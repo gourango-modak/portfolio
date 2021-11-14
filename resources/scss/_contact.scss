@@ -1,0 +1,36 @@
+#contact {
+  margin-top: 15rem;
+  .contact_item {
+    margin-top: 2rem;
+    @include bp_laptop {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+
+    div {
+      margin-left: 1rem;
+    }
+  }
+
+  .contact_form {
+    margin-top: 2rem;
+    @include bp_laptop {
+      margin-left: 2rem;
+    }
+    .form_input {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 0.9rem;
+      border: 1px solid $title-color;
+      margin-bottom: 1.3rem;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+#home {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+
+  @include bp_tablet {
+    justify-content: space-around;
+  }
+
+  .home_info {
+    @include bp_tablet {
+      width: 55%;
+      font-size: 1rem;
+    }
+
+    h1 {
+      @include bp_tablet {
+        font-size: 1.7rem;
+      }
+    }
+    p {
+      margin-top: 0.5rem;
+    }
+
+    .description {
+      line-height: 1.5rem;
+      margin-top: 0.5rem;
+      text-align: justify;
+    }
+
+    a {
+      margin-top: 2rem;
+    }
+  }
+
+  .home_img {
+    width: 20%;
+    @include bp_mobile {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      margin-top: -4rem;
+      border-radius: 70%/50%;
+    }
+  }
+}

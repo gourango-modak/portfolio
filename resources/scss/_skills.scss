@@ -1,0 +1,114 @@
+#skills {
+  margin-top: 15rem;
+  .skills_section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    @include bp_tablet {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .skill_lists {
+      padding: 1rem 0.5rem;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      border-radius: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      width: 100%;
+      background-color: $bg-color;
+
+      @include bp_laptop {
+        width: 20rem;
+      }
+
+      .fontend_skill_btn,
+      .backend_skill_btn {
+        width: 90%;
+      }
+    }
+
+    .skill_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        margin-right: 1rem;
+        color: white;
+      }
+      i {
+        color: white;
+      }
+    }
+
+    .skill_items {
+      margin-top: 2rem;
+      color: white;
+
+      p {
+        color: white;
+      }
+
+      .skill_des {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .progress_bar {
+        margin: 0.5rem 0;
+        width: 100%;
+        background-color: rgb(85, 85, 85);
+        height: 6px;
+
+        div {
+          background-color: white;
+          height: 6px;
+        }
+      }
+      .react div {
+        width: 40%;
+      }
+      .javascript div {
+        width: 90%;
+      }
+      .jquery div {
+        width: 80%;
+      }
+      .bootstrap div {
+        width: 90%;
+      }
+      .sass div {
+        width: 90%;
+      }
+      .css3 div {
+        width: 90%;
+      }
+      .html5 div {
+        width: 100%;
+      }
+      .java div {
+        width: 80%;
+      }
+      .python div {
+        width: 85%;
+      }
+      .netCore div {
+        width: 70%;
+      }
+      .django div {
+        width: 85%;
+      }
+      .php div {
+        width: 70%;
+      }
+      .cAndCPlus div {
+        width: 95%;
+      }
+    }
+  }
+}
