@@ -1,3 +1,5 @@
+$whiteColor: white;
+
 #skills {
   margin-top: 15rem;
   .skills_section {
@@ -11,21 +13,23 @@
       flex-wrap: wrap;
     }
 
+    .PaddingWrapper {
+      padding: 0 1.5rem;
+      width: 100%;
+      @include bp_laptop {
+        width: 22rem;
+      }
+    }
+
     .skill_lists {
-      padding: 1rem 0.5rem;
-      margin-right: 2rem;
+      padding: 0.5rem 0rem;
       margin-top: 2rem;
       border-radius: 7px;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
       width: 100%;
       background-color: $bg-color;
-
-      @include bp_laptop {
-        width: 20rem;
-      }
 
       .fontend_skill_btn,
       .backend_skill_btn {
@@ -37,21 +41,23 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
+      padding: 0.8rem 0.5rem;
       p {
         margin-right: 1rem;
-        color: white;
+        color: $whiteColor;
       }
       i {
-        color: white;
+        color: $whiteColor;
       }
     }
 
     .skill_items {
       margin-top: 2rem;
-      color: white;
+      color: $whiteColor;
 
       p {
-        color: white;
+        color: $whiteColor;
       }
 
       .skill_des {
@@ -66,7 +72,7 @@
         height: 6px;
 
         div {
-          background-color: white;
+          background-color: $whiteColor;
           height: 6px;
         }
       }

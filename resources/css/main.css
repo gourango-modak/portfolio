@@ -33,9 +33,6 @@ i {
   margin: 0 auto; }
   @media only screen and (min-width: 1024px) {
     .container {
-      width: 80%; } }
-  @media only screen and (min-width: 1024px) {
-    .container {
       width: 1024px; } }
 
 .btn {
@@ -144,7 +141,11 @@ i {
 #home {
   display: flex;
   align-items: center;
-  height: 100vh; }
+  height: 100vh;
+  height: 650px; }
+  @supports (height: 100vh) {
+    #home {
+      height: 100vh; } }
   @media only screen and (min-width: 481px) {
     #home {
       justify-content: space-around; } }
@@ -230,9 +231,12 @@ i {
   #about .experience_title .experience_title_info {
     display: flex;
     align-items: center;
-    cursor: pointer; }
-    #about .experience_title .experience_title_info a {
-      margin: 0; }
+    cursor: pointer;
+    flex-wrap: wrap; }
+    #about .experience_title .experience_title_info a,
+    #about .experience_title .experience_title_info i,
+    #about .experience_title .experience_title_info span {
+      margin-top: 1rem; }
   #about .experience_title .education_title {
     margin-left: 0.5rem; }
   #about .experience_title .work_title {
@@ -261,27 +265,30 @@ i {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap; } }
+    #skills .skills_section .PaddingWrapper {
+      padding: 0 1.5rem;
+      width: 100%; }
+      @media only screen and (min-width: 769px) {
+        #skills .skills_section .PaddingWrapper {
+          width: 22rem; } }
     #skills .skills_section .skill_lists {
-      padding: 1rem 0.5rem;
-      margin-right: 2rem;
+      padding: 0.5rem 0rem;
       margin-top: 2rem;
       border-radius: 7px;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
       width: 100%;
       background-color: #001131; }
-      @media only screen and (min-width: 769px) {
-        #skills .skills_section .skill_lists {
-          width: 20rem; } }
       #skills .skills_section .skill_lists .fontend_skill_btn,
       #skills .skills_section .skill_lists .backend_skill_btn {
         width: 90%; }
     #skills .skills_section .skill_title {
       display: flex;
       justify-content: space-between;
-      align-items: center; }
+      align-items: center;
+      cursor: pointer;
+      padding: 0.8rem 0.5rem; }
       #skills .skills_section .skill_title p {
         margin-right: 1rem;
         color: white; }
@@ -369,7 +376,7 @@ i {
       width: 100%;
       padding: 0.7rem;
       font-size: 0.9rem;
-      border: 1px solid #474747;
+      border: 1px solid #001131;
       margin-bottom: 1.3rem; }
 
 #footer {

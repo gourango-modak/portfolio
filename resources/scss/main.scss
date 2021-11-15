@@ -1,5 +1,4 @@
 $bg-color: #001131;
-$title-color: #474747;
 $text-color: #666666;
 
 @mixin bp_mobile {
@@ -67,7 +66,7 @@ i {
 .container {
   width: 90%;
   @include bp_large_laptop {
-    width: 80%;
+    // width: 80%;
   }
   @include bp_large_laptop {
     width: 1024px;

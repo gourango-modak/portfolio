@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
   height: 100vh;
+  height: 650px;
+
+  @supports (height: 100vh) {
+    height: 100vh;
+  }
 
   @include bp_tablet {
     justify-content: space-around;

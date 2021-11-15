@@ -54,12 +54,15 @@
     align-items: center;
     font-weight: bold;
     .experience_title_info {
-      a {
-        margin: 0;
+      a,
+      i,
+      span {
+        margin-top: 1rem;
       }
       display: flex;
       align-items: center;
       cursor: pointer;
+      flex-wrap: wrap;
     }
     .education_title {
       margin-left: 0.5rem;

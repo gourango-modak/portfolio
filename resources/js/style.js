@@ -2,9 +2,13 @@ var menuBarIcon = document.getElementById("nav_menu_icon");
 var navMenu = document.getElementById("navMenu");
 var barIcon = document.querySelector(".bar_icon");
 var closeIcon = document.querySelector(".close_icon");
-var fontendSkillsBtn = document.querySelector(".fontend_skill_btn");
+var fontendSkillsBtn = document.querySelector(
+  ".fontend_skill_btn .skill_title"
+);
 var fontendSkills = document.querySelector(".fontend_skills");
-var backendSkillsBtn = document.querySelector(".backend_skill_btn");
+var backendSkillsBtn = document.querySelector(
+  ".backend_skill_btn .skill_title"
+);
 var backendSkills = document.querySelector(".backend_skills");
 var fontEndDownIcon = document.querySelector(".fontend_skill_down");
 var fontEndUpIcon = document.querySelector(".fontend_skill_up");

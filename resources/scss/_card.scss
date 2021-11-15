@@ -1,18 +1,13 @@
-// Card Style
-
 .card {
   padding: 0.7rem;
-  // border: 2px solid black;
   margin-top: 2rem;
   width: 250px;
   display: flex;
   justify-content: center;
-  // box-shadow: 1px 1px 8px;
 
   .card_info {
     width: 100%;
     box-shadow: 1px 1px 8px;
-    // border: 1px solid yellow;
     border-radius: 5px;
     padding: 0.7rem;
   }
