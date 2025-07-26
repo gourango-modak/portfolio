@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@plugin "@tailwindcss/typography";
+
+/* Remove backticks around inline code blocks (light mode) */
+.prose code::before,
+.prose code::after {
+	content: none !important;
+}
+
+/* Remove backticks around inline code blocks (dark mode with prose-invert) */
+.dark .prose code::before,
+.dark .prose code::after {
+	content: none !important;
+}
