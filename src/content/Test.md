@@ -5,6 +5,10 @@ summary: Hello there
 
 # 🥅 Goal
 
+[Inspiration #1](https://www.abhinaythakur.com/)
+
+[Inspiration #1](https://arpitbhayani.me/)
+
 Write a function that generates a **globally unique identifier (ID)** each time it is invoked. This ID will be used to uniquely identify **any entity**.
 
 # 🔒 Constraints

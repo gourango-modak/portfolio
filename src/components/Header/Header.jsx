@@ -14,7 +14,13 @@ const Header = () => {
 						I&apos;m Gourango.
 					</h2>
 					<h3 className="text-lg sm:text-xl font-semibold mb-6 text-neutral-600 dark:text-neutral-400">
-						Sr. Frontend Engineer
+						Sr. Frontend Engineer at{" "}
+						<a
+							href="https://www.enosisbd.com/"
+							className="text-red-600 font-semibold"
+						>
+							Enosis Solutions
+						</a>
 					</h3>
 					<p className="text-base sm:text-lg leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-2xl">
 						I'm a Senior Frontend Engineer passionate about crafting
