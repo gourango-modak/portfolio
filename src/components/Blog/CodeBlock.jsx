@@ -17,10 +17,10 @@ const CodeBlock = ({ language, value }) => {
 	};
 
 	return (
-		<div style={{ position: "relative" }}>
+		<div className="relative">
 			<button
 				onClick={copyToClipboard}
-				className="absolute top-2 right-2 text-black dark:text-white opacity-70 hover:opacity-100 transition cursor-pointer"
+				className="absolute top-4 right-4 text-black dark:text-white opacity-70 hover:opacity-100 transition cursor-pointer"
 				aria-label="Copy code"
 			>
 				{copied ? <Check size={18} /> : <Clipboard size={18} />}
@@ -29,7 +29,10 @@ const CodeBlock = ({ language, value }) => {
 				style={darkMode ? atomOneDark : atomOneLight}
 				language={language}
 				PreTag={"div"}
-				showLineNumbers
+				customStyle={{
+					padding: "1.5rem", // customize padding as you want
+					borderRadius: "16px",
+				}}
 				wrapLongLines
 			>
 				{value}

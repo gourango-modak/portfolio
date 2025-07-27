@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import { useDarkMode } from "../context/DarkModeContext";
+import Footer from "../components/Footer/Footer";
 
 export default function MainLayout({ children }) {
 	const { darkMode } = useDarkMode();
@@ -16,16 +17,15 @@ export default function MainLayout({ children }) {
 
 	return (
 		<div
-			className={
-				darkMode
-					? "dark bg-white dark:bg-neutral-950"
-					: "bg-white dark:bg-neutral-950"
-			}
+			className={`flex flex-col min-h-screen bg-white dark:bg-neutral-950 ${
+				darkMode ? "dark " : ""
+			}`}
 		>
 			<Navbar scrolled={scrolled} />
-			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 				<main>{children}</main>
 			</div>
+			<Footer />
 		</div>
 	);
 }

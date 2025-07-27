@@ -27,7 +27,7 @@ const MarkdownRenderer = ({ content }) => {
 				// return the children instead of wrapping the children with `<pre></pre>`
 				pre({ children }) {
 					return (
-						<div className="border-1 border-gray-300">
+						<div className="border-1 rounded-2xl border-gray-300 dark:border-0">
 							{children}
 						</div>
 					);
