@@ -1,15 +1,20 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Calendar } from "lucide-react";
 
 export const ProjectDetail = ({ project }) => {
 	return (
 		<>
-			<h1 className="text-4xl lg:text-5xl font-bold text-slate-900 text-center">
+			<h1 className="text-4xl lg:text-5xl font-bold text-slate-900">
 				{project.title}
 			</h1>
-			<p className="text-center text-slate-600 my-4">
-				{project.description}
-			</p>
-
+			<p className=" text-slate-600 my-4">{project.description}</p>
+			{project.startDate && project.endDate && (
+				<div className="flex items-center gap-2 text-slate-500 my-4">
+					<Calendar size={16} />
+					<span>
+						{project.startDate} - {project.endDate}
+					</span>
+				</div>
+			)}
 			<div className="my-12">
 				<img
 					src={project.image}

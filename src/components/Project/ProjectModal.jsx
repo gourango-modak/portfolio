@@ -111,6 +111,20 @@ const ProjectModal = ({ isOpen, onClose }) => {
 							value={formData.description}
 							onChange={handleChange}
 						/>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<InputField
+								label="Start Date (e.g., Jan 2024)"
+								name="startDate"
+								value={formData.startDate}
+								onChange={handleChange}
+							/>
+							<InputField
+								label="End Date (e.g., May 2024)"
+								name="endDate"
+								value={formData.endDate}
+								onChange={handleChange}
+							/>
+						</div>
 						<TextareaField
 							label="The Problem"
 							name="problem"

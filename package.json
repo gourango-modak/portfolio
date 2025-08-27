@@ -5,9 +5,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "generate": "node generateContentData.js",
-    "dev": "npm run generate && vite",
-    "build": "npm run generate && vite build",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
