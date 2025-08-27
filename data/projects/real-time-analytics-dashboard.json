@@ -1,0 +1,23 @@
+{
+  "id": 1756322968813,
+  "title": "Real-Time Analytics Dashboard",
+  "description": "A dashboard application for visualizing live data streams using SignalR and modern frontend frameworks.",
+  "problem": "A financial services company required a way to monitor market data in real-time to make informed trading decisions, but their existing tools had significant latency.",
+  "solution": "I engineered a real-time dashboard using ASP.NET Core SignalR to push live data from the server to an Angular frontend. The application was deployed on Azure and utilized Cosmos DB for high-throughput data storage, reducing data latency by over 95%.",
+  "features": [
+    "Live data visualization with charts and graphs",
+    "Customizable alert notifications",
+    "Low-latency data updates via WebSockets",
+    "Scalable cloud architecture on Azure"
+  ],
+  "tags": [
+    "SignalR",
+    "Angular",
+    "Azure",
+    "Cosmos DB"
+  ],
+  "image": "https://images.unsplash.com/photo-1633621412960-6df85eff8c85?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "liveUrl": "https://images.unsplash.com/photo-1633621412960-6df85eff8c85?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "repoUrl": "https://images.unsplash.com/photo-1633621412960-6df85eff8c85?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "dynamicSections": []
+}

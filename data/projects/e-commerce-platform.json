@@ -1,0 +1,22 @@
+{
+  "id": 1756321869962,
+  "title": "E-Commerce Platform",
+  "description": "A scalable e-commerce solution with a .NET Core backend, featuring payment gateway integration and inventory management.",
+  "problem": "The client needed a modern, high-performance online store to replace their outdated system, which was slow, difficult to manage, and not mobile-friendly.",
+  "solution": "I led the development of a full-stack e-commerce platform using .NET Core for the backend API and React for the frontend. The solution included a secure payment gateway with Stripe, a real-time inventory management system, and a responsive user interface that works flawlessly on all devices.",
+  "features": [
+    "Secure user authentication and authorization",
+    "Real-time product inventory tracking",
+    "Stripe integration for credit card payments",
+    "Admin dashboard for managing products and orders"
+  ],
+  "tags": [
+    "C++",
+    "C#",
+    "Java",
+    "JavaScript"
+  ],
+  "image": "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "liveUrl": "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "repoUrl": "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+}
