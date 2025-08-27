@@ -4,6 +4,7 @@ import { useState } from "react";
 import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/Common/DataLoader";
 import { fetchAllProjects } from "../data/ProjectLoader";
+import { ISDEVENV } from "../config";
 
 const Projects = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,12 +17,14 @@ const Projects = () => {
 						<h1 className="text-4xl font-bold text-slate-900">
 							Portfolio
 						</h1>
-						<button
-							onClick={() => setIsModalOpen(true)}
-							className="bg-indigo-600 text-white font-semibold py-2 px-2 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
-						>
-							<PlusCircle size={20} />
-						</button>
+						<div className={ISDEVENV ? "" : "hidden"}>
+							<button
+								onClick={() => setIsModalOpen(true)}
+								className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+							>
+								<PlusCircle size={20} /> Add
+							</button>
+						</div>
 					</div>
 					<p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
 						Explore a curated selection of my projects. Each one

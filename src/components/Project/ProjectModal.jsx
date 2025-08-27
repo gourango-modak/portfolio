@@ -87,13 +87,13 @@ const ProjectModal = ({ isOpen, onClose }) => {
 		<div className="fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar">
 			<div className="flex items-center justify-center">
 				<div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl my-8">
-					<div className="p-6 flex justify-between items-center">
+					<div className="p-6 border-b border-gray-200 flex justify-between items-center">
 						<h2 className="text-2xl font-bold text-slate-800">
 							Create New Project
 						</h2>
 						<button
 							onClick={onClose}
-							className="text-slate-400 hover:text-slate-600"
+							className="text-slate-400 hover:text-slate-600 cursor-pointer"
 						>
 							<X size={24} />
 						</button>
@@ -172,7 +172,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
 							</div>
 						))}
 					</div>
-					<div className="px-6 flex flex-row items-center">
+					<div className="px-6 mb-6 flex flex-row items-center">
 						<button
 							onClick={() => setIsAddSectionModalOpen(true)}
 							className="bg-white text-indigo-600 font-semibold py-2 px-4 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 inline-flex items-center justify-center gap-2 cursor-pointer"
@@ -180,7 +180,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
 							<PlusCircle size={20} /> Add New Section
 						</button>
 					</div>
-					<div className="p-6 mt-12 flex justify-end gap-4 rounded-b-lg">
+					<div className="p-6 border-t border-gray-200 flex justify-end gap-4 rounded-b-lg">
 						<button
 							onClick={onClose}
 							className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"

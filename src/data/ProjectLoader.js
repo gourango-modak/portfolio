@@ -6,6 +6,8 @@ let projectsCache = null;
 // You can add as many links here as you need.
 const projectJsonUrls = [
 	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/e-commerce-platform.json",
+	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/enterprise-crm-system.json",
+	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/real-time-analytics-dashboard.json",
 	// Add more JSON file links here
 ];
 

@@ -9,7 +9,10 @@ const ProjectCard = ({ project }) => {
 		>
 			<div className="text-indigo-600">
 				{/* {React.cloneElement(project.icon, { size: 32 })} */}
-				<img src={project.image} className="rounded-t-xl" />
+				<img
+					src={project.image}
+					className="rounded-t-xl h-40 w-full object-cover"
+				/>
 			</div>
 			<div className="p-6">
 				<h3 className="text-xl font-bold mb-2 text-slate-900">
