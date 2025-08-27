@@ -1,8 +1,18 @@
 import { ExternalLink, Github, Calendar } from "lucide-react";
+import { Breadcrumb } from "../Common/Breadcrumb";
 
 export const ProjectDetail = ({ project }) => {
+	const crumbs = [
+		{ to: "/", label: "Home" },
+		{ to: "/projects", label: "Projects" },
+		{ label: project.title },
+	];
+
 	return (
 		<>
+			<div className="mb-8">
+				<Breadcrumb crumbs={crumbs} />
+			</div>
 			<h1 className="text-4xl lg:text-5xl font-bold text-slate-900">
 				{project.title}
 			</h1>

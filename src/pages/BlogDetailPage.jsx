@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Book } from "lucide-react";
+import { Breadcrumb } from "../components/Common/Breadcrumb";
 
 const BlogDetailPage = () => {
 	const blogData = [
@@ -37,8 +38,17 @@ const BlogDetailPage = () => {
 			</div>
 		);
 
+	const crumbs = [
+		{ to: "/", label: "Home" },
+		{ to: "/Blog", label: "Blog" },
+		{ label: post.title.slice(0, 30) + "..." },
+	];
+
 	return (
 		<div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl">
+			<div className="mb-8">
+				<Breadcrumb crumbs={crumbs} />
+			</div>
 			<p className="text-slate-500 mb-2">{post.date}</p>
 			<h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 			<p>{post.excerpt}</p>
