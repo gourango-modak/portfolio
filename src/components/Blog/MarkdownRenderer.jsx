@@ -32,6 +32,9 @@ const MarkdownRenderer = ({ content }) => {
 						</div>
 					);
 				},
+				p({ children }) {
+					return <p className="">{children}</p>;
+				},
 			}}
 			remarkPlugins={[remarkGfm]}
 			rehypePlugins={[rehypeRaw]}

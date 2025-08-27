@@ -13,3 +13,38 @@
 .dark .prose code::after {
 	content: none !important;
 }
+
+.prose {
+	font-size: 1.25rem;
+}
+
+.prose h1 {
+	font-size: 1.5rem;
+}
+.prose h2,
+h3,
+h4,
+h5 {
+	font-size: 1.25rem;
+}
+
+@media (max-width: 672px) {
+	.prose {
+		font-size: 1.125rem;
+	}
+	.prose h1 {
+		font-size: 1.25rem;
+	}
+	.prose h2,
+	h3,
+	h4,
+	h5 {
+		font-size: 1rem;
+	}
+}
+
+textarea.no-focus:focus {
+	outline: none;
+	border-color: inherit; /* keeps border the same */
+	box-shadow: none;
+}

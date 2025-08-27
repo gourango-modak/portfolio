@@ -4,6 +4,7 @@ import { SearchBar } from "./SearchBar";
 import { CategoryFilter } from "./CategoryFilter";
 import TagFilter from "./TagFilter";
 import { BlogCard } from "./BlogCard";
+import InfiniteScroll from "../Pagination/InfiniteScroll";
 
 const BlogListPage = () => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -39,7 +40,14 @@ const BlogListPage = () => {
 			<TagFilter selected={selectedTags} setSelected={setSelectedTags} />
 
 			<div className="grid gap-6 mt-6">
-				{filteredPosts.map((post) => (
+				<InfiniteScroll
+					items={filteredPosts}
+					itemsPerPage={6}
+					renderItem={(post) => (
+						<BlogCard key={post.slug} post={post} />
+					)}
+				/>
+				{/* {filteredPosts.map((post) => (
 					<BlogCard key={post.slug} post={post} />
 				))}
 
@@ -47,7 +55,7 @@ const BlogListPage = () => {
 					<p className="text-center text-neutral-500 dark:text-neutral-400">
 						No posts match your search or filter.
 					</p>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

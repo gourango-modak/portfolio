@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPostPage";
 import { useState } from "react";
+import Projects from "./pages/Projects";
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
@@ -45,7 +46,7 @@ const App = () => {
 					path="/projects"
 					element={
 						<MainLayout>
-							<Blog />
+							<Projects />
 						</MainLayout>
 					}
 				/>

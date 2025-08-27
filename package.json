@@ -11,6 +11,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bomdi/codebox": "^2.0.0",
+    "@coolbytes/editorjs-delimiter": "^1.0.4",
+    "@editorjs/delimiter": "^1.4.2",
+    "@editorjs/editorjs": "^2.30.8",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/image": "^2.10.3",
+    "@editorjs/inline-code": "^1.5.2",
+    "@editorjs/list": "^2.0.8",
+    "@editorjs/paragraph": "^2.11.7",
     "@tailwindcss/vite": "^4.1.11",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",

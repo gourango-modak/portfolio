@@ -24,7 +24,7 @@ const BlogPostPage = () => {
 	}
 
 	return (
-		<div className="w-3xl mx-auto py-10 text-neutral-800 dark:text-white">
+		<div className="md:w-xl lg:w-3xl mx-auto py-10 text-neutral-800 dark:text-white">
 			<h1 className="text-3xl font-bold mb-2">{post.title}</h1>
 			<p className="text-sm text-neutral-500 mb-4">{post.date}</p>
 			{/* Category */}
@@ -36,7 +36,7 @@ const BlogPostPage = () => {
 					</span>
 				</p>
 			)}
-			<div className="prose dark:prose-invert max-w-none">
+			<div className="prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg font-serif max-w-none">
 				<MarkdownRenderer content={post.content} />
 			</div>
 			{/* Tags */}

@@ -1,4 +1,4 @@
-import profile from "../../assets/profile_3.png";
+import profile from "../../assets/gm.png";
 import SocialButtons from "./SocialButtons";
 
 const Header = () => {
@@ -40,7 +40,7 @@ const Header = () => {
 					<img
 						src={profile}
 						alt="Profile"
-						className="w-46 h-46 sm:w-56 sm:h-56 rounded-full object-cover border-4 border-neutral-300 dark:border-neutral-700 shadow-md"
+						className="w-3/4 object-cover"
 					/>
 				</div>
 			</div>
