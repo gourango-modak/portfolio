@@ -1,4 +1,4 @@
-import { navLinks } from "../../Constants/Navigation"; // Adjust the path as needed
+import { navLinks } from "../../constants/Navigation"; // Adjust the path as needed
 import { NavLink } from "react-router-dom";
 
 const DesktopNav = () => {

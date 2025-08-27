@@ -1,7 +1,7 @@
-import BlogPostCard from "../components/Home/Blog/BlogPostCard";
+import { useParams } from "react-router-dom";
 import { Book } from "lucide-react";
 
-const Blog = () => {
+const BlogDetailPage = () => {
 	const blogData = [
 		{
 			id: 1, // Added an ID for unique routing
@@ -28,24 +28,22 @@ const Blog = () => {
 			date: "May 10, 2024",
 		},
 	];
-	return (
-		<section className="pt-24 pb-20 min-h-screen bg-gray-50">
-			<div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-				<h1 className="text-4xl font-bold text-center mb-4 text-slate-900">
-					My Writings
-				</h1>
-				<p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-					Here I share my thoughts on software development, .NET, and
-					the tech world.
-				</p>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{blogData.map((post) => (
-						<BlogPostCard key={post.id} post={post} />
-					))}
-				</div>
+	const { id } = useParams();
+	const post = blogData.find((p) => p.id === parseInt(id));
+	if (!post)
+		return (
+			<div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl">
+				Blog post not found.
 			</div>
-		</section>
+		);
+
+	return (
+		<div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl">
+			<p className="text-slate-500 mb-2">{post.date}</p>
+			<h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+			<p>{post.excerpt}</p>
+		</div>
 	);
 };
 
-export default Blog;
+export default BlogDetailPage;

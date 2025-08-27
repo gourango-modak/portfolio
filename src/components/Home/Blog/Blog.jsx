@@ -1,5 +1,6 @@
 import { Book } from "lucide-react";
 import BlogPostCard from "./BlogPostCard";
+import { Link } from "react-router-dom";
 
 const Blog = () => {
 	// NOTE: For better organization, this data should live in a separate file (e.g., in a /data or /constants folder)
@@ -31,7 +32,7 @@ const Blog = () => {
 	];
 
 	return (
-		<section id="blog" className="py-20 bg-gray-50">
+		<section id="blog" className="py-20 bg-white/50">
 			<div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
 				<h2 className="text-3xl font-bold text-center mb-2 text-slate-900">
 					From My Blog
@@ -45,6 +46,14 @@ const Blog = () => {
 						<BlogPostCard key={post.id} post={post} />
 					))}
 				</div>
+			</div>
+			<div className="mt-12 text-center">
+				<Link
+					to="/blog"
+					className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"
+				>
+					Read All Posts
+				</Link>
 			</div>
 		</section>
 	);

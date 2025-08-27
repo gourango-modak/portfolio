@@ -1,0 +1,141 @@
+import { useState } from "react";
+import { InputField } from "../Common/InputField";
+import { TextareaField } from "../Common/TextareaField";
+import { X } from "lucide-react";
+
+const ProjectModal = ({ isOpen, onClose }) => {
+	if (!isOpen) return null;
+
+	const [formData, setFormData] = useState({
+		title: "",
+		description: "",
+		problem: "",
+		solution: "",
+		features: "",
+		tags: "",
+		image: "",
+		liveUrl: "",
+		repoUrl: "",
+	});
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const handleSave = () => {
+		const newProject = {
+			id: Date.now(),
+			...formData,
+			tags: formData.tags.split(",").map((tag) => tag.trim()),
+			features: formData.features
+				.split(",")
+				.map((feature) => feature.trim()),
+		};
+		const jsonString = JSON.stringify(newProject, null, 2);
+		const blob = new Blob([jsonString], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = `${newProject.title
+			.toLowerCase()
+			.replace(/\s+/g, "-")}.json`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+		onClose();
+	};
+
+	return (
+		<div className="fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar">
+			<div className="flex items-center justify-center">
+				<div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl my-8">
+					<div className="p-6 border-b flex justify-between items-center">
+						<h2 className="text-2xl font-bold text-slate-800">
+							Create New Project
+						</h2>
+						<button
+							onClick={onClose}
+							className="text-slate-400 hover:text-slate-600"
+						>
+							<X size={24} />
+						</button>
+					</div>
+					<div className="p-6 space-y-4">
+						<InputField
+							label="Project Title"
+							name="title"
+							value={formData.title}
+							onChange={handleChange}
+						/>
+						<TextareaField
+							label="Short Description"
+							name="description"
+							value={formData.description}
+							onChange={handleChange}
+						/>
+						<TextareaField
+							label="The Problem"
+							name="problem"
+							value={formData.problem}
+							onChange={handleChange}
+						/>
+						<TextareaField
+							label="The Solution"
+							name="solution"
+							value={formData.solution}
+							onChange={handleChange}
+						/>
+						<TextareaField
+							label="Key Features (comma-separated)"
+							name="features"
+							value={formData.features}
+							onChange={handleChange}
+						/>
+						<InputField
+							label="Tech Stack (comma-separated)"
+							name="tags"
+							value={formData.tags}
+							onChange={handleChange}
+						/>
+						<InputField
+							label="Image URL"
+							name="image"
+							value={formData.image}
+							onChange={handleChange}
+						/>
+						<InputField
+							label="Live Site URL"
+							name="liveUrl"
+							value={formData.liveUrl}
+							onChange={handleChange}
+						/>
+						<InputField
+							label="Repository URL"
+							name="repoUrl"
+							value={formData.repoUrl}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className="p-6 flex justify-end gap-4 rounded-b-lg">
+						<button
+							onClick={onClose}
+							className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"
+						>
+							Cancel
+						</button>
+						<button
+							onClick={handleSave}
+							className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700"
+						>
+							Download JSON
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default ProjectModal;

@@ -1,16 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
-import BlogPostPage from "./pages/BlogPostPage";
-import { useState } from "react";
 import Projects from "./pages/Projects";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
+import Contact from "./pages/Contact";
+import ScrollToTop from "./components/Common/ScrollToTop";
+import { useState } from "react";
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false);
+
 	return (
-		<BrowserRouter>
+		<HashRouter>
+			<ScrollToTop />
 			<Routes>
 				<Route
 					path="/"
@@ -51,15 +56,31 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/blog/:slug"
+					path="/projects/:id"
 					element={
 						<MainLayout>
-							<BlogPostPage />
+							<ProjectDetailPage />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/blog/:id"
+					element={
+						<MainLayout>
+							<BlogDetailPage />
+						</MainLayout>
+					}
+				/>
+				<Route
+					path="/contact"
+					element={
+						<MainLayout>
+							<Contact />
 						</MainLayout>
 					}
 				/>
 			</Routes>
-		</BrowserRouter>
+		</HashRouter>
 	);
 };
 

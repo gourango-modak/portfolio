@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/navbar/Navbar";
-import { useDarkMode } from "../context/DarkModeContext";
 import Footer from "../components/Footer/Footer";
 
 export default function MainLayout({ children }) {
-	const { darkMode } = useDarkMode();
 	const [scrolled, setScrolled] = useState(false);
 	useEffect(() => {
 		const handleScroll = () => {

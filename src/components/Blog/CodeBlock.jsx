@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useDarkMode } from "../../context/DarkModeContext";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneLight } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { Clipboard, Check } from "lucide-react";
 
 const CodeBlock = ({ language, value }) => {
-	const { darkMode } = useDarkMode();
 	const [copied, setCopied] = useState(false);
 
 	const copyToClipboard = () => {
@@ -26,7 +24,7 @@ const CodeBlock = ({ language, value }) => {
 				{copied ? <Check size={18} /> : <Clipboard size={18} />}
 			</button>
 			<SyntaxHighlighter
-				style={darkMode ? atomOneDark : atomOneLight}
+				style={atomOneDark}
 				language={language}
 				PreTag={"div"}
 				customStyle={{
