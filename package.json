@@ -1,5 +1,6 @@
 {
   "name": "personal-website",
+  "homepage": "https://gourango-modak.github.io/portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +9,9 @@
     "dev": "npm run generate && vite",
     "build": "npm run generate && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@bomdi/codebox": "^2.0.0",
@@ -21,6 +24,7 @@
     "@editorjs/list": "^2.0.8",
     "@editorjs/paragraph": "^2.11.7",
     "@tailwindcss/vite": "^4.1.11",
+    "gh-pages": "^6.3.0",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

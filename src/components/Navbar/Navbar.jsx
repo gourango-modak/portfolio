@@ -1,57 +1,40 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom"; // Import NavLink
 import { Menu, X } from "lucide-react";
-import NavLinks from "./NavLinks";
-import ThemeToggle from "./ThemeToggle";
-import { Link } from "react-router-dom";
+import DesktopNav from "./DesktopNav";
+import MobileNav from "./MobileNav";
 
-const Navbar = ({ scrolled }) => {
-	const [menuOpen, setMenuOpen] = useState(false);
+const Navbar = () => {
+	const [isOpen, setIsOpen] = useState(false);
+
+	const toggleMenu = () => setIsOpen(!isOpen);
+	const closeMenu = () => setIsOpen(false);
 
 	return (
-		<div
-			className={`sticky top-0 z-50 ${
-				scrolled
-					? "border-b border-neutral-200 dark:border-neutral-800"
-					: ""
-			}`}
-		>
-			<nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-neutral-950 font-sans text-sm font-semibold">
-				<div className="flex justify-between h-16 items-center">
-					<Link
-						to={"/"}
-						className="text-lg font-bold text-gray-800 dark:text-white cursor-pointer"
+		<nav className="bg-white/80 backdrop-blur-lg shadow-sm fixed w-full top-0 z-50">
+			<div className="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center md:max-w-6xl">
+				<NavLink
+					to="/"
+					className="text-2xl font-bold text-indigo-600"
+					onClick={closeMenu}
+				>
+					Gourango.
+				</NavLink>
+
+				<DesktopNav />
+
+				<div className="md:hidden">
+					<button
+						onClick={toggleMenu}
+						className="text-slate-600 hover:text-indigo-600"
 					>
-						Gourango.
-					</Link>
-
-					{/* Desktop Navigation */}
-					<div className="hidden md:flex space-x-6 items-center">
-						<NavLinks />
-						<ThemeToggle />
-					</div>
-
-					{/* Mobile Toggle Controls */}
-					<div className="md:hidden flex items-center space-x-4">
-						<ThemeToggle isMobile />
-						<button
-							onClick={() => setMenuOpen(!menuOpen)}
-							className="text-gray-800 cursor-pointer dark:text-white"
-							aria-label="Toggle menu"
-						>
-							{menuOpen ? <X size={24} /> : <Menu size={24} />}
-						</button>
-					</div>
+						{isOpen ? <X size={24} /> : <Menu size={24} />}
+					</button>
 				</div>
-				{/* Mobile Menu */}
-				{menuOpen && (
-					<div className="md:hidden px-4">
-						<div className="border-1 rounded-2xl py-6 border-gray-200 dark:border-gray-500 text-center">
-							<NavLinks isMobile />
-						</div>
-					</div>
-				)}
-			</nav>
-		</div>
+			</div>
+
+			{isOpen && <MobileNav closeMenu={closeMenu} />}
+		</nav>
 	);
 };
 
