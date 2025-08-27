@@ -2,13 +2,16 @@
 // It's defined outside the function so it persists between calls.
 let projectsCache = null;
 
+// Base URL for all project JSON files
+const baseUrl =
+	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/gh-pages/data/projects/";
+
 // An array of URLs pointing to your project JSON files.
 // You can add as many links here as you need.
-const projectJsonUrls = [
-	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/e-commerce-platform.json",
-	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/enterprise-crm-system.json",
-	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/real-time-analytics-dashboard.json",
-	// Add more JSON file links here
+const projectFiles = [
+	"e-commerce-platform.json",
+	"enterprise-crm-system.json",
+	"real-time-analytics-dashboard.json",
 ];
 
 /**
@@ -23,8 +26,8 @@ export const fetchAllProjects = async () => {
 
 	try {
 		// Use Promise.all to fetch all JSON files concurrently for better performance.
-		const projectPromises = projectJsonUrls.map((url) =>
-			fetch(url).then((response) => {
+		const projectPromises = projectFiles.map((file) =>
+			fetch(`${baseUrl}${file}`).then((response) => {
 				// Check if the network response was ok
 				if (!response.ok) {
 					throw new Error(`Network response was not ok for ${url}`);
