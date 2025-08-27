@@ -5,9 +5,7 @@ let projectsCache = null;
 // An array of URLs pointing to your project JSON files.
 // You can add as many links here as you need.
 const projectJsonUrls = [
-	"https://your-link-to-project-1.json",
-	"https://your-link-to-project-2.json",
-	"https://your-link-to-project-3.json",
+	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/src/assets/Projects/e-commerce-platform.json",
 	// Add more JSON file links here
 ];
 
