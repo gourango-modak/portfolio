@@ -8,6 +8,8 @@ const Modal = ({
 	children,
 	footer,
 	position = "top",
+	width = "w-2xl",
+	showHeader = true,
 }) => {
 	useEffect(() => {
 		if (isOpen) {
@@ -30,19 +32,21 @@ const Modal = ({
 			className={`fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar ${alignmentClass}`}
 		>
 			<div className="flex items-center justify-center">
-				<div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl">
+				<div className={`bg-white rounded-lg shadow-2xl ${width}`}>
 					{/* Modal Header */}
-					<div className="p-6 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
-						<h2 className="text-2xl font-bold text-slate-800 pr-12">
-							{title}
-						</h2>
-						<button
-							onClick={onClose}
-							className="text-slate-400 hover:text-slate-600 cursor-pointer"
-						>
-							<X size={24} />
-						</button>
-					</div>
+					{showHeader && (
+						<div className="p-6 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
+							<h2 className="text-2xl font-bold text-slate-800">
+								{title}
+							</h2>
+							<button
+								onClick={onClose}
+								className="text-slate-400 hover:text-slate-600 cursor-pointer"
+							>
+								<X size={24} />
+							</button>
+						</div>
+					)}
 
 					{/* Modal Body (Scrollable) */}
 					<div className="p-6 space-y-4 overflow-y-auto">

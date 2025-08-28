@@ -19,6 +19,7 @@ export const AddSectionModal = ({ isOpen, onClose, onAdd }) => {
 			onClose={onClose}
 			title="Add New Section Title"
 			position="center"
+			width="w-sm"
 			footer={
 				<>
 					<button

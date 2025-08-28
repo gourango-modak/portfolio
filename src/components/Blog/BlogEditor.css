@@ -1,26 +1,28 @@
-/* 
-   Example: editor.css
-
-   This CSS controls the width of EditorJS blocks.
-   You can easily adjust the width by changing the --block-width variable below.
-*/
-
 /* Set the block width (default: 780px) */
 :root {
-	--block-width: 100%; /* Change this value to set your desired block width */
+	--block-width: calc(100% - 35px);
+	/* --block-width: 100%; */
 }
 
 /* Apply the block width to EditorJS elements */
 .ce-block__content,  /* Content inside each block */
 .ce-block,           /* The block wrapper */
-.codex-editor__redactor, /* Main editing area */
 .ce-toolbar__content {
 	/* Toolbar content for editing */
-	max-width: var(--block-width); /* Use the block width set in :root */
-	width: var(--block-width); /* Apply the block width */
-	margin: 0 auto; /* Center the blocks */
+	max-width: var(--block-width);
+	width: var(--block-width);
+	margin: 0;
+}
+
+/* Main editing area */
+.codex-editor__redactor {
+	width: 100%;
 }
 
 .ce-delimiter hr {
 	display: inline-block;
+}
+
+.ce-toolbar__actions {
+	right: -35px;
 }

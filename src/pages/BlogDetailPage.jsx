@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Book } from "lucide-react";
 import { Breadcrumb } from "../components/Common/Breadcrumb";
+import { BlogRenderer } from "../components/Blog/BlogRenderer";
 
 const BlogDetailPage = () => {
 	const blogData = [
@@ -49,9 +50,10 @@ const BlogDetailPage = () => {
 			<div className="mb-8">
 				<Breadcrumb crumbs={crumbs} />
 			</div>
-			<p className="text-slate-500 mb-2">{post.date}</p>
+			{/* <p className="text-slate-500 mb-2">{post.date}</p>
 			<h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-			<p>{post.excerpt}</p>
+			<p>{post.excerpt}</p> */}
+			<BlogRenderer content={post} />
 		</div>
 	);
 };

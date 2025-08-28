@@ -4,7 +4,7 @@ import { useState } from "react";
 import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/Common/DataLoader";
 import { fetchAllProjects } from "../data/ProjectLoader";
-import { ISDEVENV } from "../config";
+import { ISDEVENV } from "../config/config";
 
 const Projects = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);

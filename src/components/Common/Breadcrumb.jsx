@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BREADCRUMB_MAX_LENGTH } from "../../config";
+import { BREADCRUMB_MAX_LENGTH } from "../../config/config";
 
 export const Breadcrumb = ({ crumbs }) => {
 	const truncate = (text, maxLength = BREADCRUMB_MAX_LENGTH) =>
