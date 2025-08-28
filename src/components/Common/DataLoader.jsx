@@ -30,7 +30,9 @@ const DataLoader = ({ fetchData, render }) => {
 	if (isLoading) {
 		// You can customize this loading message or replace it with a spinner component
 		return (
-			<div className="pt-32 text-center text-slate-500">Loading...</div>
+			<div className="pt-32 min-h-screen text-center text-slate-500">
+				Loading...
+			</div>
 		);
 	}
 

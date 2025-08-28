@@ -13,8 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@bomdi/codebox": "^2.0.0",
-    "@coolbytes/editorjs-delimiter": "^1.0.4",
+    "@editorjs/code": "^2.9.3",
     "@editorjs/delimiter": "^1.4.2",
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/header": "^2.8.8",

@@ -11,77 +11,77 @@ import ScrollToTop from "./components/Common/ScrollToTop";
 import { useState } from "react";
 
 const App = () => {
-	const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
-	return (
-		<HashRouter>
-			<ScrollToTop />
-			<Routes>
-				<Route
-					path="/"
-					element={
-						<MainLayout
-							darkMode={darkMode}
-							setDarkMode={setDarkMode}
-						>
-							<Home
-								darkMode={darkMode}
-								setDarkMode={setDarkMode}
-							/>
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/about"
-					element={
-						<MainLayout>
-							<About />
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/blog"
-					element={
-						<MainLayout>
-							<Blog />
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/projects"
-					element={
-						<MainLayout>
-							<Projects />
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/projects/:id"
-					element={
-						<MainLayout>
-							<ProjectDetailPage />
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/blog/:id"
-					element={
-						<MainLayout>
-							<BlogDetailPage />
-						</MainLayout>
-					}
-				/>
-				<Route
-					path="/contact"
-					element={
-						<MainLayout>
-							<Contact />
-						</MainLayout>
-					}
-				/>
-			</Routes>
-		</HashRouter>
-	);
+    return (
+        <HashRouter>
+            <ScrollToTop />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <MainLayout
+                            darkMode={darkMode}
+                            setDarkMode={setDarkMode}
+                        >
+                            <Home
+                                darkMode={darkMode}
+                                setDarkMode={setDarkMode}
+                            />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/about"
+                    element={
+                        <MainLayout>
+                            <About />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/blog"
+                    element={
+                        <MainLayout>
+                            <Blog />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/projects"
+                    element={
+                        <MainLayout>
+                            <Projects />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/projects/:id"
+                    element={
+                        <MainLayout>
+                            <ProjectDetailPage />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/blog/:id"
+                    element={
+                        <MainLayout>
+                            <BlogDetailPage />
+                        </MainLayout>
+                    }
+                />
+                <Route
+                    path="/contact"
+                    element={
+                        <MainLayout>
+                            <Contact />
+                        </MainLayout>
+                    }
+                />
+            </Routes>
+        </HashRouter>
+    );
 };
 
 export default App;

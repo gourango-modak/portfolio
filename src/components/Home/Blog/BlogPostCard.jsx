@@ -1,4 +1,4 @@
-import React from "react";
+import { Book } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const BlogPostCard = ({ post }) => {
@@ -8,7 +8,7 @@ const BlogPostCard = ({ post }) => {
 			className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6"
 		>
 			<div className="text-indigo-600 mt-1 flex-shrink-0">
-				{React.cloneElement(post.icon, { size: 24 })}
+				<Book />
 			</div>
 			<div>
 				<p className="text-sm text-slate-500 mb-1">{post.date}</p>

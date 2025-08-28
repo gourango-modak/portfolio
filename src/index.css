@@ -43,12 +43,6 @@ h5 {
 	}
 }
 
-textarea.no-focus:focus {
-	outline: none;
-	border-color: inherit; /* keeps border the same */
-	box-shadow: none;
-}
-
 .hide-scrollbar {
 	-ms-overflow-style: none; /* IE/Edge */
 	scrollbar-width: none; /* Firefox */
