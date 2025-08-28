@@ -3,6 +3,7 @@ import { Breadcrumb } from "../components/Common/Breadcrumb";
 import BlogPostRenderer from "../components/blog/BlogPostRenderer";
 import { fetchPosts } from "../data/posts";
 import DataLoader from "../components/Common/DataLoader";
+import { formatDate } from "../utils/date";
 
 const BlogPostDetailPage = () => {
     const { id } = useParams();
@@ -22,6 +23,14 @@ const BlogPostDetailPage = () => {
                     <div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl">
                         <div className="mb-8">
                             <Breadcrumb crumbs={crumbs} />
+                        </div>
+                        <div className="mb-8">
+                            <h1 className="text-4xl font-bold mb-2 text-slate-900">
+                                {post.title}
+                            </h1>
+                            <p className="text-sm text-slate-500 mb-1">
+                                {formatDate(post.createdAt)}
+                            </p>
                         </div>
                         <BlogPostRenderer content={post.content} />
                     </div>

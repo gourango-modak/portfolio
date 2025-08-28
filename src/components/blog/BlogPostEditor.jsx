@@ -48,7 +48,7 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
     }));
 
     return (
-        <div className="blog-editor">
+        <>
             <BlogPostTextField
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -61,7 +61,7 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
                 placeholder="Summary..."
             />
             <div id="editorjs"></div>
-        </div>
+        </>
     );
 });
 

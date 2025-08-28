@@ -1,3 +1,4 @@
+import { Code } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ProjectCard = ({ project }) => {
@@ -6,13 +7,14 @@ const ProjectCard = ({ project }) => {
             to={`/projects/${project.id}`}
             className="flex flex-col bg-white/60 backdrop-blur-lg rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300"
         >
-            <div className="text-indigo-600">
+            {/* <div className="text-indigo-600">
                 <img
                     src={project.image}
                     className="rounded-t-xl h-40 w-full object-cover"
                 />
-            </div>
+            </div> */}
             <div className="p-6">
+                <div className="text-indigo-600 mb-4">{<Code size={32} />}</div>
                 <h3 className="text-xl font-bold mb-2 text-slate-900">
                     {project.title}
                 </h3>

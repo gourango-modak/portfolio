@@ -1,5 +1,7 @@
 import { Book } from "lucide-react";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/date";
+import { truncateText } from "../../utils/string";
 
 const BlogPostCard = ({ post }) => {
     return (
@@ -11,11 +13,13 @@ const BlogPostCard = ({ post }) => {
                 <Book />
             </div>
             <div>
-                <p className="text-sm text-slate-500 mb-1">{post.date}</p>
+                <p className="text-sm text-slate-500 mb-1">
+                    {formatDate(post.createdAt)}
+                </p>
                 <h3 className="text-xl font-bold mb-2 text-slate-900">
                     {post.title}
                 </h3>
-                <p className="text-slate-600">{post.excerpt}</p>
+                <p className="text-slate-600">{truncateText(post.summary)}</p>
             </div>
         </Link>
     );
