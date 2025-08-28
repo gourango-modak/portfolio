@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { fetchAllProjects } from "../data/ProjectLoader";
+import { fetchAllProjects } from "../data/projects";
 import { ProjectDetail } from "../components/Project/ProjectDetail";
 import DataLoader from "../components/Common/DataLoader";
 

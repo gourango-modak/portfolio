@@ -3,7 +3,7 @@ import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/Common/DataLoader";
-import { fetchAllProjects } from "../data/ProjectLoader";
+import { fetchAllProjects } from "../data/projects";
 import { ISDEVENV } from "../config/config";
 
 const Projects = () => {

@@ -1,7 +1,7 @@
 import DataLoader from "../../Common/DataLoader";
 import ProjectCard from "./ProjectCard";
 import { Link } from "react-router-dom";
-import { fetchAllProjects } from "../../../data/ProjectLoader";
+import { fetchAllProjects } from "../../../data/projects";
 const Project = () => {
 	return (
 		<section className="py-20 bg-white/50">
