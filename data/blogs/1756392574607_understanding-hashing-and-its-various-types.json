@@ -1,0 +1,459 @@
+{
+  "id": 1756392574607,
+  "title": "Understanding Hashing and Its Various Types",
+  "summary": "Python’s flexibility and wide library support make it ideal for exploring and working with data of every size. Databricks, on the other hand, is a cloud-based platform built on Apache Spark. It is designed to handle large-scale data processing while providing collaboration features for teams.\n\nWhen Python and Databricks come together, they create a system that can manage everything from small experiments to enterprise-level pipelines.",
+  "createdAt": 1756392574488,
+  "content": {
+    "time": 1756392574488,
+    "blocks": [
+      {
+        "id": "-nNQUyL6FP",
+        "type": "image",
+        "data": {
+          "caption": "Test Image",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZVXTcYaJT5WYcRnwWvKuoQ.png"
+          }
+        }
+      },
+      {
+        "id": "VXF_gtPeC6",
+        "type": "header",
+        "data": {
+          "text": "Introduction",
+          "level": 1
+        }
+      },
+      {
+        "id": "Un-iq6nrpU",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing is a fundamental concept in the realm of computer science, instrumental in optimizing data retrieval and storage processes. At its core, hashing is a technique that converts a range of key values into a range of indexes of an array. By mapping large data sets to smaller, fixed-size values or keys, hashing facilitates efficient data access, regardless of the volume of data."
+        }
+      },
+      {
+        "id": "nhjD4LfisW",
+        "type": "header",
+        "data": {
+          "text": "What is Hashing?",
+          "level": 1
+        }
+      },
+      {
+        "id": "M360CN3YK0",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing involves applying a hash function to input data — often a large, arbitrary size — to produce a fixed-size string of bytes. The output, known as a hash value or hash code, uniquely identifies the input data. Ideally, a hash function should have the following attributes:"
+        }
+      },
+      {
+        "id": "DYwjuusfyl",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Deterministic:&nbsp;The same input should always produce the same output.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Fast Computation:&nbsp;The hash function should be capable of returning the hash value quickly.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Minimal Collision:&nbsp;Different inputs should produce unique hash values. While collisions — where different inputs produce the same output — can happen, a good hash function minimizes this probability.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Uniform Distribution:&nbsp;The hash function should distribute hash values uniformly across the hash table.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "JArfFv17pt",
+        "type": "header",
+        "data": {
+          "text": "Types of Hashing",
+          "level": 1
+        }
+      },
+      {
+        "id": "s-mIggpRo8",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing can be categorized into various types, each designed to tackle specific challenges and applications. Let’s delve into some of the prominent hashing types:"
+        }
+      },
+      {
+        "id": "mgX8-0vT9l",
+        "type": "header",
+        "data": {
+          "text": "1. Direct Addressing",
+          "level": 2
+        }
+      },
+      {
+        "id": "kDW8gonEyk",
+        "type": "paragraph",
+        "data": {
+          "text": "Direct addressing is a simple yet efficient form of hashing where the key value directly serves as the index in the array. While fast and straightforward, it’s not memory-efficient for large datasets with sparse key values."
+        }
+      },
+      {
+        "id": "oDa3gqNCkD",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the flowchart depicting the process of Direct Addressing in hashing:"
+        }
+      },
+      {
+        "id": "7xUYFyW_-B",
+        "type": "paragraph",
+        "data": {
+          "text": "Press enter or click to view image in full size"
+        }
+      },
+      {
+        "id": "m0XkugWBdv",
+        "type": "image",
+        "data": {
+          "caption": "Test&nbsp;",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*tRsh7mP9QzPhkXnjz-jY_g.png"
+          }
+        }
+      },
+      {
+        "id": "HR_O37uFrL",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;Consider a scenario where you have an array of 10 elements, and you want to store integers that also range from 0 to 9. Here, the element value is directly used as the index. For example, if you have the numbers 3, 6, and 8, you would store them in an array A as follows:"
+        }
+      },
+      {
+        "id": "c4lABKgr3g",
+        "type": "code",
+        "data": {
+          "code": "A[3] = 3\nA[6] = 6\nA[8] = 8"
+        }
+      },
+      {
+        "id": "4IdlkMKWCL",
+        "type": "paragraph",
+        "data": {
+          "text": "The array index directly corresponds to the value being stored, making retrieval straightforward."
+        }
+      },
+      {
+        "id": "mGl_Q7BBgG",
+        "type": "header",
+        "data": {
+          "text": "2. Chaining",
+          "level": 2
+        }
+      },
+      {
+        "id": "P6it-US7cy",
+        "type": "paragraph",
+        "data": {
+          "text": "In chaining, each array index points to a linked list of records that share the same hash function value. When a collision occurs — multiple keys hash to the same index — the new key is added to the respective linked list. While chaining handles collisions gracefully, it can lead to increased search time if the linked lists become too long."
+        }
+      },
+      {
+        "id": "2AIY5mMNPK",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the sequence diagram illustrating the process of Chaining in hashing:"
+        }
+      },
+      {
+        "id": "OhygyKvO9P",
+        "type": "paragraph",
+        "data": {
+          "text": "Press enter or click to view image in full size"
+        }
+      },
+      {
+        "id": "2nXVI1MQ5W",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*EdE4bGTpC-vbel_JQ0dEiw.png"
+          }
+        }
+      },
+      {
+        "id": "WGt5G9JXHt",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;Let’s hash integers to an array of size 10 using the hash function h(x) = x mod 10. If our set contains the numbers 12, 22, and 32, they would all hash to the index 2. We handle the collision by chaining:"
+        }
+      },
+      {
+        "id": "m6wvKUMxKM",
+        "type": "code",
+        "data": {
+          "code": "[object HTMLPreElement]"
+        }
+      },
+      {
+        "id": "SOe4NjL7Ij",
+        "type": "paragraph",
+        "data": {
+          "text": "Each array index points to a linked list of entries that hash to the same index. If we were to insert another number, say 42, it would also link to this list:"
+        }
+      },
+      {
+        "id": "_8VVCbZX6d",
+        "type": "code",
+        "data": {
+          "code": "[object HTMLPreElement]"
+        }
+      },
+      {
+        "id": "bIQK0nzn0O",
+        "type": "header",
+        "data": {
+          "text": "3. Open Addressing",
+          "level": 3
+        }
+      },
+      {
+        "id": "3bDnm2K0ZL",
+        "type": "paragraph",
+        "data": {
+          "text": "Open addressing resolves collisions by finding another empty slot within the array using a method such as linear probing, quadratic probing, or double hashing. While open addressing is space-efficient, it can suffer from clustering, where continuous blocks of slots get filled, impacting performance."
+        }
+      },
+      {
+        "id": "f4jVzCtpBy",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the flowchart depicting the process of Open Addressing in hashing:"
+        }
+      },
+      {
+        "id": "U908rTeqiz",
+        "type": "paragraph",
+        "data": {
+          "text": "Press enter or click to view image in full size"
+        }
+      },
+      {
+        "id": "v2njOT2znW",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*85zu8JFO10DNoyiX-Gs08Q.png"
+          }
+        }
+      },
+      {
+        "id": "Yg5mhGB38e",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;Consider a hash table of size 10 and a simple hash function h(x) = x mod 10. If you try to insert the values 1, 11, and 21, all would initially hash to index 1. With&nbsp;linear probing for open addressing, you resolve collisions by checking the next available slot:"
+        }
+      },
+      {
+        "id": "hrjbOENUR6",
+        "type": "paragraph",
+        "data": {
+          "text": "Insert 1: A[1] = 1"
+        }
+      },
+      {
+        "id": "OnjACKJlQW",
+        "type": "paragraph",
+        "data": {
+          "text": "Insert 11: Collision at index 1, so insert at A[2] = 11"
+        }
+      },
+      {
+        "id": "2o5Ae8Jcw0",
+        "type": "paragraph",
+        "data": {
+          "text": "Insert 21: Collisions at indexes 1 and 2, so insert at A[3] = 21"
+        }
+      },
+      {
+        "id": "fWXiTIjxAx",
+        "type": "header",
+        "data": {
+          "text": "4. Perfect Hashing",
+          "level": 3
+        }
+      },
+      {
+        "id": "oWIjEv-GZd",
+        "type": "paragraph",
+        "data": {
+          "text": "Perfect hashing is a two-level hashing method where there are no collisions at the second level. The goal is to construct a hash function with zero collisions, ideal for static sets where insertions and deletions are infrequent."
+        }
+      },
+      {
+        "id": "eDEPedftg1",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the flowchart depicting the process of Perfect Hashing:"
+        }
+      },
+      {
+        "id": "sYFr8XxuE7",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:615/1*JHVcmTtJmcxeD6LgJCGieA.png"
+          }
+        }
+      },
+      {
+        "id": "5afIxdAVWb",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;Imagine a set {6, 8, 13, 27} that we want to store using perfect hashing. In the first level, we use a hash function h(x) = x mod 4, resulting in a potential collision for 8 and 12. To resolve this at the second level, each slot points to a secondary hash table with a size that’s the square of the number of elements hashing into it."
+        }
+      },
+      {
+        "id": "JOaKfDYAiS",
+        "type": "paragraph",
+        "data": {
+          "text": "For instance, for index 0 (for 8 and 12), we create a secondary array of size 4 (2², since two elements hash to index 0). We then find a secondary hash function for each such array that distributes the keys without collisions."
+        }
+      },
+      {
+        "id": "V8nN_mkDr-",
+        "type": "header",
+        "data": {
+          "text": "5. Consistent Hashing",
+          "level": 3
+        }
+      },
+      {
+        "id": "lXTKAQoAuZ",
+        "type": "paragraph",
+        "data": {
+          "text": "Consistent hashing is particularly useful in distributed systems to reduce the rehashing requirements when a hash table is resized. It maps data to physical nodes and ensures that only the nodes directly affected by a change are updated, improving system scalability and performance."
+        }
+      },
+      {
+        "id": "2oEMaSjTR1",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the flowchart depicting the process of Consistent Hashing:"
+        }
+      },
+      {
+        "id": "qASdsfy5Wk",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:615/1*WZxptpblaWMZnAtwu2AUBw.png"
+          }
+        }
+      },
+      {
+        "id": "RE76gAwkr3",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;Consider a circular hash space where positions 0 to 255 are mapped onto the edge of a circle. Each number from a set, say {1, 29, 199, 200}, is hashed to a random position on this circle. If we need to find where to store the value 150, we move clockwise around the circle until we find the next server position, which in this case could be 199. When a node is removed or added, only the immediate neighbours in the circle need to reorganize."
+        }
+      },
+      {
+        "id": "-gmJtnWvUl",
+        "type": "header",
+        "data": {
+          "text": "6. Cryptographic Hashing",
+          "level": 3
+        }
+      },
+      {
+        "id": "MbGgfXpwmn",
+        "type": "paragraph",
+        "data": {
+          "text": "Used extensively in security applications, cryptographic hashing ensures data integrity and authentication. Functions like SHA-256 and MD5 produce a fixed-size hash that is nearly impossible to reverse-engineer, making it ideal for password storage, data verification, and digital signatures."
+        }
+      },
+      {
+        "id": "IiCmM6COKR",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s the flowchart depicting the process of Cryptographic Hashing:"
+        }
+      },
+      {
+        "id": "UBrHbc5HG-",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:615/1*yRfAM49YFPbUaW_Kq2MCwA.png"
+          }
+        }
+      },
+      {
+        "id": "C0mrTwpdfD",
+        "type": "paragraph",
+        "data": {
+          "text": "Example:&nbsp;A common use case for cryptographic hashing is password storage. When a user creates a password, instead of storing the plain text, the system stores a hash of the password. For instance, using&nbsp;SHA-256, the password “hello” might be hashed to a long string like 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824. When the user logs in, the system hashes the entered password and compares it to the stored hash."
+        }
+      },
+      {
+        "id": "N36RLQY-mb",
+        "type": "header",
+        "data": {
+          "text": "Conclusion",
+          "level": 2
+        }
+      },
+      {
+        "id": "wzMpDyL2P1",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing is an indispensable technique in computer science, offering efficient data retrieval and storage solutions. Whether it’s optimizing database indexing, ensuring data security, or balancing load in distributed systems, the various types of hashing cater to diverse requirements and challenges. Understanding these hashing types and their appropriate applications is crucial for developers and system architects to design efficient, reliable, and scalable systems."
+        }
+      },
+      {
+        "id": "S_xxTmJoEE",
+        "type": "paragraph",
+        "data": {
+          "text": "Happy Learning !!!"
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  },
+  "tags": []
+}

@@ -1,0 +1,103 @@
+{
+  "id": 1756394019009,
+  "title": "Hashing and Its Various Types",
+  "summary": "Hashing is a fundamental concept in the realm of computer science, instrumental in optimizing data retrieval and storage processes. At its core, hashing is a technique that converts a range of key values into a range of indexes of an array. By mapping large data sets to smaller, fixed-size values or keys, hashing facilitates efficient data access, regardless of the volume of data.",
+  "createdAt": 1756394018315,
+  "content": {
+    "time": 1756394018315,
+    "blocks": [
+      {
+        "id": "7jbyxKgMHu",
+        "type": "header",
+        "data": {
+          "text": "What is Hashing?",
+          "level": 2
+        }
+      },
+      {
+        "id": "TDGDDs6nx_",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing involves applying a hash function to input data — often a large, arbitrary size — to produce a fixed-size string of bytes. The output, known as a hash value or hash code, uniquely identifies the input data. Ideally, a hash function should have the following attributes:"
+        }
+      },
+      {
+        "id": "DMlBWRAqye",
+        "type": "delimiter",
+        "data": {}
+      },
+      {
+        "id": "gLvXdqZ3gL",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Deterministic:&nbsp;The same input should always produce the same output.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Fast Computation:&nbsp;The hash function should be capable of returning the hash value quickly.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Minimal Collision:&nbsp;Different inputs should produce unique hash values. While collisions — where different inputs produce the same output — can happen, a good hash function minimizes this probability.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Uniform Distribution:&nbsp;The hash function should distribute hash values uniformly across the hash table.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "OCMs15Px1E",
+        "type": "delimiter",
+        "data": {}
+      },
+      {
+        "id": "TxglDTlAez",
+        "type": "header",
+        "data": {
+          "text": "Types of Hashing",
+          "level": 2
+        }
+      },
+      {
+        "id": "9gjfKhU__a",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing can be categorized into various types, each designed to tackle specific challenges and applications. Let’s delve into some of the prominent hashing types:"
+        }
+      },
+      {
+        "id": "9f1-rZVmCn",
+        "type": "delimiter",
+        "data": {}
+      },
+      {
+        "id": "0spAXSgYSv",
+        "type": "header",
+        "data": {
+          "text": "1. Direct Addressing",
+          "level": 3
+        }
+      },
+      {
+        "id": "Z--upUjMe3",
+        "type": "paragraph",
+        "data": {
+          "text": "Direct addressing is a simple yet efficient form of hashing where the key value directly serves as the index in the array. While fast and straightforward, it’s not memory-efficient for large datasets with sparse key values."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  },
+  "tags": []
+}
