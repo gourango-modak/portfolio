@@ -1,0 +1,50 @@
+{
+  "id": 1756387678932,
+  "title": "Hashing: A Fundamental Technique in Data Structures",
+  "summary": "Hashing is a fundamental and powerful technique employed in data structures to manage and retrieve data efficiently. Hashing involves transforming data into a fixed-size array through a process known as hashing functions. This introductory section aims to provide a foundational understanding of hashing and its significance in data structures.",
+  "createdAt": 1756387678529,
+  "content": {
+    "time": 1756387678529,
+    "blocks": [
+      {
+        "id": "YBEu5urN_1",
+        "type": "header",
+        "data": {
+          "text": "Introduction",
+          "level": 1
+        }
+      },
+      {
+        "id": "zJeCdCb_GZ",
+        "type": "paragraph",
+        "data": {
+          "text": "A. Definition of Hashing"
+        }
+      },
+      {
+        "id": "CcswgnULFz",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing is a fundamental and powerful technique employed in data structures to manage and retrieve data efficiently. Hashing involves transforming data into a fixed-size array through a process known as hashing functions. This introductory section aims to provide a foundational understanding of hashing and its significance in data structures."
+        }
+      },
+      {
+        "id": "hIl9HvZ2YD",
+        "type": "header",
+        "data": {
+          "text": "Overview of Hashing in Data Structures",
+          "level": 1
+        }
+      },
+      {
+        "id": "TgZe_aMvo-",
+        "type": "paragraph",
+        "data": {
+          "text": "Hashing serves as a crucial mechanism for organizing and accessing data. Data is mapped to specific indices in an array by employing a hash function, allowing for rapid retrieval and storage. This technique is precious in scenarios where quick access to information is paramount."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  },
+  "tags": []
+}
