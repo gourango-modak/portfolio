@@ -2,14 +2,24 @@ import { fetchAllData } from "./dataFetcher";
 
 // Project-specific config
 const projectBaseUrl =
-	"https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/gh-pages/data/projects/";
+    "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/gh-pages/data/projects/";
 
 const projectFiles = [
-	"e-commerce-platform.json",
-	"enterprise-crm-system.json",
-	"real-time-analytics-dashboard.json",
+    "e-commerce-platform.json",
+    "enterprise-crm-system.json",
+    "real-time-analytics-dashboard.json",
 ];
 
-// Export a ready-to-use function
-export const fetchAllProjects = () =>
-	fetchAllData(projectBaseUrl, projectFiles, "projects");
+export const fetchProjects = async (limit) => {
+    const projects = await fetchAllData(
+        projectBaseUrl,
+        projectFiles,
+        "projects"
+    );
+
+    if (limit && Number.isInteger(limit) && limit > 0) {
+        return projects.slice(0, limit);
+    }
+
+    return projects;
+};

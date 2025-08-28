@@ -1,10 +1,10 @@
 import { PlusCircle } from "lucide-react";
-import { ISDEVENV } from "../config/config";
+import { APP_CONFIG } from "../config/config";
 import { useState } from "react";
-import { fetchAllBlogs } from "../data/blogs";
-import BlogModal from "../components/blog/BlogModal";
+import { fetchPosts } from "../data/posts";
+import BlogPostModal from "../components/blog/BlogPostModal";
 import DataLoader from "../components/common/DataLoader";
-import { BlogList } from "../components/blog/BlogList";
+import BlogPostList from "../components/blog/BlogPostList";
 
 const Blog = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const Blog = () => {
                         <h1 className="text-4xl font-bold text-slate-900">
                             My Writings
                         </h1>
-                        <div className={ISDEVENV ? "" : "hidden"}>
+                        <div className={APP_CONFIG.IS_DEVENV ? "" : "hidden"}>
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
@@ -31,12 +31,12 @@ const Blog = () => {
                         and the tech world.
                     </p>
                     <DataLoader
-                        fetchData={fetchAllBlogs}
-                        render={(blogs) => <BlogList blogs={blogs} />}
+                        fetchData={fetchPosts}
+                        render={(posts) => <BlogPostList posts={posts} />}
                     />
                 </div>
             </section>
-            <BlogModal
+            <BlogPostModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />

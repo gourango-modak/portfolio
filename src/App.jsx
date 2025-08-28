@@ -5,7 +5,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Projects from "./pages/Projects";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
-import BlogDetailPage from "./pages/BlogDetailPage";
+import BlogPostDetailPage from "./pages/BlogPostDetailPage";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./components/Common/ScrollToTop";
 import { useState } from "react";
@@ -67,7 +67,7 @@ const App = () => {
                     path="/blog/:id"
                     element={
                         <MainLayout>
-                            <BlogDetailPage />
+                            <BlogPostDetailPage />
                         </MainLayout>
                     }
                 />

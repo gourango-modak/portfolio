@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import Modal from "../common/Modal";
-import BlogEditor from "./BlogEditor";
+import BlogPostEditor from "./BlogPostEditor";
 
-const BlogModal = ({ isOpen, onClose }) => {
+const BlogPostModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
     // Create a ref to hold the BlogEditor component instance.
     const editorRef = useRef(null);
@@ -57,9 +57,9 @@ const BlogModal = ({ isOpen, onClose }) => {
                 </>
             }
         >
-            <BlogEditor ref={editorRef} onSave={handleDataAfterSave} />
+            <BlogPostEditor ref={editorRef} onSave={handleDataAfterSave} />
         </Modal>
     );
 };
 
-export default BlogModal;
+export default BlogPostModal;

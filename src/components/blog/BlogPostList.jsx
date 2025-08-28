@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
-import BlogPostCard from "../Home/blog/BlogPostCard";
+import BlogPostCard from "./BlogPostCard";
 import { Search } from "lucide-react";
 
-export const BlogList = ({ blogs }) => {
+export const BlogPostList = ({ posts }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTag, setSelectedTag] = useState(null);
 
     // Calculate the top 10 most used tags
     const topTags = useMemo(() => {
-        const tagCounts = blogs
-            .flatMap((blog) => (Array.isArray(blog.tags) ? blog.tags : [])) // ensure it's an array
+        const tagCounts = posts
+            .flatMap((post) => (Array.isArray(post.tags) ? post.tags : []))
             .reduce((acc, tag) => {
                 acc[tag] = (acc[tag] || 0) + 1;
                 return acc;
@@ -18,19 +18,19 @@ export const BlogList = ({ blogs }) => {
             .sort(([, a], [, b]) => b - a)
             .slice(0, 10)
             .map(([tag]) => tag);
-    }, [blogs]);
+    }, [posts]);
 
-    const filteredBlogs = useMemo(() => {
-        return blogs.filter((blog) => {
-            const titleMatch = blog.title
+    const filteredPosts = useMemo(() => {
+        return posts.filter((post) => {
+            const titleMatch = post.title
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase());
             const tagMatch = selectedTag
-                ? blog.tags.includes(selectedTag)
+                ? post.tags.includes(selectedTag)
                 : true;
             return titleMatch && tagMatch;
         });
-    }, [searchTerm, selectedTag, blogs]);
+    }, [searchTerm, selectedTag, posts]);
 
     return (
         <>
@@ -79,10 +79,12 @@ export const BlogList = ({ blogs }) => {
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredBlogs.map((blog) => (
-                    <BlogPostCard key={blog.id} post={blog} />
+                {filteredPosts.map((post) => (
+                    <BlogPostCard key={post.id} post={post} />
                 ))}
             </div>
         </>
     );
 };
+
+export default BlogPostList;

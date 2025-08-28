@@ -1,28 +1,28 @@
 /* Set the block width (default: 780px) */
 :root {
-	--block-width: calc(100% - 35px);
-	/* --block-width: 100%; */
+    --block-width: calc(100% - 35px);
+    /* --block-width: 100%; */
 }
 
 /* Apply the block width to EditorJS elements */
 .ce-block__content,  /* Content inside each block */
 .ce-block,           /* The block wrapper */
 .ce-toolbar__content {
-	/* Toolbar content for editing */
-	max-width: var(--block-width);
-	width: var(--block-width);
-	margin: 0;
+    /* Toolbar content for editing */
+    max-width: var(--block-width);
+    width: var(--block-width);
+    margin: 0;
 }
 
 /* Main editing area */
 .codex-editor__redactor {
-	width: 100%;
+    width: 100%;
 }
 
 .ce-delimiter hr {
-	display: inline-block;
+    display: inline-block;
 }
 
 .ce-toolbar__actions {
-	right: -35px;
+    right: -35px;
 }

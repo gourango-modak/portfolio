@@ -1,17 +1,17 @@
-import Blog from "../components/Home/Blog/Blog";
-import Header from "../components/Home/Header/Header";
-import Project from "../components/Home/Project/Project";
-import Skill from "../components/Home/Skill/Skill";
+import BlogSection from "../components/Home/BlogSection";
+import HeroSection from "../components/Home/HeroSection";
+import ProjectSection from "../components/Home/ProjectSection";
+import SkillSection from "../components/Home/SkillSection";
 
 const Home = () => {
-	return (
-		<>
-			<Header />
-			<Project />
-			<Skill />
-			<Blog />
-		</>
-	);
+    return (
+        <>
+            <HeroSection />
+            <ProjectSection />
+            <SkillSection />
+            <BlogSection />
+        </>
+    );
 };
 
 export default Home;

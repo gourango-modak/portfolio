@@ -1,8 +1,10 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useEditor } from "../../hooks/useEditor"; // Import the custom hook
 import { EDITOR_JS_TOOLS } from "../../config/editorTools"; // Import the configuration
-import BlogTextField from "./BlogTextField";
-import "./BlogEditor.css";
+import BlogPostTextField from "./BlogPostTextField";
+import "./BlogPostEditor.css";
+import { generateId } from "../../utils/id";
+import { extractTagsFromContent } from "../../utils/tags";
 
 const BlogEditor = forwardRef(({ onSave }, ref) => {
     const [title, setTitle] = useState("");
@@ -21,33 +23,14 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
             }
 
             try {
-                const id = Date.now() + Math.floor(Math.random() * 1000);
-                const createdAt = Date.now();
                 const content = await editorInstance.current.save();
-                // Flatten all text from blocks
-                const allText = content.blocks
-                    .map((block) => {
-                        // Only consider blocks with text content
-                        if (
-                            block.type === "paragraph" ||
-                            block.type === "header"
-                        ) {
-                            return block.data.text;
-                        }
-                        return "";
-                    })
-                    .join(" ");
+                const tags = extractTagsFromContent(content);
 
-                // Extract hashtags using regex
-                const tags = Array.from(
-                    allText.matchAll(/#\w+/g),
-                    (match) => match[0]
-                );
                 const blogData = {
-                    id,
+                    id: generateId(),
                     title,
                     summary,
-                    createdAt,
+                    createdAt: Date.now(),
                     content,
                     tags,
                 };
@@ -66,13 +49,13 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
 
     return (
         <div className="blog-editor">
-            <BlogTextField
+            <BlogPostTextField
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Blog Title..."
                 fontStyle="font-bold text-3xl"
             />
-            <BlogTextField
+            <BlogPostTextField
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
                 placeholder="Summary..."

@@ -5,9 +5,9 @@ import ImageBlock from "./ImageBlock";
 import DelimiterBlock from "./DelimiterBlock";
 
 export const blockRenderers = {
-	header: HeaderBlock,
-	paragraph: ParagraphBlock,
-	list: ListBlock,
-	image: ImageBlock,
-	delimiter: DelimiterBlock,
+    header: HeaderBlock,
+    paragraph: ParagraphBlock,
+    list: ListBlock,
+    image: ImageBlock,
+    delimiter: DelimiterBlock,
 };

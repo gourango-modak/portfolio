@@ -1,10 +1,10 @@
-import ProjectCard from "../components/Home/project/ProjectCard";
+import ProjectCard from "../components/project/ProjectCard";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/common/DataLoader";
-import { fetchAllProjects } from "../data/projects";
-import { ISDEVENV } from "../config/config";
+import { fetchProjects } from "../data/projects";
+import { APP_CONFIG } from "../config/config";
 
 const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const Projects = () => {
                         <h1 className="text-4xl font-bold text-slate-900">
                             Portfolio
                         </h1>
-                        <div className={ISDEVENV ? "" : "hidden"}>
+                        <div className={APP_CONFIG.IS_DEVENV ? "" : "hidden"}>
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
@@ -32,7 +32,7 @@ const Projects = () => {
                         journey as a developer.
                     </p>
                     <DataLoader
-                        fetchData={fetchAllProjects}
+                        fetchData={fetchProjects}
                         render={(projects) => (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {projects.map((project) => (
