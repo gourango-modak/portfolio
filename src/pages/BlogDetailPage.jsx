@@ -41,7 +41,7 @@ const BlogDetailPage = () => {
 	const crumbs = [
 		{ to: "/", label: "Home" },
 		{ to: "/Blog", label: "Blog" },
-		{ label: post.title.slice(0, 30) + "..." },
+		{ label: post.title },
 	];
 
 	return (

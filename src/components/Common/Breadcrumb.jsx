@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { BREADCRUMB_MAX_LENGTH } from "../../config";
 
 export const Breadcrumb = ({ crumbs }) => {
+	const truncate = (text, maxLength = BREADCRUMB_MAX_LENGTH) =>
+		text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
 	return (
 		<nav aria-label="Breadcrumb">
 			<ol className="flex items-center gap-2 text-sm text-slate-500">
@@ -12,11 +16,11 @@ export const Breadcrumb = ({ crumbs }) => {
 								to={crumb.to}
 								className="hover:text-indigo-600 hover:underline"
 							>
-								{crumb.label}
+								{truncate(crumb.label)}
 							</Link>
 						) : (
 							<span className="font-semibold text-slate-700">
-								{crumb.label}
+								{truncate(crumb.label)}
 							</span>
 						)}
 					</li>

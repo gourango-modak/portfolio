@@ -12,3 +12,4 @@ const APP_CONFIG = {
 // --- Environment Check ---
 // This check now uses the config file.
 export const ISDEVENV = APP_CONFIG.NODE_ENV === APP_CONFIG.DEV_ENV;
+export const BREADCRUMB_MAX_LENGTH = 32;
