@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { APP_CONFIG } from "../../config/config";
+import { CONFIG } from "../../config/config";
 
 export const Breadcrumb = ({ crumbs }) => {
-    const truncate = (text, maxLength = APP_CONFIG.BREADCRUMB_MAX_LENGTH) =>
+    const truncate = (text, maxLength = CONFIG.BREADCRUMB_MAX_LENGTH) =>
         text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 
     return (

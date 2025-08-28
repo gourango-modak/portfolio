@@ -1,6 +1,6 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Index";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Projects from "./pages/Projects";
@@ -11,8 +11,6 @@ import ScrollToTop from "./components/Common/ScrollToTop";
 import { useState } from "react";
 
 const App = () => {
-    const [darkMode, setDarkMode] = useState(false);
-
     return (
         <HashRouter>
             <ScrollToTop />
@@ -20,14 +18,8 @@ const App = () => {
                 <Route
                     path="/"
                     element={
-                        <MainLayout
-                            darkMode={darkMode}
-                            setDarkMode={setDarkMode}
-                        >
-                            <Home
-                                darkMode={darkMode}
-                                setDarkMode={setDarkMode}
-                            />
+                        <MainLayout>
+                            <Home />
                         </MainLayout>
                     }
                 />

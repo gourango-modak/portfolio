@@ -1,7 +1,7 @@
 import { fetchPosts } from "../../data/posts";
-import BlogPostCard from "../blog/BlogPostCard";
+import BlogPostCard from "../../components/blog/BlogPostCard";
 import { Link } from "react-router-dom";
-import DataLoader from "../common/DataLoader";
+import DataLoader from "../../components/common/DataLoader";
 
 const Blog = () => {
     return (

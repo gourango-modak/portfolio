@@ -1,4 +1,4 @@
-export const TextareaField = ({ label, name, value, onChange }) => (
+export const TextAreaField = ({ label, name, value, onChange }) => (
     <div>
         <label
             htmlFor={name}

@@ -1,5 +1,5 @@
-import DataLoader from "../Common/DataLoader";
-import ProjectCard from "../project/ProjectCard";
+import DataLoader from "../../components/Common/DataLoader";
+import ProjectCard from "../../components/project/ProjectCard";
 import { Link } from "react-router-dom";
 import { fetchProjects } from "../../data/projects";
 

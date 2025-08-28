@@ -4,7 +4,7 @@ import { useState } from "react";
 import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/common/DataLoader";
 import { fetchProjects } from "../data/projects";
-import { APP_CONFIG } from "../config/config";
+import { CONFIG } from "../config/config";
 
 const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ const Projects = () => {
                         <h1 className="text-4xl font-bold text-slate-900">
                             Portfolio
                         </h1>
-                        <div className={APP_CONFIG.IS_DEVENV ? "" : "hidden"}>
+                        <div className={CONFIG.IS_DEVENV ? "" : "hidden"}>
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"

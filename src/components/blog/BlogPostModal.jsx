@@ -14,23 +14,14 @@ const BlogPostModal = ({ isOpen, onClose }) => {
     };
 
     const handleDataAfterSave = (blogData) => {
-        console.log("Data received from editor:", blogData);
-        const jsonString = JSON.stringify(blogData, null, 2);
-        const blob = new Blob([jsonString], {
-            type: "application/json",
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${
-            blogData.id +
-            "_" +
-            blogData.title.toLowerCase().replace(/\s+/g, "-")
-        }.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        downloadJson(
+            blogData,
+            `${
+                blogData.id +
+                "_" +
+                blogData.title.toLowerCase().replace(/\s+/g, "-")
+            }.json`
+        );
     };
 
     return (
