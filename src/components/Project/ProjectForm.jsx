@@ -9,6 +9,7 @@ export const ProjectForm = ({
     handleSectionChange,
     removeSection,
     openAddSectionModal,
+    errors = {},
 }) => {
     return (
         <>
@@ -17,6 +18,8 @@ export const ProjectForm = ({
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
+                required={true}
+                error={errors.title}
             />
 
             <TextAreaField
@@ -24,6 +27,8 @@ export const ProjectForm = ({
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
+                required={true}
+                error={errors.description}
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -32,27 +37,36 @@ export const ProjectForm = ({
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleChange}
+                    required={true}
+                    error={errors.startDate}
                 />
+
                 <InputField
                     label="End Date (e.g., May 2024)"
                     name="endDate"
                     value={formData.endDate}
                     onChange={handleChange}
+                    required={true}
+                    error={errors.endDate}
                 />
             </div>
 
             <TextAreaField
                 label="Key Features (comma-separated)"
-                name="features"
+                name="keyFeatures"
                 value={formData.features}
                 onChange={handleChange}
+                required={true}
+                error={errors.keyFeatures}
             />
 
             <InputField
                 label="Tech Stack (comma-separated)"
-                name="tags"
+                name="technologies"
                 value={formData.tags}
                 onChange={handleChange}
+                required={true}
+                error={errors.technologies}
             />
 
             <InputField
@@ -60,6 +74,8 @@ export const ProjectForm = ({
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
+                required={true}
+                error={errors.image}
             />
 
             <InputField
@@ -67,6 +83,8 @@ export const ProjectForm = ({
                 name="liveUrl"
                 value={formData.liveUrl}
                 onChange={handleChange}
+                required={true}
+                error={errors.liveUrl}
             />
 
             <InputField
@@ -74,6 +92,8 @@ export const ProjectForm = ({
                 name="repoUrl"
                 value={formData.repoUrl}
                 onChange={handleChange}
+                required={true}
+                error={errors.repoUrl}
             />
 
             <ProjectSections

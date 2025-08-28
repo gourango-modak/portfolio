@@ -1,3 +1,3 @@
 export default function DelimiterBlock() {
-    return <div className="my-6 text-center"></div>;
+    return <div className="h-4" aria-hidden="true" />;
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { AddSectionModal } from "./AddSectionModal";
 import Modal from "../common/Modal";
 import { downloadJson } from "../../utils/downloadJson";
+import { validateProjectForm } from "../../utils/validateProjectForm";
+import { formatProjectData } from "../../utils/formatProjectData";
 import { useProjectForm } from "../../hooks/useProjectForm";
 import { ProjectForm } from "./ProjectForm";
 
@@ -24,10 +26,13 @@ const ProjectModal = ({ isOpen, onClose }) => {
     const {
         formData,
         handleChange,
+        errors,
+        setErrors,
         handleSectionChange,
         addSection,
         removeSection,
     } = useProjectForm(initialData);
+
     const [isAddSectionModalOpen, setIsAddSectionModalOpen] = useState(false);
 
     const handleAddSection = (section) => {
@@ -36,14 +41,13 @@ const ProjectModal = ({ isOpen, onClose }) => {
     };
 
     const handleSave = () => {
-        const newProject = {
-            id: Date.now(),
-            ...formData,
-            tags: formData.tags.split(",").map((tag) => tag.trim()),
-            features: formData.features
-                .split(",")
-                .map((feature) => feature.trim()),
-        };
+        const validationErrors = validateProjectForm(formData);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        const newProject = formatProjectData(formData);
         downloadJson(
             newProject,
             `${newProject.title.toLowerCase().replace(/\s+/g, "-")}.json`
@@ -80,6 +84,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
                     handleSectionChange={handleSectionChange}
                     removeSection={removeSection}
                     openAddSectionModal={() => setIsAddSectionModalOpen(true)}
+                    errors={errors}
                 />
             </Modal>
 

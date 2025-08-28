@@ -20,7 +20,7 @@ const BlogPostDetailPage = () => {
                 ];
 
                 return (
-                    <div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl">
+                    <div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl mb-24">
                         <div className="mb-8">
                             <Breadcrumb crumbs={crumbs} />
                         </div>
