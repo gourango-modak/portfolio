@@ -38,6 +38,9 @@ export const EDITOR_JS_TOOLS = {
     paragraph: {
         class: Paragraph,
         inlineToolbar: true,
+        config: {
+            preserveBlank: true,
+        },
     },
     delimiter: Delimiter,
     code: CodeTool,

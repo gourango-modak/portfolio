@@ -1,56 +1,14 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 
-/* Remove backticks around inline code blocks (light mode) */
-.prose code::before,
-.prose code::after {
-	content: none !important;
-}
-
-/* Remove backticks around inline code blocks (dark mode with prose-invert) */
-.dark .prose code::before,
-.dark .prose code::after {
-	content: none !important;
-}
-
-.prose {
-	font-size: 1.25rem;
-}
-
-.prose h1 {
-	font-size: 1.5rem;
-}
-.prose h2,
-h3,
-h4,
-h5 {
-	font-size: 1.25rem;
-}
-
-@media (max-width: 672px) {
-	.prose {
-		font-size: 1.125rem;
-	}
-	.prose h1 {
-		font-size: 1.25rem;
-	}
-	.prose h2,
-	h3,
-	h4,
-	h5 {
-		font-size: 1rem;
-	}
-}
-
 .hide-scrollbar {
-	-ms-overflow-style: none; /* IE/Edge */
-	scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
 }
 .hide-scrollbar::-webkit-scrollbar {
-	display: none; /* Chrome/Safari */
+    display: none; /* Chrome/Safari */
 }
 
 .no-scroll {
-	overflow: hidden;
+    overflow: hidden;
 }
