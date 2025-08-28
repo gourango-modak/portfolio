@@ -11,7 +11,7 @@ export default function HeaderBlock({ text, level }) {
     const fontSizeClass = fontSizeMap[level] || "text-base"; // fallback
 
     return (
-        <Tag className={`font-bold my-3 text-slate-800 ${fontSizeClass}`}>
+        <Tag className={`font-bold my-4 text-slate-800 ${fontSizeClass}`}>
             {text}
         </Tag>
     );
