@@ -1,0 +1,50 @@
+{
+  "id": 1756469781850,
+  "createdAt": 1756469781696,
+  "content": {
+    "time": 1756469781696,
+    "blocks": [
+      {
+        "id": "FYLk1ucLWj",
+        "type": "code",
+        "data": {
+          "language": "python",
+          "code": "def hash_function(value):\n    sum_of_chars = 0\n    for char in value:\n        sum_of_chars += ord(char)\n\n    return sum_of_chars % 10\n\nprint(\"'Bob' has hash code:\",hash_function('Bob'))"
+        }
+      },
+      {
+        "id": "aCBFLtayxk",
+        "type": "header",
+        "data": {
+          "text": "Step 2: Storing names using a hash function",
+          "level": 3
+        }
+      },
+      {
+        "id": "k9_ndbbfU1",
+        "type": "paragraph",
+        "data": {
+          "text": "Now comes the special way we interact with the Hash Set we are making."
+        }
+      },
+      {
+        "id": "tuSkwcmtIq",
+        "type": "paragraph",
+        "data": {
+          "text": "We want to store a name directly into its right place in the array, and this is where the&nbsp;hash function&nbsp;comes in."
+        }
+      },
+      {
+        "id": "IO5vxULjgI",
+        "type": "paragraph",
+        "data": {
+          "text": "A hash function can be made in many ways, it is up to the creator of the Hash Table. A common way is to find a way to convert the value into a number that equals one of the Hash Set's index numbers, in this case a number from 0 to 9. In our example we will use the Unicode number of each character, summarize them and do a modulo 10 operation to get index numbers 0-9."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  },
+  "tags": [],
+  "title": "Storing names using a hash function",
+  "description": "A hash function can be made in many ways, it is up to the creator of the Hash Table. A common way is to find a way to convert the value into a number that equals one of the Hash Set's index numbers, in this case a number from 0 to 9. In our example we will use the Unicode number of each character, summarize them and do a modulo 10 operation to get index numbers 0-9."
+}

@@ -1,9 +1,8 @@
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
-import InlineCode from "@editorjs/inline-code";
 import Paragraph from "@editorjs/paragraph";
-import CodeTool from "@editorjs/code";
+import CodeTool from "./codeTool";
 
 // This configuration object defines all the tools and their settings for Editor.js.
 export const EDITOR_JS_TOOLS = {
@@ -33,7 +32,6 @@ export const EDITOR_JS_TOOLS = {
             },
         },
     },
-    inlineCode: InlineCode,
     paragraph: {
         class: Paragraph,
         inlineToolbar: true,

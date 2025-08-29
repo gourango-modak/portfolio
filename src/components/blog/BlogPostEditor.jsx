@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useEditor } from "../../hooks/useEditor";
-import { EDITOR_JS_TOOLS } from "../../config/editorTools";
+import { EDITOR_JS_TOOLS } from "../../config/editorjs/editorTools";
 import "./BlogPostEditor.css";
 import { generateId } from "../../utils/id";
 import { extractTagsFromContent } from "../../utils/tags";

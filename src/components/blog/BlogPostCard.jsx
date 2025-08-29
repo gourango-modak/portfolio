@@ -19,7 +19,9 @@ const BlogPostCard = ({ post }) => {
                 <h3 className="text-xl font-bold mb-2 text-slate-900">
                     {post.title}
                 </h3>
-                <p className="text-slate-600">{truncateText(post.summary)}</p>
+                <p className="text-slate-600">
+                    {truncateText(post.description)}
+                </p>
             </div>
         </Link>
     );

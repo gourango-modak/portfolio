@@ -1,45 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css"; // choose your theme
-import { Clipboard, ClipboardCheck } from "lucide-react";
 
-const CodeBlock = ({ code, language = "javascript" }) => {
-    const codeRef = useRef(null);
-    const [copied, setCopied] = useState(false);
+const CodeBlock = ({ code, language }) => {
+    const ref = useRef();
 
     useEffect(() => {
-        if (codeRef.current) {
-            Prism.highlightElement(codeRef.current);
-        }
+        if (ref.current) Prism.highlightElement(ref.current);
     }, [code, language]);
 
-    const handleCopy = async () => {
-        try {
-            await navigator.clipboard.writeText(code);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000); // reset after 2s
-        } catch (err) {
-            console.error("Failed to copy code:", err);
-        }
-    };
-
     return (
-        <div className="relative my-4 rounded-lg overflow-hidden  bg-gray-900">
-            <pre className="p-10 overflow-x-auto text-base">
-                <code ref={codeRef} className={`language-${language}`}>
+        <div className="relative my-6 rounded-lg not-prose bg-slate-800 text-gray-100">
+            {/* Left accent line */}
+            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-l-lg"></div>
+
+            <pre
+                className={`language-${language} overflow-x-auto whitespace-pre p-4 sm:p-6 rounded-lg hide-scrollbar`}
+            >
+                <code
+                    ref={ref}
+                    className={`language-${language} font-mono text-sm leading-relaxed block min-w-full`}
+                >
                     {code}
                 </code>
             </pre>
-            <button
-                onClick={handleCopy}
-                className="absolute top-2 right-2 p-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-200 transition cursor-pointer"
-            >
-                {copied ? (
-                    <ClipboardCheck size={18} />
-                ) : (
-                    <Clipboard size={18} />
-                )}
-            </button>
         </div>
     );
 };

@@ -9,5 +9,5 @@ export const blockRenderers = {
     paragraph: ParagraphBlock,
     list: ListBlock,
     image: ImageBlock,
-    // code: CodeBlock,
+    code: CodeBlock,
 };

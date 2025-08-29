@@ -6,6 +6,7 @@ const postBaseUrl =
 const postFiles = [
     "1756462370539_its-various-types.json",
     "1756464633464_dsa-hash-tables.json",
+    "1756469781850_storing-names-using-a-hash-function.json",
 ];
 
 export const fetchPosts = async (limit) => {

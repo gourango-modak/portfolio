@@ -20,7 +20,6 @@
 /* Main editing area */
 .codex-editor__redactor {
     width: 100%;
-    padding-bottom: 5rem !important;
 }
 
 .ce-toolbar__actions {
