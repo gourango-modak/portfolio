@@ -1,7 +1,7 @@
 import { Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/date";
-import { truncateText } from "../../utils/string";
+import { truncateBreadcrumb } from "../../utils/common";
 
 const BlogPostCard = ({ post }) => {
     return (
@@ -20,7 +20,7 @@ const BlogPostCard = ({ post }) => {
                     {post.title}
                 </h3>
                 <p className="text-slate-600">
-                    {truncateText(post.description)}
+                    {truncateBreadcrumb(post.description)}
                 </p>
             </div>
         </Link>

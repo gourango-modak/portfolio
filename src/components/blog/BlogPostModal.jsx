@@ -19,6 +19,12 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
         setIsOpen(true);
     };
 
+    const handleBlogPostSaveModalSave = () => {
+        setIsBlogPostSaveModalOpen(false);
+        setIsOpen(false);
+        setPostData(null);
+    };
+
     const handleEditorModalClose = () => {
         setPostData(null);
         onClose();
@@ -37,6 +43,7 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
             <BlogPostSaveModal
                 isOpen={isBlogPostSaveModalOpen}
                 onClose={handleBlogPostSaveModalClose}
+                onSave={handleBlogPostSaveModalSave}
                 postData={postData}
             />
         </>

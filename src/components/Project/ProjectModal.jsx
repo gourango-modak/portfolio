@@ -1,9 +1,9 @@
 import Modal from "../common/Modal";
-import { downloadJson } from "../../utils/downloadJson";
-import { validateProjectForm } from "../../utils/validateForms";
-import { formatProjectData } from "../../utils/formatProjectData";
+import { downloadJson } from "../../utils/common";
+import { validateProjectForm } from "../../utils/validation";
 import { useProjectForm } from "../../hooks/useProjectForm";
 import { ProjectForm } from "./ProjectForm";
+import { generateId, getFileName } from "../../utils/common";
 
 const initialData = {
     title: "",
@@ -14,7 +14,7 @@ const initialData = {
     endDate: "",
 };
 
-const ProjectModal = ({ isOpen, onClose, projectContent }) => {
+const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
     if (!isOpen) return null;
 
     const { formData, handleChange, errors, setErrors } =
@@ -26,13 +26,14 @@ const ProjectModal = ({ isOpen, onClose, projectContent }) => {
             setErrors(validationErrors);
             return;
         }
-
-        const newProject = formatProjectData(formData);
-        downloadJson(
-            newProject,
-            `${newProject.title.toLowerCase().replace(/\s+/g, "-")}.json`
-        );
-        onClose();
+        const project = {
+            id: generateId(),
+            createdAt: Date.now(),
+            ...formData,
+            content: projectContent,
+        };
+        downloadJson(project, getFileName(project.title, project.id));
+        onSave();
     };
 
     return (

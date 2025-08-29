@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../common/Modal";
-import { validatePostForm } from "../../utils/validateForms";
-import { downloadJson } from "../../utils/downloadJson";
+import { validatePostForm } from "../../utils/validation";
+import { downloadJson, generateId, getFileName } from "../../utils/common";
 import { InputField } from "../common/InputField";
 
 const initialData = {
@@ -9,7 +9,7 @@ const initialData = {
     description: "",
 };
 
-const BlogPostSaveModal = ({ isOpen, onClose, postData }) => {
+const BlogPostSaveModal = ({ isOpen, onClose, postData, onSave }) => {
     if (!isOpen) return null;
 
     const [formData, setFormData] = useState(initialData);
@@ -21,15 +21,14 @@ const BlogPostSaveModal = ({ isOpen, onClose, postData }) => {
             setErrors(validationErrors);
             return;
         }
-        postData.title = formData.title;
-        postData.description = formData.description;
-        downloadJson(
-            post,
-            `${
-                post.id + "_" + post.title.toLowerCase().replace(/\s+/g, "-")
-            }.json`
-        );
-        onClose();
+        const post = {
+            id: generateId(),
+            timestamp: Date.now(),
+            ...formData,
+            content: postData,
+        };
+        downloadJson(post, getFileName(post.title, post.id));
+        onSave();
     };
 
     const handleChange = (e) => {

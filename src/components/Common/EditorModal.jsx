@@ -9,6 +9,7 @@ const EditorModal = ({
     EditorComponent,
     onSave,
     editorInitialData,
+    actionBtnTitle = "Save",
 }) => {
     if (!isOpen) return null;
     const editorRef = useRef(null);
@@ -48,7 +49,7 @@ const EditorModal = ({
                             onClick={handleSaveClick}
                             className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
                         >
-                            Save
+                            {actionBtnTitle}
                         </button>
                     </>
                 }
