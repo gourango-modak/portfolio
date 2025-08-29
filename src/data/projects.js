@@ -4,12 +4,7 @@ import { fetchAllData } from "./dataFetcher";
 const projectBaseUrl =
     "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/";
 
-const projectFiles = [
-    "e-commerce-platform.json",
-    "enterprise-crm-system.json",
-    "real-time-analytics-dashboard.json",
-    "1756502602833_project-case-study_taskly_smart-task-management-app.json",
-];
+const projectFiles = [];
 
 export const fetchProjects = async (limit) => {
     const projects = await fetchAllData(
