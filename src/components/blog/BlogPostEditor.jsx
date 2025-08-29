@@ -41,10 +41,7 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
     }));
 
     return (
-        <div
-            id="editorjs"
-            className="prose md:prose-lg lg:prose-xl max-w-none pr-15"
-        ></div>
+        <div id="editorjs" className="prose md:prose-lg max-w-none pr-15"></div>
     );
 });
 

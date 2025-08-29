@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
+import "prismjs/themes/prism.css";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
 
@@ -16,7 +16,7 @@ const CodeBlock = ({ code, language }) => {
     return (
         <div className="relative my-6 not-prose">
             {/* Left accent line */}
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-l-lg"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-600/80 rounded-l-lg"></div>
 
             <pre
                 className={`language-${language} overflow-x-auto whitespace-pre p-6 rounded-lg hide-scrollbar`}

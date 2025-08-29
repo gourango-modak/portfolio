@@ -10,7 +10,7 @@ export const ProjectDetail = ({ project }) => {
 
     return (
         <>
-            <div className="mb-8">
+            <div className="">
                 <Breadcrumb crumbs={crumbs} />
             </div>
             <h1 className="text-4xl font-bold text-slate-900">

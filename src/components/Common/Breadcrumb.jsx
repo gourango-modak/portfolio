@@ -6,21 +6,28 @@ export const Breadcrumb = ({ crumbs }) => {
         text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 
     return (
-        <nav aria-label="Breadcrumb">
-            <ol className="flex items-center gap-2 text-sm text-slate-500">
+        <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                 {crumbs.map((crumb, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                        {index > 0 && <span className="select-none">/</span>}
+                    <li
+                        key={index}
+                        className="flex flex-wrap items-center gap-2"
+                    >
                         {crumb.to ? (
                             <Link
                                 to={crumb.to}
-                                className="hover:text-indigo-600 hover:underline"
+                                className="text-indigo-600 hover:underline"
                             >
                                 {truncate(crumb.label)}
                             </Link>
                         ) : (
-                            <span className="font-semibold text-slate-700">
-                                {truncate(crumb.label)}
+                            <span>{truncate(crumb.label)}</span>
+                        )}
+
+                        {/* Add separator after text, except for the last crumb */}
+                        {index < crumbs.length - 1 && (
+                            <span className="flex-shrink-0 select-none">
+                                &gt;
                             </span>
                         )}
                     </li>

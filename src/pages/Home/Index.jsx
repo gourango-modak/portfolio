@@ -5,12 +5,12 @@ import SkillSection from "./SkillSection";
 
 const Home = () => {
     return (
-        <>
+        <div className="bg-gray-50">
             <HeroSection />
             <ProjectSection />
             <SkillSection />
             <BlogSection />
-        </>
+        </div>
     );
 };
 

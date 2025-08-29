@@ -21,24 +21,20 @@ const BlogPostDetailPage = () => {
                 ];
 
                 return (
-                    <div className="pt-24 min-h-screen container mx-auto px-6 md:px-12 md:max-w-6xl mb-24">
-                        <div className="mb-8">
-                            <Breadcrumb crumbs={crumbs} />
+                    <section className="pt-30 min-h-screen bg-gray-50/50">
+                        <div className="container mx-auto px-6 md:px-12 md:max-w-4xl pb-24">
+                            <div className="">
+                                <Breadcrumb crumbs={crumbs} />
+                            </div>
+                            <PostHeader
+                                title={post.title}
+                                date={formatDate(post.createdAt)}
+                            />
+                            <div className="prose md:prose-lg max-w-none">
+                                <BlogPostRenderer content={post.content} />
+                            </div>
                         </div>
-                        <PostHeader
-                            title={post.title}
-                            date={formatDate(post.createdAt)}
-                        />
-                        {/* <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-0">
-                            {post.title}
-                        </h1>
-                        <p className="text-lg text-slate-500 mt-3">
-                            {formatDate(post.createdAt)}
-                        </p> */}
-                        <div className="prose md:prose-lg lg:prose-xl max-w-none">
-                            <BlogPostRenderer content={post.content} />
-                        </div>
-                    </div>
+                    </section>
                 );
             }}
         />

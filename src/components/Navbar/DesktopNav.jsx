@@ -17,7 +17,7 @@ const DesktopNav = () => {
                     style={({ isActive }) =>
                         isActive ? activeStyle : undefined
                     }
-                    className="text-slate-600 hover:text-indigo-600 transition-colors duration-300"
+                    className="text-slate-600 hover:text-indigo-600 transition-colors font-medium duration-300"
                 >
                     {link.label}
                 </NavLink>

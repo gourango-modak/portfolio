@@ -11,7 +11,7 @@ const Projects = () => {
 
     return (
         <>
-            <section className="pt-24 pb-20 min-h-screen bg-gray-50">
+            <section className="pt-30 pb-20 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
                         <h1 className="text-4xl font-bold text-slate-900">

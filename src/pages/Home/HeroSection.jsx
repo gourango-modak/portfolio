@@ -1,5 +1,5 @@
 import { ArrowRight, Mail } from "lucide-react";
-import profile from "../../assets/gm.png";
+import profile from "../../assets/gm_original.png";
 import "./HeroSection.css";
 
 const HeroSection = () => {

@@ -10,11 +10,19 @@ class CodeTool {
         this.data = data || {};
         this.textarea = null;
         this.container = null;
+
+        // Supported languages
+        this.availableLanguages = [
+            "javascript",
+            "python",
+            "bash",
+            "html",
+            "css",
+        ];
     }
 
     render() {
         this.container = this.createContainer();
-
         this.textarea = this.createTextarea(this.data.code || "");
         this.container.appendChild(this.textarea);
 
@@ -26,28 +34,39 @@ class CodeTool {
 
     save() {
         const lines = this.textarea.value.split("\n");
-        const language = lines[0] || "";
-        const code = lines.slice(1).join("\n");
 
-        return {
-            language: language.trim(),
-            code,
-        };
+        // First line must start with "// " and match a supported language
+        let language = "";
+        let codeStartIndex = 0;
+
+        if (lines[0].startsWith("//")) {
+            const possibleLang = lines[0]
+                .replace("//", "")
+                .trim()
+                .toLowerCase();
+            if (this.availableLanguages.includes(possibleLang)) {
+                language = possibleLang;
+                codeStartIndex = 1;
+            }
+        }
+
+        const code = lines.slice(codeStartIndex).join("\n");
+
+        return { language, code };
     }
 
     // ---------------- Helper Methods ----------------
 
     createContainer() {
         const container = document.createElement("div");
-        container.classList.add(
-            "border-gray-300" // keeping your original container style
-        );
+        container.classList.add("border-gray-300");
         return container;
     }
 
     createTextarea(initialValue) {
         const textarea = document.createElement("textarea");
-        textarea.placeholder = "First line: language type, then code...";
+        textarea.placeholder =
+            "First line: // language (e.g., // javascript), then code...";
         textarea.value = initialValue;
         textarea.classList.add(
             "w-full",
@@ -61,8 +80,7 @@ class CodeTool {
         );
 
         // Initial height
-        const initialHeight = 120;
-        textarea.style.height = `${initialHeight}px`;
+        textarea.style.height = "120px";
 
         // Event listeners
         textarea.addEventListener("input", () => this.autoResize());
@@ -80,17 +98,14 @@ class CodeTool {
     handleEnter(e) {
         if (e.key !== "Enter") return;
 
-        e.stopPropagation(); // Prevent Editor.js from creating a new block
+        e.stopPropagation();
 
         const start = this.textarea.selectionStart;
         const end = this.textarea.selectionEnd;
         const value = this.textarea.value;
 
-        // Insert newline at cursor
         this.textarea.value =
             value.substring(0, start) + "\n" + value.substring(end);
-
-        // Move cursor after newline
         this.textarea.selectionStart = this.textarea.selectionEnd = start + 1;
 
         this.autoResize();
