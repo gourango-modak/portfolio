@@ -19,6 +19,11 @@ const Projects = () => {
         setIsProjectModalOpen(true);
     };
 
+    const handleAddProject = () => {
+        setProjectData(null);
+        setIsEditorModalOpen(true);
+    };
+
     const handleProjectModalClose = () => {
         setIsProjectModalOpen(false);
         setIsEditorModalOpen(true);
@@ -34,7 +39,7 @@ const Projects = () => {
                         </h1>
                         <div className={CONFIG.IS_DEVENV ? "" : "hidden"}>
                             <button
-                                onClick={() => setIsEditorModalOpen(true)}
+                                onClick={handleAddProject}
                                 className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
                             >
                                 <PlusCircle size={20} /> Add
@@ -66,6 +71,7 @@ const Projects = () => {
                 onClose={() => setIsEditorModalOpen(false)}
                 EditorComponent={Editor}
                 onSave={handleSave}
+                editorInitialData={projectData}
             />
             <ProjectModal
                 isOpen={isProjectModalOpen}

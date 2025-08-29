@@ -35,9 +35,9 @@ export const EDITOR_JS_TOOLS = {
     paragraph: {
         class: Paragraph,
         inlineToolbar: true,
-        config: {
-            preserveBlank: true,
-        },
+        // config: {
+        //     preserveBlank: true,
+        // },
     },
     code: CodeTool,
 };

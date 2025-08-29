@@ -1,38 +1,62 @@
 import { X } from "lucide-react";
 import { useEffect } from "react";
 
+// Keep a global counter of open modals
+let openModalCount = 0;
+const defaultStyle = {
+    position: "top",
+    width: "w-6xl",
+    padding: "p-6",
+};
+
 const Modal = ({
     isOpen,
     onClose,
     title,
     children,
     footer,
-    position = "top",
-    width = "w-2xl",
+    style = {},
     showHeader = true,
 }) => {
+    const mergedStyle = { ...defaultStyle, ...style }; // passed style overrides default
+
     useEffect(() => {
         if (isOpen) {
+            openModalCount += 1;
             document.body.classList.add("no-scroll");
-        } else {
-            document.body.classList.remove("no-scroll");
+        } else if (openModalCount > 0) {
+            openModalCount -= 1;
+            if (openModalCount === 0) {
+                document.body.classList.remove("no-scroll");
+            }
         }
 
         // cleanup on unmount
-        return () => document.body.classList.remove("no-scroll");
+        return () => {
+            if (isOpen && openModalCount > 0) {
+                openModalCount -= 1;
+                if (openModalCount === 0) {
+                    document.body.classList.remove("no-scroll");
+                }
+            }
+        };
     }, [isOpen]);
 
     if (!isOpen) return null;
 
     const alignmentClass =
-        position === "center" ? "flex justify-center items-center" : "";
+        mergedStyle.position === "center"
+            ? "flex justify-center items-center"
+            : "";
 
     return (
         <div
             className={`fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar ${alignmentClass}`}
         >
             <div className="flex items-center justify-center">
-                <div className={`bg-white rounded-lg shadow-2xl ${width}`}>
+                <div
+                    className={`bg-white rounded-lg shadow-2xl ${mergedStyle.width}`}
+                >
                     {/* Modal Header */}
                     {showHeader && (
                         <div className="p-6 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
@@ -49,7 +73,9 @@ const Modal = ({
                     )}
 
                     {/* Modal Body (Scrollable) */}
-                    <div className="p-6 overflow-y-auto">{children}</div>
+                    <div className={`${mergedStyle.padding} overflow-y-auto`}>
+                        {children}
+                    </div>
 
                     {/* Modal Footer */}
                     <div className="p-6 border-t border-gray-200 flex justify-end gap-4 rounded-b-lg flex-shrink-0">

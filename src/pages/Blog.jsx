@@ -8,6 +8,12 @@ import BlogPostList from "../components/blog/BlogPostList";
 
 const Blog = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [postData, setPostData] = useState(null);
+
+    const handleBlogPostModalClose = () => {
+        setIsModalOpen(false);
+        setPostData(null);
+    };
 
     return (
         <>
@@ -39,7 +45,9 @@ const Blog = () => {
             <BlogPostModal
                 isOpen={isModalOpen}
                 setIsOpen={setIsModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={handleBlogPostModalClose}
+                postData={postData}
+                setPostData={setPostData}
             />
         </>
     );

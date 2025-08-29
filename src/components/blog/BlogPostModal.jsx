@@ -6,10 +6,10 @@ import BlogPostSaveModal from "./BlogPostSaveModal";
 const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
     const [isBlogPostSaveModalOpen, setIsBlogPostSaveModalOpen] =
         useState(false);
-    const [post, setPost] = useState(null);
+    const [postData, setPostData] = useState(null);
 
     const handleSave = (data) => {
-        setPost(data);
+        setPostData(data);
         onClose();
         setIsBlogPostSaveModalOpen(true);
     };
@@ -19,20 +19,25 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
         setIsOpen(true);
     };
 
+    const handleEditorModalClose = () => {
+        setPostData(null);
+        onClose();
+    };
+
     return (
         <>
             <EditorModal
                 isOpen={isOpen}
-                onClose={onClose}
-                title="Create Blog"
+                onClose={handleEditorModalClose}
                 EditorComponent={Editor}
                 onSave={handleSave}
+                editorInitialData={postData}
             />
 
             <BlogPostSaveModal
                 isOpen={isBlogPostSaveModalOpen}
                 onClose={handleBlogPostSaveModalClose}
-                post={post}
+                postData={postData}
             />
         </>
     );

@@ -2,13 +2,14 @@ import { useState } from "react";
 import Modal from "../common/Modal";
 import { validatePostForm } from "../../utils/validateForms";
 import { downloadJson } from "../../utils/downloadJson";
+import { InputField } from "../common/InputField";
 
 const initialData = {
     title: "",
     description: "",
 };
 
-const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
+const BlogPostSaveModal = ({ isOpen, onClose, postData }) => {
     if (!isOpen) return null;
 
     const [formData, setFormData] = useState(initialData);
@@ -20,8 +21,8 @@ const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
             setErrors(validationErrors);
             return;
         }
-        post.title = formData.title;
-        post.description = formData.description;
+        postData.title = formData.title;
+        postData.description = formData.description;
         downloadJson(
             post,
             `${
@@ -46,7 +47,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Create Post"
-            width="w-2xl"
+            style={{ width: "w-2xl" }}
             footer={
                 <>
                     <button
