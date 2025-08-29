@@ -38,6 +38,7 @@ const Blog = () => {
             </section>
             <BlogPostModal
                 isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
         </>

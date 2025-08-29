@@ -1,60 +1,40 @@
-import { useRef, useState } from "react";
-import Modal from "../common/Modal";
-import BlogPostEditor from "./BlogPostEditor";
+import { useState } from "react";
+import EditorModal from "../common/EditorModal";
+import Editor from "../common/Editor";
 import BlogPostSaveModal from "./BlogPostSaveModal";
 
-const BlogPostModal = ({ isOpen, onClose }) => {
-    if (!isOpen) return null;
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
+    const [isBlogPostSaveModalOpen, setIsBlogPostSaveModalOpen] =
+        useState(false);
     const [post, setPost] = useState(null);
-    // Create a ref to hold the BlogEditor component instance.
-    const editorRef = useRef(null);
 
-    const handleSaveClick = () => {
-        if (editorRef.current) {
-            editorRef.current.save();
-        }
+    const handleSave = (data) => {
+        setPost(data);
+        onClose();
+        setIsBlogPostSaveModalOpen(true);
     };
 
-    const handleDataAfterSave = (post) => {
-        setPost(post);
-        setIsModalOpen(true);
+    const handleBlogPostSaveModalClose = () => {
+        setIsBlogPostSaveModalOpen(false);
+        setIsOpen(true);
     };
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            title="Create Blog"
-            width="w-6xl"
-            showHeader={false}
-            footer={
-                <>
-                    <button
-                        onClick={onClose}
-                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-300"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleSaveClick}
-                        className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
-                    >
-                        Save
-                    </button>
-                </>
-            }
-        >
-            <BlogPostEditor ref={editorRef} onSave={handleDataAfterSave} />
+        <>
+            <EditorModal
+                isOpen={isOpen}
+                onClose={onClose}
+                title="Create Blog"
+                EditorComponent={Editor}
+                onSave={handleSave}
+            />
+
             <BlogPostSaveModal
-                isOpen={isModalOpen}
-                onClose={() => {
-                    setIsModalOpen(false);
-                    onClose();
-                }}
+                isOpen={isBlogPostSaveModalOpen}
+                onClose={handleBlogPostSaveModalClose}
                 post={post}
             />
-        </Modal>
+        </>
     );
 };
 

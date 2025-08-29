@@ -1,10 +1,6 @@
 export const CONFIG = {
     IS_DEVENV: import.meta.env.MODE === "development",
     BREADCRUMB_MAX_LENGTH: 32,
-    SECTION_TYPE: {
-        INPUT: "input",
-        TEXT: "text",
-    },
 
     // Feature Flags: Toggle features on or off based on the environment
     FEATURE_FLAGS: {

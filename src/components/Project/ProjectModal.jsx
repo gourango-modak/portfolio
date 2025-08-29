@@ -9,7 +9,7 @@ import { ProjectForm } from "./ProjectForm";
 
 const initialData = {
     title: "",
-    description: "",
+    tagline: "",
     keyFeatures: "",
     technologies: "",
     image: "",
@@ -20,7 +20,7 @@ const initialData = {
     sections: [],
 };
 
-const ProjectModal = ({ isOpen, onClose }) => {
+const ProjectModal = ({ isOpen, onClose, data }) => {
     if (!isOpen) return null;
 
     const {
@@ -73,7 +73,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
                             onClick={handleSave}
                             className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
                         >
-                            Save & Download JSON
+                            Download JSON
                         </button>
                     </>
                 }

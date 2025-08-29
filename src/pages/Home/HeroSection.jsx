@@ -1,6 +1,7 @@
 import { ArrowRight, Mail } from "lucide-react";
 import profile from "../../assets/gm_original.png";
 import "./HeroSection.css";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -37,20 +38,20 @@ const HeroSection = () => {
                             applications that solve complex business challenges.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a
-                                href="#projects"
-                                className="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                            <Link
+                                to={"/projects"}
+                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                             >
                                 View My Work
                                 <ArrowRight size={20} />
-                            </a>
-                            <a
-                                href="#contact"
-                                className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                            </Link>
+                            <Link
+                                to={"/contact"}
+                                className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-800 px-6 py-3 font-semibold text-slate-800 shadow-sm transition hover:bg-slate-800 hover:text-white"
                             >
                                 <Mail size={20} />
-                                Get in Touch
-                            </a>
+                                <span>Get in Touch</span>
+                            </Link>
                         </div>
                     </div>
                     <div className="flex justify-center md:justify-end order-first md:order-last">

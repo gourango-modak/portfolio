@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Modal from "../common/Modal";
-import { TextAreaField } from "../common/TextareaField";
 import { validatePostForm } from "../../utils/validateForms";
 import { downloadJson } from "../../utils/downloadJson";
 
@@ -65,7 +64,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
                 </>
             }
         >
-            <TextAreaField
+            <InputField
                 label="Title"
                 name="title"
                 value={formData.title}
@@ -75,7 +74,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
                 rows="1"
             />
 
-            <TextAreaField
+            <InputField
                 label="Short Description"
                 name="description"
                 value={formData.description}

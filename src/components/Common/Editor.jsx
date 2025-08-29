@@ -1,11 +1,11 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useEditor } from "../../hooks/useEditor";
 import { EDITOR_JS_TOOLS } from "../../config/editorjs/editorTools";
-import "./BlogPostEditor.css";
+import "./Editor.css";
 import { generateId } from "../../utils/id";
 import { extractTagsFromContent } from "../../utils/tags";
 
-const BlogEditor = forwardRef(({ onSave }, ref) => {
+const Editor = forwardRef(({ onSave }, ref) => {
     const editorInstance = useEditor({
         holder: "editorjs",
         tools: EDITOR_JS_TOOLS,
@@ -45,4 +45,4 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
     );
 });
 
-export default BlogEditor;
+export default Editor;

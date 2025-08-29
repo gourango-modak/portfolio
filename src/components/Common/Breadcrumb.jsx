@@ -7,7 +7,7 @@ export const Breadcrumb = ({ crumbs }) => {
 
     return (
         <nav aria-label="Breadcrumb" className="mb-8">
-            <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+            <ol className="flex flex-wrap items-center gap-3 text-[14.5px] text-slate-500">
                 {crumbs.map((crumb, index) => (
                     <li
                         key={index}

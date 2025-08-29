@@ -5,9 +5,24 @@ import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/common/DataLoader";
 import { fetchProjects } from "../data/projects";
 import { CONFIG } from "../config/config";
+import EditorModal from "../components/common/EditorModal";
+import Editor from "../components/common/Editor";
 
 const Projects = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
+    const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+    const [projectData, setProjectData] = useState(null);
+
+    const handleSave = (data) => {
+        setProjectData(data);
+        setIsEditorModalOpen(false);
+        setIsProjectModalOpen(true);
+    };
+
+    const handleProjectModalClose = () => {
+        setIsProjectModalOpen(false);
+        setIsEditorModalOpen(true);
+    };
 
     return (
         <>
@@ -19,7 +34,7 @@ const Projects = () => {
                         </h1>
                         <div className={CONFIG.IS_DEVENV ? "" : "hidden"}>
                             <button
-                                onClick={() => setIsModalOpen(true)}
+                                onClick={() => setIsEditorModalOpen(true)}
                                 className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
                             >
                                 <PlusCircle size={20} /> Add
@@ -46,9 +61,16 @@ const Projects = () => {
                     />
                 </div>
             </section>
+            <EditorModal
+                isOpen={isEditorModalOpen}
+                onClose={() => setIsEditorModalOpen(false)}
+                EditorComponent={Editor}
+                onSave={handleSave}
+            />
             <ProjectModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                isOpen={isProjectModalOpen}
+                onClose={handleProjectModalClose}
+                data={projectData}
             />
         </>
     );
