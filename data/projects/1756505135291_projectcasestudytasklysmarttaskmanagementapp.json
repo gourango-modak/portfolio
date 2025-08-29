@@ -1,40 +1,48 @@
 {
-  "id": 1756502602833,
-  "createdAt": 1756502601892,
+  "id": 1756505135291,
+  "createdAt": 1756505135206,
   "title": "Project Case Study: Taskly – Smart Task Management App",
   "tagline": "Stay organized. Stay ahead.",
   "liveUrl": "https://medium.com/@isuruj/how-does-https-actually-work-b8c569f72f66",
   "repoUrl": "https://medium.com/@isuruj/how-does-https-actually-work-b8c569f72f66",
-  "startDate": "Jan 2023",
-  "endDate": "Feb 2023",
+  "startDate": "Jan 2024",
+  "endDate": "March 2024",
+  "technologies": [
+    "C#",
+    " C++",
+    " Python",
+    " Java",
+    " R",
+    " JQuery"
+  ],
   "content": {
-    "time": 1756502563518,
+    "time": 1756505079681,
     "blocks": [
       {
-        "id": "fuaYIw45Lf",
+        "id": "jSwJDDVntA",
         "type": "header",
         "data": {
-          "text": "Overview",
+          "text": "📖 Overview",
           "level": 3
         }
       },
       {
-        "id": "fJMNm2v8Rm",
+        "id": "yORMLpIkdN",
         "type": "paragraph",
         "data": {
           "text": "Taskly is a web-based task management application designed to help individuals and teams organize, prioritize, and track work seamlessly. It blends minimal UI with powerful productivity tools, making task management intuitive and collaborative."
         }
       },
       {
-        "id": "0JPxEEXLE5",
+        "id": "kX5V9jKCIx",
         "type": "header",
         "data": {
-          "text": "Problem",
+          "text": "🧩 Problem",
           "level": 3
         }
       },
       {
-        "id": "Zfbnuw4crt",
+        "id": "i2gc_n0Tvr",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -51,7 +59,7 @@
               "items": []
             },
             {
-              "content": "Users want a lightweight yet powerful solution that doesn’t slow them down.\n",
+              "content": "Users want a lightweight yet powerful solution that doesn’t slow them down.",
               "meta": {},
               "items": []
             }
@@ -59,22 +67,22 @@
         }
       },
       {
-        "id": "sOaoz43k_6",
+        "id": "ztAo6eTfl1",
         "type": "header",
         "data": {
-          "text": "Solution",
+          "text": "💡 Solution",
           "level": 3
         }
       },
       {
-        "id": "jO6A6FDpkN",
+        "id": "butTdT_i9W",
         "type": "paragraph",
         "data": {
           "text": "Taskly provides a balanced task management system:"
         }
       },
       {
-        "id": "APZ1jOWeeN",
+        "id": "jNWSswQgIS",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -99,15 +107,15 @@
         }
       },
       {
-        "id": "gjB_mw4yoo",
+        "id": "eo92WEo_s0",
         "type": "header",
         "data": {
-          "text": "Tech Stack",
+          "text": "⚙️ Tech Stack",
           "level": 3
         }
       },
       {
-        "id": "tp-85B473a",
+        "id": "8p1lx5i6B-",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -152,15 +160,15 @@
         }
       },
       {
-        "id": "Wjep28GDKo",
+        "id": "gyoL8mDKCT",
         "type": "header",
         "data": {
-          "text": "Features",
+          "text": "🚀 Features",
           "level": 3
         }
       },
       {
-        "id": "LRQDLUujgf",
+        "id": "GwyQgWDPSf",
         "type": "list",
         "data": {
           "style": "ordered",
@@ -197,7 +205,7 @@
               "items": []
             },
             {
-              "content": "Analytics Dashboard – Track task completion and productivity trends.",
+              "content": "Analytics Dashboard – Track task completion and productivity trends.\n",
               "meta": {},
               "items": []
             }
@@ -205,15 +213,15 @@
         }
       },
       {
-        "id": "Yh25ngKdDL",
+        "id": "vfuy1jKe4T",
         "type": "header",
         "data": {
-          "text": "Key Features (Highlights)",
+          "text": "⭐ Key Features (Highlights)",
           "level": 3
         }
       },
       {
-        "id": "0qAgAjIjRP",
+        "id": "o3OWiVQOHb",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -230,7 +238,7 @@
               "items": []
             },
             {
-              "content": "Cross-platform PWA → installable on mobile and desktop.",
+              "content": "Cross-platform PWA → installable on mobile and desktop.\n",
               "meta": {},
               "items": []
             }
@@ -238,15 +246,15 @@
         }
       },
       {
-        "id": "5dMT3LxNEV",
+        "id": "mXIBERqK7u",
         "type": "header",
         "data": {
-          "text": "Challenges Faced",
+          "text": "🏗️ Challenges Faced",
           "level": 3
         }
       },
       {
-        "id": "yvGzFWj8pc",
+        "id": "saDE5Disb0",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -268,7 +276,7 @@
               "items": []
             },
             {
-              "content": "UI/UX balance: Keeping the interface clean but feature-rich.",
+              "content": "UI/UX balance: Keeping the interface clean but feature-rich.\n",
               "meta": {},
               "items": []
             }
@@ -276,7 +284,7 @@
         }
       },
       {
-        "id": "eaBewPtipH",
+        "id": "Xl3h60z1Ik",
         "type": "header",
         "data": {
           "text": "📊 Outcomes",
@@ -284,7 +292,7 @@
         }
       },
       {
-        "id": "yIlD2jr0K8",
+        "id": "WW9CJ26Vbb",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -301,7 +309,7 @@
               "items": []
             },
             {
-              "content": "Scalable architecture ready for enterprise features.",
+              "content": "Scalable architecture ready for enterprise features.\n",
               "meta": {},
               "items": []
             }
@@ -309,7 +317,7 @@
         }
       },
       {
-        "id": "9mJCiZmLtk",
+        "id": "0PRyIluJYm",
         "type": "header",
         "data": {
           "text": "🔮 Future Improvements",
@@ -317,7 +325,7 @@
         }
       },
       {
-        "id": "GTRPw8L_MC",
+        "id": "anFY45J4rC",
         "type": "list",
         "data": {
           "style": "unordered",
