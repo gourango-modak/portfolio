@@ -8,6 +8,7 @@ const projectFiles = [
     "e-commerce-platform.json",
     "enterprise-crm-system.json",
     "real-time-analytics-dashboard.json",
+    "1756502602833_project-case-study_-taskly-–-smart-task-management-app.json",
 ];
 
 export const fetchProjects = async (limit) => {

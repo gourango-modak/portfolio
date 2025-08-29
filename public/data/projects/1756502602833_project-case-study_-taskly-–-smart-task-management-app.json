@@ -1,0 +1,347 @@
+{
+  "id": 1756502602833,
+  "createdAt": 1756502601892,
+  "title": "Project Case Study: Taskly – Smart Task Management App",
+  "tagline": "Stay organized. Stay ahead.",
+  "liveUrl": "https://medium.com/@isuruj/how-does-https-actually-work-b8c569f72f66",
+  "repoUrl": "https://medium.com/@isuruj/how-does-https-actually-work-b8c569f72f66",
+  "startDate": "Jan 2023",
+  "endDate": "Feb 2023",
+  "content": {
+    "time": 1756502563518,
+    "blocks": [
+      {
+        "id": "fuaYIw45Lf",
+        "type": "header",
+        "data": {
+          "text": "Overview",
+          "level": 3
+        }
+      },
+      {
+        "id": "fJMNm2v8Rm",
+        "type": "paragraph",
+        "data": {
+          "text": "Taskly is a web-based task management application designed to help individuals and teams organize, prioritize, and track work seamlessly. It blends minimal UI with powerful productivity tools, making task management intuitive and collaborative."
+        }
+      },
+      {
+        "id": "0JPxEEXLE5",
+        "type": "header",
+        "data": {
+          "text": "Problem",
+          "level": 3
+        }
+      },
+      {
+        "id": "Zfbnuw4crt",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Traditional task managers are either too complex (steep learning curve) or too simplistic (lacking advanced features).\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Teams often struggle with tracking deadlines, accountability, and progress.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Users want a lightweight yet powerful solution that doesn’t slow them down.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "sOaoz43k_6",
+        "type": "header",
+        "data": {
+          "text": "Solution",
+          "level": 3
+        }
+      },
+      {
+        "id": "jO6A6FDpkN",
+        "type": "paragraph",
+        "data": {
+          "text": "Taskly provides a balanced task management system:"
+        }
+      },
+      {
+        "id": "APZ1jOWeeN",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Simple for individuals, yet scalable for teams.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Combines drag-and-drop task boards, real-time collaboration, and smart reminders.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Works across desktop and mobile with offline-first capability.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "gjB_mw4yoo",
+        "type": "header",
+        "data": {
+          "text": "Tech Stack",
+          "level": 3
+        }
+      },
+      {
+        "id": "tp-85B473a",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Frontend: React (with Vite), TailwindCSS\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Backend: Node.js (Express)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Database: MongoDB (with Mongoose)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Auth &amp; Security: JWT Authentication + OAuth (Google)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Real-time: Socket.IO for live updates\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Hosting: Vercel (frontend), Render (backend)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Other Tools: Prisma ORM, Cloudinary (file uploads)\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Wjep28GDKo",
+        "type": "header",
+        "data": {
+          "text": "Features",
+          "level": 3
+        }
+      },
+      {
+        "id": "LRQDLUujgf",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "User Authentication – Signup/Login with email or Google.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Task Boards – Create projects and organize tasks in Kanban view.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Drag-and-Drop Tasks – Easy prioritization.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Reminders &amp; Deadlines – Smart notifications.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Collaboration – Share boards with teammates, assign tasks.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Offline-first – Works without internet, syncs when online.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Analytics Dashboard – Track task completion and productivity trends.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Yh25ngKdDL",
+        "type": "header",
+        "data": {
+          "text": "Key Features (Highlights)",
+          "level": 3
+        }
+      },
+      {
+        "id": "0qAgAjIjRP",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Minimal UI + Dark Mode → clean, distraction-free experience.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Smart Suggestions → auto-prioritizes based on deadlines.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Cross-platform PWA → installable on mobile and desktop.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "5dMT3LxNEV",
+        "type": "header",
+        "data": {
+          "text": "Challenges Faced",
+          "level": 3
+        }
+      },
+      {
+        "id": "yvGzFWj8pc",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Real-time sync: Ensuring smooth updates across multiple users without conflicts.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Offline mode: Handling local storage and background sync reliably.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Scalability: Designing database schema that supports both individual and team use cases.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "UI/UX balance: Keeping the interface clean but feature-rich.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "eaBewPtipH",
+        "type": "header",
+        "data": {
+          "text": "📊 Outcomes",
+          "level": 3
+        }
+      },
+      {
+        "id": "yIlD2jr0K8",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Improved team productivity by 35% (based on beta testing).\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Reduced task drop-offs thanks to reminders and better visualization.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Scalable architecture ready for enterprise features.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "9mJCiZmLtk",
+        "type": "header",
+        "data": {
+          "text": "🔮 Future Improvements",
+          "level": 3
+        }
+      },
+      {
+        "id": "GTRPw8L_MC",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "AI-powered task recommendations.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Calendar &amp; email integrations.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Customizable workflows for enterprises.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
