@@ -25,5 +25,14 @@ export const truncateBreadcrumb = (text, maxLength = 20) => {
 };
 
 export const getFileName = (title, id) => {
-    return `${id}_${title.toLowerCase().replace(/\s+/g, "-")}.json`;
+    // Convert to lowercase
+    let name = title.toLowerCase();
+
+    // Replace all non-alphanumeric characters (except dash) with a dash
+    name = name.replace(/[^a-z0-9]+/g, "");
+
+    // Remove leading/trailing dashes
+    name = name.replace(/^-+|-+$/g, "");
+
+    return `${id}_${name}.json`;
 };
