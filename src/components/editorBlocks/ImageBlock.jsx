@@ -1,15 +1,14 @@
-export default function ImageBlock({
+const ImageBlock = ({
     file,
     caption,
     withBorder,
     withBackground,
     stretched,
     maxHeight = "800px", // customizable max height
-}) {
+}) => {
     return (
         <div
             className={`
-                my-8
                 ${stretched ? "w-full" : ""} 
                 ${withBackground ? "bg-gray-100 p-2" : ""} 
                 ${withBorder ? "border border-gray-300" : ""}
@@ -33,4 +32,6 @@ export default function ImageBlock({
             )}
         </div>
     );
-}
+};
+
+export default ImageBlock;

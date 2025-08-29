@@ -1,12 +1,9 @@
-export default function ParagraphBlock({ text, emptyHeight = 18 }) {
-    const isEmpty = !text || !text.trim();
-
-    return isEmpty ? (
-        <div style={{ height: `${emptyHeight}px` }} />
-    ) : (
+const ParagraphBlock = ({ text }) => {
+    return (
         <p
             className="text-slate-600"
             dangerouslySetInnerHTML={{ __html: text }}
         />
     );
-}
+};
+export default ParagraphBlock;

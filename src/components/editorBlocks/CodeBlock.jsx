@@ -3,7 +3,7 @@ import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css"; // choose your theme
 import { Clipboard, ClipboardCheck } from "lucide-react";
 
-export default function CodeBlock({ code, language = "javascript" }) {
+const CodeBlock = ({ code, language = "javascript" }) => {
     const codeRef = useRef(null);
     const [copied, setCopied] = useState(false);
 
@@ -42,4 +42,6 @@ export default function CodeBlock({ code, language = "javascript" }) {
             </button>
         </div>
     );
-}
+};
+
+export default CodeBlock;

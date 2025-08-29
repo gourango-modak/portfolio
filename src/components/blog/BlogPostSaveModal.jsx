@@ -22,7 +22,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, post }) => {
             return;
         }
         post.title = formData.title;
-        post.description = formData.title;
+        post.description = formData.description;
         downloadJson(
             post,
             `${

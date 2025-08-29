@@ -1,0 +1,171 @@
+{
+  "id": 1756464633464,
+  "createdAt": 1756464633199,
+  "content": {
+    "time": 1756464633199,
+    "blocks": [
+      {
+        "id": "4sWDE9emf8",
+        "type": "header",
+        "data": {
+          "text": "Hash Table",
+          "level": 2
+        }
+      },
+      {
+        "id": "DtwjxKx21U",
+        "type": "paragraph",
+        "data": {
+          "text": "A Hash Table is a data structure designed to be fast to work with."
+        }
+      },
+      {
+        "id": "yW1McEY9aK",
+        "type": "paragraph",
+        "data": {
+          "text": "The reason Hash Tables are sometimes preferred instead of arrays or linked lists is because searching for, adding, and deleting data can be done really quickly, even for large amounts of data."
+        }
+      },
+      {
+        "id": "XTZGEJeADV",
+        "type": "paragraph",
+        "data": {
+          "text": "In a&nbsp;<a href=\"https://www.w3schools.com/dsa/dsa_theory_linkedlists.php\">Linked List</a>, finding a person \"Bob\" takes time because we would have to go from one node to the next, checking each node, until the node with \"Bob\" is found."
+        }
+      },
+      {
+        "id": "Id6rjm-H2a",
+        "type": "paragraph",
+        "data": {
+          "text": "And finding \"Bob\" in an&nbsp;<a href=\"https://www.w3schools.com/dsa/dsa_data_arrays.php\">Array</a>&nbsp;could be fast if we knew the index, but when we only know the name \"Bob\", we need to compare each element (like with Linked Lists), and that takes time."
+        }
+      },
+      {
+        "id": "gAAdnCh5uJ",
+        "type": "paragraph",
+        "data": {
+          "text": "With a Hash Table however, finding \"Bob\" is done really fast because there is a way to go directly to where \"Bob\" is stored, using something called a hash function."
+        }
+      },
+      {
+        "id": "gwU3stqqa8",
+        "type": "header",
+        "data": {
+          "text": "Building A Hash Table from Scratch",
+          "level": 2
+        }
+      },
+      {
+        "id": "p4TzzNH2jv",
+        "type": "paragraph",
+        "data": {
+          "text": "To get the idea of what a Hash Table is, let's try to build one from scratch, to store unique first names inside it."
+        }
+      },
+      {
+        "id": "O2lrn6J9uh",
+        "type": "paragraph",
+        "data": {
+          "text": "We will build the Hash Set in 5 steps:"
+        }
+      },
+      {
+        "id": "E9p6kMGuZM",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Starting with an array.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Storing names using a hash function.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Looking up an element using a hash function.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Handling collisions.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "The basic Hash Set code example and simulation.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "BSVDCXfCBX",
+        "type": "header",
+        "data": {
+          "text": "Step 1: Starting with an array",
+          "level": 3
+        }
+      },
+      {
+        "id": "3FY9oognC9",
+        "type": "paragraph",
+        "data": {
+          "text": "Using an array, we could store names like this:"
+        }
+      },
+      {
+        "id": "ZTakRSX86i",
+        "type": "paragraph",
+        "data": {
+          "text": "<code class=\"inline-code\">my_array = ['Pete', 'Jones', 'Lisa', 'Bob', 'Siri']</code>"
+        }
+      },
+      {
+        "id": "K4C7EOijlb",
+        "type": "header",
+        "data": {
+          "text": "Step 2: Storing names using a hash function",
+          "level": 3
+        }
+      },
+      {
+        "id": "_vPRWSiM_H",
+        "type": "paragraph",
+        "data": {
+          "text": "Now comes the special way we interact with the Hash Set we are making."
+        }
+      },
+      {
+        "id": "uXVxtE-tTs",
+        "type": "paragraph",
+        "data": {
+          "text": "We want to store a name directly into its right place in the array, and this is where the&nbsp;hash function&nbsp;comes in."
+        }
+      },
+      {
+        "id": "5CgH3al5m8",
+        "type": "paragraph",
+        "data": {
+          "text": "A hash function can be made in many ways, it is up to the creator of the Hash Table. A common way is to find a way to convert the value into a number that equals one of the Hash Set's index numbers, in this case a number from 0 to 9. In our example we will use the Unicode number of each character, summarize them and do a modulo 10 operation to get index numbers 0-9."
+        }
+      },
+      {
+        "id": "u7i_pwUrJm",
+        "type": "code",
+        "data": {
+          "code": "def hash_function(value):\n    sum_of_chars = 0\n    for char in value:\n        sum_of_chars += ord(char)\n\n    return sum_of_chars % 10\n\nprint(\"'Bob' has hash code:\",hash_function('Bob'))"
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  },
+  "tags": [],
+  "title": "DSA Hash Tables",
+  "description": "A Hash Table is a data structure designed to be fast to work with.\nThe reason Hash Tables are sometimes preferred instead of arrays or linked lists is because searching for, adding, and deleting data can be done really quickly, even for large amounts of data."
+}
