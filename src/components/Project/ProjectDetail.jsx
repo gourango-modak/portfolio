@@ -87,12 +87,12 @@ export const ProjectDetail = ({ project }) => {
                                 Tech Stack
                             </h3>
                             <div className="flex flex-wrap gap-2">
-                                {project.tags.map((tag) => (
+                                {project.technologies.map((technology) => (
                                     <span
-                                        key={tag}
+                                        key={technology}
                                         className="bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full"
                                     >
-                                        {tag}
+                                        {technology}
                                     </span>
                                 ))}
                             </div>
@@ -107,12 +107,12 @@ export const ProjectDetail = ({ project }) => {
                                 Tech Stack
                             </h3>
                             <div className="flex flex-wrap gap-2">
-                                {project.tags.map((tag) => (
+                                {project.technologies.map((technology) => (
                                     <span
-                                        key={tag}
+                                        key={technology}
                                         className="bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full"
                                     >
-                                        {tag}
+                                        {technology}
                                     </span>
                                 ))}
                             </div>

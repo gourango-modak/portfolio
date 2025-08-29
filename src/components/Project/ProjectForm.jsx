@@ -40,7 +40,15 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                     error={errors.endDate}
                 />
             </div>
-
+            <InputField
+                label="Technologies"
+                name="technologies"
+                value={formData.technologies}
+                onChange={handleChange}
+                required={true}
+                error={errors.technologies}
+                minRows={2}
+            />
             <InputField
                 label="Live Site URL"
                 name="liveUrl"

@@ -12,6 +12,7 @@ const initialData = {
     repoUrl: "",
     startDate: "",
     endDate: "",
+    technologies: "",
 };
 
 const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
