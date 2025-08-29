@@ -1,0 +1,152 @@
+{
+  "id": 1756505232165,
+  "timestamp": 1756505231438,
+  "title": "How does HTTPS actually work?",
+  "description": "Have you ever noticed this green padlock and the letters “https” in your address bar? It’s what keeps your passwords, credit card details and communications safe from viewing or modifying by attackers while your computer and the server communicates. Client and Server encrypts and decrypts their requests and responses in both ends, so even an attacker can see the encrypted message he cannot access the actual data.",
+  "content": {
+    "time": 1756505215773,
+    "blocks": [
+      {
+        "id": "wU4y_ih3OJ",
+        "type": "paragraph",
+        "data": {
+          "text": "Have you ever noticed this green padlock and the letters “https” in your address bar? It’s what keeps your passwords, credit card details and communications safe from viewing or modifying by attackers while your computer and the server communicates. Client and Server encrypts and decrypts their requests and responses in both ends, so even an attacker can see the encrypted message he cannot access the actual data."
+        }
+      },
+      {
+        "id": "rQbA5H6C2C",
+        "type": "paragraph",
+        "data": {
+          "text": "HTTPS protocol is created by adding an encryption layer on top of the well-known HTTP protocol. This encryption layer is know as SSL/TLS. SSL stands for Secure Socket Layer and TLS stands for Transport Layer Security, SSL is the predecessor of TLS. SSL/TLS verifies that you are talking directly to the server that you think you are talking to and it ensures that only the server and the client can read what they send each other."
+        }
+      },
+      {
+        "id": "4Quz0Z_Q33",
+        "type": "header",
+        "data": {
+          "text": "How an SSL connection is established…",
+          "level": 2
+        }
+      },
+      {
+        "id": "MeE7XeN6Jd",
+        "type": "paragraph",
+        "data": {
+          "text": "An SSL connection between a client and server is established by a handshake. In this blog post I’ll be talking about One-way SSL and how to enable One-way SSL in tomcat server."
+        }
+      },
+      {
+        "id": "OKUu_TO0YP",
+        "type": "paragraph",
+        "data": {
+          "text": "In One-way SSL client verifies that it is talking to the right server. (client trusts server)"
+        }
+      },
+      {
+        "id": "m0KFPcZvK0",
+        "type": "header",
+        "data": {
+          "text": "SSL/TLS Hand Shake (One-way SSL)",
+          "level": 3
+        }
+      },
+      {
+        "id": "kn_yaW_CSM",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*QZS56fd0cNGTbNr7BCPKFg.jpeg"
+          }
+        }
+      },
+      {
+        "id": "POj3768-Dx",
+        "type": "header",
+        "data": {
+          "text": "How to enable One-way SSL in tomcat",
+          "level": 3
+        }
+      },
+      {
+        "id": "WKJyziOTTx",
+        "type": "paragraph",
+        "data": {
+          "text": "Here, I have used Java Keytool Commands to manage key pairs and certificates, if you are trying this you need to have java installed and tomcat downloaded."
+        }
+      },
+      {
+        "id": "V5rwHQLXNh",
+        "type": "paragraph",
+        "data": {
+          "text": "First we need to generate server keystore file, type below command in terminal,"
+        }
+      },
+      {
+        "id": "SPlxKG8_6Z",
+        "type": "paragraph",
+        "data": {
+          "text": "Then you will asked to type a password for keystore, then it’ll ask your name, organizational unit, organization, city, state, country code and after that confirmation for the above provided details, type yes and press enter. Finally it asks for key password, press enter to keep same as keystore password."
+        }
+      },
+      {
+        "id": "3UDFchp8f9",
+        "type": "paragraph",
+        "data": {
+          "text": "Press enter or click to view image in full size"
+        }
+      },
+      {
+        "id": "jFLqH4OXJE",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*kmAsn80W8t0bwarNcg2emQ.png"
+          }
+        }
+      },
+      {
+        "id": "LRkubH1Cs3",
+        "type": "paragraph",
+        "data": {
+          "text": "This will generate a java keystore file, enable HTTPS in tomcat by adding this to tomcat/conf/server.xml. Provide keystore file path for “keystoreFile” and keystore password for “keystorePass”."
+        }
+      },
+      {
+        "id": "p0klB6znfR",
+        "type": "image",
+        "data": {
+          "caption": "",
+          "withBorder": false,
+          "withBackground": false,
+          "stretched": false,
+          "file": {
+            "url": "https://miro.medium.com/v2/resize:fit:1050/1*kRMBlUKAxfdyxTtBElXdow.png"
+          }
+        }
+      },
+      {
+        "id": "fL8eHJizcr",
+        "type": "paragraph",
+        "data": {
+          "text": "Save it and then start tomcat with “sh catalina.sh run” for linux, windows “catalina.bat run”"
+        }
+      },
+      {
+        "id": "AUGeNxEvJa",
+        "type": "paragraph",
+        "data": {
+          "text": "Go to&nbsp;<a href=\"https://localhost:8443/,\" target=\"_blank\">https://localhost:8443/</a>&nbsp;you will be redirected to an insecure page as below, it’s because browser doesn’t trust certificate because it’s self signed. After confirming security exception you will be redirected to Apache Tomcat page with https enabled."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
