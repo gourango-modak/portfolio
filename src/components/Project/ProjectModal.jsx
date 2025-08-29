@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AddSectionModal } from "./AddSectionModal";
 import Modal from "../common/Modal";
 import { downloadJson } from "../../utils/downloadJson";
-import { validateProjectForm } from "../../utils/validateProjectForm";
+import { validateProjectForm } from "../../utils/validateForms";
 import { formatProjectData } from "../../utils/formatProjectData";
 import { useProjectForm } from "../../hooks/useProjectForm";
 import { ProjectForm } from "./ProjectForm";

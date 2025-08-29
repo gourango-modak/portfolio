@@ -49,9 +49,7 @@ const Modal = ({
                     )}
 
                     {/* Modal Body (Scrollable) */}
-                    <div className="p-6 space-y-4 overflow-y-auto">
-                        {children}
-                    </div>
+                    <div className="p-6 overflow-y-auto">{children}</div>
 
                     {/* Modal Footer */}
                     <div className="p-6 border-t border-gray-200 flex justify-end gap-4 rounded-b-lg flex-shrink-0">

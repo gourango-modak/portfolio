@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@editorjs/code": "^2.9.3",
-    "@editorjs/delimiter": "^1.4.2",
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/header": "^2.8.8",
     "@editorjs/image": "^2.10.3",
@@ -27,7 +26,6 @@
     "prismjs": "^1.30.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-syntax-highlighter": "^15.6.1",
     "rehype-raw": "^7.0.0",
     "tailwindcss": "^4.1.11"
   },
@@ -41,7 +39,6 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
-    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.7.1",
     "remark-gfm": "^4.0.1",
     "vite": "^7.0.4"

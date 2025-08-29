@@ -19,20 +19,20 @@ export const AddSectionModal = ({ isOpen, onClose, onAdd }) => {
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            title="Add New Section Title"
+            title="Add New Section"
             position="center"
             width="w-sm"
             footer={
                 <>
                     <button
                         onClick={onClose}
-                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"
+                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 cursor-pointer"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={handleAdd}
-                        className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700"
+                        className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 cursor-pointer"
                     >
                         Add
                     </button>

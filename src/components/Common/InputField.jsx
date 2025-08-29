@@ -6,7 +6,7 @@ export const InputField = ({
     required = false,
     error,
 }) => (
-    <div>
+    <div className="mb-4">
         <label
             htmlFor={name}
             className="block text-sm font-medium text-slate-700 mb-1"

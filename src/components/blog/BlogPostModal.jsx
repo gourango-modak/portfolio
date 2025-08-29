@@ -1,10 +1,12 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Modal from "../common/Modal";
 import BlogPostEditor from "./BlogPostEditor";
-import { downloadJson } from "../../utils/downloadJson";
+import BlogPostSaveModal from "./BlogPostSaveModal";
 
 const BlogPostModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [post, setPost] = useState(null);
     // Create a ref to hold the BlogEditor component instance.
     const editorRef = useRef(null);
 
@@ -14,15 +16,9 @@ const BlogPostModal = ({ isOpen, onClose }) => {
         }
     };
 
-    const handleDataAfterSave = (blogData) => {
-        downloadJson(
-            blogData,
-            `${
-                blogData.id +
-                "_" +
-                blogData.title.toLowerCase().replace(/\s+/g, "-")
-            }.json`
-        );
+    const handleDataAfterSave = (post) => {
+        setPost(post);
+        setIsModalOpen(true);
     };
 
     return (
@@ -44,12 +40,20 @@ const BlogPostModal = ({ isOpen, onClose }) => {
                         onClick={handleSaveClick}
                         className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
                     >
-                        Save & Download JSON
+                        Save
                     </button>
                 </>
             }
         >
             <BlogPostEditor ref={editorRef} onSave={handleDataAfterSave} />
+            <BlogPostSaveModal
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    onClose();
+                }}
+                post={post}
+            />
         </Modal>
     );
 };

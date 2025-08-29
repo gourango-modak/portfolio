@@ -4,7 +4,7 @@ const BlogPostRenderer = ({ content }) => {
     if (!content || !content.blocks) return null;
 
     return (
-        <div className="editor-content">
+        <div>
             {content.blocks.map((block, index) => {
                 const BlockComponent = blockRenderers[block.type];
                 if (!BlockComponent) {

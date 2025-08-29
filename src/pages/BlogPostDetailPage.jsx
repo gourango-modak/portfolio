@@ -24,15 +24,15 @@ const BlogPostDetailPage = () => {
                         <div className="mb-8">
                             <Breadcrumb crumbs={crumbs} />
                         </div>
-                        <div className="mb-8">
-                            <h1 className="text-4xl font-bold mb-2 text-slate-900">
-                                {post.title}
-                            </h1>
-                            <p className="text-sm text-slate-500 mb-1">
-                                {formatDate(post.createdAt)}
-                            </p>
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-0">
+                            {post.title}
+                        </h1>
+                        <p className="text-lg text-slate-500 mt-3">
+                            {formatDate(post.createdAt)}
+                        </p>
+                        <div className="prose md:prose-lg lg:prose-xl max-w-none mt-8">
+                            <BlogPostRenderer content={post.content} />
                         </div>
-                        <BlogPostRenderer content={post.content} />
                     </div>
                 );
             }}

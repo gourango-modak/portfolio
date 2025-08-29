@@ -9,7 +9,7 @@ export const blockRenderers = {
     header: HeaderBlock,
     paragraph: ParagraphBlock,
     list: ListBlock,
-    image: ImageBlock,
-    delimiter: DelimiterBlock,
-    code: CodeBlock,
+    // image: ImageBlock,
+    // delimiter: DelimiterBlock,
+    // code: CodeBlock,
 };

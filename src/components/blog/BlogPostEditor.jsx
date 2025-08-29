@@ -26,7 +26,7 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
                 const content = await editorInstance.current.save();
                 const tags = extractTagsFromContent(content);
 
-                const blogData = {
+                const post = {
                     id: generateId(),
                     title,
                     summary,
@@ -37,10 +37,10 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
 
                 // Pass the saved data up to the parent.
                 if (onSave) {
-                    onSave(blogData);
+                    onSave(post);
                 }
 
-                console.log("Saved blog data:", blogData);
+                console.log("Saved blog data:", post);
             } catch (err) {
                 console.error("Failed to save blog content:", err);
             }
@@ -49,18 +49,22 @@ const BlogEditor = forwardRef(({ onSave }, ref) => {
 
     return (
         <>
-            <BlogPostTextField
+            {/* <BlogPostTextField
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Blog Title..."
-                fontStyle="font-bold text-3xl"
+                fontStyle="text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-800"
             />
             <BlogPostTextField
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
                 placeholder="Summary..."
-            />
-            <div id="editorjs"></div>
+                fontStyle="text-base md:text-lg lg:text-xl text-slate-600"
+            /> */}
+            <div
+                id="editorjs"
+                className="prose md:prose-lg lg:prose-xl max-w-none"
+            ></div>
         </>
     );
 });

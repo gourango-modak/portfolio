@@ -3,7 +3,6 @@ import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import InlineCode from "@editorjs/inline-code";
 import Paragraph from "@editorjs/paragraph";
-import Delimiter from "@editorjs/delimiter";
 import CodeTool from "@editorjs/code";
 
 // This configuration object defines all the tools and their settings for Editor.js.
@@ -42,6 +41,5 @@ export const EDITOR_JS_TOOLS = {
             preserveBlank: true,
         },
     },
-    delimiter: Delimiter,
     code: CodeTool,
 };

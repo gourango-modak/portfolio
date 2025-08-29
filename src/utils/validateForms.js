@@ -15,3 +15,12 @@ export const validateProjectForm = (data) => {
 
     return errors;
 };
+
+export const validatePostForm = (data) => {
+    const errors = {};
+    if (!data.title.trim()) errors.title = "Title is required";
+    if (!data.description.trim())
+        errors.description = "Description is required";
+
+    return errors;
+};

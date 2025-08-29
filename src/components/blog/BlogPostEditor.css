@@ -1,7 +1,6 @@
 /* Set the block width (default: 780px) */
 :root {
-    --block-width: calc(100% - 35px);
-    /* --block-width: 100%; */
+    --block-width: 100%;
 }
 
 /* Apply the block width to EditorJS elements */
@@ -14,16 +13,16 @@
     margin: 0;
 }
 
+.ce-block {
+    padding-left: 60px;
+}
+
 /* Main editing area */
 .codex-editor__redactor {
     width: 100%;
     padding-bottom: 7rem !important;
 }
 
-.ce-delimiter hr {
-    display: inline-block;
-}
-
 .ce-toolbar__actions {
-    right: -35px;
+    left: 0px;
 }
