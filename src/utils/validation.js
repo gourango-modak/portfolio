@@ -2,6 +2,7 @@ export const validateProjectForm = (data) => {
     const errors = {};
     if (!data.title.trim()) errors.title = "Title is required";
     if (!data.tagline.trim()) errors.tagline = "Tagline is required";
+    if (!data.description.trim()) errors.tagline = "Tagline is required";
     if (!data.liveUrl.trim()) errors.liveUrl = "Live URL is required";
     if (!data.repoUrl.trim()) errors.repoUrl = "Repository URL is required";
     if (!data.startDate) errors.startDate = "Start date is required";

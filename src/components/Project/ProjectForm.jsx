@@ -21,6 +21,15 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                 error={errors.tagline}
             />
 
+            <InputField
+                label="Short Description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required={true}
+                error={errors.description}
+            />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InputField
                     label="Start Date (e.g., Jan 2024)"

@@ -8,6 +8,7 @@ import { generateId, getFileName } from "../../utils/common";
 const initialData = {
     title: "",
     tagline: "",
+    description: "",
     liveUrl: "",
     repoUrl: "",
     startDate: "",

@@ -52,6 +52,17 @@ export const ProjectDetail = ({ project }) => {
             </header>
             <div className="prose md:prose-lg max-w-none">
                 <EditorContentRenderer content={project.content} />
+                <div className="flex flex-wrap gap-2 mt-15">
+                    {project.technologies?.length > 0 &&
+                        project.technologies.map((tag) => (
+                            <span
+                                key={tag}
+                                className="font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                </div>
             </div>
         </>
     );
