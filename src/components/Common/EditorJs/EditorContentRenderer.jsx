@@ -1,6 +1,6 @@
-import { blockRenderers } from "../editorBlocks";
+import { blockRenderers } from "../../editorBlocks";
 
-const BlogPostRenderer = ({ content }) => {
+const EditorContentRenderer = ({ content }) => {
     if (!content || !content.blocks) return null;
 
     return (
@@ -20,4 +20,4 @@ const BlogPostRenderer = ({ content }) => {
     );
 };
 
-export default BlogPostRenderer;
+export default EditorContentRenderer;

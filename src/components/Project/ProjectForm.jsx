@@ -41,7 +41,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                 />
             </div>
             <InputField
-                label="Technologies"
+                label="Technologies (Comma Separated)"
                 name="technologies"
                 value={formData.technologies}
                 onChange={handleChange}

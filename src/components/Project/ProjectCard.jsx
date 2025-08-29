@@ -16,14 +16,15 @@ const ProjectCard = ({ project }) => {
                     {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.technologies.map((tag) => (
-                        <span
-                            key={tag}
-                            className="text-xs font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
-                        >
-                            {tag}
-                        </span>
-                    ))}
+                    {project.technologies.length > 0 &&
+                        project.technologies.map((tag) => (
+                            <span
+                                key={tag}
+                                className="text-xs font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
+                            >
+                                {tag}
+                            </span>
+                        ))}
                 </div>
             </div>
         </Link>

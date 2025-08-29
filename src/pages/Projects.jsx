@@ -5,8 +5,8 @@ import ProjectModal from "../components/Project/ProjectModal";
 import DataLoader from "../components/common/DataLoader";
 import { fetchProjects } from "../data/projects";
 import { CONFIG } from "../config/config";
-import EditorModal from "../components/common/EditorModal";
-import Editor from "../components/common/Editor";
+import EditorModal from "../components/common/EditorJs/EditorModal";
+import Editor from "../components/common/EditorJs/Editor";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);

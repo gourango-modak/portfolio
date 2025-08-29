@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import Modal from "../common/Modal";
-import { useAlertModal } from "../../hooks/useAlertModal";
+import Modal from "../Modal";
+import { useAlertModal } from "../../../hooks/useAlertModal";
 
 const EditorModal = ({
     isOpen,

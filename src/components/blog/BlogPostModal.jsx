@@ -1,6 +1,6 @@
 import { useState } from "react";
-import EditorModal from "../common/EditorModal";
-import Editor from "../common/Editor";
+import EditorModal from "../common/EditorJs/EditorModal";
+import Editor from "../common/EditorJs/Editor";
 import BlogPostSaveModal from "./BlogPostSaveModal";
 
 const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {

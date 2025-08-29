@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Breadcrumb } from "../components/Common/Breadcrumb";
-import BlogPostRenderer from "../components/blog/BlogPostRenderer";
+import EditorContentRenderer from "../components/common/EditorJs/EditorContentRenderer";
 import { fetchPosts } from "../data/posts";
 import DataLoader from "../components/Common/DataLoader";
 import { formatDate } from "../utils/date";
@@ -29,7 +29,7 @@ const BlogPostDetailPage = () => {
                                 date={formatDate(post.createdAt)}
                             />
                             <div className="prose md:prose-lg max-w-none">
-                                <BlogPostRenderer content={post.content} />
+                                <EditorContentRenderer content={post.content} />
                             </div>
                         </div>
                     </section>

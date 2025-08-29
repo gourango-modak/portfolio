@@ -12,7 +12,7 @@ const initialData = {
     repoUrl: "",
     startDate: "",
     endDate: "",
-    technologies: "",
+    technologies: [],
 };
 
 const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
@@ -32,6 +32,7 @@ const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
             createdAt: Date.now(),
             ...formData,
             content: projectContent,
+            technologies: formData.technologies.split(","),
         };
         downloadJson(project, getFileName(project.title, project.id));
         onSave();
