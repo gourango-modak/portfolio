@@ -1,5 +1,5 @@
 import { CONFIG } from "../config/config";
-import { extractTags, extractTitle } from "./editor";
+import { extractTagline, extractTags, extractTitle } from "./editor";
 
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
@@ -48,14 +48,17 @@ export const prepareProjectData = (editorData, metaData) => {
         extractTags(editorData);
     const { title: extractedTitle, content: contentWithoutTitle } =
         extractTitle(contentWithoutTags);
+    const { tagline: extractedTagline, content: contentWithoutTagline } =
+        extractTagline(contentWithoutTitle);
 
     return {
         id: generateId(),
         title: extractedTitle,
+        tagline: extractedTagline,
         createdAt: Date.now(),
         ...metaData,
         technologies: extractedTags,
-        content: contentWithoutTitle,
+        content: contentWithoutTagline,
     };
 };
 

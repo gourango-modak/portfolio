@@ -1,12 +1,12 @@
-export function extractTitle(data) {
-    if (!data || !Array.isArray(data.blocks)) {
-        return { title: null, content: data };
+export function extractTitle(editorData) {
+    if (!editorData || !Array.isArray(editorData.blocks)) {
+        return { title: null, content: editorData };
     }
 
     let title = null;
     const remainingBlocks = [];
 
-    for (const block of data.blocks) {
+    for (const block of editorData.blocks) {
         if (block.type === "title" && !title) {
             // Take the first title block only
             title = block.data.text;
@@ -17,17 +17,17 @@ export function extractTitle(data) {
 
     return {
         title: title,
-        content: { ...data, blocks: remainingBlocks },
+        content: { ...editorData, blocks: remainingBlocks },
     };
 }
 
-export function extractTags(data) {
-    if (!data || !Array.isArray(data.blocks)) {
-        return { tags: [], content: data };
+export function extractTags(editorData) {
+    if (!editorData || !Array.isArray(editorData.blocks)) {
+        return { tags: [], content: editorData };
     }
 
     const tagsSet = new Set(); // Use a Set to remove duplicates
-    const remainingBlocks = data.blocks.filter((block) => {
+    const remainingBlocks = editorData.blocks.filter((block) => {
         if (block.type === "tag") {
             if (block.data && typeof block.data.text === "string") {
                 const regex = /#\w+/g;
@@ -43,17 +43,17 @@ export function extractTags(data) {
 
     return {
         tags: Array.from(tagsSet),
-        content: { ...data, blocks: remainingBlocks },
+        content: { ...editorData, blocks: remainingBlocks },
     };
 }
 
-export function extractTagline(data) {
-    if (!data || !Array.isArray(data.blocks)) {
-        return { tagline: "", content: data };
+export function extractTagline(editorData) {
+    if (!editorData || !Array.isArray(editorData.blocks)) {
+        return { tagline: "", content: editorData };
     }
 
     let tagline = "";
-    const remainingBlocks = data.blocks.filter((block) => {
+    const remainingBlocks = editorData.blocks.filter((block) => {
         if (block.type === "tagline") {
             if (block.data && typeof block.data.text === "string") {
                 tagline = block.data.text.trim();
@@ -62,9 +62,8 @@ export function extractTagline(data) {
         }
         return true; // keep other blocks
     });
-
     return {
         tagline: tagline,
-        content: { ...data, blocks: remainingBlocks },
+        content: { ...editorData, blocks: remainingBlocks },
     };
 }

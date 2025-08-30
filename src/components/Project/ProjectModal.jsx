@@ -6,7 +6,6 @@ import { ProjectForm } from "./ProjectForm";
 import { getFileName } from "../../utils/common";
 
 const initialData = {
-    tagline: "",
     description: "",
     liveUrl: "",
     repoUrl: "",
