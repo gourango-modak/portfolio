@@ -1,18 +1,16 @@
-import ProjectCard from "../components/project/ProjectCard";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
-import ProjectModal from "../components/Project/ProjectModal";
-import DataLoader from "../components/common/DataLoader";
-import { fetchProjects } from "../data/projects";
-import { CONFIG } from "../config/config";
-import EditorModal from "../components/common/EditorJs/EditorModal";
-import Editor from "../components/common/EditorJs/Editor";
-import { validateEditorModalForProject } from "../utils/validation";
+import ProjectModal from "../../components/Project/ProjectModal";
+import DataLoader from "../../components/common/DataLoader";
+import { fetchProjects } from "../../data/projects";
+import EditorModal from "../../components/common/EditorJs/EditorModal";
+import Editor from "../../components/common/EditorJs/Editor";
+import { validateEditorModalForProject } from "../../utils/validation";
 import {
     getProjectEditorInitialData,
     getProjectTools,
-} from "../config/editorJs/editorTools";
-import ProjectList from "../components/project/ProjectList";
+} from "../../config/editorJs/editorTools";
+import ProjectList from "../../components/project/ProjectList";
+import HeaderSection from "./HeaderSection";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -45,24 +43,9 @@ const Projects = () => {
         <>
             <section className="pt-30 pb-20 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
-                        <h1 className="text-4xl font-bold text-slate-900">
-                            Portfolio
-                        </h1>
-                        <div className={CONFIG.IS_DEVENV ? "" : "hidden"}>
-                            <button
-                                onClick={() => setIsEditorModalOpen(true)}
-                                className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
-                            >
-                                <PlusCircle size={20} /> Add
-                            </button>
-                        </div>
-                    </div>
-                    <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-                        Explore a curated selection of my projects. Each one
-                        represents a unique challenge and a step forward in my
-                        journey as a developer.
-                    </p>
+                    <HeaderSection
+                        onAddClick={() => setIsEditorModalOpen(true)}
+                    />
                     <DataLoader
                         fetchData={fetchProjects}
                         render={(projects) => (

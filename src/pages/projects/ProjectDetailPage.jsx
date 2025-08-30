@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { fetchProjects } from "../data/projects";
-import { ProjectDetail } from "../components/Project/ProjectDetail";
-import DataLoader from "../components/Common/DataLoader";
+import { fetchProjects } from "../../data/projects";
+import { ProjectDetail } from "../../components/Project/ProjectDetail";
+import DataLoader from "../../components/Common/DataLoader";
 
 const ProjectDetailPage = () => {
     const { id } = useParams();

@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { Breadcrumb } from "../components/Common/Breadcrumb";
-import EditorContentRenderer from "../components/common/EditorJs/EditorContentRenderer";
-import { fetchPosts } from "../data/posts";
-import DataLoader from "../components/Common/DataLoader";
-import { formatDate } from "../utils/date";
-import BlogPostHeader from "../components/blog/BlogPostHeader";
+import { Breadcrumb } from "../../components/Common/Breadcrumb";
+import EditorContentRenderer from "../../components/common/EditorJs/EditorContentRenderer";
+import { fetchPosts } from "../../data/posts";
+import DataLoader from "../../components/Common/DataLoader";
+import { formatDate } from "../../utils/date";
+import BlogPostHeader from "../../components/blog/BlogPostHeader";
 
 const BlogPostDetailPage = () => {
     const { id } = useParams();
