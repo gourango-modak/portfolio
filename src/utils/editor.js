@@ -1,5 +1,3 @@
-import { getEditorTools } from "../config/editorjs/editorTools";
-
 export function extractTitle(data) {
     if (!data || !Array.isArray(data.blocks)) {
         return { title: null, content: data };
@@ -18,7 +16,7 @@ export function extractTitle(data) {
     }
 
     return {
-        title,
+        title: title,
         content: { ...data, blocks: remainingBlocks },
     };
 }
@@ -49,6 +47,24 @@ export function extractTags(data) {
     };
 }
 
-export function getProjectTools() {
-    return getEditorTools({ includeTagline: true, includeTags: true });
+export function extractTagline(data) {
+    if (!data || !Array.isArray(data.blocks)) {
+        return { tagline: "", content: data };
+    }
+
+    let tagline = "";
+    const remainingBlocks = data.blocks.filter((block) => {
+        if (block.type === "tagline") {
+            if (block.data && typeof block.data.text === "string") {
+                tagline = block.data.text.trim();
+            }
+            return false; // remove this block
+        }
+        return true; // keep other blocks
+    });
+
+    return {
+        tagline: tagline,
+        content: { ...data, blocks: remainingBlocks },
+    };
 }

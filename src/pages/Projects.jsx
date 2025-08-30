@@ -8,7 +8,7 @@ import { CONFIG } from "../config/config";
 import EditorModal from "../components/common/EditorJs/EditorModal";
 import Editor from "../components/common/EditorJs/Editor";
 import { validateEditorModalForProject } from "../utils/validation";
-import { getProjectTools } from "../utils/editor";
+import { getProjectTools } from "../config/editorJs/editorTools";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);

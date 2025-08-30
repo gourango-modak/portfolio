@@ -23,12 +23,12 @@ const EditorModal = ({
         }
     };
 
-    const handleDataAfterSave = (data) => {
+    const handleDataAfterSave = (editorData) => {
         if (validateBeforeSave) {
-            const isValid = validateBeforeSave(data, showAlert);
+            const isValid = validateBeforeSave(editorData, showAlert);
             if (!isValid) return;
         }
-        onSave(data);
+        onSave(editorData);
     };
 
     return (

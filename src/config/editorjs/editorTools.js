@@ -61,3 +61,7 @@ export const getEditorTools = ({
 
     return tools;
 };
+
+export function getProjectTools() {
+    return getEditorTools({ includeTagline: true, includeTags: true });
+}
