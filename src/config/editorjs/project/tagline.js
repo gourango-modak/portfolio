@@ -4,7 +4,7 @@ export default class TagLine extends Paragraph {
     static get toolbox() {
         return {
             title: "Tagline",
-            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4H20V5H4V4Z" fill="currentColor" /><path d="M4 9H20V10H4V9Z" fill="currentColor" /><path d="M4 14H14V15H4V14Z" fill="currentColor" /></svg>`,
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 5H19V6H5V5Z" fill="currentColor" /><path d="M5 10H19V11H5V10Z" fill="currentColor" /><path d="M5 15H15V16H5V15Z" fill="currentColor" /></svg>`,
         };
     }
 

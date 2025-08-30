@@ -2,7 +2,7 @@ class Code {
     static get toolbox() {
         return {
             title: "Code",
-            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 3l-3 4 3 4M9 3l3 4-3 4"/></svg>`,
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l-3 4 3 4M9 3l3 4-3 4"/></svg>`,
         };
     }
 
