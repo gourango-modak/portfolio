@@ -3,11 +3,10 @@ import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Table from "@editorjs/table";
-import CodeTool from "./code";
-import TitleTool from "./title";
-import TagListTool from "./tagList";
-import TaglineTool from "./project/tagline";
-import GalleryTool from "./project/gallery";
+import Code from "./tools/code";
+import Title from "./tools/title";
+import TagList from "./tools/tagList";
+import { CONTENT_TYPES } from "..";
 
 export const EDITOR_JS_TOOLS = {
     header: Header,
@@ -43,10 +42,42 @@ export const EDITOR_JS_TOOLS = {
         //     preserveBlank: true,
         // },
     },
-    code: CodeTool,
-    title: TitleTool,
-    tag: TagListTool,
     table: Table,
+    code: Code,
+    title: Title,
+    tag: TagList,
+};
+
+export const CUSTOM_TOOLS = {
+    CODE: {
+        TYPE: "code",
+    },
+    TITLE: {
+        TYPE: "title",
+    },
+    TAGLIST: {
+        TYPE: "tags",
+    },
+    TAGLINE: {
+        TYPE: "tagline",
+    },
+    GALLERY: {
+        TYPE: "gallery",
+    },
+};
+
+export const getEditorJsTools = (contentType) => {
+    const tools = EDITOR_JS_TOOLS;
+    switch (contentType) {
+        case CONTENT_TYPES.BLOG:
+            return tools;
+        case CONTENT_TYPES.PROJECT:
+            tools.tagline = TaglineTool;
+            tools.gallery = GalleryTool;
+            return tools;
+        default:
+            return tools;
+    }
 };
 
 export const EDITOR_JS_INITIALDATA = {
@@ -60,48 +91,25 @@ export const EDITOR_JS_INITIALDATA = {
     ],
 };
 
-export const getEditorTools = ({
-    includeTagline = false,
-    includeGallery = false,
-}) => {
-    const tools = EDITOR_JS_TOOLS;
-
-    if (includeTagline) {
-        tools.tagline = TaglineTool;
+export function getEditorJsInitialData(contentType) {
+    switch (contentType) {
+        case CONTENT_TYPES.BLOG:
+            return {
+                ...EDITOR_JS_INITIALDATA,
+                blocks: [...EDITOR_JS_INITIALDATA.blocks],
+            };
+        case CONTENT_TYPES.PROJECT:
+            return {
+                ...EDITOR_JS_INITIALDATA,
+                blocks: [
+                    ...EDITOR_JS_INITIALDATA.blocks,
+                    {
+                        type: "tagline",
+                        data: { text: "" },
+                    },
+                ],
+            };
+        default:
+            return EDITOR_JS_INITIALDATA;
     }
-
-    if (includeGallery) {
-        tools.gallery = GalleryTool;
-    }
-
-    return tools;
-};
-
-export function getProjectTools() {
-    return getEditorTools({
-        includeTagline: true,
-        includeGallery: true,
-    });
-}
-
-// Blog-specific initial data
-export function getBlogEditorInitialData() {
-    return {
-        ...EDITOR_JS_INITIALDATA,
-        blocks: [...EDITOR_JS_INITIALDATA.blocks],
-    };
-}
-
-// Project-specific initial data
-export function getProjectEditorInitialData() {
-    return {
-        ...EDITOR_JS_INITIALDATA,
-        blocks: [
-            ...EDITOR_JS_INITIALDATA.blocks,
-            {
-                type: "tagline",
-                data: { text: "" },
-            },
-        ],
-    };
 }

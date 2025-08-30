@@ -1,12 +1,12 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import Home from "./pages/home/Index";
-import About from "./pages/About";
-import Blog from "./pages/blog/Blog";
-import Projects from "./pages/projects/Projects";
-import ProjectDetailPage from "./pages/projects/ProjectDetailPage";
-import BlogPostDetailPage from "./pages/blog/BlogPostDetailPage";
-import Contact from "./pages/Contact";
+import Layout from "./components/Layout";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import BlogPage from "./pages/BlogPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import PostDetailPage from "./pages/PostDetailPage";
+import ContactPage from "./pages/ContactPage";
 import ScrollToTop from "./components/Common/ScrollToTop";
 
 const App = () => {
@@ -17,57 +17,57 @@ const App = () => {
                 <Route
                     path="/"
                     element={
-                        <MainLayout>
-                            <Home />
-                        </MainLayout>
+                        <Layout>
+                            <HomePage />
+                        </Layout>
                     }
                 />
                 <Route
                     path="/about"
                     element={
-                        <MainLayout>
-                            <About />
-                        </MainLayout>
+                        <Layout>
+                            <AboutPage />
+                        </Layout>
                     }
                 />
                 <Route
                     path="/blog"
                     element={
-                        <MainLayout>
-                            <Blog />
-                        </MainLayout>
+                        <Layout>
+                            <BlogPage />
+                        </Layout>
                     }
                 />
                 <Route
                     path="/projects"
                     element={
-                        <MainLayout>
-                            <Projects />
-                        </MainLayout>
+                        <Layout>
+                            <ProjectsPage />
+                        </Layout>
                     }
                 />
                 <Route
                     path="/projects/:id"
                     element={
-                        <MainLayout>
+                        <Layout>
                             <ProjectDetailPage />
-                        </MainLayout>
+                        </Layout>
                     }
                 />
                 <Route
                     path="/blog/:id"
                     element={
-                        <MainLayout>
-                            <BlogPostDetailPage />
-                        </MainLayout>
+                        <Layout>
+                            <PostDetailPage />
+                        </Layout>
                     }
                 />
                 <Route
                     path="/contact"
                     element={
-                        <MainLayout>
-                            <Contact />
-                        </MainLayout>
+                        <Layout>
+                            <ContactPage />
+                        </Layout>
                     }
                 />
             </Routes>

@@ -1,3 +1,4 @@
+import { CONTENT_TYPES } from "../config";
 import { isValidUrl } from "./common";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 
@@ -54,23 +55,29 @@ export const validatePostForm = (data) => {
     return errors;
 };
 
-export const validateEditorModal = (
-    editorData,
-    requireOptions = {},
-    showAlert
-) => {
-    // Default validation requirements
-    const defaultRequire = {
+const getRequiredOptions = (contentType) => {
+    // Default required options for all content type
+    const requiredOptions = {
         requireTitle: true,
         requireTags: false,
         requireTagline: false,
     };
 
-    // Merge defaults with caller-provided options
-    const { requireTitle, requireTags, requireTagline } = {
-        ...defaultRequire,
-        ...requireOptions,
-    };
+    switch (contentType) {
+        case CONTENT_TYPES.BLOG:
+            return requiredOptions;
+        case CONTENT_TYPES.PROJECT:
+            requiredOptions.requireTitle = true;
+            requiredOptions.requireTagline = true;
+            return requiredOptions;
+        default:
+            return requiredOptions;
+    }
+};
+
+export const validateEditorJsModal = (contentType, editorData, showAlert) => {
+    const { requireTitle, requireTags, requireTagline } =
+        getRequiredOptions(contentType);
 
     const errors = [];
 
@@ -100,16 +107,4 @@ export const validateEditorModal = (
     }
 
     return errors.length === 0; // valid if no errors
-};
-
-export const validateEditorModalForBlogPost = (editorData, showAlert) => {
-    return validateEditorModal(editorData, {}, showAlert);
-};
-
-export const validateEditorModalForProject = (editorData, showAlert) => {
-    return validateEditorModal(
-        editorData,
-        { requireTags: true, requireTagline: true },
-        showAlert
-    );
 };

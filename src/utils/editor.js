@@ -1,3 +1,5 @@
+import { CUSTOM_TOOLS } from "../config/editorJs/editorTools";
+
 export function extractTitle(editorData) {
     if (!editorData || !Array.isArray(editorData.blocks)) {
         return { title: null, content: editorData };
@@ -7,7 +9,7 @@ export function extractTitle(editorData) {
     const remainingBlocks = [];
 
     for (const block of editorData.blocks) {
-        if (block.type === "title" && !title) {
+        if (block.type === CUSTOM_TOOLS.TITLE.TYPE && !title) {
             // Take the first title block only
             title = block.data.text;
         } else {
@@ -28,7 +30,7 @@ export function extractTags(editorData) {
 
     const tagsSet = new Set(); // Use a Set to remove duplicates
     const remainingBlocks = editorData.blocks.filter((block) => {
-        if (block.type === "tag") {
+        if (block.type === CUSTOM_TOOLS.TAGLIST.TYPE) {
             if (block.data && typeof block.data.text === "string") {
                 const regex = /#\w+/g;
                 const matches = block.data.text.match(regex);
@@ -54,7 +56,7 @@ export function extractTagline(editorData) {
 
     let tagline = "";
     const remainingBlocks = editorData.blocks.filter((block) => {
-        if (block.type === "tagline") {
+        if (block.type === CUSTOM_TOOLS.TAGLINE.TYPE) {
             if (block.data && typeof block.data.text === "string") {
                 tagline = block.data.text.trim();
             }

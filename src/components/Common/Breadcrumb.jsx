@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
-import { CONFIG } from "../../config/config";
+import { truncateBreadcrumb } from "../../utils/common";
 
 export const Breadcrumb = ({ crumbs }) => {
-    const truncate = (text, maxLength = CONFIG.BREADCRUMB_MAX_LENGTH) =>
-        text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-
     return (
         <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex flex-wrap items-center gap-3 text-[14.5px] text-slate-500">
@@ -18,10 +15,10 @@ export const Breadcrumb = ({ crumbs }) => {
                                 to={crumb.to}
                                 className="text-indigo-600 hover:underline"
                             >
-                                {truncate(crumb.label)}
+                                {crumb.label}
                             </Link>
                         ) : (
-                            <span>{truncate(crumb.label)}</span>
+                            <span>{truncateBreadcrumb(crumb.label)}</span>
                         )}
 
                         {/* Add separator after text, except for the last crumb */}

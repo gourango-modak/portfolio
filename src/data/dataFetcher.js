@@ -1,10 +1,10 @@
-import { CONFIG } from "../config/config";
-import { delay } from "../utils/common";
+import { SIMULATE_API_DELAY } from "../config";
+import { delay } from "./../utils/common";
 
 const cache = {};
 
 export const fetchAllData = async (baseUrl, files, type) => {
-    if (CONFIG.SIMULATE_API_DELAY) {
+    if (SIMULATE_API_DELAY) {
         await delay(10 * 1000);
     }
 

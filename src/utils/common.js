@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config";
+import { BREADCRUMB_MAX_LENGTH } from "../config";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
@@ -23,10 +23,7 @@ export const truncateText = (text, maxLength = 0, suffix = "") => {
     return text.length > limit ? text.slice(0, limit) + suffix : text;
 };
 
-export const truncateBreadcrumb = (
-    text,
-    maxLength = CONFIG.BREADCRUMB_MAX_LENGTH
-) => {
+export const truncateBreadcrumb = (text, maxLength = BREADCRUMB_MAX_LENGTH) => {
     return truncateText(text, maxLength, "...");
 };
 
@@ -78,7 +75,6 @@ export const preparePostData = (editorData, metaData) => {
     };
 };
 
-// URL validation helper
 export const isValidUrl = (url) => {
     try {
         new URL(url);

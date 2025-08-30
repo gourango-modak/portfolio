@@ -1,8 +1,8 @@
 import { PlusCircle } from "lucide-react";
-import { CONFIG } from "../../config/config";
+import { IS_DEVENV } from "../../config";
 
 const AddContentButton = ({ onClick }) => {
-    if (!CONFIG.IS_DEVENV) return null;
+    if (IS_DEVENV) return null;
 
     return (
         <button
