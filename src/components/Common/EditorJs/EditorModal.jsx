@@ -37,7 +37,11 @@ const EditorModal = ({
                 isOpen={isOpen}
                 onClose={onClose}
                 title={title}
-                style={{ width: "w-6xl", padding: "px-6 pb-6 pt-12" }}
+                style={{
+                    width: "w-6xl",
+                    padding: "px-6 pb-6 pt-12",
+                    minHeight: "min-h-[80vh]",
+                }}
                 showHeader={title ? true : false}
                 footer={
                     <>

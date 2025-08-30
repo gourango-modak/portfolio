@@ -10,7 +10,7 @@ export const useEditor = ({ holder, tools, initialData }) => {
             const editor = new EditorJS({
                 holder: holder,
                 autofocus: true,
-                placeholder: "Write your blog content here...",
+                placeholder: "Write your content here...",
                 tools: tools,
                 data: initialData,
             });

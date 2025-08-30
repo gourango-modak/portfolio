@@ -12,7 +12,11 @@ export default class TitleBlock extends Header {
     constructor({ data, config, api, readOnly }) {
         super({
             data,
-            config: { levels: [1], defaultLevel: 1 },
+            config: {
+                levels: [1],
+                defaultLevel: 1,
+                placeholder: "Enter your title here...",
+            },
             api,
             readOnly,
         });

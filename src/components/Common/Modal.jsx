@@ -7,6 +7,7 @@ const defaultStyle = {
     position: "top",
     width: "w-6xl",
     padding: "p-6",
+    minHeight: "",
 };
 
 const Modal = ({
@@ -73,7 +74,9 @@ const Modal = ({
                     )}
 
                     {/* Modal Body (Scrollable) */}
-                    <div className={`${mergedStyle.padding} overflow-y-auto`}>
+                    <div
+                        className={`${mergedStyle.padding} ${mergedStyle.minHeight} overflow-y-auto`}
+                    >
                         {children}
                     </div>
 

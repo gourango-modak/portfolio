@@ -8,6 +8,18 @@ export default class TagLine extends Paragraph {
         };
     }
 
+    constructor({ data, config, api, readOnly }) {
+        super({
+            data,
+            config: {
+                ...config,
+                placeholder: "Enter your project tagline here...",
+            },
+            api,
+            readOnly,
+        });
+    }
+
     // Override the type for the saved data
     save(blockContent) {
         const data = super.save(blockContent);

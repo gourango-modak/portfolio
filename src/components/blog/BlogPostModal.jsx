@@ -3,11 +3,12 @@ import EditorModal from "../common/EditorJs/EditorModal";
 import Editor from "../common/EditorJs/Editor";
 import { validateEditorModalForBlogPost } from "../../utils/validation";
 import BlogPostSaveModal from "./BlogPostSaveModal";
+import { getBlogEditorInitialData } from "../../config/editorjs/editorTools";
 
 const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
     const [isBlogPostSaveModalOpen, setIsBlogPostSaveModalOpen] =
         useState(false);
-    const [editorData, setEditorData] = useState(null);
+    const [editorData, setEditorData] = useState(getBlogEditorInitialData());
 
     const handleSave = (data) => {
         setEditorData(data);
@@ -23,11 +24,11 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
     const handleBlogPostSaveModalSave = () => {
         setIsBlogPostSaveModalOpen(false);
         setIsOpen(false);
-        setEditorData(null);
+        setEditorData(getBlogEditorInitialData());
     };
 
     const handleEditorModalClose = () => {
-        setEditorData(null);
+        setEditorData(getBlogEditorInitialData());
         onClose();
     };
 

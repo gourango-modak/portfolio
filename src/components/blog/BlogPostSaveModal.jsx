@@ -61,7 +61,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, editorData, onSave }) => {
                 onChange={handleChange}
                 required={true}
                 error={errors.description}
-                minRows={4}
+                minRows={3}
             />
         </Modal>
     );

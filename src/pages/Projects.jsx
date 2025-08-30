@@ -8,12 +8,15 @@ import { CONFIG } from "../config/config";
 import EditorModal from "../components/common/EditorJs/EditorModal";
 import Editor from "../components/common/EditorJs/Editor";
 import { validateEditorModalForProject } from "../utils/validation";
-import { getProjectTools } from "../config/editorJs/editorTools";
+import {
+    getProjectEditorInitialData,
+    getProjectTools,
+} from "../config/editorJs/editorTools";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-    const [editorData, setEditorData] = useState(null);
+    const [editorData, setEditorData] = useState(getProjectEditorInitialData());
 
     const handleSave = (data) => {
         setEditorData(data);
@@ -22,7 +25,7 @@ const Projects = () => {
     };
 
     const handleEditorModalClose = () => {
-        setEditorData(null);
+        setEditorData(getProjectEditorInitialData());
         setIsEditorModalOpen(false);
     };
 
@@ -34,7 +37,7 @@ const Projects = () => {
     const handleProjectModalSave = () => {
         setIsProjectModalOpen(false);
         setIsEditorModalOpen(false);
-        setEditorData(null);
+        setEditorData(getProjectEditorInitialData());
     };
 
     return (

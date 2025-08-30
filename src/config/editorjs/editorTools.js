@@ -45,6 +45,17 @@ export const EDITOR_JS_TOOLS = {
     title: TitleTool,
 };
 
+export const EDITOR_JS_INITIALDATA = {
+    blocks: [
+        {
+            type: "title",
+            data: {
+                text: "",
+            },
+        },
+    ],
+};
+
 export const getEditorTools = ({
     includeTags = false,
     includeTagline = false,
@@ -64,4 +75,26 @@ export const getEditorTools = ({
 
 export function getProjectTools() {
     return getEditorTools({ includeTagline: true, includeTags: true });
+}
+
+// Blog-specific initial data
+export function getBlogEditorInitialData() {
+    return {
+        ...EDITOR_JS_INITIALDATA,
+        blocks: [...EDITOR_JS_INITIALDATA.blocks],
+    };
+}
+
+// Project-specific initial data
+export function getProjectEditorInitialData() {
+    return {
+        ...EDITOR_JS_INITIALDATA,
+        blocks: [
+            ...EDITOR_JS_INITIALDATA.blocks,
+            {
+                type: "tagline",
+                data: { text: "" },
+            },
+        ],
+    };
 }
