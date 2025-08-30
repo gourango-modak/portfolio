@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Loader from "./Loader";
 
 const DataLoader = ({ fetchData, render }) => {
     const [data, setData] = useState(null);
@@ -22,11 +23,7 @@ const DataLoader = ({ fetchData, render }) => {
 
     if (isLoading) {
         // You can customize this loading message or replace it with a spinner component
-        return (
-            <div className="pt-32 min-h-screen text-center text-slate-500">
-                Loading...
-            </div>
-        );
+        return <Loader />;
     }
 
     // Once data is loaded, call the render prop function with the data

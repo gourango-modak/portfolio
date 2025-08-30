@@ -1,7 +1,7 @@
 const SkillBadge = ({ name, proficiency, experience, iconClass }) => {
     const tooltipDetails = [
-        `Proficiency: ${proficiency}`,
-        `Experience: ${experience}`,
+        { title: "Proficiency", value: proficiency },
+        { title: "Experience", value: experience },
     ];
 
     return (
@@ -22,7 +22,10 @@ const SkillBadge = ({ name, proficiency, experience, iconClass }) => {
                      whitespace-normal break-words min-w-max max-w-xs text-center top-[-8px]"
                 >
                     {tooltipDetails.map((detail, index) => (
-                        <div key={index}>{detail}</div>
+                        <div key={index}>
+                            <span className="font-medium">{detail.title}:</span>{" "}
+                            {detail.value}
+                        </div>
                     ))}
 
                     {/* Tooltip Arrow */}

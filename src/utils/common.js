@@ -87,3 +87,5 @@ export const isValidUrl = (url) => {
         return false;
     }
 };
+
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

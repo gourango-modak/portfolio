@@ -17,21 +17,23 @@ const Blog = () => {
                 <DataLoader
                     fetchData={fetchPosts}
                     render={(posts) => (
-                        <div className="space-y-8">
-                            {posts.map((post) => (
-                                <BlogPostCard key={post.id} post={post} />
-                            ))}
-                        </div>
+                        <>
+                            <div className="space-y-8">
+                                {posts.map((post) => (
+                                    <BlogPostCard key={post.id} post={post} />
+                                ))}
+                            </div>
+                            <div className="mt-12 text-center">
+                                <Link
+                                    to="/blog"
+                                    className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"
+                                >
+                                    Read All Posts
+                                </Link>
+                            </div>
+                        </>
                     )}
                 />
-            </div>
-            <div className="mt-12 text-center">
-                <Link
-                    to="/blog"
-                    className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"
-                >
-                    Read All Posts
-                </Link>
             </div>
         </section>
     );
