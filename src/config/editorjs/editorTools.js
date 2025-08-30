@@ -2,6 +2,7 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
+import Table from "@editorjs/table";
 import CodeTool from "./code";
 import TitleTool from "./title";
 import TagListTool from "./tagList";
@@ -45,6 +46,7 @@ export const EDITOR_JS_TOOLS = {
     code: CodeTool,
     title: TitleTool,
     tag: TagListTool,
+    table: Table,
 };
 
 export const EDITOR_JS_INITIALDATA = {

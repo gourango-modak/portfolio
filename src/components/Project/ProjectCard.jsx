@@ -1,5 +1,7 @@
 import { Code } from "lucide-react";
 import { Link } from "react-router-dom";
+import { truncateText } from "../../utils/common";
+import { CONFIG } from "../../config/config";
 
 const ProjectCard = ({ project }) => {
     return (
@@ -13,7 +15,11 @@ const ProjectCard = ({ project }) => {
                     {project.title}
                 </h3>
                 <p className="text-slate-600 mb-4 flex-grow">
-                    {project.description}
+                    {truncateText(
+                        project.description,
+                        CONFIG.CARD_DESCRIPTION_MAX_LENGTH,
+                        "..."
+                    )}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-auto">
                     {project.technologies?.length > 0 &&

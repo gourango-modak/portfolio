@@ -1,4 +1,5 @@
 import { Server, Database, Paintbrush, Wrench } from "lucide-react";
+import SkillsShowcase from "../../components/skill/SkillsShowcase";
 
 const Skill = () => {
     const skillsData = [
@@ -46,7 +47,8 @@ const Skill = () => {
                     A summary of my technical expertise, from backend logic to
                     frontend design and deployment.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <SkillsShowcase />
+                {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {skillsData.map((skillCategory) => (
                         <div
                             key={skillCategory.category}
@@ -72,7 +74,7 @@ const Skill = () => {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
         </section>
     );
