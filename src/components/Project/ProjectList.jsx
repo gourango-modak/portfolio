@@ -1,16 +1,18 @@
 import { useMemo, useState } from "react";
 import SearchBar from "../common/SearchBar";
 import TagFilter from "../common/TagFilter";
-import BlogPostGrid from "./BlogPostGrid";
+import ProjectGrid from "./ProjectGrid";
 
-const BlogPostList = ({ posts }) => {
+const ProjectList = ({ projects }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedTag, setSelectedTag] = useState(null);
 
     // Calculate top 10 tags
     const topTags = useMemo(() => {
-        const tagCounts = posts
-            .flatMap((post) => (Array.isArray(post.tags) ? post.tags : []))
+        const tagCounts = projects
+            .flatMap((project) =>
+                Array.isArray(project.tags) ? project.tags : []
+            )
             .reduce((acc, tag) => {
                 acc[tag] = (acc[tag] || 0) + 1;
                 return acc;
@@ -20,20 +22,20 @@ const BlogPostList = ({ posts }) => {
             .sort(([, a], [, b]) => b - a)
             .slice(0, 10)
             .map(([tag]) => tag);
-    }, [posts]);
+    }, [projects]);
 
-    // Filter posts based on search & selected tag
-    const filteredPosts = useMemo(() => {
-        return posts.filter((post) => {
-            const titleMatch = post.title
+    // Filter projects based on search & selected tag
+    const filteredProjects = useMemo(() => {
+        return projects.filter((project) => {
+            const titleMatch = project.title
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase());
             const tagMatch = selectedTag
-                ? post.tags.includes(selectedTag)
+                ? project.tags.includes(selectedTag)
                 : true;
             return titleMatch && tagMatch;
         });
-    }, [searchTerm, selectedTag, posts]);
+    }, [searchTerm, selectedTag, projects]);
 
     return (
         <>
@@ -47,14 +49,14 @@ const BlogPostList = ({ posts }) => {
                     topTags={topTags}
                     selectedTag={selectedTag}
                     setSelectedTag={setSelectedTag}
-                    allLabel="All Posts"
+                    allLabel="All Projects"
                 />
             </div>
 
-            {/* Posts Grid */}
-            <BlogPostGrid posts={filteredPosts} />
+            {/* Projects Grid */}
+            <ProjectGrid projects={filteredProjects} />
         </>
     );
 };
 
-export default BlogPostList;
+export default ProjectList;

@@ -12,6 +12,7 @@ import {
     getProjectEditorInitialData,
     getProjectTools,
 } from "../config/editorJs/editorTools";
+import ProjectList from "../components/project/ProjectList";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -65,14 +66,7 @@ const Projects = () => {
                     <DataLoader
                         fetchData={fetchProjects}
                         render={(projects) => (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {projects.map((project) => (
-                                    <ProjectCard
-                                        key={project.id}
-                                        project={project}
-                                    />
-                                ))}
-                            </div>
+                            <ProjectList projects={projects} />
                         )}
                     />
                 </div>

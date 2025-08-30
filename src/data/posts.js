@@ -1,4 +1,3 @@
-import { delay } from "../utils/common";
 import { fetchAllData } from "./dataFetcher";
 
 const postBaseUrl =
@@ -7,7 +6,6 @@ const postBaseUrl =
 const postFiles = ["1756556084593_theultimateguidetomodernwebdevelopment.json"];
 
 export const fetchPosts = async (limit) => {
-    await delay(10 * 1000);
     const posts = await fetchAllData(postBaseUrl, postFiles, "posts");
 
     if (limit && Number.isInteger(limit) && limit > 0) {
