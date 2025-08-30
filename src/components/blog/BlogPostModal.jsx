@@ -1,15 +1,16 @@
 import { useState } from "react";
 import EditorModal from "../common/EditorJs/EditorModal";
 import Editor from "../common/EditorJs/Editor";
+import { validateEditorModalForBlogPost } from "../../utils/validation";
 import BlogPostSaveModal from "./BlogPostSaveModal";
 
 const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
     const [isBlogPostSaveModalOpen, setIsBlogPostSaveModalOpen] =
         useState(false);
-    const [postData, setPostData] = useState(null);
+    const [editorData, setEditorData] = useState(null);
 
     const handleSave = (data) => {
-        setPostData(data);
+        setEditorData(data);
         onClose();
         setIsBlogPostSaveModalOpen(true);
     };
@@ -22,11 +23,11 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
     const handleBlogPostSaveModalSave = () => {
         setIsBlogPostSaveModalOpen(false);
         setIsOpen(false);
-        setPostData(null);
+        setEditorData(null);
     };
 
     const handleEditorModalClose = () => {
-        setPostData(null);
+        setEditorData(null);
         onClose();
     };
 
@@ -37,14 +38,15 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
                 onClose={handleEditorModalClose}
                 EditorComponent={Editor}
                 onSave={handleSave}
-                editorInitialData={postData}
+                editorInitialData={editorData}
+                validateBeforeSave={validateEditorModalForBlogPost}
             />
 
             <BlogPostSaveModal
                 isOpen={isBlogPostSaveModalOpen}
                 onClose={handleBlogPostSaveModalClose}
                 onSave={handleBlogPostSaveModalSave}
-                postData={postData}
+                editorData={editorData}
             />
         </>
     );

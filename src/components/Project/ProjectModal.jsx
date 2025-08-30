@@ -1,12 +1,11 @@
 import Modal from "../common/Modal";
-import { downloadJson } from "../../utils/common";
+import { downloadJson, prepareProjectData } from "../../utils/common";
 import { validateProjectForm } from "../../utils/validation";
 import { useProjectForm } from "../../hooks/useProjectForm";
 import { ProjectForm } from "./ProjectForm";
-import { generateId, getFileName } from "../../utils/common";
+import { getFileName } from "../../utils/common";
 
 const initialData = {
-    title: "",
     tagline: "",
     description: "",
     liveUrl: "",
@@ -16,7 +15,7 @@ const initialData = {
     technologies: [],
 };
 
-const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
+const ProjectModal = ({ isOpen, onClose, onSave, editorData }) => {
     if (!isOpen) return null;
 
     const { formData, handleChange, errors, setErrors } =
@@ -28,14 +27,11 @@ const ProjectModal = ({ isOpen, onClose, onSave, projectContent }) => {
             setErrors(validationErrors);
             return;
         }
-        const project = {
-            id: generateId(),
-            createdAt: Date.now(),
-            ...formData,
-            content: projectContent,
-            technologies: formData.technologies.split(","),
-        };
-        downloadJson(project, getFileName(project.title, project.id));
+        const projectData = prepareProjectData(editorData, formData);
+        downloadJson(
+            projectData,
+            getFileName(projectData.title, projectData.id)
+        );
         onSave();
     };
 

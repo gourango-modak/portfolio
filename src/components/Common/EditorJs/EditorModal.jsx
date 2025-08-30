@@ -10,6 +10,8 @@ const EditorModal = ({
     onSave,
     editorInitialData,
     actionBtnTitle = "Save",
+    validateBeforeSave,
+    editorTools,
 }) => {
     if (!isOpen) return null;
     const editorRef = useRef(null);
@@ -22,9 +24,9 @@ const EditorModal = ({
     };
 
     const handleDataAfterSave = (data) => {
-        if (!data || (Array.isArray(data.blocks) && data.blocks.length === 0)) {
-            showAlert("No content here! Please add something before saving.");
-            return;
+        if (validateBeforeSave) {
+            const isValid = validateBeforeSave(data, showAlert);
+            if (!isValid) return;
         }
         onSave(data);
     };
@@ -60,6 +62,7 @@ const EditorModal = ({
                         ref={editorRef}
                         onSave={handleDataAfterSave}
                         initialData={editorInitialData}
+                        tools={editorTools}
                     />
                 )}
             </Modal>

@@ -1,3 +1,6 @@
+import { CONFIG } from "../config/config";
+import { extractTags, extractTitle } from "./editor";
+
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
 export const downloadJson = (data, fileName) => {
@@ -20,7 +23,10 @@ export const truncateText = (text, maxLength = 0, suffix = "") => {
     return text.length > limit ? text.slice(0, limit) + suffix : text;
 };
 
-export const truncateBreadcrumb = (text, maxLength = 20) => {
+export const truncateBreadcrumb = (
+    text,
+    maxLength = CONFIG.BREADCRUMB_MAX_LENGTH
+) => {
     return truncateText(text, maxLength, "...");
 };
 
@@ -35,4 +41,33 @@ export const getFileName = (title, id) => {
     name = name.replace(/^-+|-+$/g, "");
 
     return `${id}_${name}.json`;
+};
+
+export const prepareProjectData = (editorData, metaData) => {
+    const { tags: extractedTags, content: contentWithoutTags } =
+        extractTags(editorData);
+    const { title: extractedTitle, content: contentWithoutTitle } =
+        extractTitle(contentWithoutTags);
+
+    return {
+        id: generateId(),
+        title: extractedTitle,
+        createdAt: Date.now(),
+        ...metaData,
+        technologies: extractedTags,
+        content: contentWithoutTitle,
+    };
+};
+
+export const preparePostData = (editorData, metaData) => {
+    const { title: extractedTitle, content: contentWithoutTitle } =
+        extractTitle(editorData);
+
+    return {
+        id: generateId(),
+        title: extractedTitle,
+        createdAt: Date.now(),
+        ...metaData,
+        content: contentWithoutTitle,
+    };
 };

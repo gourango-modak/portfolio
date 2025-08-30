@@ -1,39 +1,29 @@
 import { useState } from "react";
 import Modal from "../common/Modal";
 import { validatePostForm } from "../../utils/validation";
-import { downloadJson, generateId, getFileName } from "../../utils/common";
+import { downloadJson, getFileName, preparePostData } from "../../utils/common";
 import { InputField } from "../common/InputField";
 
-const initialData = {
-    title: "",
-    description: "",
-};
-
-const BlogPostSaveModal = ({ isOpen, onClose, postData, onSave }) => {
+const BlogPostSaveModal = ({ isOpen, onClose, editorData, onSave }) => {
     if (!isOpen) return null;
 
-    const [formData, setFormData] = useState(initialData);
+    const [description, setDescription] = useState("");
     const [errors, setErrors] = useState("");
 
     const handleSaveClick = () => {
-        const validationErrors = validatePostForm(formData);
+        const validationErrors = validatePostForm({ description });
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-        const post = {
-            id: generateId(),
-            timestamp: Date.now(),
-            ...formData,
-            content: postData,
-        };
+        const post = preparePostData(editorData, { description });
         downloadJson(post, getFileName(post.title, post.id));
         onSave();
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setDescription(value);
 
         // clear error if value entered
         if (value.trim() !== "") {
@@ -46,7 +36,7 @@ const BlogPostSaveModal = ({ isOpen, onClose, postData, onSave }) => {
             isOpen={isOpen}
             onClose={onClose}
             title="Create Post"
-            style={{ width: "w-2xl" }}
+            style={{ width: "w-lg" }}
             footer={
                 <>
                     <button
@@ -65,22 +55,13 @@ const BlogPostSaveModal = ({ isOpen, onClose, postData, onSave }) => {
             }
         >
             <InputField
-                label="Title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required={true}
-                error={errors.title}
-                rows="1"
-            />
-
-            <InputField
                 label="Short Description"
                 name="description"
-                value={formData.description}
+                value={description}
                 onChange={handleChange}
                 required={true}
                 error={errors.description}
+                minRows={4}
             />
         </Modal>
     );

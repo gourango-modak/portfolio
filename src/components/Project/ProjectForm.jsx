@@ -4,15 +4,6 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
     return (
         <>
             <InputField
-                label="Title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required={true}
-                error={errors.title}
-            />
-
-            <InputField
                 label="Tagline"
                 name="tagline"
                 value={formData.tagline}
@@ -28,6 +19,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                 onChange={handleChange}
                 required={true}
                 error={errors.description}
+                minRows={2}
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -49,15 +41,6 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                     error={errors.endDate}
                 />
             </div>
-            <InputField
-                label="Technologies (Comma Separated)"
-                name="technologies"
-                value={formData.technologies}
-                onChange={handleChange}
-                required={true}
-                error={errors.technologies}
-                minRows={2}
-            />
             <InputField
                 label="Live Site URL"
                 name="liveUrl"

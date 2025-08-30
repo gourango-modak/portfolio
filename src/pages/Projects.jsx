@@ -7,20 +7,22 @@ import { fetchProjects } from "../data/projects";
 import { CONFIG } from "../config/config";
 import EditorModal from "../components/common/EditorJs/EditorModal";
 import Editor from "../components/common/EditorJs/Editor";
+import { validateEditorModalForProject } from "../utils/validation";
+import { getProjectTools } from "../utils/editor";
 
 const Projects = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-    const [projectData, setProjectData] = useState(null);
+    const [editorData, setEditorData] = useState(null);
 
     const handleSave = (data) => {
-        setProjectData(data);
+        setEditorData(data);
         setIsEditorModalOpen(false);
         setIsProjectModalOpen(true);
     };
 
     const handleEditorModalClose = () => {
-        setProjectData(null);
+        setEditorData(null);
         setIsEditorModalOpen(false);
     };
 
@@ -32,7 +34,7 @@ const Projects = () => {
     const handleProjectModalSave = () => {
         setIsProjectModalOpen(false);
         setIsEditorModalOpen(false);
-        setProjectData(null);
+        setEditorData(null);
     };
 
     return (
@@ -77,14 +79,16 @@ const Projects = () => {
                 onClose={handleEditorModalClose}
                 EditorComponent={Editor}
                 onSave={handleSave}
-                editorInitialData={projectData}
+                editorInitialData={editorData}
                 actionBtnTitle="Next"
+                validateBeforeSave={validateEditorModalForProject}
+                editorTools={getProjectTools()}
             />
             <ProjectModal
                 isOpen={isProjectModalOpen}
                 onClose={handleProjectModalClose}
                 onSave={handleProjectModalSave}
-                projectContent={projectData}
+                editorData={editorData}
             />
         </>
     );

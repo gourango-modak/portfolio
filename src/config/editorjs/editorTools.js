@@ -2,9 +2,11 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
-import CodeTool from "./codeTool";
+import CodeTool from "./code";
+import TitleTool from "./title";
+import TagListTool from "./tagList";
+import TaglineTool from "./project/tagline";
 
-// This configuration object defines all the tools and their settings for Editor.js.
 export const EDITOR_JS_TOOLS = {
     header: Header,
     list: List,
@@ -40,4 +42,22 @@ export const EDITOR_JS_TOOLS = {
         // },
     },
     code: CodeTool,
+    title: TitleTool,
+};
+
+export const getEditorTools = ({
+    includeTags = false,
+    includeTagline = false,
+}) => {
+    const tools = EDITOR_JS_TOOLS;
+
+    if (includeTags) {
+        tools.tag = TagListTool;
+    }
+
+    if (includeTagline) {
+        tools.tagline = TaglineTool;
+    }
+
+    return tools;
 };

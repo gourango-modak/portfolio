@@ -8,14 +8,12 @@ const PostHeader = ({ title, date }) => {
             </h1>
 
             <div className="flex items-center gap-4 text-gray-600">
-                {/* Image */}
                 <img
                     src={profile}
                     alt="Gourango Modak"
                     className="w-13 h-13 rounded-full border-2 border-gray-200"
                 />
 
-                {/* Author name + date in a column */}
                 <div className="flex flex-col">
                     <span className="font-semibold text-gray-800">
                         Gourango Modak
