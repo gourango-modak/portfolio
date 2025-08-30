@@ -44,6 +44,7 @@ export const EDITOR_JS_TOOLS = {
     },
     code: CodeTool,
     title: TitleTool,
+    tag: TagListTool,
 };
 
 export const EDITOR_JS_INITIALDATA = {
@@ -58,15 +59,10 @@ export const EDITOR_JS_INITIALDATA = {
 };
 
 export const getEditorTools = ({
-    includeTags = false,
     includeTagline = false,
     includeGallery = false,
 }) => {
     const tools = EDITOR_JS_TOOLS;
-
-    if (includeTags) {
-        tools.tag = TagListTool;
-    }
 
     if (includeTagline) {
         tools.tagline = TaglineTool;
@@ -82,7 +78,6 @@ export const getEditorTools = ({
 export function getProjectTools() {
     return getEditorTools({
         includeTagline: true,
-        includeTags: true,
         includeGallery: true,
     });
 }

@@ -65,13 +65,16 @@ export const prepareProjectData = (editorData, metaData) => {
 export const preparePostData = (editorData, metaData) => {
     const { title: extractedTitle, content: contentWithoutTitle } =
         extractTitle(editorData);
+    const { tags: extractedTags, content: contentWithoutTags } =
+        extractTags(contentWithoutTitle);
 
     return {
         id: generateId(),
         title: extractedTitle,
         createdAt: Date.now(),
+        tags: extractedTags,
         ...metaData,
-        content: contentWithoutTitle,
+        content: contentWithoutTags,
     };
 };
 
