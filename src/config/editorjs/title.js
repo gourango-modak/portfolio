@@ -28,7 +28,22 @@ export default class TitleBlock extends Header {
     }
 
     static get pasteConfig() {
-        return {};
+        return {
+            // Patterns are optional now; we'll use onPaste
+            onPaste: {
+                // Called with a string from clipboard or HTML
+                handler: (event) => {
+                    // event.detail contains the pasted text
+                    const pastedText =
+                        event.detail?.data?.innerText ||
+                        event.detail?.data?.text ||
+                        "";
+                    return {
+                        text: pastedText, // pass text to your block
+                    };
+                },
+            },
+        };
     }
 
     save(blockContent) {

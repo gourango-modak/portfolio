@@ -1,0 +1,305 @@
+{
+  "id": 1756556084593,
+  "title": "The Ultimate Guide to Modern Web Development",
+  "createdAt": 1756556084112,
+  "tags": [
+    "#css",
+    "#html",
+    "#webapp"
+  ],
+  "description": "Web development has evolved tremendously over the past decade. From simple HTML pages to full-fledged web applications, developers now have an abundance of tools and frameworks at their disposal. In this guide, we’ll explore modern web development practices and provide practical examples.",
+  "content": {
+    "time": 1756556070811,
+    "blocks": [
+      {
+        "id": "H8klPKlKFb",
+        "type": "header",
+        "data": {
+          "text": "Introduction",
+          "level": 2
+        }
+      },
+      {
+        "id": "STQ_vb2p-E",
+        "type": "paragraph",
+        "data": {
+          "text": "Web development has evolved tremendously over the past decade. From simple HTML pages to full-fledged web applications, developers now have an abundance of tools and frameworks at their disposal. In this guide, we’ll explore modern web development practices and provide practical examples."
+        }
+      },
+      {
+        "id": "k86_phuMyO",
+        "type": "header",
+        "data": {
+          "text": "Why Modern Web Development Matters",
+          "level": 2
+        }
+      },
+      {
+        "id": "x8NM9kJqKm",
+        "type": "paragraph",
+        "data": {
+          "text": "Developers today must balance performance, accessibility, and maintainability. Modern tools like React, Tailwind CSS, and TypeScript allow for efficient development without sacrificing quality."
+        }
+      },
+      {
+        "id": "L_EPmdfbWW",
+        "type": "header",
+        "data": {
+          "text": "Key Benefits",
+          "level": 3
+        }
+      },
+      {
+        "id": "YIxguiySfF",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Faster development cycles\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Enhanced user experience\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Better maintainability\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Cross-platform compatibility\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "aRI_5ID8Lm",
+        "type": "header",
+        "data": {
+          "text": "Core Technologies",
+          "level": 2
+        }
+      },
+      {
+        "id": "i0Kb-N_iw9",
+        "type": "header",
+        "data": {
+          "text": "HTML &amp; CSS",
+          "level": 3
+        }
+      },
+      {
+        "id": "L6MsI1ZoRN",
+        "type": "paragraph",
+        "data": {
+          "text": "HTML and CSS form the backbone of web development. While HTML provides structure, CSS adds style."
+        }
+      },
+      {
+        "id": "0V0zZkbvQB",
+        "type": "paragraph",
+        "data": {
+          "text": "Example of a simple HTML snippet:"
+        }
+      },
+      {
+        "id": "AFEsGUNC1r",
+        "type": "code",
+        "data": {
+          "language": "html",
+          "code": "<div class=\"container\">\n  <h1>Welcome to Modern Web Development</h1>\n  <p>This is a simple HTML block.</p>\n</div>"
+        }
+      },
+      {
+        "id": "yKY6yEGcOk",
+        "type": "paragraph",
+        "data": {
+          "text": "Inline code is also commonly used, like display: flex; for layout purposes."
+        }
+      },
+      {
+        "id": "8XDmKgNkam",
+        "type": "header",
+        "data": {
+          "text": "JavaScript &amp; Frameworks",
+          "level": 3
+        }
+      },
+      {
+        "id": "a6miyfR1bN",
+        "type": "paragraph",
+        "data": {
+          "text": "JavaScript powers dynamic behavior on the web. Frameworks like React, Vue, and Angular simplify state management and component creation."
+        }
+      },
+      {
+        "id": "HFvd1k8iCD",
+        "type": "code",
+        "data": {
+          "language": "javascript",
+          "code": "function greetUser(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greetUser(\"Gourango\"));"
+        }
+      },
+      {
+        "id": "vd3UdjtkEj",
+        "type": "header",
+        "data": {
+          "text": "Advanced Features",
+          "level": 2
+        }
+      },
+      {
+        "id": "TPNwOTrjY6",
+        "type": "header",
+        "data": {
+          "text": "Responsive Design",
+          "level": 3
+        }
+      },
+      {
+        "id": "S9MSlm2Rtb",
+        "type": "paragraph",
+        "data": {
+          "text": "A website must look good on all devices. Media queries in CSS are essential for responsiveness:"
+        }
+      },
+      {
+        "id": "Nin7b2yIHG",
+        "type": "code",
+        "data": {
+          "language": "css",
+          "code": "@media (max-width: 768px) {\n  .container {\n    flex-direction: column;\n  }\n}"
+        }
+      },
+      {
+        "id": "jxy26sQY_i",
+        "type": "header",
+        "data": {
+          "text": "Lists &amp; Quotes",
+          "level": 2
+        }
+      },
+      {
+        "id": "rHfnPaXs8t",
+        "type": "header",
+        "data": {
+          "text": "Ordered List",
+          "level": 3
+        }
+      },
+      {
+        "id": "Yv7hOYXI-Z",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Plan your project structure\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Choose the right tech stack\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Write clean and maintainable code\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Test thoroughly\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "w88TgO_2l7",
+        "type": "header",
+        "data": {
+          "text": "Unordered List",
+          "level": 3
+        }
+      },
+      {
+        "id": "9F1q2ZBkmt",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "HTML &amp; CSS basics\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "JavaScript fundamentals\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Modern frameworks (React, Vue)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "DevOps &amp; deployment\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "-AlKg7--8w",
+        "type": "header",
+        "data": {
+          "text": "Blockquote",
+          "level": 3
+        }
+      },
+      {
+        "id": "rIi6Msowmx",
+        "type": "paragraph",
+        "data": {
+          "text": "“The best way to predict the future is to invent it.” – Alan Kay"
+        }
+      },
+      {
+        "id": "YRfAfMv_As",
+        "type": "header",
+        "data": {
+          "text": "Conclusion",
+          "level": 2
+        }
+      },
+      {
+        "id": "dMpSIQLYf5",
+        "type": "paragraph",
+        "data": {
+          "text": "Modern web development is all about using the right tools, staying updated, and following best practices. By combining HTML, CSS, JavaScript, frameworks, and accessibility principles, you can build applications that are fast, maintainable, and user-friendly."
+        }
+      },
+      {
+        "id": "wbPQX9OqRA",
+        "type": "paragraph",
+        "data": {
+          "text": "Call to Action:\nStart your journey today by experimenting with React and Tailwind CSS. Happy coding! 🚀"
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
