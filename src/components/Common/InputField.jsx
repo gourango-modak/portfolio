@@ -7,6 +7,7 @@ export const InputField = ({
     onChange,
     required = false,
     error,
+    placeholder = "",
     minRows = 1,
     maxRows = 500,
 }) => {
@@ -17,20 +18,17 @@ export const InputField = ({
         const textarea = textareaRef.current;
 
         const style = getComputedStyle(textarea);
-        const lineHeight = parseFloat(style.lineHeight); // line height in px
+        const lineHeight = parseFloat(style.lineHeight);
         const paddingTop = parseFloat(style.paddingTop);
         const paddingBottom = parseFloat(style.paddingBottom);
 
-        // total padding included
         const verticalPadding = paddingTop + paddingBottom;
 
         const minHeight = lineHeight * minRows + verticalPadding;
         const maxHeight = lineHeight * maxRows + verticalPadding;
 
-        // Reset height to measure scrollHeight
         textarea.style.height = `${minHeight}px`;
 
-        // Grow height based on content, constrained by min/max
         const newHeight = Math.min(
             Math.max(textarea.scrollHeight, minHeight),
             maxHeight
@@ -55,11 +53,16 @@ export const InputField = ({
                 value={value}
                 onChange={onChange}
                 rows={minRows}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none resize-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 hide-scrollbar"
+                className={`w-full px-4 py-2 border rounded-lg outline-none resize-none focus:ring-2 hide-scrollbar ${
+                    error
+                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                }`}
                 style={{ overflow: "hidden" }}
+                placeholder={placeholder}
             />
 
-            {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </div>
     );
 };

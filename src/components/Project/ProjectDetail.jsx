@@ -17,12 +17,12 @@ export const ProjectDetail = ({ project }) => {
                     {project.title}
                 </h1>
                 {project.tagline && (
-                    <p className="text-lg text-slate-600 mb-2 max-w-2xl">
+                    <p className="text-lg text-slate-600 mt-4 mb-2 max-w-2xl">
                         {project.tagline}
                     </p>
                 )}
                 {project.startDate && project.endDate && (
-                    <div className="flex items-center justify-start gap-2 text-slate-500 mb-5">
+                    <div className="flex items-center justify-start gap-2 text-slate-500 mb-8">
                         <Calendar size={16} />
                         <span>
                             {project.startDate} - {project.endDate}
@@ -57,7 +57,7 @@ export const ProjectDetail = ({ project }) => {
                         project.technologies.map((tag) => (
                             <span
                                 key={tag}
-                                className="font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
+                                className="text-sm font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
                             >
                                 {tag}
                             </span>

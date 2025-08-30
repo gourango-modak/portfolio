@@ -6,6 +6,7 @@ import CodeTool from "./code";
 import TitleTool from "./title";
 import TagListTool from "./tagList";
 import TaglineTool from "./project/tagline";
+import GalleryTool from "./project/gallery";
 
 export const EDITOR_JS_TOOLS = {
     header: Header,
@@ -59,6 +60,7 @@ export const EDITOR_JS_INITIALDATA = {
 export const getEditorTools = ({
     includeTags = false,
     includeTagline = false,
+    includeGallery = false,
 }) => {
     const tools = EDITOR_JS_TOOLS;
 
@@ -70,11 +72,19 @@ export const getEditorTools = ({
         tools.tagline = TaglineTool;
     }
 
+    if (includeGallery) {
+        tools.gallery = GalleryTool;
+    }
+
     return tools;
 };
 
 export function getProjectTools() {
-    return getEditorTools({ includeTagline: true, includeTags: true });
+    return getEditorTools({
+        includeTagline: true,
+        includeTags: true,
+        includeGallery: true,
+    });
 }
 
 // Blog-specific initial data

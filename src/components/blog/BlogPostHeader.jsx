@@ -1,6 +1,6 @@
 import profile from "../../assets/gm_150x150.png";
 
-const PostHeader = ({ title, date }) => {
+const BlogPostHeader = ({ title, date }) => {
     return (
         <div className="border-b pb-7 border-gray-300">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
@@ -27,4 +27,4 @@ const PostHeader = ({ title, date }) => {
     );
 };
 
-export default PostHeader;
+export default BlogPostHeader;

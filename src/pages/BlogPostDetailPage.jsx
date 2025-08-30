@@ -4,7 +4,7 @@ import EditorContentRenderer from "../components/common/EditorJs/EditorContentRe
 import { fetchPosts } from "../data/posts";
 import DataLoader from "../components/Common/DataLoader";
 import { formatDate } from "../utils/date";
-import PostHeader from "../components/blog/PostHeader";
+import BlogPostHeader from "../components/blog/BlogPostHeader";
 
 const BlogPostDetailPage = () => {
     const { id } = useParams();
@@ -24,7 +24,7 @@ const BlogPostDetailPage = () => {
                     <section className="pt-30 min-h-screen bg-gray-50/50">
                         <div className="container mx-auto px-6 md:px-12 md:max-w-4xl pb-24">
                             <Breadcrumb crumbs={crumbs} />
-                            <PostHeader
+                            <BlogPostHeader
                                 title={post.title}
                                 date={formatDate(post.createdAt)}
                             />

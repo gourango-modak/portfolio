@@ -1,19 +1,10 @@
+import { isValidUrl } from "./common";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 
 export const validateProjectForm = (data) => {
     const errors = {};
-    if (!data.tagline.trim()) errors.tagline = "Tagline is required";
-    if (!data.description.trim()) errors.tagline = "Tagline is required";
-
-    // URL validation helper
-    const isValidUrl = (url) => {
-        try {
-            new URL(url);
-            return true;
-        } catch {
-            return false;
-        }
-    };
+    if (!data.description.trim())
+        errors.description = "Short Description is required";
 
     // URL fields
     if (!data.liveUrl?.trim()) {

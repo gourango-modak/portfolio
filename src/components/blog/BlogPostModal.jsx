@@ -41,6 +41,7 @@ const BlogPostModal = ({ isOpen, setIsOpen, onClose }) => {
                 onSave={handleSave}
                 editorInitialData={editorData}
                 validateBeforeSave={validateEditorModalForBlogPost}
+                actionBtnTitle="Next"
             />
 
             <BlogPostSaveModal
