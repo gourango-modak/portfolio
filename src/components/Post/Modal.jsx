@@ -18,19 +18,19 @@ const PostModal = ({ isOpen, setIsOpen, onClose }) => {
         setIsPostMetaDataModalOpen(true);
     };
 
-    const handleBlogPostSaveModalClose = () => {
+    const handlePostSaveModalClose = () => {
         setIsPostMetaDataModalOpen(false);
         setIsOpen(true);
     };
 
-    const handleBlogPostSaveModalSave = () => {
+    const handlePostSaveModalSave = () => {
         setIsPostMetaDataModalOpen(false);
         setIsOpen(false);
-        setEditorJsData(getBlogEditorInitialData());
+        setEditorJsData(getEditorJsInitialData(contentType));
     };
 
     const handleEditorJsModalClose = () => {
-        setEditorJsData(getBlogEditorInitialData());
+        setEditorJsData(getEditorJsInitialData(contentType));
         onClose();
     };
 
@@ -47,8 +47,8 @@ const PostModal = ({ isOpen, setIsOpen, onClose }) => {
 
             <PostMetaDataModal
                 isOpen={isPostMetaDataModalOpen}
-                onClose={handleBlogPostSaveModalClose}
-                onSave={handleBlogPostSaveModalSave}
+                onClose={handlePostSaveModalClose}
+                onSave={handlePostSaveModalSave}
                 editorJsData={editorJsData}
             />
         </>
