@@ -7,6 +7,8 @@ import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
 import { CONTENT_TYPES } from "..";
+import TagLine from "./tools/project/tagline";
+import Gallery from "./tools/project/gallery";
 
 export const EDITOR_JS_TOOLS = {
     header: Header,
@@ -72,8 +74,8 @@ export const getEditorJsTools = (contentType) => {
         case CONTENT_TYPES.BLOG:
             return tools;
         case CONTENT_TYPES.PROJECT:
-            tools.tagline = TaglineTool;
-            tools.gallery = GalleryTool;
+            tools.tagline = TagLine;
+            tools.gallery = Gallery;
             return tools;
         default:
             return tools;

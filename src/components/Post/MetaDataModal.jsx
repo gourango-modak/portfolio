@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { validateProjectForm } from "./../../utils/validation";
+import { validatePostForm } from "./../../utils/validation";
 import Modal from "./../Modal/index";
 import { InputField } from "./../Common/InputField";
-import {
-    downloadJson,
-    getFileName,
-    prepareProjectData,
-} from "../../utils/common";
+import { downloadJson, getFileName, preparePostData } from "../../utils/common";
 
 const PostMetaDataModal = ({ isOpen, onClose, editorJsData, onSave }) => {
     if (!isOpen) return null;
@@ -15,12 +11,12 @@ const PostMetaDataModal = ({ isOpen, onClose, editorJsData, onSave }) => {
     const [errors, setErrors] = useState("");
 
     const handleSaveClick = () => {
-        const validationErrors = validateProjectForm({ description });
+        const validationErrors = validatePostForm({ description });
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-        const post = prepareProjectData(editorJsData, { description });
+        const post = preparePostData(editorJsData, { description });
         downloadJson(post, getFileName(post.title, post.id));
         onSave();
     };
