@@ -23,7 +23,7 @@ const HeroSection = () => {
                         <p className="text-lg md:text-2xl text-indigo-600 font-semibold mb-6">
                             Senior Software Engineer | .NET Specialist
                         </p>
-                        <p className="text-base text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
+                        <p className="text-lg text-slate-600 mb-8 max-w-lg mx-auto md:mx-0">
                             As a Senior Software Engineer at
                             <a
                                 href="https://www.enosisbd.com/"

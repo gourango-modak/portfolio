@@ -144,3 +144,50 @@ export const SKILL_CATEGORIES = [
         ],
     },
 ];
+
+export const SKILLS = [
+    {
+        category: "Backend",
+        skills: [
+            "C#",
+            ".NET Core & ASP.NET Core",
+            ".NET Framework",
+            "LINQ",
+            "SignalR",
+        ],
+    },
+    {
+        category: "Frontend",
+        skills: ["JavaScript / TypeScript", "React", "HTML5 & CSS3", "WPF"],
+    },
+    {
+        category: "Databases",
+        skills: [
+            "MS SQL Server",
+            "Entity Framework Core",
+            "PostgreSQL",
+            "Cosmos DB",
+        ],
+    },
+    {
+        category: "Cloud & DevOps",
+        skills: ["Azure", "CI/CD Pipelines", "Azure DevOps"],
+    },
+    {
+        category: "Architecture",
+        skills: [
+            "Microservices",
+            "Domain-Driven Design (DDD)",
+            "SOLID Principles",
+            "CQRS",
+        ],
+    },
+    {
+        category: "Testing",
+        skills: ["xUnit", "NUnit", "Moq", "Unit & Integration Testing"],
+    },
+    { category: "APIs", skills: ["RESTful APIs", "gRPC", "Azure Service Bus"] },
+    { category: "Containerization", skills: ["Docker", "Kubernetes (Basic)"] },
+    { category: "Version Control", skills: ["Git", "GitHub", "Bitbucket"] },
+    { category: "Tools", skills: ["Agile Methodologies", "Scrum", "Jira"] },
+];

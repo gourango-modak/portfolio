@@ -7,7 +7,7 @@ const AddContentButton = ({ onClick }) => {
     return (
         <button
             onClick={onClick}
-            className="bg-indigo-600 text-white font-semibold p-3 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+            className="bg-indigo-600 text-white font-semibold p-3 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 items-center gap-2 cursor-pointer hidden sm:flex"
         >
             <PlusCircle size={20} />
         </button>

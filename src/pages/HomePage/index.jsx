@@ -1,15 +1,17 @@
+import SkillsSection from "../../components/Skills/SkillsSection";
 import BlogSection from "./BlogSection";
 import HeroSection from "./HeroSection";
 import ProjectSection from "./ProjectSection";
-import SkillSection from "./SkillSection";
+import Contact from "./../../components/Contact/index";
 
 const HomePage = () => {
     return (
         <div className="bg-gray-50">
             <HeroSection />
             <ProjectSection />
-            <SkillSection />
+            <SkillsSection bgClass="bg-gray-50" />
             <BlogSection />
+            <Contact bgClass="bg-gray-50" />
         </div>
     );
 };
