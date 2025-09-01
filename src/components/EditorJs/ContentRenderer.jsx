@@ -14,7 +14,13 @@ const EditorJsContentRenderer = ({ content }) => {
                         </p>
                     );
                 }
-                return <BlockComponent key={index} {...block.data} />;
+                return (
+                    <BlockComponent
+                        key={index}
+                        isFirstBlock={index == 0}
+                        {...block.data}
+                    />
+                );
             })}
         </div>
     );
