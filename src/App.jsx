@@ -47,7 +47,7 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/projects/:id"
+                    path="/projects/:slug"
                     element={
                         <Layout>
                             <ProjectDetailPage />
@@ -55,7 +55,7 @@ const App = () => {
                     }
                 />
                 <Route
-                    path="/blog/:id"
+                    path="/blog/:slug"
                     element={
                         <Layout>
                             <PostDetailPage />

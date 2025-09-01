@@ -55,6 +55,7 @@ export const prepareProjectData = (editorData, metaData) => {
         createdAt: Date.now(),
         ...metaData,
         technologies: extractedTags,
+        slug: buildSlug(extractedTitle),
         content: contentWithoutTagline,
     };
 };
@@ -71,6 +72,7 @@ export const preparePostData = (editorData, metaData) => {
         createdAt: Date.now(),
         tags: extractedTags,
         ...metaData,
+        slug: buildSlug(extractedTitle),
         content: contentWithoutTags,
     };
 };
@@ -85,3 +87,36 @@ export const isValidUrl = (url) => {
 };
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const buildSlug = (title, id = "", maxLength = 100) => {
+    if (!title) return id || "";
+
+    // Convert to lowercase
+    let slug = title.toLowerCase();
+
+    // Remove accents
+    slug = slug.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    // Replace spaces/underscores with hyphens
+    slug = slug.replace(/[\s_]+/g, "-");
+
+    // Remove non-alphanumeric characters except hyphens
+    slug = slug.replace(/[^a-z0-9-]/g, "");
+
+    // Remove consecutive hyphens
+    slug = slug.replace(/-+/g, "-");
+
+    // Trim hyphens from start and end
+    slug = slug.replace(/^-+|-+$/g, "");
+
+    if (id) {
+        // Ensure total length doesn't exceed maxLength
+        const availableLength = maxLength - id.length - 1; // for hyphen
+        if (slug.length > availableLength) {
+            slug = slug.substring(0, availableLength).replace(/-+$/g, "");
+        }
+        slug = `${slug}-${id}`;
+    }
+
+    return slug;
+};

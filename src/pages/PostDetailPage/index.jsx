@@ -7,13 +7,13 @@ import { fetchPosts } from "../../data/posts";
 import { formatDate } from "../../utils/date";
 
 const PostDetailPage = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
 
     return (
         <DataLoader
             fetchData={fetchPosts}
             render={(posts) => {
-                const post = posts.find((p) => p.id === parseInt(id));
+                const post = posts.find((p) => p.slug === slug);
                 const crumbs = [
                     { to: "/", label: "Home" },
                     { to: "/Blog", label: "Blog" },

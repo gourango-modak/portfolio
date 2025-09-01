@@ -6,7 +6,7 @@ import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
 const ProjectCard = ({ project }) => {
     return (
         <Link
-            to={`/projects/${project.id}`}
+            to={`/projects/${project.slug}`}
             className="flex flex-col bg-white/60 backdrop-blur-lg rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300"
         >
             <div className="p-6">

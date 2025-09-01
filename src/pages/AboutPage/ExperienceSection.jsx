@@ -5,7 +5,7 @@ import SectionHeader from "./../../components/Section/Header";
 const ExperienceSection = () => (
     <Section bgClass="bg-white/50">
         <SectionHeader title="Professional Experience" />
-        <div className="relative border-l-2 border-gray-200 ">
+        <div className="relative border-l-2 border-gray-200">
             <Job
                 company="Enosis Solutions"
                 title="Senior Software Engineer"

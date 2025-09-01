@@ -7,7 +7,7 @@ import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
 const PostCard = ({ post }) => {
     return (
         <Link
-            to={`/blog/${post.id}`}
+            to={`/blog/${post.slug}`}
             className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6"
         >
             <div className="text-indigo-600 mt-1 flex-shrink-0">
