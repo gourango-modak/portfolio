@@ -50,19 +50,17 @@ export const ProjectDetail = ({ project }) => {
                     </a>
                 </div>
             </header>
-            <div className="prose md:prose-lg max-w-none">
-                <EditorJsContentRenderer content={project.content} />
-                <div className="flex flex-wrap gap-2 mt-15">
-                    {project.technologies?.length > 0 &&
-                        project.technologies.map((tag) => (
-                            <span
-                                key={tag}
-                                className="text-sm font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                </div>
+            <EditorJsContentRenderer content={project.content} />
+            <div className="flex flex-wrap gap-2 mt-15">
+                {project.technologies?.length > 0 &&
+                    project.technologies.map((tag) => (
+                        <span
+                            key={tag}
+                            className="text-sm font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
+                        >
+                            {tag}
+                        </span>
+                    ))}
             </div>
         </>
     );

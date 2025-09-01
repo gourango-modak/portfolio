@@ -28,11 +28,7 @@ const PostDetailPage = () => {
                                 title={post.title}
                                 date={formatDate(post.createdAt)}
                             />
-                            <div className="prose md:prose-lg max-w-none">
-                                <EditorJsContentRenderer
-                                    content={post.content}
-                                />
-                            </div>
+                            <EditorJsContentRenderer content={post.content} />
                         </div>
                     </section>
                 );
