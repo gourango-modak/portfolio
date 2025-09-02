@@ -47,9 +47,9 @@ const ExperienceSection = () => (
             </Job>
 
             <Job
-                company="Tech Solutions Inc."
-                title="Software Engineer"
-                period="2019 - 2021"
+                company="Brain Station 23"
+                title="Software Engineer (Trainee)"
+                period="2021 - 2021"
             >
                 <li className="text-slate-600">
                     Contributed to the development of a legacy desktop

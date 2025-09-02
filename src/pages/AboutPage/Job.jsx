@@ -1,6 +1,6 @@
 const Job = ({ company, title, period, children }) => (
-    <div className="mb-12 pl-10 pt-2 relative">
-        <span className="absolute left-[-9px] top-[14px] flex items-center justify-center w-4 h-4 bg-indigo-600 rounded-full border-4 border-white"></span>
+    <div className="mb-12 pl-10 relative">
+        <span className="absolute left-[-9px] top-[7px] flex items-center justify-center w-4 h-4 bg-indigo-600 rounded-full border-4 border-white"></span>
         <div className="flex flex-col sm:flex-row gap-4">
             <div className="sm:w-1/3">
                 <h3 className="text-xl lg:text-2xl font-semibold text-slate-900">
