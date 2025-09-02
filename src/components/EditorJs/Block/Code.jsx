@@ -14,7 +14,7 @@ const EditorJsCodeBlock = ({ code, language }) => {
     }, [code, language]);
 
     return (
-        <div className="relative my-6 not-prose">
+        <div className="relative my-6">
             {/* Left accent line */}
             <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-600/80 rounded-l-lg"></div>
 

@@ -29,22 +29,19 @@ const AboutSection = () => {
                         <h1 className="text-4xl font-bold text-slate-900 mb-6">
                             About Me
                         </h1>
-
                         <p className="text-slate-600">
-                            A dedicated .NET developer with 4 years of
-                            experience in architecting and building
-                            high-performance, scalable web applications from the
-                            ground up.
-                        </p>
-                        <p className="text-slate-600">
-                            Hello! I'm Gourango, a passionate Senior Software
-                            Engineer with a knack for solving complex problems
-                            and a drive for creating high-quality, efficient,
-                            and maintainable code. My journey in software
-                            development has been focused on the .NET ecosystem,
-                            where I've had the privilege of contributing to
-                            various projects, from initial concept to
-                            deployment.
+                            Hello! I'm Gourango, a Senior Software Engineer with{" "}
+                            <span className="text-indigo-600 font-semibold">
+                                4 years of experience
+                            </span>{" "}
+                            building high-performance, scalable applications. I
+                            thrive on solving complex problems and delivering
+                            end-to-end solutions across the full stack,
+                            combining robust backend architecture with
+                            intuitive, responsive frontend experiences. My
+                            expertise spans designing maintainable code,
+                            optimizing system performance, and implementing best
+                            practices that ensure reliability and efficiency.
                         </p>
                         <p className="text-slate-600">
                             At{" "}
@@ -52,16 +49,22 @@ const AboutSection = () => {
                                 Enosis Solutions
                             </span>
                             , I am responsible for designing and implementing
-                            key features for enterprise-level applications,
-                            mentoring junior developers, and ensuring our
-                            software architecture remains scalable and modern. I
-                            thrive in collaborative environments and am always
-                            eager to learn new technologies and improve my
-                            craft.
+                            features for enterprise-level applications, and
+                            ensuring our software architecture remains scalable
+                            and modern. I collaborate closely with
+                            cross-functional teams to translate requirements
+                            into impactful solutions that meet business goals.
                         </p>
-
+                        <p className="text-slate-600">
+                            Driven by a passion for continuous learning, I
+                            constantly explore emerging technologies and tools
+                            to enhance my craft. I take pride in building
+                            software that not only works seamlessly but also
+                            delivers measurable business value and a great user
+                            experience.
+                        </p>
                         {/* CTA Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mt-12">
                             <Link
                                 to="/resume.pdf" // you can place your resume in public/ folder
                                 download

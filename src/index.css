@@ -19,7 +19,8 @@ body {
 pre[class*="language-"],
 code[class*="language-"],
 .token {
-    background: #f3f4f6 !important;
+    /* background: #f3f4f6 !important; */
+    background: #303030 !important;
 }
 
 /* Make code selection transparent and follow your own styles */
