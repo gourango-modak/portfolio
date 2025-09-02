@@ -1,5 +1,5 @@
 export const TabList = ({ items, activeTab, setActiveTab }) => (
-    <div className="flex justify-center border-b border-gray-200">
+    <div className="flex justify-center">
         <div className="flex flex-wrap justify-center -mb-px rounded-lg p-1.5 gap-2 bg-gray-50">
             {items.map(({ id, label }) => (
                 <button
