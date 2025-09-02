@@ -15,7 +15,7 @@ export default class Title extends Header {
             config: {
                 levels: [1],
                 defaultLevel: 1,
-                placeholder: "Enter your title here...",
+                // placeholder: "Enter your title here...", // Has a placeholder cursor position bug in editorjs
             },
             api,
             readOnly,

@@ -19,6 +19,12 @@ const ExperienceSection = () => (
                     , and modern front-end frameworks.
                 </li>
                 <li className="text-slate-600">
+                    Develop and maintain robust desktop applications using{" "}
+                    <span className="text-slate-700 font-semibold">
+                        Winform, C#, C++, MFC
+                    </span>
+                </li>
+                <li className="text-slate-600">
                     Design and manage scalable database solutions with{" "}
                     <span className="text-slate-700 font-semibold">
                         MS SQL Server
@@ -28,13 +34,6 @@ const ExperienceSection = () => (
                         Entity Framework Core
                     </span>
                     .
-                </li>
-                <li className="text-slate-600">
-                    Architect and implement{" "}
-                    <span className="text-slate-700 font-semibold">
-                        microservices
-                    </span>{" "}
-                    to enhance application modularity and scalability.
                 </li>
                 <li className="text-slate-600">
                     Collaborate with cross-functional teams to define, design,
@@ -52,39 +51,22 @@ const ExperienceSection = () => (
                 period="2021 - 2021"
             >
                 <li className="text-slate-600">
-                    Contributed to the development of a legacy desktop
-                    application using{" "}
+                    Developed standalone applications using{" "}
                     <span className="text-slate-700 font-semibold">
-                        .NET Framework
+                        Spring Boot
                     </span>{" "}
-                    and{" "}
-                    <span className="text-slate-700 font-semibold">WPF</span>.
+                    in Java.
                 </li>
                 <li className="text-slate-600">
-                    Wrote and optimized complex{" "}
+                    Designed and implemented{" "}
                     <span className="text-slate-700 font-semibold">
-                        SQL queries
+                        RESTful APIs
                     </span>{" "}
-                    and stored procedures for data retrieval and manipulation in{" "}
-                    <span className="text-slate-700 font-semibold">
-                        SQL Server
-                    </span>
-                    .
+                    to serve data efficiently to front-end clients.
                 </li>
                 <li className="text-slate-600">
-                    Worked closely with a team of developers to troubleshoot and
-                    resolve bugs, improving application{" "}
-                    <span className="text-slate-700 font-semibold">
-                        stability by 15%
-                    </span>
-                    .
-                </li>
-                <li className="text-slate-600">
-                    Participated in the full{" "}
-                    <span className="text-slate-700 font-semibold">
-                        software development lifecycle
-                    </span>
-                    , from requirements gathering to deployment and maintenance.
+                    Worked with Microservices Architecture for modular and
+                    scalable application design.
                 </li>
             </Job>
         </div>

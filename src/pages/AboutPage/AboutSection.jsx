@@ -44,18 +44,6 @@ const AboutSection = () => {
                             practices that ensure reliability and efficiency.
                         </p>
                         <p className="text-slate-600">
-                            At{" "}
-                            <span className="text-indigo-600 font-semibold">
-                                Enosis Solutions
-                            </span>
-                            , I am responsible for designing and implementing
-                            features for enterprise-level applications, and
-                            ensuring our software architecture remains scalable
-                            and modern. I collaborate closely with
-                            cross-functional teams to translate requirements
-                            into impactful solutions that meet business goals.
-                        </p>
-                        <p className="text-slate-600">
                             Driven by a passion for continuous learning, I
                             constantly explore emerging technologies and tools
                             to enhance my craft. I take pride in building
