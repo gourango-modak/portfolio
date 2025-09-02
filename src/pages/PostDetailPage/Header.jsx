@@ -3,7 +3,7 @@ import profile from "../../assets/gm_150x150.png";
 const PostDetailPageHeader = ({ title, date }) => {
     return (
         <div className="border-b pb-7 border-gray-300">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
                 {title}
             </h1>
 

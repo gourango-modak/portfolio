@@ -74,3 +74,94 @@ pre[class*="language-"]::-moz-selection,
     transform-origin: 70% 70%;
     display: inline-block;
 }
+
+#editorjs h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0f172b;
+}
+
+#editorjs h2 {
+    color: #1e293b; /* text-slate-800 */
+    font-weight: 700; /* font-bold */
+    line-height: 1.25; /* leading-tight */
+    font-size: 1.5rem; /* text-2xl */
+}
+
+#editorjs h3 {
+    color: #1e293b; /* text-slate-800 */
+    font-weight: 600; /* font-semibold */
+    line-height: 1.25; /* leading-tight */
+    font-size: 1.25rem; /* text-xl */
+}
+
+#editorjs h4 {
+    color: #1e293b; /* text-slate-800 */
+    line-height: 1.25; /* leading-tight */
+    font-size: 1rem; /* text-base */
+}
+
+#editorjs .ce-paragraph {
+    font-size: 16px;
+    color: #45556c; /* text-slate-600 */
+}
+
+#editorjs ul {
+    list-style-type: disc; /* list-disc */
+    list-style-position: outside; /* list-outside */
+    padding-left: 1.5rem; /* pl-6 */
+    margin-bottom: 1.25rem; /* mb-5 */
+    color: #374151; /* text-slate-700 */
+    font-size: 1rem; /* text-base */
+    line-height: 1.5rem; /* default for text-base */
+}
+
+#editorjs ul li::marker {
+    color: #1f2937; /* marker:text-slate-800 */
+}
+
+#editorjs ol {
+    list-style-type: decimal; /* list-decimal */
+    list-style-position: outside; /* list-outside */
+    padding-left: 1.5rem; /* pl-6 */
+    margin-bottom: 1.25rem; /* mb-5 */
+    color: #374151; /* text-slate-700 */
+    font-size: 1rem; /* text-base */
+    line-height: 1.5rem; /* default for text-base */
+}
+
+#editorjs ol li::marker {
+    color: #1f2937; /* marker:text-slate-800 */
+}
+
+@media (min-width: 640px) {
+    #editorjs h1 {
+        font-size: 36px;
+    }
+    #editorjs .ce-paragraph {
+        font-size: 18px;
+    }
+    #editorjs ul,
+    #editorjs ol {
+        padding-left: 1.75rem; /* sm:pl-7 */
+        font-size: 1.125rem; /* sm:text-lg */
+        line-height: 1.75rem; /* sm:text-lg line-height */
+    }
+    #editorjs h4 {
+        font-size: 1.125rem; /* sm:text-lg */
+    }
+}
+@media (min-width: 768px) {
+    #editorjs h1 {
+        font-size: 48px;
+    }
+    #editorjs h2 {
+        font-size: 1.875rem; /* md:text-3xl */
+    }
+    #editorjs h3 {
+        font-size: 1.5rem; /* md:text-2xl */
+    }
+    #editorjs h4 {
+        font-size: 1.25rem; /* md:text-xl */
+    }
+}
