@@ -1,23 +1,20 @@
 {
-  "id": 1756556466389,
+  "id": 1756798931976,
   "title": "Project Name: TaskMaster Pro",
   "tagline": "Organize smarter, achieve faster.",
-  "createdAt": 1756556465782,
-  "description": "TaskMaster Pro is a modern web application designed to help individuals and teams manage their tasks efficiently. It combines a clean interface, drag-and-drop task management, notifications, and analytics to improve productivity.",
-  "liveUrl": "https://plus.unsplash.com/premium_photo-1672116453187-3aa64afe04ad?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "repoUrl": "https://plus.unsplash.com/premium_photo-1672116453187-3aa64afe04ad?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "startDate": "12/12/2024",
-  "endDate": "12/25/2025",
-  "technologies": [
-    "#C",
-    "#Python",
-    "#R"
-  ],
+  "createdAt": 1756798931503,
+  "description": "TaskMaster Pro is a modern web application designed to help individuals and teams manage their tasks efficiently. It combines a clean interface, drag-and-drop task management, notifications, and analytics to improve productivity. The main goal is to provide a lightweight, responsive, and intuitive task management tool for both personal and team use.",
+  "liveUrl": "https://medium.com/@reetesh043/understanding-hashing-and-its-various-types-41d03de0a4a6",
+  "repoUrl": "https://medium.com/@reetesh043/understanding-hashing-and-its-various-types-41d03de0a4a6",
+  "startDate": "12/10/2021",
+  "endDate": "01/14/2024",
+  "technologies": [],
+  "slug": "project-name-taskmaster-pro",
   "content": {
-    "time": 1756556440137,
+    "time": 1756798899657,
     "blocks": [
       {
-        "id": "x_NM_sO5_l",
+        "id": "QUXDQRkG6z",
         "type": "header",
         "data": {
           "text": "1. Project Overview",
@@ -25,21 +22,21 @@
         }
       },
       {
-        "id": "6O0D4ZDxus",
+        "id": "0iBA0jHAfH",
         "type": "paragraph",
         "data": {
           "text": "TaskMaster Pro is a modern web application designed to help individuals and teams manage their tasks efficiently. It combines a clean interface, drag-and-drop task management, notifications, and analytics to improve productivity."
         }
       },
       {
-        "id": "2N7sZqiNOk",
+        "id": "jlYF5ch-AQ",
         "type": "paragraph",
         "data": {
           "text": "The main goal is to provide a lightweight, responsive, and intuitive task management tool for both personal and team use."
         }
       },
       {
-        "id": "dP9Vxh77Va",
+        "id": "fUieOcdwl_",
         "type": "header",
         "data": {
           "text": "2. Objectives",
@@ -47,34 +44,34 @@
         }
       },
       {
-        "id": "YZb9we2iXs",
+        "id": "q0WHOClP8S",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Create a responsive web application for task management.\n",
+              "content": "Create a responsive web application for task management.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Implement real-time collaboration features for teams.\n",
+              "content": "Implement real-time collaboration features for teams.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Ensure secure authentication and data storage.\n",
+              "content": "Ensure secure authentication and data storage.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Provide insightful analytics and reporting.\n",
+              "content": "Provide insightful analytics and reporting.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Optimize performance for desktop and mobile devices.\n",
+              "content": "Optimize performance for desktop and mobile devices.",
               "meta": {},
               "items": []
             }
@@ -82,7 +79,7 @@
         }
       },
       {
-        "id": "wjXD37hqgr",
+        "id": "Npl72Mf1QQ",
         "type": "header",
         "data": {
           "text": "3. Key Features",
@@ -90,7 +87,7 @@
         }
       },
       {
-        "id": "2oCZF_ERnq",
+        "id": "UGyqzPKKHh",
         "type": "header",
         "data": {
           "text": "User Features",
@@ -98,34 +95,34 @@
         }
       },
       {
-        "id": "FvHt0xgoYg",
+        "id": "fDlP7p_aPC",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "User Authentication: Register, login, and manage profiles.\n",
+              "content": "User Authentication: Register, login, and manage profiles.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Task CRUD: Create, read, update, and delete tasks.\n",
+              "content": "Task CRUD: Create, read, update, and delete tasks.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Task Categories: Organize tasks by projects or tags.\n",
+              "content": "Task Categories: Organize tasks by projects or tags.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Drag-and-Drop Interface: Easily move tasks between categories.\n",
+              "content": "Drag-and-Drop Interface: Easily move tasks between categories.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Notifications &amp; Reminders: Email and in-app alerts.\n",
+              "content": "Notifications &amp;amp; Reminders: Email and in-app alerts.",
               "meta": {},
               "items": []
             }
@@ -133,7 +130,7 @@
         }
       },
       {
-        "id": "APHKW9n-D4",
+        "id": "YLCcKvoKA7",
         "type": "header",
         "data": {
           "text": "Team Features",
@@ -141,24 +138,24 @@
         }
       },
       {
-        "id": "simblcJDF2",
+        "id": "pjMW6r7QHL",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Collaboration: Invite team members to projects.\n",
+              "content": "Collaboration: Invite team members to projects.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Role Management: Assign roles (Admin, Editor, Viewer).\n",
+              "content": "Role Management: Assign roles (Admin, Editor, Viewer).",
               "meta": {},
               "items": []
             },
             {
-              "content": "Activity Logs: Track changes and updates by users.\n",
+              "content": "Activity Logs: Track changes and updates by users.",
               "meta": {},
               "items": []
             }
@@ -166,7 +163,7 @@
         }
       },
       {
-        "id": "DtnVH7rvvT",
+        "id": "VEzO159CIz",
         "type": "header",
         "data": {
           "text": "Analytics",
@@ -174,24 +171,24 @@
         }
       },
       {
-        "id": "DmcHJpS9gb",
+        "id": "5Z5IOkgCRQ",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Dashboard with charts showing task completion trends.\n",
+              "content": "Dashboard with charts showing task completion trends.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Time spent per project or task.\n",
+              "content": "Time spent per project or task.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Performance metrics for individual users and teams.\n",
+              "content": "Performance metrics for individual users and teams.",
               "meta": {},
               "items": []
             }
@@ -199,7 +196,7 @@
         }
       },
       {
-        "id": "Ebi8dLKOFe",
+        "id": "5p9RdgdpBi",
         "type": "header",
         "data": {
           "text": "4. Technology Stack",
@@ -207,14 +204,14 @@
         }
       },
       {
-        "id": "J86Q5__TYX",
+        "id": "OCnpawvNoi",
         "type": "paragraph",
         "data": {
           "text": "LayerTechnology / ToolsFrontendReact, Tailwind CSS, ReduxBackendNode.js, Express, MongoDBAuthenticationJWT, bcryptReal-time FeaturesSocket.IODeploymentDocker, AWS EC2, NginxCI/CDGitHub Actions, Docker HubAnalytics &amp; ChartsChart.js, Recharts"
         }
       },
       {
-        "id": "NeQ-_nqCKz",
+        "id": "_MQuvAkkCh",
         "type": "header",
         "data": {
           "text": "6. Sample Code",
@@ -222,7 +219,7 @@
         }
       },
       {
-        "id": "6Lqpv_TnMW",
+        "id": "yp6K6fx_HO",
         "type": "header",
         "data": {
           "text": "Backend (Node.js/Express) – Task Route",
@@ -230,15 +227,15 @@
         }
       },
       {
-        "id": "Jn3wSsUucv",
+        "id": "cTzoMgSsIS",
         "type": "code",
         "data": {
           "language": "javascript",
-          "code": "const express = require('express');\nconst router = express.Router();\nconst Task = require('../models/task');\nconst auth = require('../middleware/auth');\n\n// Create a new task\nrouter.post('/', auth, async (req, res) => {\n    try {\n        const task = new Task({ ...req.body, owner: req.user.id });\n        await task.save();\n        res.status(201).send(task);\n    } catch (error) {\n        res.status(400).send(error);\n    }\n});\n\nmodule.exports = router;"
+          "code": "\nconst express = require('express');\nconst router = express.Router();\nconst Task = require('../models/task');\nconst auth = require('../middleware/auth');\n\n// Create a new task\nrouter.post('/', auth, async (req, res) => {\n    try {\n        const task = new Task({ ...req.body, owner: req.user.id });\n        await task.save();\n        res.status(201).send(task);\n    } catch (error) {\n        res.status(400).send(error);\n    }\n});\n\nmodule.exports = router;"
         }
       },
       {
-        "id": "IKain-B9XM",
+        "id": "CdStDVUQ3b",
         "type": "header",
         "data": {
           "text": "8. Deployment",
@@ -246,34 +243,34 @@
         }
       },
       {
-        "id": "_No6M8Ir1j",
+        "id": "sMlOAb9uge",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Dockerized application for consistent environment.\n",
+              "content": "Dockerized application for consistent environment.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Frontend served via Nginx.\n",
+              "content": "Frontend served via Nginx.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Backend API hosted on AWS EC2.\n",
+              "content": "Backend API hosted on AWS EC2.",
               "meta": {},
               "items": []
             },
             {
-              "content": "MongoDB hosted on MongoDB Atlas.\n",
+              "content": "MongoDB hosted on MongoDB Atlas.",
               "meta": {},
               "items": []
             },
             {
-              "content": "CI/CD pipelines via GitHub Actions for automated deployment.\n",
+              "content": "CI/CD pipelines via GitHub Actions for automated deployment.",
               "meta": {},
               "items": []
             }
@@ -281,7 +278,7 @@
         }
       },
       {
-        "id": "A4urKyvrqR",
+        "id": "onlH3yobtt",
         "type": "header",
         "data": {
           "text": "9. Future Enhancements",
@@ -289,29 +286,29 @@
         }
       },
       {
-        "id": "b5rkPtpGve",
+        "id": "Estg7GYSh0",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Mobile app version with React Native.\n",
+              "content": "Mobile app version with React Native.",
               "meta": {},
               "items": []
             },
             {
-              "content": "AI-powered task prioritization.\n",
+              "content": "AI-powered task prioritization.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Integration with calendars and third-party productivity tools.\n",
+              "content": "Integration with calendars and third-party productivity tools.",
               "meta": {},
               "items": []
             },
             {
-              "content": "Offline mode with local storage sync.\n",
+              "content": "Offline mode with local storage sync.",
               "meta": {},
               "items": []
             }
@@ -319,7 +316,7 @@
         }
       },
       {
-        "id": "jzUGQBS61c",
+        "id": "p8iqHEkBR7",
         "type": "header",
         "data": {
           "text": "10. References",
@@ -327,51 +324,31 @@
         }
       },
       {
-        "id": "c4vIf9cs15",
+        "id": "noXwnQ19sT",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "React Docs – https://reactjs.org\n",
+              "content": "React Docs – https://reactjs.org",
               "meta": {},
               "items": []
             },
             {
-              "content": "Node.js Docs – https://nodejs.org\n",
+              "content": "Node.js Docs – https://nodejs.org",
               "meta": {},
               "items": []
             },
             {
-              "content": "Tailwind CSS – https://tailwindcss.com\n",
+              "content": "Tailwind CSS – https://tailwindcss.com",
               "meta": {},
               "items": []
             },
             {
-              "content": "MongoDB – https://www.mongodb.com\n",
+              "content": "MongoDB – https://www.mongodb.com",
               "meta": {},
               "items": []
-            }
-          ]
-        }
-      },
-      {
-        "id": "yRhY8Mon1_",
-        "type": "gallery",
-        "data": {
-          "images": [
-            {
-              "url": "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "caption": ""
-            },
-            {
-              "url": "https://images.unsplash.com/photo-1566438480900-0609be27a4be?q=80&w=694&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "caption": ""
-            },
-            {
-              "url": "https://plus.unsplash.com/premium_photo-1672116453187-3aa64afe04ad?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              "caption": ""
             }
           ]
         }
