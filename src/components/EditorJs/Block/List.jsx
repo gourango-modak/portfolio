@@ -15,9 +15,11 @@ const EditorJsListBlock = ({ style, items }) => {
       `}
         >
             {items.map((item, i) => (
-                <li key={i} className="mb-2 pl-2 leading-relaxed">
-                    {item.content}
-                </li>
+                <li
+                    key={i}
+                    className="mb-2 pl-2 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                />
             ))}
         </ListTag>
     );
