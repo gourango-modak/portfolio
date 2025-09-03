@@ -48,8 +48,8 @@
         "id": "4ahKSgPTZT",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//csharp\npublic async Task LoadDataAsync()\n{\n    // Running on the UI thread\n    var data = await GetDataFromApiAsync(); // pauses here\n    myLabel.Text = data; // resumes on UI thread safely\n}"
+          "language": "csharp",
+          "code": "public async Task LoadDataAsync()\n{\n    // Running on the UI thread\n    var data = await GetDataFromApiAsync(); // pauses here\n    myLabel.Text = data; // resumes on UI thread safely\n}"
         }
       },
       {
@@ -151,8 +151,8 @@
         "id": "VLbuxoqP9Q",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//csharp\npublic async Task<int> CalculateAsync()\n{\n    Console.WriteLine($\"Start on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    await Task.Delay(1000); // wait for 1 second\n    Console.WriteLine($\"Resume on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    return 42;\n}"
+          "language": "csharp",
+          "code": "public async Task<int> CalculateAsync()\n{\n    Console.WriteLine($\"Start on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    await Task.Delay(1000); // wait for 1 second\n    Console.WriteLine($\"Resume on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    return 42;\n}"
         }
       },
       {
@@ -173,8 +173,8 @@
         "id": "2OD7JtbCAy",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//csharp\npublic async Task<int> CalculateAsync()\n{\n    Console.WriteLine($\"Start on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    await Task.Delay(1000).ConfigureAwait(false); // skip original thread\n    Console.WriteLine($\"Resume on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    return 42;\n}"
+          "language": "csharp",
+          "code": "public async Task<int> CalculateAsync()\n{\n    Console.WriteLine($\"Start on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    await Task.Delay(1000).ConfigureAwait(false); // skip original thread\n    Console.WriteLine($\"Resume on Thread {Thread.CurrentThread.ManagedThreadId}\");\n    return 42;\n}"
         }
       },
       {
@@ -223,8 +223,8 @@
         "id": "R7LP-70AFA",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//csharp\npublic async Task<IActionResult> GetUsers()\n{\n    var users = await _userService.GetAllUsersAsync().ConfigureAwait(false);\n    return Ok(users); // safe in ASP.NET Core, no UI thread needed\n}"
+          "language": "csharp",
+          "code": "public async Task<IActionResult> GetUsers()\n{\n    var users = await _userService.GetAllUsersAsync().ConfigureAwait(false);\n    return Ok(users); // safe in ASP.NET Core, no UI thread needed\n}"
         }
       },
       {

@@ -18,6 +18,7 @@ class Code {
             "bash",
             "html",
             "css",
+            "csharp",
         ];
     }
 

@@ -1,10 +1,8 @@
 const EditorJsHeaderBlock = ({ text, level, isFirstBlock }) => {
     const Tag = `h${level}`;
 
-    // Base class for all headers
     const baseClass = "text-slate-800 leading-tight";
 
-    // Bottom margins similar to Tailwind prose
     const levelClasses = {
         1: "text-2xl sm:text-3xl md:text-4xl font-bold mb-6",
         2: `text-2xl md:text-3xl font-bold mb-6 ${
@@ -15,9 +13,10 @@ const EditorJsHeaderBlock = ({ text, level, isFirstBlock }) => {
     };
 
     return (
-        <Tag className={`${baseClass} ${levelClasses[level] || "mb-4"}`}>
-            {text}
-        </Tag>
+        <Tag
+            className={`${baseClass} ${levelClasses[level] || "mb-4"}`}
+            dangerouslySetInnerHTML={{ __html: text }}
+        />
     );
 };
 

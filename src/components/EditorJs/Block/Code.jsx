@@ -3,6 +3,7 @@ import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.css";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
+import "prismjs/components/prism-csharp";
 
 const EditorJsCodeBlock = ({ code, language }) => {
     const ref = useRef();
