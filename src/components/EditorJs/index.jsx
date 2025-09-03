@@ -8,7 +8,7 @@ const EditorJs = forwardRef(
         const editorInstance = useEditor({
             holder: "editorjs",
             tools: tools,
-            initialData: initialData,
+            initialData: initialData || {},
         });
 
         useImperativeHandle(ref, () => ({

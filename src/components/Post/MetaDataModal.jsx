@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { validatePostForm } from "./../../utils/validation";
 import Modal from "./../Modal/index";
 import { InputField } from "./../Common/InputField";
 import { downloadJson, getFileName, preparePostData } from "../../utils/common";
 
-const PostMetaDataModal = ({ isOpen, onClose, editorJsData, onSave }) => {
-    if (!isOpen) return null;
-
+const PostMetaDataModal = ({ isOpen, onClose, onSave, postData }) => {
     const [description, setDescription] = useState("");
-    const [errors, setErrors] = useState("");
+    const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (isOpen) {
+            if (postData?.description) {
+                setDescription(postData?.description);
+            }
+            setErrors({});
+        }
+    }, [isOpen, postData]);
 
     const handleSaveClick = () => {
         const validationErrors = validatePostForm({ description });
@@ -16,7 +23,7 @@ const PostMetaDataModal = ({ isOpen, onClose, editorJsData, onSave }) => {
             setErrors(validationErrors);
             return;
         }
-        const post = preparePostData(editorJsData, { description });
+        const post = preparePostData(postData, { description });
         downloadJson(post, getFileName(post.title, post.id));
         onSave();
     };

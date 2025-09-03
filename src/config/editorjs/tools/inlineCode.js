@@ -9,7 +9,8 @@ export default class InlineCode {
 
     constructor({ api }) {
         this.api = api;
-        this.class = "bg-[#303030] text-white font-mono px-1 py-[2px] rounded";
+        this.class =
+            "bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded";
     }
 
     render() {

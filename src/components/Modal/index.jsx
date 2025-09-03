@@ -40,8 +40,6 @@ const Modal = ({
         };
     }, [isOpen]);
 
-    if (!isOpen) return null;
-
     const alignmentClass =
         mergedStyle.position === "center"
             ? "flex justify-center items-center"
@@ -49,7 +47,11 @@ const Modal = ({
 
     return (
         <div
-            className={`fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar ${alignmentClass}`}
+            className={`fixed inset-0 bg-black/60 z-50 p-4 overflow-auto hide-scrollbar ${alignmentClass} ${
+                isOpen
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
+            }`}
         >
             <div className="flex items-center justify-center">
                 <div

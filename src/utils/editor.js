@@ -1,3 +1,4 @@
+import { NON_RENDER_EDITORJS_BLOCKS } from "../config";
 import { CUSTOM_TOOLS } from "../config/editorJs/editorTools";
 
 export function extractTitle(editorData) {
@@ -5,22 +6,12 @@ export function extractTitle(editorData) {
         return { title: null, content: editorData };
     }
 
-    let title = null;
-    const remainingBlocks = [];
+    // Take the first title block only
+    const titleBlock = editorData.blocks.find(
+        (block) => block.type === CUSTOM_TOOLS.TITLE.TYPE
+    );
 
-    for (const block of editorData.blocks) {
-        if (block.type === CUSTOM_TOOLS.TITLE.TYPE && !title) {
-            // Take the first title block only
-            title = block.data.text;
-        } else {
-            remainingBlocks.push(block);
-        }
-    }
-
-    return {
-        title: title,
-        content: { ...editorData, blocks: remainingBlocks },
-    };
+    return titleBlock?.data?.text || "";
 }
 
 export function extractTags(editorData) {
@@ -28,8 +19,9 @@ export function extractTags(editorData) {
         return { tags: [], content: editorData };
     }
 
-    const tagsSet = new Set(); // Use a Set to remove duplicates
-    const remainingBlocks = editorData.blocks.filter((block) => {
+    const tagsSet = new Set();
+
+    editorData.blocks.forEach((block) => {
         if (block.type === CUSTOM_TOOLS.TAGLIST.TYPE) {
             if (block.data && typeof block.data.text === "string") {
                 const regex = /#\w+/g;
@@ -38,15 +30,10 @@ export function extractTags(editorData) {
                     matches.forEach((tag) => tagsSet.add(tag));
                 }
             }
-            return false; // remove the tag block
         }
-        return true; // keep other blocks
     });
 
-    return {
-        tags: Array.from(tagsSet),
-        content: { ...editorData, blocks: remainingBlocks },
-    };
+    return Array.from(tagsSet);
 }
 
 export function extractTagline(editorData) {
@@ -54,18 +41,19 @@ export function extractTagline(editorData) {
         return { tagline: "", content: editorData };
     }
 
-    let tagline = "";
-    const remainingBlocks = editorData.blocks.filter((block) => {
-        if (block.type === CUSTOM_TOOLS.TAGLINE.TYPE) {
-            if (block.data && typeof block.data.text === "string") {
-                tagline = block.data.text.trim();
-            }
-            return false; // remove this block
-        }
-        return true; // keep other blocks
-    });
-    return {
-        tagline: tagline,
-        content: { ...editorData, blocks: remainingBlocks },
-    };
+    const taglineBlock = editorData.blocks.find(
+        (block) => block.type === CUSTOM_TOOLS.TAGLINE.TYPE
+    );
+
+    return taglineBlock?.data?.text || "";
 }
+
+export const filterEditorBlocks = (editorJsData) => {
+    if (!editorJsData) return { blocks: [] };
+
+    const remainingBlocks = editorJsData.blocks.filter(
+        (block) => !NON_RENDER_EDITORJS_BLOCKS.includes(block.type)
+    );
+
+    return { ...editorJsData, blocks: remainingBlocks };
+};

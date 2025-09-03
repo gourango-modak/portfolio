@@ -5,19 +5,27 @@ export const useEditor = ({ holder, tools, initialData }) => {
     const editorInstance = useRef(null);
 
     useEffect(() => {
-        // Initialize Editor.js only if it hasn't been initialized yet.
-        if (!editorInstance.current) {
-            const editor = new EditorJS({
-                holder: holder,
-                autofocus: true,
-                placeholder: "Write your content here...",
-                tools: tools,
-                data: initialData,
-            });
-            editorInstance.current = editor;
+        if (!holder) return;
+
+        // If an instance already exists, destroy it before re-initializing
+        if (
+            editorInstance.current &&
+            typeof editorInstance.current.destroy === "function"
+        ) {
+            editorInstance.current.destroy();
+            editorInstance.current = null;
         }
 
-        // Cleanup function to destroy the editor instance when the component unmounts.
+        const editor = new EditorJS({
+            holder: holder,
+            autofocus: true,
+            placeholder: "Write your content here...",
+            tools: tools,
+            data: initialData,
+        });
+
+        editorInstance.current = editor;
+
         return () => {
             if (
                 editorInstance.current &&
@@ -27,7 +35,7 @@ export const useEditor = ({ holder, tools, initialData }) => {
                 editorInstance.current = null;
             }
         };
-    }, [holder, tools]);
+    }, [holder, tools, initialData]); // Re-run when initialData changes
 
     return editorInstance;
 };

@@ -5,6 +5,7 @@ import PostDetailPageHeader from "./Header";
 import EditorJsContentRenderer from "./../../components/EditorJs/ContentRenderer";
 import { fetchPosts } from "../../data/posts";
 import { formatDate } from "../../utils/date";
+import { filterEditorBlocks } from "../../utils/editor";
 
 const PostDetailPage = () => {
     const { slug } = useParams();
@@ -28,7 +29,9 @@ const PostDetailPage = () => {
                                 title={post.title}
                                 date={formatDate(post.createdAt)}
                             />
-                            <EditorJsContentRenderer content={post.content} />
+                            <EditorJsContentRenderer
+                                content={filterEditorBlocks(post.content)}
+                            />
                         </div>
                     </section>
                 );

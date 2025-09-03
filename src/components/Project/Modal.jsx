@@ -1,71 +1,56 @@
-import {
-    downloadJson,
-    getFileName,
-    prepareProjectData,
-} from "../../utils/common";
-import { useProjectForm } from "./../../hooks/useProjectForm";
-import { validateProjectForm } from "./../../utils/validation";
-import Modal from "./../Modal";
-import { ProjectForm } from "./Form";
+import { useState } from "react";
+import EditorJsModal from "../EditorJs/Modal";
+import ProjectMetaDataModal from "./MetaDataModal";
+import { CONTENT_TYPES } from "../../config";
 
-const initialData = {
-    description: "",
-    liveUrl: "",
-    repoUrl: "",
-    startDate: "",
-    endDate: "",
-    technologies: [],
-};
+const ProjectModal = ({ isOpen, setIsOpen, onClose, initialData = {} }) => {
+    const [isProjectMetaDataModalOpen, setIsProjectMetaDataModalOpen] =
+        useState(false);
+    const [projectData, setProjectData] = useState(initialData);
 
-const ProjectModal = ({ isOpen, onClose, onSave, editorJsData }) => {
-    if (!isOpen) return null;
+    const handleEditorJsModalSave = (data) => {
+        setProjectData({ ...initialData, content: data });
+        onClose();
+        setIsProjectMetaDataModalOpen(true);
+    };
 
-    const { formData, handleChange, errors, setErrors } =
-        useProjectForm(initialData);
+    const handleProjectMetaDataModalClose = () => {
+        setIsProjectMetaDataModalOpen(false);
+        setIsOpen(true);
+    };
 
-    const handleSave = () => {
-        const validationErrors = validateProjectForm(formData);
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        const projectData = prepareProjectData(editorJsData, formData);
-        downloadJson(
-            projectData,
-            getFileName(projectData.title, projectData.id)
-        );
-        onSave();
+    const handleProjectMetaDataModalSave = () => {
+        setIsProjectMetaDataModalOpen(false);
+        setIsOpen(false);
+        setProjectData(null);
+    };
+
+    const handleEditorJsModalClose = () => {
+        setProjectData(null);
+        onClose();
     };
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            style={{ width: "w-2xl" }}
-            title="Create New Project"
-            footer={
+        <>
+            {projectData && (
                 <>
-                    <button
-                        onClick={onClose}
-                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-300"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
-                    >
-                        Download JSON
-                    </button>
+                    <EditorJsModal
+                        isOpen={isOpen}
+                        onClose={handleEditorJsModalClose}
+                        onSave={handleEditorJsModalSave}
+                        initialData={projectData.content}
+                        actionBtnTitle="Next"
+                        contentType={CONTENT_TYPES.PROJECT}
+                    />
+                    <ProjectMetaDataModal
+                        isOpen={isProjectMetaDataModalOpen}
+                        onClose={handleProjectMetaDataModalClose}
+                        onSave={handleProjectMetaDataModalSave}
+                        initialData={projectData}
+                    />
                 </>
-            }
-        >
-            <ProjectForm
-                formData={formData}
-                handleChange={handleChange}
-                errors={errors}
-            />
-        </Modal>
+            )}
+        </>
     );
 };
 

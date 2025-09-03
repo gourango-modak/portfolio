@@ -1,8 +1,9 @@
 import { PlusCircle } from "lucide-react";
-import { IS_DEVENV } from "../../config";
+import { useAuth } from "../../context/AuthContext";
 
 const AddContentButton = ({ onClick }) => {
-    // if (!IS_DEVENV) return null;
+    const { isAuthenticated } = useAuth();
+    if (!isAuthenticated) return null;
 
     return (
         <button

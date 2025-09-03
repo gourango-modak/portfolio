@@ -1,5 +1,4 @@
-// Environment
-export const IS_DEVENV = import.meta.env.MODE === "development";
+import { CUSTOM_TOOLS } from "./editorJs/editorTools";
 
 // Limits
 export const BREADCRUMB_MAX_LENGTH = 18;
@@ -18,6 +17,12 @@ export const NAV_LINKS = [
     { to: "/blog", label: "Blog" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
+];
+
+export const NON_RENDER_EDITORJS_BLOCKS = [
+    CUSTOM_TOOLS.TITLE,
+    CUSTOM_TOOLS.TAGLINE,
+    CUSTOM_TOOLS.TAGLIST,
 ];
 
 export const SKILLS = [

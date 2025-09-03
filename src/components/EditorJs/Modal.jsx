@@ -14,7 +14,6 @@ const EditorJsModal = ({
     actionBtnTitle = "Save",
     contentType,
 }) => {
-    if (!isOpen) return null;
     const editorRef = useRef(null);
     const { showAlert, AlertModal } = useAlertModal();
 

@@ -83,21 +83,20 @@ export const validateEditorJsModal = (contentType, editorData, showAlert) => {
 
     // Check for title
     if (requireTitle) {
-        const { title } = extractTitle(editorData);
-        if (!title) errors.push("Please add a title before saving.");
+        if (!extractTitle(editorData))
+            errors.push("Please add a title before saving.");
     }
 
     // Check for tags (useful for projects)
     if (requireTags) {
-        const { tags } = extractTags(editorData);
+        const tags = extractTags(editorData);
         if (!tags || tags.length === 0)
             errors.push("Please add project tech stacks by tag list.");
     }
 
     // Check for tagline (useful for projects)
     if (requireTagline) {
-        const { tagline } = extractTagline(editorData);
-        if (!tagline || tagline.length === 0)
+        if (!extractTagline(editorData))
             errors.push("Please add project tagline.");
     }
 

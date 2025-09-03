@@ -1,0 +1,53 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
+const LoginPage = () => {
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const success = login(password);
+        if (success) {
+            navigate("/"); // redirect after login
+        } else {
+            setError("Invalid password");
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-center h-screen bg-slate-50">
+            <form
+                onSubmit={handleSubmit}
+                className="bg-white shadow-md rounded-lg p-6 w-80"
+            >
+                <h2 className="text-xl font-semibold text-center mb-4">
+                    Login
+                </h2>
+                <input
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={`w-full px-4 py-2 border rounded-lg mb-3 outline-none resize-none focus:ring-2 hide-scrollbar ${
+                        error
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                    }`}
+                />
+                {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+                <button
+                    type="submit"
+                    className="w-full bg-indigo-600 text-white rounded px-3 py-2 hover:bg-indigo-700"
+                >
+                    Login
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default LoginPage;

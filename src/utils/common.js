@@ -1,4 +1,5 @@
-import { BREADCRUMB_MAX_LENGTH } from "../config";
+import { BREADCRUMB_MAX_LENGTH, CONTENT_TYPES } from "../config";
+import { getEditorJsInitialData } from "../config/editorJs/editorTools";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
@@ -40,40 +41,53 @@ export const getFileName = (title, id) => {
     return `${id}_${name}.json`;
 };
 
-export const prepareProjectData = (editorData, metaData) => {
-    const { tags: extractedTags, content: contentWithoutTags } =
-        extractTags(editorData);
-    const { title: extractedTitle, content: contentWithoutTitle } =
-        extractTitle(contentWithoutTags);
-    const { tagline: extractedTagline, content: contentWithoutTagline } =
-        extractTagline(contentWithoutTitle);
+export const prepareProjectData = ({ content }, metaData) => {
+    const tags = extractTags(content);
+    const title = extractTitle(content);
+    const tagline = extractTagline(content);
 
     return {
         id: generateId(),
-        title: extractedTitle,
-        tagline: extractedTagline,
+        title: title,
+        tagline: tagline,
         createdAt: Date.now(),
         ...metaData,
-        technologies: extractedTags,
-        slug: buildSlug(extractedTitle),
-        content: contentWithoutTagline,
+        technologies: tags,
+        slug: buildSlug(title),
+        content: content,
     };
 };
 
-export const preparePostData = (editorData, metaData) => {
-    const { title: extractedTitle, content: contentWithoutTitle } =
-        extractTitle(editorData);
-    const { tags: extractedTags, content: contentWithoutTags } =
-        extractTags(contentWithoutTitle);
+export const preparePostData = ({ content }, metaData) => {
+    const tags = extractTags(content);
+    const title = extractTitle(content);
 
     return {
         id: generateId(),
-        title: extractedTitle,
+        title: title,
         createdAt: Date.now(),
-        tags: extractedTags,
+        tags: tags,
         ...metaData,
-        slug: buildSlug(extractedTitle),
-        content: contentWithoutTags,
+        slug: buildSlug(title),
+        content: content,
+    };
+};
+
+export const getPostInitialData = () => {
+    return {
+        content: getEditorJsInitialData(CONTENT_TYPES.BLOG),
+    };
+};
+
+export const getProjectInitialData = () => {
+    return {
+        description: "",
+        liveUrl: "",
+        repoUrl: "",
+        startDate: "",
+        endDate: "",
+        technologies: [],
+        content: getEditorJsInitialData(CONTENT_TYPES.PROJECT),
     };
 };
 

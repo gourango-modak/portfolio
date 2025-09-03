@@ -1,50 +1,45 @@
 import { useState } from "react";
-import { getEditorJsInitialData } from "../../config/editorJs/editorTools";
 import ProjectPageHeader from "./Header";
 import DataLoader from "../../components/Common/DataLoader";
 import ProjectList from "../../components/Project/List";
-import EditorJsModal from "../../components/EditorJs/Modal";
-import ProjectModal from "../../components/Project/Modal";
-import { CONTENT_TYPES } from "../../config";
 import { fetchProjects } from "../../data/projects";
+import { CONTENT_TYPES } from "../../config";
+import { getProjectInitialData } from "./../../utils/common";
+import ProjectMetaDataModal from "../../components/Project/MetaDataModal";
+import EditorJsModal from "../../components/EditorJs/Modal";
 
 const ProjectsPage = () => {
-    const [isEditorJsModalOpen, setIsEditorJsModalOpen] = useState(false);
-    const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-    const contentType = CONTENT_TYPES.PROJECT;
-    const [editorJsData, setEditorJsData] = useState(
-        getEditorJsInitialData(contentType)
-    );
+    const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
+    const [isProjectMetaDataModalOpen, setIsProjectMetaDataModalOpen] =
+        useState(false);
+    const [projectData, setProjectData] = useState(getProjectInitialData());
 
-    const handleSave = (data) => {
-        setEditorJsData(data);
-        setIsEditorJsModalOpen(false);
-        setIsProjectModalOpen(true);
+    const handleOnAddClick = () => {
+        setProjectData(getProjectInitialData());
+        setIsEditorModalOpen(true);
     };
 
-    const handleEditorJsModalClose = () => {
-        setEditorJsData(getEditorJsInitialData(contentType));
-        setIsEditorJsModalOpen(false);
+    const handleEditorJsModalSave = (data) => {
+        setProjectData((prev) => ({ ...prev, content: data }));
+        setIsProjectMetaDataModalOpen(true);
+        setIsEditorModalOpen(false);
     };
 
-    const handleProjectModalClose = () => {
-        setIsProjectModalOpen(false);
-        setIsEditorJsModalOpen(true);
+    const handleProjectMetaDataModalClose = () => {
+        setIsProjectMetaDataModalOpen(false);
+        setIsEditorModalOpen(true);
     };
 
-    const handleProjectModalSave = () => {
-        setIsProjectModalOpen(false);
-        setIsEditorJsModalOpen(false);
-        setEditorJsData(getEditorJsInitialData(contentType));
+    const handleProjectMetaDataModalSave = () => {
+        setIsProjectMetaDataModalOpen(false);
+        setProjectData(null);
     };
 
     return (
         <>
             <section className="pt-30 pb-20 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                    <ProjectPageHeader
-                        onAddClick={() => setIsEditorJsModalOpen(true)}
-                    />
+                    <ProjectPageHeader onAddClick={handleOnAddClick} />
                     <DataLoader
                         fetchData={fetchProjects}
                         render={(projects) => (
@@ -54,18 +49,18 @@ const ProjectsPage = () => {
                 </div>
             </section>
             <EditorJsModal
-                isOpen={isEditorJsModalOpen}
-                onClose={handleEditorJsModalClose}
-                onSave={handleSave}
-                initialData={editorJsData}
+                isOpen={isEditorModalOpen}
+                onClose={() => setIsEditorModalOpen(false)}
+                onSave={handleEditorJsModalSave}
+                initialData={projectData?.content}
                 actionBtnTitle="Next"
-                contentType={contentType}
+                contentType={CONTENT_TYPES.PROJECT}
             />
-            <ProjectModal
-                isOpen={isProjectModalOpen}
-                onClose={handleProjectModalClose}
-                onSave={handleProjectModalSave}
-                editorJsData={editorJsData}
+            <ProjectMetaDataModal
+                isOpen={isProjectMetaDataModalOpen}
+                onClose={handleProjectMetaDataModalClose}
+                onSave={handleProjectMetaDataModalSave}
+                initialData={projectData}
             />
         </>
     );
