@@ -12,8 +12,14 @@ import Gallery from "./tools/project/gallery";
 import InlineCode from "./tools/inlineCode";
 
 export const EDITOR_JS_TOOLS = {
-    header: Header,
-    list: List,
+    header: {
+        class: Header,
+        inlineToolbar: true,
+    },
+    list: {
+        class: List,
+        inlineToolbar: true,
+    },
     image: {
         class: ImageTool,
         config: {

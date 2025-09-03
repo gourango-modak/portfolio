@@ -173,10 +173,6 @@ pre[class*="language-"]::-moz-selection,
     }
 }
 
-#editorjs .ce-paragraph code::selection {
+#editorjs code::selection {
     color: #1e293b;
-}
-
-#editorjs .ce-paragraph code {
-    font-family: Poppins;
 }

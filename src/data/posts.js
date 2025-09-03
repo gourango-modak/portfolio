@@ -4,8 +4,7 @@ const postBaseUrl =
     "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/";
 
 const postFiles = [
-    "1756798811433_theultimateguidetomodernwebdevelopment.json",
-    "1756884231624_unlockingpythonspoweraglimpseintothebasics.json",
+    "1756888667159_howtouseconfigureawaittoimprovecasyncperformance.json",
 ];
 
 export const fetchPosts = async (limit) => {
