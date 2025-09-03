@@ -4,7 +4,7 @@ const postBaseUrl =
     "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/";
 
 const postFiles = [
-    "1756888667159_howtouseconfigureawaittoimprovecasyncperformance.json",
+    "1756890334080_howtouseconfigureawaittoimprovecasyncperformance.json",
 ];
 
 export const fetchPosts = async (limit) => {
