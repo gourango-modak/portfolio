@@ -4,7 +4,7 @@ const EditorJsContentRenderer = ({ content }) => {
     if (!content || !content.blocks) return null;
 
     return (
-        <div>
+        <div className="editorjs-content">
             {content.blocks.map((block, index) => {
                 const BlockComponent = BLOCK_RENDERERS[block.type];
                 if (!BlockComponent) {

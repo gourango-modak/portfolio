@@ -23,6 +23,12 @@ code[class*="language-"],
     background: #303030 !important;
 }
 
+.editorjs-content code .inline-code {
+    background: #303030;
+    color: white;
+    padding: 4px 8px;
+}
+
 /* Make code selection transparent and follow your own styles */
 code[class*="language-"]::selection,
 pre[class*="language-"]::selection,

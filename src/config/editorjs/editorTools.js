@@ -3,13 +3,14 @@ import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Table from "@editorjs/table";
-import InlineCode from "@editorjs/inline-code";
+// import InlineCode from "@editorjs/inline-code";
 import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
 import { CONTENT_TYPES } from "..";
 import TagLine from "./tools/project/tagline";
 import Gallery from "./tools/project/gallery";
+import InlineCode from "./tools/inlineCode";
 
 export const EDITOR_JS_TOOLS = {
     header: Header,

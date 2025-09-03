@@ -5,7 +5,7 @@ const postBaseUrl =
 
 const postFiles = [
     "1756798811433_theultimateguidetomodernwebdevelopment.json",
-    "1756879713331_unlockingpythonspoweraglimpseintothebasics.json",
+    "1756884231624_unlockingpythonspoweraglimpseintothebasics.json",
 ];
 
 export const fetchPosts = async (limit) => {
