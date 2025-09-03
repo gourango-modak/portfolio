@@ -9,94 +9,82 @@ export default class InlineCode {
 
     constructor({ api }) {
         this.api = api;
-        // Tailwind classes
-        this.class = "bg-gray-100 text-red-600 font-mono px-1 rounded";
+        this.class = "bg-[#303030] text-white font-mono px-1 py-[2px] rounded";
     }
 
     render() {
         this.button = document.createElement("button");
         this.button.type = "button";
         this.button.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="16 18 22 12 16 6"></polyline>
-                <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8L5 12L9 16"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 8L19 12L15 16"></path></svg>
         `;
         this.button.classList.add(this.api.styles.inlineToolButton);
         return this.button;
     }
 
     surround(range) {
-        if (!range) return;
+        if (!range || range.collapsed) return;
 
+        const text = range.toString();
+        if (!text.trim()) return; // ignore only-space selection
+
+        // Check if selection is already inside code
         const ancestor = range.commonAncestorContainer;
         const codeNode = ancestor.closest
             ? ancestor.closest("code")
             : this._findParentCode(ancestor);
 
-        // TOGGLE OFF
         if (
             codeNode &&
             codeNode.contains(range.startContainer) &&
             codeNode.contains(range.endContainer)
         ) {
+            // Toggle OFF: unwrap
             const textNode = document.createTextNode(codeNode.textContent);
             codeNode.parentNode.replaceChild(textNode, codeNode);
             this.api.selection.expandToTag(textNode);
             return;
         }
 
-        // Extract selection
-        const selectedContent = range.extractContents();
-        const text = selectedContent.textContent;
-
-        if (!text.trim()) return; // do not wrap empty or spaces
-
-        // Split spaces from text
+        // Split leading/trailing spaces
         const leadingSpaces = text.match(/^(\s*)/)[0];
         const trailingSpaces = text.match(/(\s*)$/)[0];
         const mainText = text.trim();
-
         if (!mainText) return;
 
         const fragment = document.createDocumentFragment();
-
-        // Insert leading spaces
         if (leadingSpaces)
             fragment.appendChild(document.createTextNode(leadingSpaces));
 
-        // Wrap main text in code
-        const codeElement = document.createElement("code");
-        codeElement.className = this.class;
-        codeElement.textContent = mainText;
-        fragment.appendChild(codeElement);
+        const codeEl = document.createElement("code");
+        codeEl.className = this.class;
+        codeEl.textContent = mainText;
+        fragment.appendChild(codeEl);
 
-        // Insert trailing spaces
         if (trailingSpaces)
             fragment.appendChild(document.createTextNode(trailingSpaces));
 
-        // Insert fragment back
+        // Insert fragment in place
+        range.deleteContents();
         range.insertNode(fragment);
 
-        // Merge adjacent <code> if any
-        this._mergeAdjacentCode(codeElement);
+        // Merge adjacent code blocks
+        this._mergeAdjacentCode(codeEl);
 
-        // Set selection to newly created code element
-        this.api.selection.expandToTag(codeElement);
+        // Keep selection inside the new code
+        this.api.selection.expandToTag(codeEl);
     }
 
     _mergeAdjacentCode(code) {
         const prev = code.previousSibling;
         const next = code.nextSibling;
 
-        // Merge previous
         if (prev && prev.tagName === "CODE") {
             prev.textContent += code.textContent;
             code.parentNode.removeChild(code);
             code = prev;
         }
 
-        // Merge next
         if (next && next.tagName === "CODE") {
             code.textContent += next.textContent;
             next.parentNode.removeChild(next);
@@ -111,8 +99,27 @@ export default class InlineCode {
     }
 
     checkState(selection) {
-        const ancestor = selection.anchorNode?.parentNode;
-        return ancestor?.tagName === "CODE";
+        if (!selection) return false;
+
+        const { anchorNode, focusNode } = selection;
+
+        const isInsideCode = (node) => {
+            if (!node) return false;
+            return node.closest
+                ? Boolean(node.closest("code"))
+                : Boolean(this._findParentCode(node));
+        };
+
+        this.state = isInsideCode(anchorNode) || isInsideCode(focusNode);
+
+        // Toggle toolbar button active state
+        if (this.button) {
+            this.state
+                ? this.button.classList.add("ce-inline-tool--active")
+                : this.button.classList.remove("ce-inline-tool--active");
+        }
+
+        return this.state;
     }
 
     static get sanitize() {

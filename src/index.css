@@ -172,3 +172,11 @@ pre[class*="language-"]::-moz-selection,
         font-size: 1.25rem; /* md:text-xl */
     }
 }
+
+#editorjs .ce-paragraph code::selection {
+    color: #1e293b;
+}
+
+#editorjs .ce-paragraph code {
+    font-family: Poppins;
+}

@@ -3,7 +3,6 @@ import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Table from "@editorjs/table";
-// import InlineCode from "@editorjs/inline-code";
 import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
