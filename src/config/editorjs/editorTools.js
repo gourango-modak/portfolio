@@ -3,6 +3,7 @@ import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Table from "@editorjs/table";
+import InlineCode from "@editorjs/inline-code";
 import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
@@ -48,6 +49,7 @@ export const EDITOR_JS_TOOLS = {
     code: Code,
     title: Title,
     tag: TagList,
+    inlineCode: InlineCode,
 };
 
 export const CUSTOM_TOOLS = {
