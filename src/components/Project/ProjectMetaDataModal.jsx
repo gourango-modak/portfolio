@@ -58,10 +58,15 @@ const ProjectMetaDataModal = ({
         setMetaData(defaultMetaData);
     };
 
+    const handleClose = () => {
+        onClose();
+        setMetaData(defaultMetaData);
+    };
+
     return (
         <Modal
             isOpen={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             style={{ width: "w-2xl" }}
             title={"Create New Project"}
             footer={

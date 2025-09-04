@@ -72,7 +72,7 @@ const BlogPage = () => {
                 onSave={handleEditorJsModalSave}
                 initialData={editorJsData}
                 actionBtnTitle="Next"
-                contentType={CONTENT_TYPES.PROJECT}
+                contentType={CONTENT_TYPES.BLOG}
             />
             <PostMetaDataModal
                 isOpen={isPostMetaDataModalOpen}

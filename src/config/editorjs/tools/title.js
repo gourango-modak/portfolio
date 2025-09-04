@@ -1,6 +1,4 @@
-import Header from "@editorjs/header";
-
-export default class Title extends Header {
+export default class Title {
     static get toolbox() {
         return {
             title: "Title",
@@ -8,49 +6,53 @@ export default class Title extends Header {
         };
     }
 
-    // Optional: override default config to always be H1
-    constructor({ data, config, api, readOnly }) {
-        super({
-            data,
-            config: {
-                levels: [1],
-                defaultLevel: 1,
-                // placeholder: "Enter your title here...", // Has a placeholder cursor position bug in editorjs
-            },
-            api,
-            readOnly,
-        });
-    }
-
-    // Make sure saved type is "title" instead of "header"
     static get isInline() {
         return false;
     }
 
+    constructor({ data, api, readOnly }) {
+        this.api = api;
+        this.readOnly = readOnly;
+        this.data = {
+            text: data?.text || "",
+        };
+        this.placeholder = "Enter your title here...";
+    }
+
+    render() {
+        const h1 = document.createElement("h1");
+        h1.contentEditable = !this.readOnly;
+        h1.innerText = this.data.text;
+        h1.classList.add("ce-header", "ce-title-block"); // optional CSS class
+
+        // Optional: handle input changes
+        h1.addEventListener("input", (e) => {
+            this.data.text = e.target.innerText;
+        });
+
+        return h1;
+    }
+
+    save(blockContent) {
+        return {
+            text: blockContent.innerText,
+        };
+    }
+
+    // Paste handling
     static get pasteConfig() {
         return {
-            // Patterns are optional now; we'll use onPaste
             onPaste: {
-                // Called with a string from clipboard or HTML
                 handler: (event) => {
-                    // event.detail contains the pasted text
                     const pastedText =
                         event.detail?.data?.innerText ||
                         event.detail?.data?.text ||
                         "";
                     return {
-                        text: pastedText, // pass text to your block
+                        text: pastedText,
                     };
                 },
             },
-        };
-    }
-
-    save(blockContent) {
-        const data = super.save(blockContent);
-        return {
-            ...data,
-            level: 1, // enforce H1
         };
     }
 

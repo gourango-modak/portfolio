@@ -54,10 +54,15 @@ const PostMetaDataModal = ({
         setMetaData(defaultMetaData);
     };
 
+    const handleClose = () => {
+        onClose();
+        setMetaData(defaultMetaData);
+    };
+
     return (
         <Modal
             isOpen={isOpen}
-            onClose={onClose}
+            onClose={handleClose}
             title="Create Post"
             style={{ width: "w-lg" }}
             footer={

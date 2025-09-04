@@ -1,29 +1,36 @@
 {
-  "id": 1756891620433,
+  "id": 1757017854025,
   "title": "How to Use ConfigureAwait to Improve C# Async Performance",
-  "createdAt": 1756891619592,
+  "createdAt": 1757017853960,
   "tags": [],
   "description": "Learn how to boost your C# async code performance using ConfigureAwait. This blog explains the concept in simple terms with practical examples for faster, scalable, and deadlock-free applications.",
   "slug": "how-to-use-configureawait-to-improve-c-async-performance",
   "content": {
-    "time": 1756891605869,
+    "time": 1757017836860,
     "blocks": [
       {
-        "id": "KpghAUnsxR",
-        "type": "paragraph",
+        "id": "DPZjRKcsBB",
+        "type": "title",
         "data": {
-          "text": "Asynchronous programming in .NET helps apps stay responsive and handle multiple tasks at the same time. But if you want your async code to be fast and efficient, you need to understand <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait</code>."
+          "text": "How to Use ConfigureAwait to Improve C# Async Performance"
         }
       },
       {
-        "id": "q3QlLVtzEK",
+        "id": "Ww4Fnaoaae",
         "type": "paragraph",
         "data": {
-          "text": "In this post, we’ll explain <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait</code> in simple terms, why it matters for performance, and show a timing simulation to see the difference in action."
+          "text": "Asynchronous programming in .NET helps apps stay responsive and handle multiple tasks at the same time. But if you want your async code to be fast and efficient, you need to understand <code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait</code>."
         }
       },
       {
-        "id": "C9a-j52Tha",
+        "id": "ukfPC2YVRc",
+        "type": "paragraph",
+        "data": {
+          "text": "In this post, we’ll explain <code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait</code> in simple terms, why it matters for performance, and show a timing simulation to see the difference in action."
+        }
+      },
+      {
+        "id": "WtxR6WeSkP",
         "type": "header",
         "data": {
           "text": "What Happens When You Use await?",
@@ -31,21 +38,21 @@
         }
       },
       {
-        "id": "VOf7JOYW3z",
+        "id": "gvNZjdtBfv",
         "type": "paragraph",
         "data": {
-          "text": "When you <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">await</code> a task in C#, the program pauses until the task finishes. Then it resumes from where it left off. By default, it tries to resume on the same thread it started on."
+          "text": "When you <code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">await</code> a task in C#, the program pauses until the task finishes. Then it resumes from where it left off. By default, it tries to resume on the same thread it started on."
         }
       },
       {
-        "id": "1zbPujRYOw",
+        "id": "8u4Y2jKNG_",
         "type": "paragraph",
         "data": {
           "text": "This is important for UI apps (like WPF or WinForms) because UI controls can only be updated from the main thread."
         }
       },
       {
-        "id": "xYaxoWrAUA",
+        "id": "NIHGR7HhM8",
         "type": "code",
         "data": {
           "language": "csharp",
@@ -53,14 +60,14 @@
         }
       },
       {
-        "id": "JA7vLEC-W3",
+        "id": "gm50Kl-B31",
         "type": "paragraph",
         "data": {
           "text": "Works perfectly for UI apps. But in server apps (like ASP.NET Core), this “same thread” rule adds unnecessary overhead, slowing your app."
         }
       },
       {
-        "id": "UqIgAcA_nd",
+        "id": "svToHd5Q9I",
         "type": "header",
         "data": {
           "text": "What is ConfigureAwait?",
@@ -68,14 +75,14 @@
         }
       },
       {
-        "id": "d8GklDHIpL",
+        "id": "ne96I828vF",
         "type": "paragraph",
         "data": {
-          "text": "<code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait</code> tells C# whether to resume on the same thread or not."
+          "text": "<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait</code> tells C# whether to resume on the same thread or not."
         }
       },
       {
-        "id": "-MW_eudYWi",
+        "id": "h-GQUT7NGM",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -87,7 +94,7 @@
               "items": []
             },
             {
-              "content": "ConfigureAwait(false) → allows resuming on any available thread, skipping context capture.",
+              "content": "ConfigureAwait(false) → allows resuming on any available thread, skipping context capture.\n",
               "meta": {},
               "items": []
             }
@@ -95,7 +102,7 @@
         }
       },
       {
-        "id": "jmi-DiqbOZ",
+        "id": "rkLJbrHEgi",
         "type": "header",
         "data": {
           "text": "What is Context Capture and Skipping It?",
@@ -103,14 +110,14 @@
         }
       },
       {
-        "id": "bWJVXu5fYA",
+        "id": "5NIyXAbxg7",
         "type": "paragraph",
         "data": {
           "text": "When you await a task, the runtime captures the current context — basically “where the code should continue after the task finishes.”"
         }
       },
       {
-        "id": "WEXSMEJHAX",
+        "id": "JJp3H357p3",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -130,14 +137,14 @@
         }
       },
       {
-        "id": "fhjdO6xwd1",
+        "id": "5yGsLfUmru",
         "type": "paragraph",
         "data": {
           "text": "Capturing the context ensures that after your await, you can safely update UI controls or continue on the correct request thread."
         }
       },
       {
-        "id": "1Dusg8P-cQ",
+        "id": "4mdNr8mjxi",
         "type": "header",
         "data": {
           "text": "Why Capturing Context Can Be Costly",
@@ -145,28 +152,29 @@
         }
       },
       {
-        "id": "S8GLTyWlhD",
+        "id": "8Igm-Em_uG",
         "type": "paragraph",
         "data": {
           "text": "Capturing and restoring the context adds extra work for each async operation. If you have many tasks running in parallel, this overhead can slow down your app."
         }
       },
       {
-        "id": "hOE1rBGOij",
-        "type": "paragraph",
+        "id": "e96Fn2MYNL",
+        "type": "code",
         "data": {
-          "text": "<code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">await Task.Delay(10); // default captures context</code>"
+          "language": "csharp",
+          "code": "await Task.Delay(10); // default captures context"
         }
       },
       {
-        "id": "TjF-_x8KWt",
+        "id": "ZQJ7aNPim6",
         "type": "paragraph",
         "data": {
           "text": "Even for a tiny delay, the runtime ensures the continuation resumes on the original thread, causing unnecessary thread switches."
         }
       },
       {
-        "id": "C31zKxpWfT",
+        "id": "jqPg3S2Ggq",
         "type": "header",
         "data": {
           "text": "Skipping Context Capture with ConfigureAwait(false)",
@@ -174,21 +182,22 @@
         }
       },
       {
-        "id": "jQVYxPY0bR",
+        "id": "NM7SVtU7VP",
         "type": "paragraph",
         "data": {
           "text": "Using ConfigureAwait(false) tells the runtime: “I don’t care which thread I resume on. Just continue as soon as a thread is available.”"
         }
       },
       {
-        "id": "5Gt6LAbC_N",
-        "type": "paragraph",
+        "id": "pAydEzU9Vl",
+        "type": "code",
         "data": {
-          "text": "<code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">await Task.Delay(10).ConfigureAwait(false); // skip context capture</code>"
+          "language": "csharp",
+          "code": "await Task.Delay(10).ConfigureAwait(false); // skip context capture"
         }
       },
       {
-        "id": "-zrNJUX1kX",
+        "id": "oOEwi8u2IM",
         "type": "header",
         "data": {
           "text": "Benefits of skipping context capture:",
@@ -196,7 +205,7 @@
         }
       },
       {
-        "id": "KlFrqLMCK5",
+        "id": "RagJWBNA5K",
         "type": "list",
         "data": {
           "style": "unordered",
@@ -226,14 +235,14 @@
         }
       },
       {
-        "id": "gKBM2Jg_dM",
+        "id": "EnVK_Df020",
         "type": "paragraph",
         "data": {
           "text": "Think of it as saying: “I don’t need to return to the starting point; any available worker thread will do.”"
         }
       },
       {
-        "id": "r-L5G5pSjE",
+        "id": "Le_ht09wvn",
         "type": "header",
         "data": {
           "text": "Simulation: Comparing Performance With and Without ConfigureAwait(false)",
@@ -241,14 +250,14 @@
         }
       },
       {
-        "id": "YsDUlvpwxU",
+        "id": "pN1bboODEP",
         "type": "paragraph",
         "data": {
           "text": "To see the difference, let’s simulate multiple async tasks and measure the total execution time."
         }
       },
       {
-        "id": "iRbzGpvnb_",
+        "id": "WLxzOCyHT0",
         "type": "code",
         "data": {
           "language": "csharp",
@@ -256,7 +265,7 @@
         }
       },
       {
-        "id": "ODfAJUe04A",
+        "id": "dLJN-RUqP_",
         "type": "header",
         "data": {
           "text": "What You’ll Observe",
@@ -264,19 +273,19 @@
         }
       },
       {
-        "id": "n8ozM_AXiD",
+        "id": "lqRs7iICwm",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Without <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code>, each continuation tries to resume on the original context, adding small delays.",
+              "content": "Without ConfigureAwait(false), each continuation tries to resume on the original context, adding small delays. ",
               "meta": {},
               "items": []
             },
             {
-              "content": "With <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code>, continuations run freely on thread pool threads, improving throughput.",
+              "content": "With ConfigureAwait(false), continuations run freely on thread pool threads, improving throughput. ",
               "meta": {},
               "items": []
             },
@@ -289,7 +298,7 @@
         }
       },
       {
-        "id": "H4CldIXH7k",
+        "id": "VVN1W1HAIY",
         "type": "header",
         "data": {
           "text": "Real-Life Scenario in ASP.NET Core",
@@ -297,26 +306,26 @@
         }
       },
       {
-        "id": "6qNnsXt0pW",
+        "id": "39ohfsxJ7D",
         "type": "paragraph",
         "data": {
           "text": "Imagine your web app handles 100 simultaneous requests, each fetching data from a database."
         }
       },
       {
-        "id": "mgMBpzIu3s",
+        "id": "xqKxZcgpQm",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Without <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code>, each request waits for the continuation to return to the original request thread → slows down throughput.",
+              "content": "Without&nbsp;<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code>, each request waits for the continuation to return to the original request thread → slows down throughput.",
               "meta": {},
               "items": []
             },
             {
-              "content": "With <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code>, continuations run on free thread pool threads, improving response time and scalability.",
+              "content": "With&nbsp;<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code>, continuations run on free thread pool threads, improving response time and scalability.\n\n",
               "meta": {},
               "items": []
             }
@@ -324,7 +333,7 @@
         }
       },
       {
-        "id": "5H545l3dlg",
+        "id": "Q4Zvkt13fG",
         "type": "code",
         "data": {
           "language": "csharp",
@@ -332,7 +341,7 @@
         }
       },
       {
-        "id": "KFQBJIOX-O",
+        "id": "X4B3S0ybXC",
         "type": "header",
         "data": {
           "text": "Best Practices",
@@ -340,14 +349,14 @@
         }
       },
       {
-        "id": "FNe4uSe-2d",
+        "id": "oIYDoMqsuK",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "Use <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code> in library and server code.",
+              "content": "Use&nbsp;<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code> in library and server code.",
               "meta": {},
               "items": []
             },
@@ -357,7 +366,7 @@
               "items": []
             },
             {
-              "content": "Never access UI elements after <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code> in a UI app — it may crash.",
+              "content": "Never access UI elements after&nbsp;<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code> &nbsp;in a UI app — it may crash.",
               "meta": {},
               "items": []
             }
@@ -365,7 +374,7 @@
         }
       },
       {
-        "id": "SNlon8leHt",
+        "id": "cELsLVRS9K",
         "type": "header",
         "data": {
           "text": "Key Takeaways",
@@ -373,14 +382,14 @@
         }
       },
       {
-        "id": "mt97zopPMG",
+        "id": "GXPJtQ8Y_C",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "<code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code> improves performance by skipping unnecessary thread switching.",
+              "content": "<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code> &nbsp;improves performance by skipping unnecessary thread switching.",
               "meta": {},
               "items": []
             },
@@ -403,7 +412,7 @@
         }
       },
       {
-        "id": "w8uwI_lyhM",
+        "id": "6z0nlG1mzS",
         "type": "header",
         "data": {
           "text": "Summary",
@@ -411,10 +420,10 @@
         }
       },
       {
-        "id": "17b-mc_Oh5",
+        "id": "xYMBFKvtL7",
         "type": "paragraph",
         "data": {
-          "text": "<code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait</code> might look small, but it can make a big difference in performance and reliability. With the simulation above, you can see the impact of using <code class=\"bg-[#303030] text-white font-mono px-1 py-[2px] rounded\">ConfigureAwait(false)</code> for high-throughput async operations."
+          "text": "<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait</code> might look small, but it can make a big difference in performance and reliability. With the simulation above, you can see the impact of using&nbsp;<code class=\"bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded\">ConfigureAwait(false)</code>&nbsp;for high-throughput async operations."
         }
       }
     ],

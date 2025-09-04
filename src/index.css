@@ -176,3 +176,10 @@ pre[class*="language-"]::-moz-selection,
 .editorjs code::selection {
     color: #1e293b;
 }
+
+.ce-title-block:empty::before {
+    content: "Enter your title here...";
+    color: #9ca3af;
+    pointer-events: none;
+    display: block;
+}
