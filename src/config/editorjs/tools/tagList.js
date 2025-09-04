@@ -1,4 +1,5 @@
 import Paragraph from "@editorjs/paragraph";
+import { CUSTOM_TOOLS } from "../editorTools";
 
 export default class TagList extends Paragraph {
     static get toolbox() {
@@ -23,6 +24,6 @@ export default class TagList extends Paragraph {
 
     // Change the block type for Editor.js
     static get type() {
-        return "tags";
+        return CUSTOM_TOOLS.TAGLIST;
     }
 }

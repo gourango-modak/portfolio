@@ -1,3 +1,5 @@
+import { CUSTOM_TOOLS } from "../editorTools";
+
 class Code {
     static get toolbox() {
         return {
@@ -114,7 +116,7 @@ class Code {
     }
 
     static get type() {
-        return "code";
+        return CUSTOM_TOOLS.CODE;
     }
 }
 

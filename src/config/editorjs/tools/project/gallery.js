@@ -1,4 +1,5 @@
 import { isValidUrl } from "../../../../utils/common";
+import { CUSTOM_TOOLS } from "../../editorTools";
 
 export default class Gallery {
     static get toolbox() {
@@ -10,7 +11,7 @@ export default class Gallery {
     }
 
     static get type() {
-        return "gallery";
+        return CUSTOM_TOOLS.GALLERY;
     }
 
     constructor({ data, api, readOnly }) {

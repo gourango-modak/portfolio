@@ -1,3 +1,5 @@
+import { CUSTOM_TOOLS } from "../editorTools";
+
 export default class InlineCode {
     static get isInline() {
         return true;
@@ -127,5 +129,9 @@ export default class InlineCode {
         return {
             code: true,
         };
+    }
+
+    static get type() {
+        return CUSTOM_TOOLS.INLINE_CODE;
     }
 }

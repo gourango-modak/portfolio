@@ -1,3 +1,5 @@
+import { CUSTOM_TOOLS } from "../editorTools";
+
 export default class Title {
     static get toolbox() {
         return {
@@ -57,6 +59,6 @@ export default class Title {
     }
 
     static get type() {
-        return "title";
+        return CUSTOM_TOOLS.TITLE;
     }
 }

@@ -71,6 +71,9 @@ export const CUSTOM_TOOLS = {
     GALLERY: {
         TYPE: "gallery",
     },
+    INLINE_CODE: {
+        TYPE: "inline_code",
+    },
 };
 
 export const getEditorJsTools = (contentType) => {
