@@ -116,7 +116,7 @@ class Code {
     }
 
     static get type() {
-        return CUSTOM_TOOLS.CODE;
+        return CUSTOM_TOOLS.CODE.TYPE;
     }
 }
 

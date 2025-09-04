@@ -4,7 +4,6 @@ import { Breadcrumb } from "../../components/Common/Breadcrumb";
 import PostDetailPageHeader from "./PostDetailPageHeader";
 import { fetchPosts } from "../../data/posts";
 import { formatDate } from "../../utils/date";
-import { filterEditorBlocks } from "../../utils/editor";
 import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
 
 const PostDetailPage = () => {
@@ -29,9 +28,7 @@ const PostDetailPage = () => {
                                 title={post.title}
                                 date={formatDate(post.createdAt)}
                             />
-                            <EditorJsContentRenderer
-                                content={filterEditorBlocks(post.content)}
-                            />
+                            <EditorJsContentRenderer content={post.content} />
                         </div>
                     </section>
                 );

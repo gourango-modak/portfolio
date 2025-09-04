@@ -59,6 +59,6 @@ export default class Title {
     }
 
     static get type() {
-        return CUSTOM_TOOLS.TITLE;
+        return CUSTOM_TOOLS.TITLE.TYPE;
     }
 }

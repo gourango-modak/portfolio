@@ -132,6 +132,6 @@ export default class InlineCode {
     }
 
     static get type() {
-        return CUSTOM_TOOLS.INLINE_CODE;
+        return CUSTOM_TOOLS.INLINE_CODE.TYPE;
     }
 }

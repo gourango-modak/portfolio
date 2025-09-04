@@ -11,7 +11,7 @@ export default class Gallery {
     }
 
     static get type() {
-        return CUSTOM_TOOLS.GALLERY;
+        return CUSTOM_TOOLS.GALLERY.TYPE;
     }
 
     constructor({ data, api, readOnly }) {

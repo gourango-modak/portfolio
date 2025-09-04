@@ -24,6 +24,6 @@ export default class TagList extends Paragraph {
 
     // Change the block type for Editor.js
     static get type() {
-        return CUSTOM_TOOLS.TAGLIST;
+        return CUSTOM_TOOLS.TAGLIST.TYPE;
     }
 }

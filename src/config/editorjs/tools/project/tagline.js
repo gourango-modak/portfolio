@@ -36,6 +36,6 @@ export default class TagLine extends Paragraph {
 
     // Change the block type for Editor.js
     static get type() {
-        return CUSTOM_TOOLS.TAGLINE;
+        return CUSTOM_TOOLS.TAGLINE.TYPE;
     }
 }

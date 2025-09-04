@@ -1,6 +1,5 @@
 import { ExternalLink, Github, Calendar } from "lucide-react";
 import { Breadcrumb } from "../../components/Common/Breadcrumb";
-import { filterEditorBlocks } from "../../utils/editor";
 import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
 
 export const ProjectDetail = ({ project }) => {
@@ -51,9 +50,7 @@ export const ProjectDetail = ({ project }) => {
                     </a>
                 </div>
             </header>
-            <EditorJsContentRenderer
-                content={filterEditorBlocks(project.content)}
-            />
+            <EditorJsContentRenderer content={project.content} />
             <div className="flex flex-wrap gap-2 mt-15">
                 {project.technologies?.length > 0 &&
                     project.technologies.map((tag) => (

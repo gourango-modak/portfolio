@@ -369,9 +369,9 @@
       },
       {
         "id": "1UIo1Je5gj",
-        "type": "tag",
+        "type": "tags",
         "data": {
-          "text": "#C#, #C++,&nbsp;"
+          "text": "#C# #C++"
         }
       }
     ],
