@@ -19,7 +19,7 @@ const Modal = ({
     children,
     footer,
     style = {},
-    showHeader = true,
+    showCloseBtn = true,
 }) => {
     const mergedStyle = { ...defaultStyle, ...style };
 
@@ -57,8 +57,12 @@ const Modal = ({
                 <div
                     className={`bg-white rounded-lg shadow-2xl ${mergedStyle.width}`}
                 >
-                    {showHeader && (
-                        <ModalHeader title={title} onClose={onClose} />
+                    {title && (
+                        <ModalHeader
+                            title={title}
+                            onClose={onClose}
+                            showCloseBtn={showCloseBtn}
+                        />
                     )}
 
                     <ModalBody

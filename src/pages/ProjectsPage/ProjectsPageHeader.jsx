@@ -1,11 +1,11 @@
 import AddContentButton from "../../components/Common/AddContentButton";
 
-const ProjectsPageHeader = ({ onAddClick }) => {
+const ProjectsPageHeader = ({ onAdd }) => {
     return (
         <>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
                 <h1 className="text-4xl font-bold text-slate-900">Portfolio</h1>
-                <AddContentButton onClick={onAddClick} />
+                <AddContentButton onClick={onAdd} />
             </div>
             <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
                 Explore a curated selection of my projects. Each one represents

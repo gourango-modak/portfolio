@@ -42,7 +42,7 @@ const PostMetaDataModal = ({ isOpen, onClose, onSave, postData }) => {
                         onClick={onClose}
                         className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-300"
                     >
-                        Cancel
+                        Back
                     </button>
                     <button
                         onClick={handleSaveClick}

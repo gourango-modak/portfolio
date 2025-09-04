@@ -2,7 +2,10 @@ import { useRef } from "react";
 import { useAlertModal } from "../../hooks/useAlertModal";
 import Modal from "../Modal/Modal";
 import EditorJs from "./EditorJs";
-import { getEditorJsTools } from "../../config/editorJs/editorTools";
+import {
+    getEditorJsInitialData,
+    getEditorJsTools,
+} from "../../config/editorJs/editorTools";
 import { validateEditorJsModal } from "../../utils/validation";
 
 const EditorJsModal = ({
@@ -65,7 +68,9 @@ const EditorJsModal = ({
                 <EditorJs
                     ref={editorRef}
                     onSave={handleDataAfterSave}
-                    initialData={initialData}
+                    initialData={
+                        initialData || getEditorJsInitialData(contentType)
+                    }
                     tools={getEditorJsTools(contentType)}
                 />
             </Modal>

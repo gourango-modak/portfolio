@@ -41,10 +41,10 @@ export const getFileName = (title, id) => {
     return `${id}_${name}.json`;
 };
 
-export const prepareProjectData = ({ content }, metaData) => {
-    const tags = extractTags(content);
-    const title = extractTitle(content);
-    const tagline = extractTagline(content);
+export const prepareProjectData = (editorJsData, metaData) => {
+    const tags = extractTags(editorJsData);
+    const title = extractTitle(editorJsData);
+    const tagline = extractTagline(editorJsData);
 
     return {
         id: generateId(),
@@ -54,13 +54,13 @@ export const prepareProjectData = ({ content }, metaData) => {
         ...metaData,
         technologies: tags,
         slug: buildSlug(title),
-        content: content,
+        content: editorJsData,
     };
 };
 
-export const preparePostData = ({ content }, metaData) => {
-    const tags = extractTags(content);
-    const title = extractTitle(content);
+export const preparePostData = (editorJsData, metaData) => {
+    const tags = extractTags(editorJsData);
+    const title = extractTitle(editorJsData);
 
     return {
         id: generateId(),
@@ -69,7 +69,7 @@ export const preparePostData = ({ content }, metaData) => {
         tags: tags,
         ...metaData,
         slug: buildSlug(title),
-        content: content,
+        content: editorJsData,
     };
 };
 
