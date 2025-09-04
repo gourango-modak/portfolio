@@ -51,7 +51,7 @@ export const EDITOR_JS_TOOLS = {
     table: Table,
     code: Code,
     title: Title,
-    tag: TagList,
+    tags: TagList,
     inlineCode: InlineCode,
 };
 
@@ -72,7 +72,7 @@ export const CUSTOM_TOOLS = {
         TYPE: "gallery",
     },
     INLINE_CODE: {
-        TYPE: "inline_code",
+        TYPE: "inlineCode",
     },
 };
 
@@ -93,7 +93,7 @@ export const getEditorJsTools = (contentType) => {
 export const EDITOR_JS_INITIALDATA = {
     blocks: [
         {
-            type: "title",
+            type: CUSTOM_TOOLS.TITLE.TYPE,
             data: {
                 text: "",
             },
@@ -114,7 +114,7 @@ export function getEditorJsInitialData(contentType) {
                 blocks: [
                     ...EDITOR_JS_INITIALDATA.blocks,
                     {
-                        type: "tagline",
+                        type: CUSTOM_TOOLS.TAGLINE.TYPE,
                         data: { text: "" },
                     },
                 ],

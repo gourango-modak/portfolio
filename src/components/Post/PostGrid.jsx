@@ -3,37 +3,53 @@ import PostCard from "./PostCard";
 import EditorJsModal from "../EditorJs/EditorJsModal";
 import PostMetaDataModal from "./PostMetaDataModal";
 import { CONTENT_TYPES } from "../../config/config";
+import { downloadJson, getFileName, preparePostData } from "../../utils/common";
 
 const PostGrid = ({ posts }) => {
-    const [selectedPost, setSelectedPost] = useState(null);
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
     const [isPostMetaDataModalOpen, setIsPostMetaDataModalOpen] =
         useState(false);
+    const [editorJsData, setEditorJsData] = useState(null);
+    const [metaData, setMetaData] = useState(null);
 
     const handleEditorJsModalSave = (data) => {
-        setSelectedPost((prev) => ({ ...prev, content: data }));
-        setIsPostMetaDataModalOpen(true);
+        setEditorJsData(data);
         setIsEditorModalOpen(false);
+        setIsPostMetaDataModalOpen(true);
     };
 
     const handleEditorJsModalClose = () => {
-        setSelectedPost(null);
+        setEditorJsData(null);
+        setMetaData(null);
         setIsEditorModalOpen(false);
     };
 
     const handlePostMetaDataModalClose = () => {
         setIsPostMetaDataModalOpen(false);
-        setIsEditorModalOpen(true);
+        setIsEditorModalOpen(false);
+        setEditorJsData(null);
+        setMetaData(null);
     };
 
-    const handlePostMetaDataModalSave = () => {
+    const handlePostMetaDataModalSave = (metaData) => {
+        const postData = preparePostData(editorJsData, metaData);
+        downloadJson(postData, getFileName(postData.title, postData.id));
+
         setIsPostMetaDataModalOpen(false);
-        setSelectedPost(null);
+        setEditorJsData(null);
+        setMetaData(null);
+    };
+
+    const handlePostMetaDataModalBack = (metaData) => {
+        setMetaData(metaData);
+        setIsPostMetaDataModalOpen(false);
+        setIsEditorModalOpen(true);
     };
 
     const handleEdit = (post) => {
-        setSelectedPost(post);
         setIsEditorModalOpen(true);
+        setEditorJsData(post.content);
+        setMetaData(post);
     };
 
     return (
@@ -47,16 +63,16 @@ const PostGrid = ({ posts }) => {
                 isOpen={isEditorModalOpen}
                 onClose={handleEditorJsModalClose}
                 onSave={handleEditorJsModalSave}
-                initialData={selectedPost?.content}
+                initialData={editorJsData}
                 actionBtnTitle="Next"
                 contentType={CONTENT_TYPES.BLOG}
             />
-
             <PostMetaDataModal
                 isOpen={isPostMetaDataModalOpen}
                 onClose={handlePostMetaDataModalClose}
                 onSave={handlePostMetaDataModalSave}
-                postData={selectedPost}
+                onBack={handlePostMetaDataModalBack}
+                initialData={metaData}
             />
         </>
     );

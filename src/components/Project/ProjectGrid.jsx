@@ -3,42 +3,61 @@ import ProjectCard from "./ProjectCard";
 import EditorJsModal from "../EditorJs/EditorJsModal";
 import ProjectMetaDataModal from "./ProjectMetaDataModal";
 import { CONTENT_TYPES } from "../../config/config";
+import {
+    downloadJson,
+    getFileName,
+    prepareProjectData,
+} from "../../utils/common";
 
 const ProjectGrid = ({ projects }) => {
-    const [selectedProject, setSelectedProject] = useState(null);
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
     const [isProjectMetaDataModalOpen, setIsProjectMetaDataModalOpen] =
         useState(false);
-
-    const handleOnAddClick = () => {
-        setSelectedProject(getProjectInitialData());
-        setIsEditorModalOpen(true);
-    };
+    const [editorJsData, setEditorJsData] = useState(null);
+    const [metaData, setMetaData] = useState(null);
 
     const handleEditorJsModalSave = (data) => {
-        setSelectedProject((prev) => ({ ...prev, content: data }));
-        setIsProjectMetaDataModalOpen(true);
+        setEditorJsData(data);
         setIsEditorModalOpen(false);
+        setIsProjectMetaDataModalOpen(true);
     };
 
     const handleEditorJsModalClose = () => {
-        setSelectedProject(null);
+        setEditorJsData(null);
+        setMetaData(null);
         setIsEditorModalOpen(false);
     };
 
     const handleProjectMetaDataModalClose = () => {
         setIsProjectMetaDataModalOpen(false);
-        setIsEditorModalOpen(true);
+        setIsEditorModalOpen(false);
+        setEditorJsData(null);
+        setMetaData(null);
     };
 
-    const handleProjectMetaDataModalSave = () => {
+    const handleProjectMetaDataModalSave = (metaData) => {
+        debugger;
+        const projectData = prepareProjectData(editorJsData, metaData);
+        downloadJson(
+            projectData,
+            getFileName(projectData.title, projectData.id)
+        );
+
         setIsProjectMetaDataModalOpen(false);
-        setSelectedProject(null);
+        setEditorJsData(null);
+        setMetaData(null);
+    };
+
+    const handleProjectMetaDataModalBack = (metaData) => {
+        setMetaData(metaData);
+        setIsProjectMetaDataModalOpen(false);
+        setIsEditorModalOpen(true);
     };
 
     const handleEdit = (post) => {
-        setSelectedProject(post);
         setIsEditorModalOpen(true);
+        setEditorJsData(post.content);
+        setMetaData(post);
     };
 
     return (
@@ -56,7 +75,7 @@ const ProjectGrid = ({ projects }) => {
                 isOpen={isEditorModalOpen}
                 onClose={handleEditorJsModalClose}
                 onSave={handleEditorJsModalSave}
-                initialData={selectedProject?.content}
+                initialData={editorJsData}
                 actionBtnTitle="Next"
                 contentType={CONTENT_TYPES.PROJECT}
             />
@@ -64,7 +83,8 @@ const ProjectGrid = ({ projects }) => {
                 isOpen={isProjectMetaDataModalOpen}
                 onClose={handleProjectMetaDataModalClose}
                 onSave={handleProjectMetaDataModalSave}
-                initialData={selectedProject}
+                onBack={handleProjectMetaDataModalBack}
+                initialData={metaData}
             />
         </>
     );

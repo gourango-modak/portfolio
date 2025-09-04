@@ -47,11 +47,11 @@ export const prepareProjectData = (editorJsData, metaData) => {
     const tagline = extractTagline(editorJsData);
 
     return {
+        ...metaData,
         id: generateId(),
         title: title,
         tagline: tagline,
         createdAt: Date.now(),
-        ...metaData,
         technologies: tags,
         slug: buildSlug(title),
         content: editorJsData,
@@ -63,11 +63,11 @@ export const preparePostData = (editorJsData, metaData) => {
     const title = extractTitle(editorJsData);
 
     return {
+        ...metaData,
         id: generateId(),
         title: title,
         createdAt: Date.now(),
         tags: tags,
-        ...metaData,
         slug: buildSlug(title),
         content: editorJsData,
     };
