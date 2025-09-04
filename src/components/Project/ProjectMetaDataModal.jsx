@@ -14,7 +14,7 @@ const ProjectMetaDataModal = ({
     onSave,
     initialData = {},
 }) => {
-    const { formData, handleChange, errors, setErrors } =
+    const { formData, setFormData, handleChange, errors, setErrors } =
         useProjectForm(initialData);
 
     const handleSave = () => {
@@ -29,6 +29,7 @@ const ProjectMetaDataModal = ({
             getFileName(projectData.title, projectData.id)
         );
         onSave();
+        setFormData(null);
     };
     return (
         <Modal

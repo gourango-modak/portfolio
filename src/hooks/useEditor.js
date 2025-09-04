@@ -5,7 +5,6 @@ export const useEditor = ({ holder, tools, initialData }) => {
     const editorInstance = useRef(null);
 
     useEffect(() => {
-        debugger;
         if (!holder) return;
 
         // If an instance already exists, destroy it before re-initializing
@@ -16,13 +15,12 @@ export const useEditor = ({ holder, tools, initialData }) => {
             editorInstance.current.destroy();
             editorInstance.current = null;
         }
-
         const editor = new EditorJS({
             holder: holder,
             autofocus: true,
             placeholder: "Write your content here...",
             tools: tools,
-            data: initialData,
+            data: initialData || {},
         });
 
         editorInstance.current = editor;

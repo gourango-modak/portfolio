@@ -8,7 +8,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage/ProjectDetailPage";
 import PostDetailPage from "./pages/PostDetailPage/PostDetailPage";
 import ContactPage from "./pages/ContactPage";
 import ScrollToTop from "./components/Common/ScrollToTop";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {

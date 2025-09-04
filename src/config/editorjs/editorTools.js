@@ -47,9 +47,6 @@ export const EDITOR_JS_TOOLS = {
     paragraph: {
         class: Paragraph,
         inlineToolbar: true,
-        // config: {
-        //     preserveBlank: true,
-        // },
     },
     table: Table,
     code: Code,

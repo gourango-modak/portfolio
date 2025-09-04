@@ -6,7 +6,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
             <InputField
                 label="Short Description"
                 name="description"
-                value={formData.description}
+                value={formData?.description || ""}
                 onChange={handleChange}
                 required={true}
                 error={errors.description}
@@ -17,7 +17,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                 <InputField
                     label="Start Date"
                     name="startDate"
-                    value={formData.startDate}
+                    value={formData?.startDate || ""}
                     onChange={handleChange}
                     required={true}
                     error={errors.startDate}
@@ -27,7 +27,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
                 <InputField
                     label="End Date"
                     name="endDate"
-                    value={formData.endDate}
+                    value={formData?.endDate || ""}
                     onChange={handleChange}
                     required={true}
                     error={errors.endDate}
@@ -37,7 +37,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
             <InputField
                 label="Live Site URL"
                 name="liveUrl"
-                value={formData.liveUrl}
+                value={formData?.liveUrl || ""}
                 onChange={handleChange}
                 required={true}
                 error={errors.liveUrl}
@@ -46,7 +46,7 @@ export const ProjectForm = ({ formData, handleChange, errors = {} }) => {
             <InputField
                 label="Repository URL"
                 name="repoUrl"
-                value={formData.repoUrl}
+                value={formData?.repoUrl || ""}
                 onChange={handleChange}
                 required={true}
                 error={errors.repoUrl}
