@@ -1,6 +1,6 @@
 import AddContentButton from "../../components/Common/AddContentButton";
 
-const ProjectPageHeader = ({ onAddClick }) => {
+const ProjectsPageHeader = ({ onAddClick }) => {
     return (
         <>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
@@ -16,4 +16,4 @@ const ProjectPageHeader = ({ onAddClick }) => {
     );
 };
 
-export default ProjectPageHeader;
+export default ProjectsPageHeader;

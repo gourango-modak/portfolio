@@ -1,4 +1,4 @@
-import { CONTENT_TYPES } from "../config";
+import { CONTENT_TYPES } from "../config/config";
 import { isValidUrl } from "./common";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 

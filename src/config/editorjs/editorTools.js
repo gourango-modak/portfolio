@@ -6,7 +6,7 @@ import Table from "@editorjs/table";
 import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
-import { CONTENT_TYPES } from "..";
+import { CONTENT_TYPES } from "../config";
 import TagLine from "./tools/project/tagline";
 import Gallery from "./tools/project/gallery";
 import InlineCode from "./tools/inlineCode";

@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import DataLoader from "../../components/Common/DataLoader";
-import { Breadcrumb } from "./../../components/Common/Breadcrumb";
-import PostDetailPageHeader from "./Header";
-import EditorJsContentRenderer from "./../../components/EditorJs/ContentRenderer";
+import { Breadcrumb } from "../../components/Common/Breadcrumb";
+import PostDetailPageHeader from "./PostDetailPageHeader";
 import { fetchPosts } from "../../data/posts";
 import { formatDate } from "../../utils/date";
 import { filterEditorBlocks } from "../../utils/editor";
+import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
 
 const PostDetailPage = () => {
     const { slug } = useParams();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SKILLS } from "../../config";
+import { SKILLS } from "../../config/config";
 import SkillTag from "./SkillTag";
 import { TabList } from "./../Common/TabList";
 import { TabPanel } from "./../Common/TabPanel";

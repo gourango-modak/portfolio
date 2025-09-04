@@ -2,7 +2,7 @@ import SkillsSection from "../../components/Skills/SkillsSection";
 import BlogSection from "./BlogSection";
 import HeroSection from "./HeroSection";
 import ProjectSection from "./ProjectSection";
-import Contact from "./../../components/Contact/index";
+import Contact from "./../../components/Contact/Contact";
 
 const HomePage = () => {
     return (

@@ -1,4 +1,4 @@
-import { NON_RENDER_EDITORJS_BLOCKS } from "../config";
+import { NON_RENDER_EDITORJS_BLOCKS } from "../config/config";
 import { CUSTOM_TOOLS } from "../config/editorJs/editorTools";
 
 export function extractTitle(editorData) {

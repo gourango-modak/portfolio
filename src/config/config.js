@@ -1,4 +1,10 @@
 import { CUSTOM_TOOLS } from "./editorJs/editorTools";
+import EditorJsHeaderBlock from "./../components/EditorJs/Blocks/EditorJsHeaderBlock";
+import EditorJsParagraphBlock from "./../components/EditorJs/Blocks/EditorJsParagraphBlock";
+import EditorJsListBlock from "./../components/EditorJs/Blocks/EditorJsListBlock";
+import EditorJsImageBlock from "./../components/EditorJs/Blocks/EditorJsImageBlock";
+import EditorJsCodeBlock from "./../components/EditorJs/Blocks/EditorJsCodeBlock";
+import EditorJsGalleryBlock from "./../components/EditorJs/Blocks/EditorJsGalleryBlock";
 
 // Limits
 export const BREADCRUMB_MAX_LENGTH = 18;
@@ -79,3 +85,12 @@ export const SKILLS = [
         ],
     },
 ];
+
+export const EDITORJS_BLOCKS = {
+    header: EditorJsHeaderBlock,
+    paragraph: EditorJsParagraphBlock,
+    list: EditorJsListBlock,
+    image: EditorJsImageBlock,
+    code: EditorJsCodeBlock,
+    gallery: EditorJsGalleryBlock,
+};

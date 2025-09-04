@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import SearchBar from "./../Common/SearchBar";
-import TagFilter from "./../Common/TagFilter";
-import ProjectGrid from "./Grid";
+import SearchBar from "../Common/SearchBar";
+import TagFilter from "../Common/TagFilter";
+import ProjectGrid from "./ProjectGrid";
 
 const ProjectList = ({ projects }) => {
     const [searchTerm, setSearchTerm] = useState("");

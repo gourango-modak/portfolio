@@ -5,6 +5,7 @@ export const useEditor = ({ holder, tools, initialData }) => {
     const editorInstance = useRef(null);
 
     useEffect(() => {
+        debugger;
         if (!holder) return;
 
         // If an instance already exists, destroy it before re-initializing

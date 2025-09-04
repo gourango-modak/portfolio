@@ -1,4 +1,4 @@
-import { BREADCRUMB_MAX_LENGTH, CONTENT_TYPES } from "../config";
+import { BREADCRUMB_MAX_LENGTH, CONTENT_TYPES } from "../config/config";
 import { getEditorJsInitialData } from "../config/editorJs/editorTools";
 import { extractTagline, extractTags, extractTitle } from "./editor";
 

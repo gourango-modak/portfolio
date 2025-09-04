@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import SearchBar from "./../Common/SearchBar";
 import TagFilter from "./../Common/TagFilter";
-import PostGrid from "./Grid";
+import PostGrid from "./PostGrid";
 
 const PostList = ({ posts }) => {
     const [searchTerm, setSearchTerm] = useState("");

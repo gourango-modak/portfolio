@@ -1,6 +1,5 @@
 import { useState } from "react";
-import ProjectCard from "./Card";
-import ProjectModal from "./Modal";
+import ProjectCard from "./ProjectCard";
 
 const ProjectGrid = ({ projects }) => {
     const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import DataLoader from "../../components/Common/DataLoader";
 import { ProjectDetail } from "./ProjectDetail";
-import { fetchProjects } from "./../../data/projects";
+import { fetchProjects } from "../../data/projects";
 
 const ProjectDetailPage = () => {
     const { slug } = useParams();

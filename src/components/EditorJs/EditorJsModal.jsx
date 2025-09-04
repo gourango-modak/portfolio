@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import { useAlertModal } from "./../../hooks/useAlertModal";
-import Modal from "./../Modal";
-import EditorJs from "./index";
+import { useAlertModal } from "../../hooks/useAlertModal";
+import Modal from "../Modal/Modal";
+import EditorJs from "./EditorJs";
 import { getEditorJsTools } from "../../config/editorJs/editorTools";
-import { validateEditorJsModal } from "./../../utils/validation";
+import { validateEditorJsModal } from "../../utils/validation";
 
 const EditorJsModal = ({
     isOpen,

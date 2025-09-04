@@ -5,8 +5,8 @@ import {
     prepareProjectData,
 } from "../../utils/common";
 import { validateProjectForm } from "../../utils/validation";
-import Modal from "../Modal";
-import { ProjectForm } from "./Form";
+import Modal from "../Modal/Modal";
+import { ProjectForm } from "./ProjectForm";
 
 const ProjectMetaDataModal = ({
     isOpen,

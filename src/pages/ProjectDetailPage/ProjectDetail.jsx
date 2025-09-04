@@ -1,7 +1,7 @@
 import { ExternalLink, Github, Calendar } from "lucide-react";
 import { Breadcrumb } from "../../components/Common/Breadcrumb";
-import EditorJsContentRenderer from "../../components/EditorJs/ContentRenderer";
 import { filterEditorBlocks } from "../../utils/editor";
+import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
 
 export const ProjectDetail = ({ project }) => {
     const crumbs = [

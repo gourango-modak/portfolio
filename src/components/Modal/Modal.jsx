@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import ModalHeader from "./Header";
-import ModalBody from "./Body";
-import ModalFooter from "./Footer";
+import ModalHeader from "./ModalHeader";
+import ModalBody from "./ModalBody";
+import ModalFooter from "./ModalFooter";
 
 // Keep a global counter of open modals
 let openModalCount = 0;

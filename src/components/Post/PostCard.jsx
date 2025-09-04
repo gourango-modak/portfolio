@@ -2,7 +2,7 @@ import { Book, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDate } from "./../../utils/date";
 import { truncateText } from "./../../utils/common";
-import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
+import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config/config";
 import { useAuth } from "../../context/AuthContext";
 
 const PostCard = ({ post, onEdit }) => {

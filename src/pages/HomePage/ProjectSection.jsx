@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DataLoader from "../../components/Common/DataLoader";
-import ProjectCard from "./../../components/Project/Card";
+import ProjectCard from "./../../components/Project/ProjectCard";
 import { fetchProjects } from "./../../data/projects";
 import Section from "../../components/Section";
 import SectionHeader from "../../components/Section/Header";

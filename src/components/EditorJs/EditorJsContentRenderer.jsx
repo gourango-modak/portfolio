@@ -1,4 +1,4 @@
-import { BLOCK_RENDERERS } from "./Block";
+import { EDITORJS_BLOCKS } from "../../config/config";
 
 const EditorJsContentRenderer = ({ content }) => {
     if (!content || !content.blocks) return null;
@@ -6,7 +6,7 @@ const EditorJsContentRenderer = ({ content }) => {
     return (
         <div className="editorjs-content">
             {content.blocks.map((block, index) => {
-                const BlockComponent = BLOCK_RENDERERS[block.type];
+                const BlockComponent = EDITORJS_BLOCKS[block.type];
                 if (!BlockComponent) {
                     return (
                         <p key={index} className="text-red-500">

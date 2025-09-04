@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import DataLoader from "./../../components/Common/DataLoader";
-import PostCard from "./../../components/Post/Card";
+import PostCard from "./../../components/Post/PostCard";
 import { fetchPosts } from "./../../data/posts";
 import Section from "../../components/Section";
 import SectionHeader from "../../components/Section/Header";

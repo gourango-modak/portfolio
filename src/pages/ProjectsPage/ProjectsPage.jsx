@@ -1,12 +1,12 @@
 import { useState } from "react";
-import ProjectPageHeader from "./Header";
+import ProjectPageHeader from "./ProjectsPageHeader";
 import DataLoader from "../../components/Common/DataLoader";
-import ProjectList from "../../components/Project/List";
+import ProjectList from "../../components/Project/ProjectList";
 import { fetchProjects } from "../../data/projects";
-import { CONTENT_TYPES } from "../../config";
-import { getProjectInitialData } from "./../../utils/common";
-import ProjectMetaDataModal from "../../components/Project/MetaDataModal";
-import EditorJsModal from "../../components/EditorJs/Modal";
+import { CONTENT_TYPES } from "../../config/config";
+import { getProjectInitialData } from "../../utils/common";
+import ProjectMetaDataModal from "../../components/Project/ProjectMetaDataModal";
+import EditorJsModal from "../../components/EditorJs/EditorJsModal";
 
 const ProjectsPage = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -22,6 +22,11 @@ const ProjectsPage = () => {
     const handleEditorJsModalSave = (data) => {
         setProjectData((prev) => ({ ...prev, content: data }));
         setIsProjectMetaDataModalOpen(true);
+        setIsEditorModalOpen(false);
+    };
+
+    const handleEditorJsModalClose = () => {
+        setProjectData(null);
         setIsEditorModalOpen(false);
     };
 
@@ -50,7 +55,7 @@ const ProjectsPage = () => {
             </section>
             <EditorJsModal
                 isOpen={isEditorModalOpen}
-                onClose={() => setIsEditorModalOpen(false)}
+                onClose={handleEditorJsModalClose}
                 onSave={handleEditorJsModalSave}
                 initialData={projectData?.content}
                 actionBtnTitle="Next"

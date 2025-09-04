@@ -1,12 +1,12 @@
 import { useState } from "react";
-import BlogPageHeader from "./Header";
-import DataLoader from "./../../components/Common/DataLoader";
-import PostList from "./../../components/Post/List";
+import BlogPageHeader from "./BlogPageHeader";
+import DataLoader from "../../components/Common/DataLoader";
+import PostList from "./../../components/Post/PostList";
 import { fetchPosts } from "../../data/posts";
 import { getPostInitialData } from "../../utils/common";
-import EditorJsModal from "../../components/EditorJs/Modal";
-import { CONTENT_TYPES } from "../../config";
-import PostMetaDataModal from "../../components/Post/MetaDataModal";
+import EditorJsModal from "../../components/EditorJs/EditorJsModal";
+import { CONTENT_TYPES } from "../../config/config";
+import PostMetaDataModal from "../../components/Post/PostMetaDataModal";
 
 const BlogPage = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -22,6 +22,11 @@ const BlogPage = () => {
     const handleEditorJsModalSave = (data) => {
         setPostData((prev) => ({ ...prev, content: data }));
         setIsPostMetaDataModalOpen(true);
+        setIsEditorModalOpen(false);
+    };
+
+    const handleEditorJsModalClose = () => {
+        setPostData(null);
         setIsEditorModalOpen(false);
     };
 
@@ -48,7 +53,7 @@ const BlogPage = () => {
             </section>
             <EditorJsModal
                 isOpen={isEditorModalOpen}
-                onClose={() => setIsEditorModalOpen(false)}
+                onClose={handleEditorJsModalClose}
                 onSave={handleEditorJsModalSave}
                 initialData={postData?.content}
                 actionBtnTitle="Next"

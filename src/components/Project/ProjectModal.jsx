@@ -1,6 +1,6 @@
 import { useState } from "react";
 import EditorJsModal from "../EditorJs/Modal";
-import ProjectMetaDataModal from "./MetaDataModal";
+import ProjectMetaDataModal from "./ProjectMetaDataModal";
 import { CONTENT_TYPES } from "../../config";
 
 const ProjectModal = ({ isOpen, setIsOpen, onClose, initialData = {} }) => {

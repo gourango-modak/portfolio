@@ -1,7 +1,7 @@
 import { Code, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { truncateText } from "../../utils/common";
-import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
+import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config/config";
 import { useAuth } from "../../context/AuthContext";
 
 const ProjectCard = ({ project, onEdit }) => {

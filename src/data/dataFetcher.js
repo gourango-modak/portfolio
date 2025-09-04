@@ -1,4 +1,4 @@
-import { SIMULATE_API_DELAY } from "../config";
+import { SIMULATE_API_DELAY } from "../config/config";
 import { delay } from "./../utils/common";
 
 const cache = {};
