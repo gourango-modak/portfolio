@@ -1,34 +1,35 @@
-import { NON_RENDER_EDITORJS_BLOCKS } from "../config/config";
 import { CUSTOM_TOOLS } from "../config/editorJs/editorTools";
 
-export function extractTitle(editorData) {
-    if (!editorData || !Array.isArray(editorData.blocks)) {
-        return { title: null, content: editorData };
+export function extractTitle(editorJsData) {
+    if (!editorJsData || !Array.isArray(editorJsData.blocks)) {
+        return { title: null, content: editorJsData };
     }
 
     // Take the first title block only
-    const titleBlock = editorData.blocks.find(
+    const titleBlock = editorJsData.blocks.find(
         (block) => block.type === CUSTOM_TOOLS.TITLE.TYPE
     );
 
     return titleBlock?.data?.text || "";
 }
 
-export function extractTags(editorData) {
-    if (!editorData || !Array.isArray(editorData.blocks)) {
-        return { tags: [], content: editorData };
+export function extractTags(editorJsData) {
+    if (!editorJsData || !Array.isArray(editorJsData.blocks)) {
+        return { tags: [], content: editorJsData };
     }
 
     const tagsSet = new Set();
 
-    editorData.blocks.forEach((block) => {
+    editorJsData.blocks.forEach((block) => {
         if (block.type === CUSTOM_TOOLS.TAGLIST.TYPE) {
             if (block.data && typeof block.data.text === "string") {
-                const regex = /#\w+/g;
-                const matches = block.data.text.match(regex);
-                if (matches) {
-                    matches.forEach((tag) => tagsSet.add(tag));
-                }
+                // Split by comma, trim each tag, filter out empty strings
+                const tags = block.data.text
+                    .split(",")
+                    .map((tag) => tag.replace(/&nbsp;/g, "").trim())
+                    .filter((tag) => tag.length > 0);
+
+                tags.forEach((tag) => tagsSet.add(tag));
             }
         }
     });
@@ -36,24 +37,14 @@ export function extractTags(editorData) {
     return Array.from(tagsSet);
 }
 
-export function extractTagline(editorData) {
-    if (!editorData || !Array.isArray(editorData.blocks)) {
-        return { tagline: "", content: editorData };
+export function extractTagline(editorJsData) {
+    if (!editorJsData || !Array.isArray(editorJsData.blocks)) {
+        return { tagline: "", content: editorJsData };
     }
 
-    const taglineBlock = editorData.blocks.find(
+    const taglineBlock = editorJsData.blocks.find(
         (block) => block.type === CUSTOM_TOOLS.TAGLINE.TYPE
     );
 
     return taglineBlock?.data?.text || "";
 }
-
-export const filterEditorBlocks = (editorJsData) => {
-    if (!editorJsData) return { blocks: [] };
-
-    const remainingBlocks = editorJsData.blocks.filter(
-        (block) => !NON_RENDER_EDITORJS_BLOCKS.includes(block.type)
-    );
-
-    return { ...editorJsData, blocks: remainingBlocks };
-};
