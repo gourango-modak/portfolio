@@ -11,7 +11,7 @@ const Navbar = () => {
     const closeMenu = () => setIsOpen(false);
 
     return (
-        <nav className="bg-white/80 backdrop-blur-lg shadow-sm fixed w-full top-0 z-50">
+        <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
             <div className="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center md:max-w-6xl">
                 <NavLink
                     to="/"
