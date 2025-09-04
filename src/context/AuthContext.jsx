@@ -9,8 +9,8 @@ const PASSWORD_HASH =
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // configurable session timeout (in ms) — e.g., 60 mins
-    const SESSION_TIMEOUT = 60 * 60 * 1000;
+    // configurable session timeout (in hours)
+    const SESSION_TIMEOUT = 2 * 60 * 60 * 1000;
 
     useEffect(() => {
         const session = JSON.parse(localStorage.getItem("session"));
