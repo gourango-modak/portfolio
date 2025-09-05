@@ -56,6 +56,8 @@ export const prepareProjectData = (editorJsData, metaData) => {
         tagline: tagline,
         technologies: tags,
         slug: buildSlug(title),
+        status: metaData.status.value,
+        category: metaData.category.value,
         content: editorJsData,
     };
 };
@@ -70,6 +72,7 @@ export const preparePostData = (editorJsData, metaData) => {
         id: isEditing ? metaData.id : generateId(),
         createdAt: isEditing ? metaData.createdAt : Date.now(),
         updatedAt: Date.now(),
+        readTime: parseInt(metaData.readTime),
         title: title,
         tags: tags,
         slug: buildSlug(title),

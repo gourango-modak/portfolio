@@ -2,6 +2,8 @@
   "id": 1757017854025,
   "title": "How to Use ConfigureAwait to Improve C# Async Performance",
   "createdAt": 1757017853960,
+  "updatedAt": 1757017853990,
+  "readTime": 18,
   "tags": [
     "C++",
     "CSharp",

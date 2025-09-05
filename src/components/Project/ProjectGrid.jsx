@@ -36,7 +36,6 @@ const ProjectGrid = ({ projects }) => {
     };
 
     const handleProjectMetaDataModalSave = (metaData) => {
-        debugger;
         const projectData = prepareProjectData(editorJsData, metaData);
         downloadJson(
             projectData,

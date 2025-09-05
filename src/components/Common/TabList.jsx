@@ -5,7 +5,7 @@ export const TabList = ({ items, activeTab, setActiveTab }) => (
                 <button
                     key={id}
                     onClick={() => setActiveTab(id)}
-                    className={`py-3 px-6 rounded-md font-semibold cursor-pointer transition-colors duration-300 ${
+                    className={`py-3 px-6 rounded-md font-semibold cursor-pointer transition-colors duration-300 shadow-sm ${
                         activeTab === id
                             ? "bg-indigo-600 text-white shadow-md"
                             : "bg-white text-slate-800 hover:bg-gray-100 border border-gray-300"

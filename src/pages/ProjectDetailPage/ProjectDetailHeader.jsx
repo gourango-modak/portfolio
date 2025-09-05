@@ -1,9 +1,6 @@
 import { formatDate } from "./../../utils/date";
 
 const ProjectDetailHeader = ({ project }) => {
-    project.status = project.status || "In Progress";
-    project.category = "Web Application";
-
     return (
         <header>
             {/* Project Title */}

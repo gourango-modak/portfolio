@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import DataLoader from "./../../components/Common/DataLoader";
-import PostCard from "./../../components/Post/PostCard";
 import { fetchPosts } from "./../../data/posts";
 import Section from "../../components/Section";
 import SectionHeader from "../../components/Section/Header";
@@ -15,11 +14,11 @@ const BlogSection = () => {
                     between. Here are some of my latest articles."
             />
             <DataLoader
-                fetchData={fetchPosts}
+                fetchData={fetchPosts(6)}
                 render={(posts) => (
                     <>
                         <PostGrid posts={posts} />
-                        <div className="mt-12 text-center">
+                        <div className="mt-16 text-center">
                             <Link
                                 to="/blog"
                                 className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"

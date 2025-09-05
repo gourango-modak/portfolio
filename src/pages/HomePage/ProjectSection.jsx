@@ -14,11 +14,11 @@ const ProjectSection = () => {
                     building robust and scalable applications."
             />
             <DataLoader
-                fetchData={fetchProjects}
+                fetchData={fetchProjects(6)}
                 render={(projects) => (
                     <>
                         <ProjectGrid projects={projects} />
-                        <div className="mt-12 text-center">
+                        <div className="mt-16 text-center">
                             <Link
                                 to="/projects"
                                 className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"

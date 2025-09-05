@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { validateProjectForm } from "../../utils/validation";
 import Modal from "../Modal/Modal";
 import { InputField } from "./../Common/InputField";
+import Dropdown from "../Common/Dropdown";
+import {
+    PROJECT_CATEGORIES_OPTIONS,
+    PROJECT_STATUSES_OPTIONS,
+} from "../../config/config";
 
 const defaultMetaData = {
     description: "",
@@ -9,6 +14,8 @@ const defaultMetaData = {
     repoUrl: "",
     startDate: "",
     endDate: "",
+    status: "",
+    category: "",
 };
 
 const ProjectMetaDataModal = ({
@@ -38,6 +45,18 @@ const ProjectMetaDataModal = ({
 
         // clear error if value entered
         if (value.trim() !== "") {
+            setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    const handleDropdownChange = ({ name, value }) => {
+        setMetaData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        // clear error if value entered
+        if (value?.toString().trim() !== "") {
             setErrors((prev) => ({ ...prev, [name]: "" }));
         }
     };
@@ -115,6 +134,22 @@ const ProjectMetaDataModal = ({
                     required={true}
                     error={errors.endDate}
                     maxRows={1}
+                />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Dropdown
+                    label="Status"
+                    name="status"
+                    options={PROJECT_STATUSES_OPTIONS}
+                    onChange={handleDropdownChange}
+                    selected={metaData.status}
+                />
+                <Dropdown
+                    label="Category"
+                    name="category"
+                    options={PROJECT_CATEGORIES_OPTIONS}
+                    onChange={handleDropdownChange}
+                    selected={metaData.category}
                 />
             </div>
             <InputField

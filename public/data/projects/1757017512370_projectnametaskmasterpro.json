@@ -8,6 +8,9 @@
   "repoUrl": "https://gourango-modak.github.io/portfolio/",
   "startDate": "12/24/2023",
   "endDate": "12/23/2025",
+  "category": "Web Application",
+  "updatedAt": 1757017511587,
+  "status": "In progress",
   "technologies": [
     "C",
     "C++",
