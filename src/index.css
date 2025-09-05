@@ -181,7 +181,6 @@ pre[class*="language-"]::-moz-selection,
     content: "Enter your title here...";
     color: #9ca3af;
     pointer-events: none;
-    display: block;
 }
 
 /* Base style for inline code */
