@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectPageHeader from "./ProjectsPageHeader";
 import DataLoader from "../../components/common/DataLoader";
 import ProjectList from "../../components/project/ProjectList";
-import { fetchProjects } from "../../data/projects";
 import ProjectMetaDataModal from "../../components/project/ProjectMetaDataModal";
 import EditorJsModal from "../../components/editorJs/EditorJsModal";
 import { downloadJson, getContentFileName } from "../../utils/common";
 import { CONTENT_TYPES } from "../../config";
 import { prepareProjectData } from "../../components/project/projectUtils";
+import { getTopCategories, fetchProjects } from "../../data/projects";
+import SearchBar from "../../components/common/SearchBar";
+import TagFilter from "../../components/common/TagFilter";
+import InfiniteScroll from "../../components/Common/InfiniteScroll";
+import ProjectCard from "../../components/project/ProjectCard";
 
 const ProjectsPage = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -15,6 +19,9 @@ const ProjectsPage = () => {
         useState(false);
     const [editorJsData, setEditorJsData] = useState(null);
     const [metaData, setMetaData] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [topCategories, setTopCategories] = useState([]);
 
     const handleAddProject = () => {
         setIsEditorModalOpen(true);
@@ -59,17 +66,71 @@ const ProjectsPage = () => {
         setIsEditorModalOpen(true);
     };
 
+    const handleEdit = (project) => {
+        setIsEditorModalOpen(true);
+        setEditorJsData(project.content);
+        setMetaData(project);
+    };
+
+    useEffect(() => {
+        const fetchTopCategories = async () => {
+            const categories = await getTopCategories();
+            setTopCategories(categories);
+        };
+        fetchTopCategories();
+    }, []);
+
+    // Filter projects based on search & selected category
+    // const filteredProjects = useMemo(() => {
+    //     return projects.filter((project) => {
+    //         const titleMatch = project.title
+    //             .toLowerCase()
+    //             .includes(searchTerm.toLowerCase());
+
+    //         const categoryMatch = selectedCategory
+    //             ? project.category === selectedCategory
+    //             : true;
+
+    //         return titleMatch && categoryMatch;
+    //     });
+    // }, [searchTerm, selectedCategory, projects]);
+
     return (
         <>
             <section className="pt-30 pb-20 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
                     <ProjectPageHeader onAdd={handleAddProject} />
-                    <DataLoader
+                    <div className="mb-12">
+                        <SearchBar
+                            searchTerm={searchTerm}
+                            setSearchTerm={setSearchTerm}
+                        />
+                        <TagFilter
+                            topTags={topCategories}
+                            selectedTag={selectedCategory}
+                            setSelectedTag={setSelectedCategory}
+                            allLabel="All Projects"
+                        />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                        <InfiniteScroll
+                            fetchData={fetchProjects} // fetches pages from manifest
+                            renderItem={(project) => (
+                                <ProjectCard
+                                    key={project.url}
+                                    project={project}
+                                    onEdit={handleEdit}
+                                />
+                            )}
+                            pageSize={10}
+                        />
+                    </div>
+                    {/* <DataLoader
                         fetchData={fetchProjects}
                         render={(projects) => (
                             <ProjectList projects={projects} />
                         )}
-                    />
+                    /> */}
                 </div>
             </section>
             <EditorJsModal

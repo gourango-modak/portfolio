@@ -9,14 +9,14 @@ const PostList = ({ posts }) => {
 
     // Calculate top 10 tags
     const topTags = useMemo(() => {
-        const tagCounts = posts
-            .flatMap((post) => (Array.isArray(post.tags) ? post.tags : []))
-            .reduce((acc, tag) => {
-                acc[tag] = (acc[tag] || 0) + 1;
-                return acc;
-            }, {});
+        // const tagCounts = posts
+        //     .flatMap((post) => (Array.isArray(post.tags) ? post.tags : []))
+        //     .reduce((acc, tag) => {
+        //         acc[tag] = (acc[tag] || 0) + 1;
+        //         return acc;
+        //     }, {});
 
-        return Object.entries(tagCounts)
+        return Object.entries([])
             .sort(([, a], [, b]) => b - a)
             .slice(0, 10)
             .map(([tag]) => tag);
@@ -24,7 +24,7 @@ const PostList = ({ posts }) => {
 
     // Filter posts based on search & selected tag
     const filteredPosts = useMemo(() => {
-        return posts.filter((post) => {
+        return [].filter((post) => {
             const titleMatch = post.title
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase());

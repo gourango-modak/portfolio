@@ -1,3 +1,38 @@
-[
-  "1757017854025_howtouseconfigureawaittoimprovecasyncperformance.json"
-]
+{
+  "totalPosts": 1,
+  "topTags": [
+    "C++",
+    "CSharp",
+    "Python",
+    "Golang",
+    "Test1",
+    "Test2",
+    "Test3",
+    "Test4",
+    "Test5",
+    "Test6"
+  ],
+  "posts": [
+    {
+      "title": "How to Use ConfigureAwait to Improve C# Async Performance",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1757017854025_howtouseconfigureawaittoimprovecasyncperformance.json",
+      "tags": [
+        "C++",
+        "CSharp",
+        "Python",
+        "Golang",
+        "Test1",
+        "Test2",
+        "Test3",
+        "Test4",
+        "Test5",
+        "Test6",
+        "Test7",
+        "Test8",
+        "Test9",
+        "Test10"
+      ],
+      "description": "Learn how to boost your C# async code performance using ConfigureAwait. This blog explains the concept in simple terms with practical examples for faster, scalable, and deadlock-free applications."
+    }
+  ]
+}

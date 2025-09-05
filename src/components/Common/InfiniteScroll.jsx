@@ -1,53 +1,71 @@
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
-const InfiniteScroll = ({ items = [], itemsPerPage = 6, renderItem }) => {
-    const [visibleItems, setVisibleItems] = useState([]);
+export default function InfiniteScroll({
+    fetchData, // async function(page, pageSize) => { data, hasMore }
+    renderItem, // function to render each item
+    pageSize = 10,
+    threshold = 300,
+}) {
+    const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const loaderRef = useRef(null);
+    const [hasMore, setHasMore] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const containerRef = useRef(null);
 
-    // Observer logic to watch scroll point
-    const handleObserver = useCallback((entries) => {
-        const target = entries[0];
-        if (target.isIntersecting) {
-            setPage((prev) => prev + 1);
-        }
-    }, []);
+    const loadPage = useCallback(
+        async (nextPage) => {
+            if (!hasMore || loading) return;
+            setLoading(true);
+            try {
+                const result = await fetchData(nextPage, pageSize);
+                setItems((prev) => [...prev, ...result.data]);
+                setHasMore(result.hasMore);
+                setPage(nextPage);
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [fetchData, hasMore, loading, pageSize]
+    );
 
+    // Initial load
     useEffect(() => {
-        const observer = new IntersectionObserver(handleObserver, {
-            root: null,
-            rootMargin: "20px",
-            threshold: 1.0,
-        });
+        loadPage(1);
+    }, [loadPage]);
 
-        if (loaderRef.current) observer.observe(loaderRef.current);
-
-        return () => observer.disconnect();
-    }, [handleObserver]);
-
-    // Slice data when page changes
+    // Scroll listener
     useEffect(() => {
-        const next = items.slice(0, page * itemsPerPage);
-        setVisibleItems(next);
-    }, [page, items]);
+        const container = containerRef.current;
+        if (!container) return;
+
+        const handleScroll = () => {
+            const { scrollTop, scrollHeight, clientHeight } = container;
+            if (scrollHeight - scrollTop - clientHeight < threshold) {
+                loadPage(page + 1);
+            }
+        };
+
+        container.addEventListener("scroll", handleScroll);
+        return () => container.removeEventListener("scroll", handleScroll);
+    }, [loadPage, page, threshold]);
 
     return (
-        <>
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{visibleItems.map((item, idx) => renderItem(item, idx))}
-			</div> */}
-            {visibleItems.map((item, idx) => renderItem(item, idx))}
-            <div ref={loaderRef} className="w-full text-center py-6">
-                {visibleItems.length < items.length ? (
-                    <span className="text-neutral-500 text-sm">
-                        Loading more...
-                    </span>
-                ) : (
-                    ""
-                )}
-            </div>
-        </>
+        <div
+            ref={containerRef} /*style={{ height: "80vh", overflowY: "auto" }}*/
+        >
+            {items.map((item, idx) => renderItem(item, idx))}
+            {loading && (
+                <div style={{ textAlign: "center", padding: "1rem" }}>
+                    Loading...
+                </div>
+            )}
+            {!hasMore && (
+                <div style={{ textAlign: "center", padding: "1rem" }}>
+                    No more projects
+                </div>
+            )}
+        </div>
     );
-};
-
-export default InfiniteScroll;
+}

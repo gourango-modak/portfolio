@@ -1,24 +1,42 @@
-import { PROJECT_FILES_BASE_URL, PROJECT_MANIFEST_FILE_URL } from "../config";
-import { fetchAllData } from "./dataFetcher";
+import { PROJECT_MANIFEST_FILE_URL } from "../config";
 
-let cachedProjectFiles = null; // cache manifest in memory
+// Cache manifest in memory
+let cachedProjectManifest = null;
 
-const getProjectFiles = async () => {
-    if (!cachedProjectFiles) {
-        cachedProjectFiles = await fetch(PROJECT_MANIFEST_FILE_URL).then(
-            (res) => res.json()
-        );
+/**
+ * Fetch the projects manifest file and cache it
+ */
+const getProjectManifest = async () => {
+    if (!cachedProjectManifest) {
+        const res = await fetch(PROJECT_MANIFEST_FILE_URL);
+        cachedProjectManifest = await res.json();
+        console.log(cachedProjectManifest);
     }
-    return cachedProjectFiles;
+    return cachedProjectManifest;
 };
 
-export const fetchProjects = async () => {
-    const projectFiles = await getProjectFiles();
-    const projects = await fetchAllData(
-        PROJECT_FILES_BASE_URL,
-        projectFiles,
-        "projects"
-    );
+export const fetchProjects = async (page = 1, pageSize = 10) => {
+    const manifest = await getProjectManifest();
+    const allProjects = manifest.projects || [];
+    const totalProjects = allProjects.length;
+    const totalPages = Math.ceil(totalProjects / pageSize);
 
-    return projects;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalProjects);
+
+    // Slice projects for the current page
+    const projects = allProjects.slice(startIndex, endIndex);
+
+    return {
+        data: projects,
+        hasMore: page < totalPages,
+    };
+};
+
+/**
+ * Get top categories from manifest
+ */
+export const getTopCategories = async () => {
+    const manifest = await getProjectManifest();
+    return manifest.topCategories || [];
 };
