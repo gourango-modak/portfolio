@@ -180,3 +180,7 @@ h3 .inline-code,
 h4 .inline-code {
     font-size: 1rem; /* ~16px */
 }
+
+.section-m-h {
+    min-height: calc(100vh - 120px);
+}

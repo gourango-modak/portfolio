@@ -21,6 +21,20 @@ const EditorJsContentRenderer = ({ content }) => {
                             </p>
                         );
                     }
+                    if (block.type === "header") {
+                        const id = block.data.text
+                            .replace(/\s+/g, "-")
+                            .toLowerCase();
+                        return (
+                            <BlockComponent
+                                key={index}
+                                id={id}
+                                isFirstBlock={index == 0}
+                                {...block.data}
+                            />
+                        );
+                    }
+
                     return (
                         <BlockComponent
                             key={index}

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import DataLoader from "../../components/Common/DataLoader";
 import { fetchProjects } from "./../../data/projects";
-import Section from "../../components/Section";
-import SectionHeader from "../../components/Section/Header";
+import Section from "../../components/Section/Section";
+import SectionHeader from "../../components/Section/SectionHeader";
 import ProjectGrid from "../../components/Project/ProjectGrid";
 
 const ProjectSection = () => {
@@ -14,7 +14,7 @@ const ProjectSection = () => {
                     building robust and scalable applications."
             />
             <DataLoader
-                fetchData={fetchProjects(6)}
+                fetchData={fetchProjects}
                 render={(projects) => (
                     <>
                         <ProjectGrid projects={projects} />

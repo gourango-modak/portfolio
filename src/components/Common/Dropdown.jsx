@@ -55,8 +55,8 @@ const Dropdown = ({
             >
                 <span>{selected ? selected.label : placeholder}</span>
                 <ChevronDown
-                    className={`w-5 h-5 transition-transform ${
-                        isOpen ? "rotate-180" : ""
+                    className={`w-5 h-5 transition-transform duration-200 ${
+                        isOpen ? "rotate-180 text-blue-500" : "text-gray-400"
                     }`}
                 />
             </button>

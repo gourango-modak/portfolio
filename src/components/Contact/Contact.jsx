@@ -1,6 +1,6 @@
 import { Github, Linkedin, Mail } from "lucide-react";
-import Section from "../Section";
-import SectionHeader from "../Section/Header";
+import Section from "./../Section/Section";
+import SectionHeader from "./../Section/SectionHeader";
 
 const Contact = ({ bgClass = "bg-gray-100" }) => (
     <Section bgClass={bgClass}>

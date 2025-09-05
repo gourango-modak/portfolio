@@ -48,3 +48,33 @@ export function extractTagline(editorJsData) {
 
     return taglineBlock?.data?.text || "";
 }
+
+export const extractHeadings = (content) => {
+    const headings = [];
+    let lastH2 = null;
+
+    content.blocks.forEach((block) => {
+        if (block.type === "header") {
+            const level = block.data.level;
+            if (level === 2 || level === 3) {
+                const heading = {
+                    id: block.data.text.replace(/\s+/g, "-").toLowerCase(),
+                    text: block.data.text,
+                    level,
+                    children: [],
+                };
+
+                if (level === 2) {
+                    headings.push(heading);
+                    lastH2 = heading;
+                } else if (level === 3 && lastH2) {
+                    lastH2.children.push(heading);
+                } else {
+                    headings.push(heading); // fallback in case no parent H2
+                }
+            }
+        }
+    });
+
+    return headings;
+};

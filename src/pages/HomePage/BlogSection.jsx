@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import DataLoader from "./../../components/Common/DataLoader";
 import { fetchPosts } from "./../../data/posts";
-import Section from "../../components/Section";
-import SectionHeader from "../../components/Section/Header";
+import Section from "../../components/Section/Section";
+import SectionHeader from "../../components/Section/SectionHeader";
 import PostGrid from "./../../components/Post/PostGrid";
 
 const BlogSection = () => {
@@ -14,7 +14,7 @@ const BlogSection = () => {
                     between. Here are some of my latest articles."
             />
             <DataLoader
-                fetchData={fetchPosts(6)}
+                fetchData={fetchPosts}
                 render={(posts) => (
                     <>
                         <PostGrid posts={posts} />

@@ -1,4 +1,4 @@
-const EditorJsHeaderBlock = ({ text, level, isFirstBlock }) => {
+const EditorJsHeaderBlock = ({ id, text, level, isFirstBlock }) => {
     const Tag = `h${level}`;
 
     const baseClass = "text-slate-800 leading-tight";
@@ -12,6 +12,7 @@ const EditorJsHeaderBlock = ({ text, level, isFirstBlock }) => {
 
     return (
         <Tag
+            id={id}
             className={`${baseClass} ${levelClasses[level] || "mb-4"}`}
             dangerouslySetInnerHTML={{ __html: text }}
         />

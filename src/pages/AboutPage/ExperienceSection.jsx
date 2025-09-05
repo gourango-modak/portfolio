@@ -1,6 +1,6 @@
-import Section from "../../components/Section";
+import Section from "../../components/Section/Section";
 import Job from "./Job";
-import SectionHeader from "./../../components/Section/Header";
+import SectionHeader from "./../../components/Section/SectionHeader";
 
 const ExperienceSection = () => (
     <Section bgClass="bg-white/50">

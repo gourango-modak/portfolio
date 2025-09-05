@@ -4,8 +4,8 @@ import SkillTag from "./SkillTag";
 import { TabList } from "./../Common/TabList";
 import { TabPanel } from "./../Common/TabPanel";
 import { AccordionItem } from "./../Common/AccordionItem";
-import Section from "../Section";
-import SectionHeader from "../Section/Header";
+import Section from "../Section/Section";
+import SectionHeader from "../Section/SectionHeader";
 
 const SkillsSection = ({ bgClass = "bg-gray-50" }) => {
     const [activeTab, setActiveTab] = useState(SKILLS[0].category);
