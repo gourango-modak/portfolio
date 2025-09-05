@@ -1,16 +1,13 @@
 import { useState } from "react";
 import ProjectPageHeader from "./ProjectsPageHeader";
-import DataLoader from "../../components/Common/DataLoader";
-import ProjectList from "../../components/Project/ProjectList";
+import DataLoader from "../../components/common/DataLoader";
+import ProjectList from "../../components/project/ProjectList";
 import { fetchProjects } from "../../data/projects";
-import { CONTENT_TYPES } from "../../config/config";
-import ProjectMetaDataModal from "../../components/Project/ProjectMetaDataModal";
-import EditorJsModal from "../../components/EditorJs/EditorJsModal";
-import {
-    downloadJson,
-    getFileName,
-    prepareProjectData,
-} from "../../utils/common";
+import ProjectMetaDataModal from "../../components/project/ProjectMetaDataModal";
+import EditorJsModal from "../../components/editorJs/EditorJsModal";
+import { downloadJson, getContentFileName } from "../../utils/common";
+import { CONTENT_TYPES } from "../../config";
+import { prepareProjectData } from "../../components/project/projectUtils";
 
 const ProjectsPage = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -48,7 +45,7 @@ const ProjectsPage = () => {
         const projectData = prepareProjectData(editorJsData, metaData);
         downloadJson(
             projectData,
-            getFileName(projectData.title, projectData.id)
+            getContentFileName(projectData.title, projectData.id)
         );
 
         setIsProjectMetaDataModalOpen(false);

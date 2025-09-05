@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./navbar/Navbar";
 import Footer from "./Footer";
 
 export default function Layout({ children }) {

@@ -1,5 +1,4 @@
 import AddContentButton from "./../../components/Common/AddContentButton";
-
 const BlogPageHeader = ({ onAddClick }) => {
     return (
         <>

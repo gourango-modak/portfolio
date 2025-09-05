@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import SearchBar from "./../Common/SearchBar";
-import TagFilter from "./../Common/TagFilter";
+import SearchBar from "../common/SearchBar";
+import TagFilter from "../common/TagFilter";
 import PostGrid from "./PostGrid";
 
 const PostList = ({ posts }) => {

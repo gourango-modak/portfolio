@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { validatePostForm } from "../../utils/validation";
-import Modal from "../Modal/Modal";
-import { InputField } from "../Common/InputField";
+import Modal from "../modal/Modal";
+import { InputField } from "../common/InputField";
+import { validatePostMetaData } from "./postUtils";
 
 const defaultMetaData = {
     description: "",
@@ -45,7 +45,7 @@ const PostMetaDataModal = ({
     };
 
     const handleSave = () => {
-        const validationErrors = validatePostForm(metaData);
+        const validationErrors = validatePostMetaData(metaData);
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;

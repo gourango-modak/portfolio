@@ -1,6 +1,4 @@
-import { BREADCRUMB_MAX_LENGTH, CONTENT_TYPES } from "../config/config";
-import { getEditorJsInitialData } from "../config/editorJs/editorTools";
-import { extractTagline, extractTags, extractTitle } from "./editor";
+import { BREADCRUMB_MAX_LENGTH } from "../config";
 
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
@@ -28,7 +26,7 @@ export const truncateBreadcrumb = (text, maxLength = BREADCRUMB_MAX_LENGTH) => {
     return truncateText(text, maxLength, "...");
 };
 
-export const getFileName = (title, id) => {
+export const getContentFileName = (title, id) => {
     // Convert to lowercase
     let name = title.toLowerCase();
 
@@ -39,72 +37,6 @@ export const getFileName = (title, id) => {
     name = name.replace(/^-+|-+$/g, "");
 
     return `${id}_${name}.json`;
-};
-
-export const prepareProjectData = (editorJsData, metaData) => {
-    const tags = extractTags(editorJsData);
-    const title = extractTitle(editorJsData);
-    const tagline = extractTagline(editorJsData);
-    const isEditing = Boolean(metaData?.id);
-
-    return {
-        ...metaData,
-        id: isEditing ? metaData.id : generateId(),
-        createdAt: isEditing ? metaData.createdAt : Date.now(),
-        updatedAt: Date.now(),
-        title: title,
-        tagline: tagline,
-        technologies: tags,
-        slug: buildSlug(title),
-        status: metaData.status.value,
-        category: metaData.category.value,
-        content: editorJsData,
-    };
-};
-
-export const preparePostData = (editorJsData, metaData) => {
-    const tags = extractTags(editorJsData);
-    const title = extractTitle(editorJsData);
-    const isEditing = Boolean(metaData?.id);
-
-    return {
-        ...metaData,
-        id: isEditing ? metaData.id : generateId(),
-        createdAt: isEditing ? metaData.createdAt : Date.now(),
-        updatedAt: Date.now(),
-        readTime: parseInt(metaData.readTime),
-        title: title,
-        tags: tags,
-        slug: buildSlug(title),
-        content: editorJsData,
-    };
-};
-
-export const getPostInitialData = () => {
-    return {
-        content: getEditorJsInitialData(CONTENT_TYPES.BLOG),
-    };
-};
-
-export const getProjectInitialData = () => {
-    return {
-        description: "",
-        liveUrl: "",
-        repoUrl: "",
-        startDate: "",
-        endDate: "",
-        technologies: [],
-        content: getEditorJsInitialData(CONTENT_TYPES.PROJECT),
-    };
-};
-
-export const isValidUrl = (url) => {
-    try {
-        new URL(url);
-        return true;
-    } catch {
-        return false;
-    }
 };
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -140,4 +72,13 @@ export const buildSlug = (title, id = "", maxLength = 100) => {
     }
 
     return slug;
+};
+
+export const isValidUrl = (url) => {
+    try {
+        new URL(url);
+        return true;
+    } catch {
+        return false;
+    }
 };

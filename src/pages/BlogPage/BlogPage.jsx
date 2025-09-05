@@ -1,12 +1,13 @@
 import { useState } from "react";
 import BlogPageHeader from "./BlogPageHeader";
-import DataLoader from "../../components/Common/DataLoader";
-import PostList from "./../../components/Post/PostList";
+import DataLoader from "../../components/common/DataLoader";
+import PostList from "./../../components/post/PostList";
 import { fetchPosts } from "../../data/posts";
-import EditorJsModal from "../../components/EditorJs/EditorJsModal";
-import { CONTENT_TYPES } from "../../config/config";
-import PostMetaDataModal from "../../components/Post/PostMetaDataModal";
-import { downloadJson, getFileName, preparePostData } from "../../utils/common";
+import EditorJsModal from "../../components/editorJs/EditorJsModal";
+import PostMetaDataModal from "../../components/post/PostMetaDataModal";
+import { preparePostData } from "../../components/Post/postUtils";
+import { downloadJson, getContentFileName } from "./../../utils/common";
+import { CONTENT_TYPES } from "../../config";
 
 const BlogPage = () => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -42,7 +43,7 @@ const BlogPage = () => {
 
     const handlePostMetaDataModalSave = (metaData) => {
         const postData = preparePostData(editorJsData, metaData);
-        downloadJson(postData, getFileName(postData.title, postData.id));
+        downloadJson(postData, getContentFileName(postData.title, postData.id));
 
         setIsPostMetaDataModalOpen(false);
         setEditorJsData(null);

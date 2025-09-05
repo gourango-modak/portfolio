@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import TOCList from "./TOCList";
+import TableOfContentList from "./TableOfContentList";
 
-const TOCItem = ({
+const TableOfContentItem = ({
     item,
     activeId,
     setActiveId,
@@ -46,7 +46,7 @@ const TOCItem = ({
         if (hasChildren) setIsOpen((prev) => !prev);
 
         // Re-enable scroll updates after animation
-        setTimeout(() => setIsClickScrolling(false), 1000); // adjust duration to match smooth scroll
+        setTimeout(() => setIsClickScrolling(false), 700); // adjust duration to match smooth scroll
     };
 
     // Determine left margin based on level
@@ -86,7 +86,7 @@ const TOCItem = ({
 
             {hasChildren && isOpen && (
                 <div className="ml-4 mt-1">
-                    <TOCList
+                    <TableOfContentList
                         items={item.children}
                         activeId={activeId}
                         setActiveId={setActiveId}
@@ -99,4 +99,4 @@ const TOCItem = ({
     );
 };
 
-export default TOCItem;
+export default TableOfContentItem;

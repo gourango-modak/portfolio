@@ -1,5 +1,5 @@
-import Section from "../../components/Section/Section";
 import Job from "./Job";
+import Section from "./../../components/Section/Section";
 import SectionHeader from "./../../components/Section/SectionHeader";
 
 const ExperienceSection = () => (

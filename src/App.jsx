@@ -1,5 +1,5 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
+import Layout from "./components/layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import BlogPage from "./pages/BlogPage/BlogPage";
@@ -7,7 +7,7 @@ import ProjectsPage from "./pages/ProjectsPage/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage/ProjectDetailPage";
 import PostDetailPage from "./pages/PostDetailPage/PostDetailPage";
 import ContactPage from "./pages/ContactPage";
-import ScrollToTop from "./components/Common/ScrollToTop";
+import ScrollToTop from "./components/common/ScrollToTop";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./context/AuthContext";
 

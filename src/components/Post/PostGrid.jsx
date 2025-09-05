@@ -1,9 +1,10 @@
 import { useState } from "react";
 import PostCard from "./PostCard";
-import EditorJsModal from "../EditorJs/EditorJsModal";
+import EditorJsModal from "../editorJs/EditorJsModal";
 import PostMetaDataModal from "./PostMetaDataModal";
-import { CONTENT_TYPES } from "../../config/config";
-import { downloadJson, getFileName, preparePostData } from "../../utils/common";
+import { preparePostData } from "./postUtils";
+import { downloadJson, getContentFileName } from "./../../utils/common";
+import { CONTENT_TYPES } from "../../config";
 
 const PostGrid = ({ posts }) => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -33,7 +34,7 @@ const PostGrid = ({ posts }) => {
 
     const handlePostMetaDataModalSave = (metaData) => {
         const postData = preparePostData(editorJsData, metaData);
-        downloadJson(postData, getFileName(postData.title, postData.id));
+        downloadJson(postData, getContentFileName(postData.title, postData.id));
 
         setIsPostMetaDataModalOpen(false);
         setEditorJsData(null);

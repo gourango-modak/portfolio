@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { SKILLS } from "../../config/config";
 import SkillTag from "./SkillTag";
-import { TabList } from "./../Common/TabList";
-import { TabPanel } from "./../Common/TabPanel";
-import { AccordionItem } from "./../Common/AccordionItem";
-import Section from "../Section/Section";
-import SectionHeader from "../Section/SectionHeader";
+import { TabList } from "./../common/TabList";
+import { TabPanel } from "./../common/TabPanel";
+import { AccordionItem } from "./../common/AccordionItem";
+import Section from "../section/Section";
+import SectionHeader from "../section/SectionHeader";
+import { SKILLS } from "../../config";
 
 const SkillsSection = ({ bgClass = "bg-gray-50" }) => {
     const [activeTab, setActiveTab] = useState(SKILLS[0].category);

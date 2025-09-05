@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { NAV_LINKS } from "../../../config/config";
+import { NAV_LINKS } from "../../../config";
 
 const DesktopNavbar = () => {
     const activeStyle = {

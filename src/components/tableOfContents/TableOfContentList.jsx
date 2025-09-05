@@ -1,6 +1,6 @@
-import TOCItem from "./TOCItem";
+import TableOfContentItem from "./TableOfContentItem";
 
-const TOCList = ({
+const TableOfContentList = ({
     items,
     activeId,
     setActiveId,
@@ -9,7 +9,7 @@ const TOCList = ({
 }) => (
     <ul className="space-y-2">
         {items.map((item) => (
-            <TOCItem
+            <TableOfContentItem
                 key={item.id}
                 item={item}
                 activeId={activeId}
@@ -21,4 +21,4 @@ const TOCList = ({
     </ul>
 );
 
-export default TOCList;
+export default TableOfContentList;

@@ -1,6 +1,5 @@
-import { ExternalLink, Github } from "lucide-react";
-import { Breadcrumb } from "../../components/Common/Breadcrumb";
-import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
+import { Breadcrumb } from "../../components/common/Breadcrumb";
+import EditorJsContentRenderer from "./../../components/editorJs/EditorJsContentRenderer";
 import ProjectDetailHeader from "./ProjectDetailHeader";
 
 export const ProjectDetail = ({ project }) => {

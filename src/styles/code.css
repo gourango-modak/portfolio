@@ -1,0 +1,44 @@
+pre[class*="language-"],
+code[class*="language-"],
+.token {
+    background: #303030 !important;
+}
+
+.editorjs-content code .inline-code {
+    background: #303030;
+    color: white;
+    padding: 4px 8px;
+}
+
+code[class*="language-"]::selection,
+pre[class*="language-"]::selection,
+.token::selection {
+    background: rgba(154, 170, 222, 0.2) !important;
+    color: inherit;
+}
+
+code[class*="language-"]::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+.token::-moz-selection {
+    background: rgba(145, 152, 217, 0.2) !important;
+    color: inherit;
+}
+
+.editorjs code::selection {
+    color: #1e293b;
+}
+
+/* Inline code font sizes */
+.inline-code {
+    font-size: 0.875rem;
+}
+h1 .inline-code {
+    font-size: 1.25rem;
+}
+h2 .inline-code {
+    font-size: 1.125rem;
+}
+h3 .inline-code,
+h4 .inline-code {
+    font-size: 1rem;
+}

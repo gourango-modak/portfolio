@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import DataLoader from "../../components/Common/DataLoader";
+import DataLoader from "../../components/common/DataLoader";
 import { ProjectDetail } from "./ProjectDetail";
 import { fetchProjects } from "../../data/projects";
-import TableOfContents from "../../components/TOC/TableOfContents";
-import { extractHeadings } from "../../utils/editor";
+import TableOfContents from "../../components/tableOfContents/TableOfContents";
+import { extractHeadings } from "../../components/editorJs/editorJsUtils";
 
 const ProjectDetailPage = () => {
     const { slug } = useParams();

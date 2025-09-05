@@ -1,5 +1,5 @@
 import Paragraph from "@editorjs/paragraph";
-import { CUSTOM_TOOLS } from "../../editorTools";
+import { CUSTOM_TOOLS } from "../editorJsConfig";
 
 export default class TagLine extends Paragraph {
     static get toolbox() {

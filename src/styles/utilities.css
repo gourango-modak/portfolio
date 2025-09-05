@@ -1,0 +1,15 @@
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.section-m-h {
+    min-height: calc(100vh - 120px);
+}

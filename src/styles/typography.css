@@ -1,0 +1,61 @@
+.title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0f172b;
+}
+@media (min-width: 768px) {
+    .title {
+        font-size: 42px;
+    }
+}
+
+.editorjs h2 {
+    color: #1e293b;
+    font-weight: 700;
+    line-height: 1.25;
+    font-size: 1.5rem;
+}
+
+.editorjs h3 {
+    color: #1e293b;
+    font-weight: 600;
+    line-height: 1.25;
+    font-size: 1.25rem;
+}
+
+.editorjs .ce-paragraph {
+    font-size: 16px;
+    color: #45556c;
+}
+
+.editorjs ul,
+.editorjs ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.editorjs ul {
+    list-style-type: disc;
+}
+.editorjs ol {
+    list-style-type: decimal;
+}
+
+.editorjs ul li::marker,
+.editorjs ol li::marker {
+    color: #1f2937;
+}
+
+@media (min-width: 640px) {
+    .editorjs .ce-paragraph {
+        font-size: 18px;
+    }
+    .editorjs ul,
+    .editorjs ol {
+        padding-left: 1.75rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+}

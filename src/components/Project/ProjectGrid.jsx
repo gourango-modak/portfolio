@@ -1,13 +1,10 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
-import EditorJsModal from "../EditorJs/EditorJsModal";
+import EditorJsModal from "../editorJs/EditorJsModal";
 import ProjectMetaDataModal from "./ProjectMetaDataModal";
-import { CONTENT_TYPES } from "../../config/config";
-import {
-    downloadJson,
-    getFileName,
-    prepareProjectData,
-} from "../../utils/common";
+import { downloadJson, getContentFileName } from "../../utils/common";
+import { prepareProjectData } from "./projectUtils";
+import { CONTENT_TYPES } from "../../config";
 
 const ProjectGrid = ({ projects }) => {
     const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
@@ -39,7 +36,7 @@ const ProjectGrid = ({ projects }) => {
         const projectData = prepareProjectData(editorJsData, metaData);
         downloadJson(
             projectData,
-            getFileName(projectData.title, projectData.id)
+            getContentFileName(projectData.title, projectData.id)
         );
 
         setIsProjectMetaDataModalOpen(false);

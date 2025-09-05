@@ -26,3 +26,9 @@
 .ce-toolbar__actions {
     left: 0px;
 }
+
+.ce-title-block:empty::before {
+    content: "Enter your title here...";
+    color: #9ca3af;
+    pointer-events: none;
+}

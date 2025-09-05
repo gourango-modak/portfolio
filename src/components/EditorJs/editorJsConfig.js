@@ -6,10 +6,16 @@ import Table from "@editorjs/table";
 import Code from "./tools/code";
 import Title from "./tools/title";
 import TagList from "./tools/tagList";
-import { CONTENT_TYPES } from "../config";
-import TagLine from "./tools/project/tagline";
-import Gallery from "./tools/project/gallery";
+import TagLine from "./tools/tagline";
 import InlineCode from "./tools/inlineCode";
+import Gallery from "./tools/gallery";
+import { CONTENT_TYPES } from "../../config";
+import EditorJsHeaderBlock from "./blocks/EditorJsHeaderBlock";
+import EditorJsParagraphBlock from "./blocks/EditorJsParagraphBlock";
+import EditorJsCodeBlock from "./blocks/EditorJsCodeBlock";
+import EditorJsGalleryBlock from "./blocks/EditorJsGalleryBlock";
+import EditorJsListBlock from "./blocks/EditorJsListBlock";
+import EditorJsImageBlock from "./blocks/EditorJsImageBlock";
 
 export const EDITOR_JS_TOOLS = {
     header: {
@@ -127,3 +133,18 @@ export function getEditorJsInitialData(contentType) {
             return EDITOR_JS_INITIALDATA;
     }
 }
+
+export const NON_RENDER_EDITORJS_BLOCKS = [
+    CUSTOM_TOOLS.TITLE.TYPE,
+    CUSTOM_TOOLS.TAGLINE.TYPE,
+    CUSTOM_TOOLS.TAGLIST.TYPE,
+];
+
+export const EDITORJS_BLOCKS = {
+    header: EditorJsHeaderBlock,
+    paragraph: EditorJsParagraphBlock,
+    list: EditorJsListBlock,
+    image: EditorJsImageBlock,
+    code: EditorJsCodeBlock,
+    gallery: EditorJsGalleryBlock,
+};

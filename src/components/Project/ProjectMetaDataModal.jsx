@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { validateProjectForm } from "../../utils/validation";
-import Modal from "../Modal/Modal";
-import { InputField } from "./../Common/InputField";
-import Dropdown from "../Common/Dropdown";
+import Modal from "../modal/Modal";
+import { InputField } from "../common/InputField";
+import Dropdown from "../common/Dropdown";
+import { validateProjectMetaData } from "./projectUtils";
 import {
     PROJECT_CATEGORIES_OPTIONS,
     PROJECT_STATUSES_OPTIONS,
-} from "../../config/config";
+} from "./projectConfig";
 
 const defaultMetaData = {
     description: "",
@@ -68,7 +68,7 @@ const ProjectMetaDataModal = ({
     };
 
     const handleSave = () => {
-        const validationErrors = validateProjectForm(metaData);
+        const validationErrors = validateProjectMetaData(metaData);
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;

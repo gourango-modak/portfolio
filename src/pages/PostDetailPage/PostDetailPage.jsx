@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import DataLoader from "../../components/Common/DataLoader";
-import { Breadcrumb } from "../../components/Common/Breadcrumb";
+import DataLoader from "../../components/common/DataLoader";
+import { Breadcrumb } from "../../components/common/Breadcrumb";
 import PostDetailPageHeader from "./PostDetailPageHeader";
 import { fetchPosts } from "../../data/posts";
-import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
-import { extractHeadings } from "../../utils/editor";
-import TableOfContents from "../../components/TOC/TableOfContents";
+import EditorJsContentRenderer from "./../../components/editorJs/EditorJsContentRenderer";
+import TableOfContents from "../../components/tableOfContents/TableOfContents";
+import { extractHeadings } from "../../components/editorJs/editorJsUtils";
 
 const PostDetailPage = () => {
     const { slug } = useParams();

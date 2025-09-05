@@ -1,7 +1,7 @@
-import ExperienceSection from "./ExperienceSection";
 import AboutSection from "./AboutSection";
-import SkillsSection from "../../components/Skills/SkillsSection";
-import Contact from "../../components/Contact/Contact";
+import ExperienceSection from "./ExperienceSection";
+import SkillsSection from "./../../components/Skills/SkillsSection";
+import Contact from "./../../components/Contact/Contact";
 
 const AboutPage = () => {
     return (
