@@ -45,13 +45,15 @@ export const prepareProjectData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);
     const title = extractTitle(editorJsData);
     const tagline = extractTagline(editorJsData);
+    const isEditing = Boolean(metaData?.id);
 
     return {
         ...metaData,
-        id: generateId(),
+        id: isEditing ? metaData.id : generateId(),
+        createdAt: isEditing ? metaData.createdAt : Date.now(),
+        updatedAt: Date.now(),
         title: title,
         tagline: tagline,
-        createdAt: Date.now(),
         technologies: tags,
         slug: buildSlug(title),
         content: editorJsData,
@@ -61,12 +63,14 @@ export const prepareProjectData = (editorJsData, metaData) => {
 export const preparePostData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);
     const title = extractTitle(editorJsData);
+    const isEditing = Boolean(metaData?.id);
 
     return {
         ...metaData,
-        id: generateId(),
+        id: isEditing ? metaData.id : generateId(),
+        createdAt: isEditing ? metaData.createdAt : Date.now(),
+        updatedAt: Date.now(),
         title: title,
-        createdAt: Date.now(),
         tags: tags,
         slug: buildSlug(title),
         content: editorJsData,
