@@ -1,12 +1,19 @@
+import { PROJECT_MANIFEST_FILE_URL } from "../config";
 import { fetchAllData } from "./dataFetcher";
 
-// Project-specific config
-const projectBaseUrl =
-    "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/";
+let cachedProjectFiles = null; // cache manifest in memory
 
-const projectFiles = ["1757017512370_projectnametaskmasterpro.json"];
+const getProjectFiles = async () => {
+    if (!cachedProjectFiles) {
+        cachedProjectFiles = await fetch(PROJECT_MANIFEST_FILE_URL).then(
+            (res) => res.json()
+        );
+    }
+    return cachedProjectFiles;
+};
 
 export const fetchProjects = async (limit) => {
+    const projectFiles = await getProjectFiles();
     const projects = await fetchAllData(
         projectBaseUrl,
         projectFiles,

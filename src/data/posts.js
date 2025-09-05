@@ -1,13 +1,19 @@
+import { POSTS_MANIFEST_FILE_URL } from "../config";
 import { fetchAllData } from "./dataFetcher";
 
-const postBaseUrl =
-    "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/";
+let cachedPostFiles = null; // cache manifest in memory
 
-const postFiles = [
-    "1757017854025_howtouseconfigureawaittoimprovecasyncperformance.json",
-];
+const getPostFiles = async () => {
+    if (!cachedPostFiles) {
+        cachedPostFiles = await fetch(POSTS_MANIFEST_FILE_URL).then((res) =>
+            res.json()
+        );
+    }
+    return cachedPostFiles;
+};
 
 export const fetchPosts = async (limit) => {
+    const postFiles = await getPostFiles();
     const posts = await fetchAllData(postBaseUrl, postFiles, "posts");
 
     if (limit && Number.isInteger(limit) && limit > 0) {

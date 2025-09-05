@@ -5,8 +5,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate-manifests": "node scripts/generateManifests.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run generate-manifests && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",

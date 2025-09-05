@@ -5,6 +5,14 @@ export const CARD_DESCRIPTION_MAX_LENGTH = 200;
 // API simulation
 export const SIMULATE_API_DELAY = false;
 
+export const BASE_URL =
+    "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data";
+export const POSTS_MANIFEST_FILE_NAME = "posts-manifest.json";
+export const POSTS_MANIFEST_FILE_URL = `${BASE_URL}/blogs/${POSTS_MANIFEST_FILE_NAME}`;
+
+export const PROJECTS_MANIFEST_FILE_NAME = "projects-manifest.json";
+export const PROJECT_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECTS_MANIFEST_FILE_NAME}`;
+
 export const CONTENT_TYPES = {
     BLOG: "blog",
     PROJECT: "project",
