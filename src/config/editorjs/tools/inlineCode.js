@@ -12,7 +12,7 @@ export default class InlineCode {
     constructor({ api }) {
         this.api = api;
         this.class =
-            "bg-neutral-100 text-blue-600 font-mono text-[14px] px-1.5 py-0.5 rounded";
+            "bg-[#F2F2F2] text-[#242424] font-mono font-bold px-1 py-0.5 rounded inline-code";
     }
 
     render() {

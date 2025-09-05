@@ -41,7 +41,7 @@ const ProjectCard = ({ project, onEdit }) => {
                 <button
                     onClick={() => onEdit(project)}
                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
-                    title="Edit Project"
+                    title="Edit Project hidden sm:flex"
                 >
                     <Edit3 size={16} className="text-gray-600" />
                 </button>
