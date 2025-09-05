@@ -15,6 +15,10 @@ export const EDITOR_JS_TOOLS = {
     header: {
         class: Header,
         inlineToolbar: true,
+        config: {
+            levels: [1, 2, 3], // only show h1, h2, h3
+            defaultLevel: 2,
+        },
     },
     list: {
         class: List,
