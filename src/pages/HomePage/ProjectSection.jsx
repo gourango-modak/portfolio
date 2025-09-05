@@ -17,7 +17,7 @@ const ProjectSection = () => {
                 fetchData={fetchProjects}
                 render={(projects) => (
                     <>
-                        <ProjectGrid projects={projects} />
+                        {/* <ProjectGrid projects={projects} /> */}
                         <div className="mt-16 text-center">
                             <Link
                                 to="/projects"

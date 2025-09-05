@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import Loader from "./Loader";
 
 export default function InfiniteScroll({
-    fetchData, // async function(page, pageSize) => { data, hasMore }
-    renderItem, // function to render each item
+    fetchData,
+    renderItem,
     pageSize = 10,
     threshold = 300,
+    containerClasses = "", // for content container styling
 }) {
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
@@ -30,17 +32,16 @@ export default function InfiniteScroll({
         [fetchData, hasMore, loading, pageSize]
     );
 
-    // Initial load
     useEffect(() => {
         loadPage(1);
     }, [loadPage]);
 
-    // Scroll listener
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
         const handleScroll = () => {
+            debugger;
             const { scrollTop, scrollHeight, clientHeight } = container;
             if (scrollHeight - scrollTop - clientHeight < threshold) {
                 loadPage(page + 1);
@@ -53,17 +54,17 @@ export default function InfiniteScroll({
 
     return (
         <div
-            ref={containerRef} /*style={{ height: "80vh", overflowY: "auto" }}*/
+            ref={containerRef}
+            className="overflow-y-auto"
+            // style={{ height: "80vh" }}
         >
-            {items.map((item, idx) => renderItem(item, idx))}
+            <div className={containerClasses}>
+                {items.map((item, idx) => renderItem(item, idx))}
+            </div>
+
             {loading && (
-                <div style={{ textAlign: "center", padding: "1rem" }}>
-                    Loading...
-                </div>
-            )}
-            {!hasMore && (
-                <div style={{ textAlign: "center", padding: "1rem" }}>
-                    No more projects
+                <div className="flex justify-center my-4">
+                    <Loader />
                 </div>
             )}
         </div>

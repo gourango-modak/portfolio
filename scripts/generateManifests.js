@@ -48,6 +48,7 @@ const generatePostsManifest = () => {
                 url: `${POST_FILES_BASE_URL}/${p._fileName}`,
                 tags: p.tags || [],
                 description: p.description,
+                slug: p.slug,
             };
         }),
     };
@@ -80,6 +81,7 @@ const generateProjectsManifest = () => {
                 category: p.category,
                 url: `${PROJECT_FILES_BASE_URL}/${p._fileName}`,
                 description: p.description,
+                slug: p.slug,
             };
         }),
     };

@@ -1,4 +1,5 @@
 import { PROJECT_MANIFEST_FILE_URL } from "../config";
+import { delay } from "../utils/common";
 
 // Cache manifest in memory
 let cachedProjectManifest = null;
@@ -7,6 +8,7 @@ let cachedProjectManifest = null;
  * Fetch the projects manifest file and cache it
  */
 const getProjectManifest = async () => {
+    // await delay(50 * 1000);
     if (!cachedProjectManifest) {
         const res = await fetch(PROJECT_MANIFEST_FILE_URL);
         cachedProjectManifest = await res.json();

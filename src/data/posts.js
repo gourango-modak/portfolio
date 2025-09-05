@@ -1,4 +1,5 @@
 import { POSTS_MANIFEST_FILE_URL } from "../config";
+import { delay } from "../utils/common";
 
 // Cache manifest in memory
 let cachedPostManifest = null;
@@ -7,6 +8,7 @@ let cachedPostManifest = null;
  * Fetch the posts manifest file and cache it
  */
 const getPostManifest = async () => {
+    await delay(10 * 1000);
     if (!cachedPostManifest) {
         const res = await fetch(POSTS_MANIFEST_FILE_URL);
         cachedPostManifest = await res.json();

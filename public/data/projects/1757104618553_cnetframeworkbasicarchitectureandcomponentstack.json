@@ -1,0 +1,50 @@
+{
+  "description": "C# (C-Sharp) is a modern, object-oriented programming language developed by Microsoft in 2000. It is a part of the .NET ecosystem and is widely used for building desktop, web, mobile, cloud, and enterprise applications. This is originally tied to the .NET Framework, C# has evolved to be the primary language used across the .NET platform which now supports cross-platform development.",
+  "liveUrl": "https://zerotomastery.io/blog/async-await-csharp/",
+  "repoUrl": "https://zerotomastery.io/blog/async-await-csharp/",
+  "startDate": "12/12/2022",
+  "endDate": "12/22/2244",
+  "status": "In progress",
+  "category": "Mobile Application",
+  "id": 1757104618553,
+  "createdAt": 1757104618394,
+  "updatedAt": 1757104618394,
+  "title": "C# .NET Framework (Basic Architecture and Component Stack)",
+  "tagline": "FFFFFF",
+  "technologies": [],
+  "slug": "c-net-framework-basic-architecture-and-component-stack",
+  "content": {
+    "time": 1757104592412,
+    "blocks": [
+      {
+        "id": "aHyJCyp4Sk",
+        "type": "title",
+        "data": {
+          "text": "C# .NET Framework (Basic Architecture and Component Stack)"
+        }
+      },
+      {
+        "id": "6hTIlJ9EWr",
+        "type": "tagline",
+        "data": {
+          "text": "FFFFFF"
+        }
+      },
+      {
+        "id": "HnHKDzOP9l",
+        "type": "paragraph",
+        "data": {
+          "text": "FFFFF"
+        }
+      },
+      {
+        "id": "RICUA8ljDo",
+        "type": "paragraph",
+        "data": {
+          "text": "FF"
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}

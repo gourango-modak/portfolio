@@ -112,7 +112,7 @@ const ProjectsPage = () => {
                             allLabel="All Projects"
                         />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <div>
                         <InfiniteScroll
                             fetchData={fetchProjects} // fetches pages from manifest
                             renderItem={(project) => (
@@ -123,6 +123,7 @@ const ProjectsPage = () => {
                                 />
                             )}
                             pageSize={10}
+                            containerClasses="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 pb-10"
                         />
                     </div>
                     {/* <DataLoader
