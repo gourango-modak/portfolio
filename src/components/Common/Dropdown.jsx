@@ -8,6 +8,8 @@ const Dropdown = ({
     selected,
     onChange,
     placeholder = "Select...",
+    required = false,
+    error,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -34,14 +36,19 @@ const Dropdown = ({
                     className="block mb-2 text-sm font-medium text-gray-700"
                     htmlFor={name}
                 >
-                    {label}
+                    {label}{" "}
+                    {required && <span className="text-red-500">*</span>}
                 </label>
             )}
 
             <button
                 type="button"
                 id={name}
-                className="h-10 w-full flex justify-between items-center px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                className={`h-10 w-full flex justify-between items-center px-4 py-2 bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
+                    error
+                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                }`}
                 onClick={() => setIsOpen(!isOpen)}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
@@ -79,6 +86,8 @@ const Dropdown = ({
                     ))}
                 </ul>
             )}
+
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </div>
     );
 };

@@ -62,6 +62,7 @@ const ProjectMetaDataModal = ({
     };
 
     const handleBack = () => {
+        setErrors({});
         setMetaData(defaultMetaData);
         onBack(metaData);
     };
@@ -75,11 +76,13 @@ const ProjectMetaDataModal = ({
 
         onSave(metaData);
         setMetaData(defaultMetaData);
+        setErrors({});
     };
 
     const handleClose = () => {
         onClose();
         setMetaData(defaultMetaData);
+        setErrors({});
     };
 
     return (
@@ -143,6 +146,7 @@ const ProjectMetaDataModal = ({
                     options={PROJECT_STATUSES_OPTIONS}
                     onChange={handleDropdownChange}
                     selected={metaData.status}
+                    error={errors.status}
                 />
                 <Dropdown
                     label="Category"
@@ -150,6 +154,7 @@ const ProjectMetaDataModal = ({
                     options={PROJECT_CATEGORIES_OPTIONS}
                     onChange={handleDropdownChange}
                     selected={metaData.category}
+                    error={errors.category}
                 />
             </div>
             <InputField

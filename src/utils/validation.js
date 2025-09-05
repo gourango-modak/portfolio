@@ -44,6 +44,16 @@ export const validateProjectForm = (data) => {
         }
     }
 
+    // Status validation
+    if (!data.status.value) {
+        errors.status = "Status is required";
+    }
+
+    // Category validation
+    if (!data.category.value) {
+        errors.category = "Category is required";
+    }
+
     return errors;
 };
 
