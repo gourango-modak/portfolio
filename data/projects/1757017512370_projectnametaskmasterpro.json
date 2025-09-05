@@ -8,7 +8,15 @@
   "repoUrl": "https://gourango-modak.github.io/portfolio/",
   "startDate": "12/24/2023",
   "endDate": "12/23/2025",
-  "technologies": [],
+  "category": "Web Application",
+  "updatedAt": 1757017511587,
+  "status": "In progress",
+  "technologies": [
+    "C",
+    "C++",
+    "CSharp",
+    "Python"
+  ],
   "slug": "project-name-taskmaster-pro",
   "content": {
     "time": 1757017478702,

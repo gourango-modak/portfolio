@@ -2,7 +2,14 @@
   "id": 1757017854025,
   "title": "How to Use ConfigureAwait to Improve C# Async Performance",
   "createdAt": 1757017853960,
-  "tags": [],
+  "updatedAt": 1757017853990,
+  "readTime": 18,
+  "tags": [
+    "C++",
+    "CSharp",
+    "Python",
+    "Golang"
+  ],
   "description": "Learn how to boost your C# async code performance using ConfigureAwait. This blog explains the concept in simple terms with practical examples for faster, scalable, and deadlock-free applications.",
   "slug": "how-to-use-configureawait-to-improve-c-async-performance",
   "content": {
