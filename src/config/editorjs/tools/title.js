@@ -25,7 +25,7 @@ export default class Title {
         const h1 = document.createElement("h1");
         h1.contentEditable = !this.readOnly;
         h1.innerText = this.data.text;
-        h1.classList.add("ce-header", "ce-title-block"); // optional CSS class
+        h1.classList.add("ce-header", "ce-title-block", "title"); // optional CSS class
 
         // Optional: handle input changes
         h1.addEventListener("input", (e) => {

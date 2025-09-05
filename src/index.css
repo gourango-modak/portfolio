@@ -82,8 +82,8 @@ pre[class*="language-"]::-moz-selection,
     display: inline-block;
 }
 
-.editorjs h1 {
-    font-size: 30px;
+.title {
+    font-size: 32px;
     font-weight: bold;
     color: #0f172b;
 }
@@ -100,12 +100,6 @@ pre[class*="language-"]::-moz-selection,
     font-weight: 600; /* font-semibold */
     line-height: 1.25; /* leading-tight */
     font-size: 1.25rem; /* text-xl */
-}
-
-.editorjs h4 {
-    color: #1e293b; /* text-slate-800 */
-    line-height: 1.25; /* leading-tight */
-    font-size: 1rem; /* text-base */
 }
 
 .editorjs .ce-paragraph {
@@ -142,9 +136,6 @@ pre[class*="language-"]::-moz-selection,
 }
 
 @media (min-width: 640px) {
-    .editorjs h1 {
-        font-size: 36px;
-    }
     .editorjs .ce-paragraph {
         font-size: 18px;
     }
@@ -154,22 +145,10 @@ pre[class*="language-"]::-moz-selection,
         font-size: 1.125rem; /* sm:text-lg */
         line-height: 1.75rem; /* sm:text-lg line-height */
     }
-    .editorjs h4 {
-        font-size: 1.125rem; /* sm:text-lg */
-    }
 }
 @media (min-width: 768px) {
-    .editorjs h1 {
-        font-size: 48px;
-    }
-    .editorjs h2 {
-        font-size: 1.875rem; /* md:text-3xl */
-    }
-    .editorjs h3 {
-        font-size: 1.5rem; /* md:text-2xl */
-    }
-    .editorjs h4 {
-        font-size: 1.25rem; /* md:text-xl */
+    .title {
+        font-size: 42px;
     }
 }
 

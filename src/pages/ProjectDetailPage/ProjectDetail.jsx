@@ -13,7 +13,7 @@ export const ProjectDetail = ({ project }) => {
         <>
             <Breadcrumb crumbs={crumbs} />
             <header className="mt-8 mb-12 pb-10 border-b border-slate-200">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-2 leading-tight">
+                <h1 className="title font-bold text-slate-900 mb-2 leading-tight">
                     {project.title}
                 </h1>
                 {project.tagline && (
