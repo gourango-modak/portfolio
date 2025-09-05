@@ -50,7 +50,7 @@ const EditorJsCodeBlock = ({ code, language }) => {
             >
                 <code
                     ref={ref}
-                    className={`language-${language} font-mono text-sm leading-relaxed block min-w-full`}
+                    className={`language-${language} font-mono text-sm leading-relaxed block px-4 min-w-full`}
                 >
                     {code}
                 </code>

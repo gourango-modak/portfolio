@@ -5,6 +5,7 @@ import { InputField } from "../Common/InputField";
 
 const defaultMetaData = {
     description: "",
+    readTime: "",
 };
 
 const PostMetaDataModal = ({
@@ -90,6 +91,15 @@ const PostMetaDataModal = ({
                 required={true}
                 error={errors.description}
                 minRows={3}
+            />
+            <InputField
+                label="Read Time (minutes)"
+                name="readTime"
+                value={metaData?.readTime || ""}
+                onChange={handleChange}
+                required={true}
+                error={errors.readTime}
+                maxRows={1}
             />
         </Modal>
     );

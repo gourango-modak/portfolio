@@ -18,7 +18,7 @@ const PostCard = ({ post, onEdit }) => {
                 <div className="flex-1">
                     <p className="text-sm text-slate-500 mb-1">
                         {post.updatedAt
-                            ? `Updated on ${formatDate(post.updatedAt)}`
+                            ? `Last Updated on ${formatDate(post.updatedAt)}`
                             : `Published on ${formatDate(post.createdAt)}`}
                     </p>
                     <h3 className="text-xl font-bold mb-2 text-slate-900">
@@ -31,6 +31,17 @@ const PostCard = ({ post, onEdit }) => {
                             "..."
                         )}
                     </p>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                        {post.tags?.length > 0 &&
+                            post.tags.map((tag) => (
+                                <span
+                                    key={tag}
+                                    className="text-xs font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                    </div>
                 </div>
             </Link>
 

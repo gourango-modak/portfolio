@@ -1,29 +1,44 @@
-import profile from "../../assets/gm_150x150.png";
+import { formatDate } from "../../utils/date";
 
-const PostDetailPageHeader = ({ title, date }) => {
+const PostDetailPageHeader = ({ post }) => {
     return (
-        <div className="border-b pb-7 border-gray-300">
-            <h1 className="title font-extrabold text-slate-900 mb-4 leading-tight">
-                {title}
+        <header>
+            <h1 className="title font-extrabold text-slate-900 leading-tight mb-4">
+                {post.title}
             </h1>
 
-            <div className="flex items-center gap-4 text-gray-600">
-                <img
-                    src={profile}
-                    alt="Gourango Modak"
-                    className="w-13 h-13 rounded-full border-2 border-gray-200"
-                />
-
-                <div className="flex flex-col">
-                    <span className="font-semibold text-gray-800">
+            {/* Project Meta */}
+            <div className="flex flex-wrap gap-y-3 gap-x-6 text-gray-600 pb-6 border-b border-gray-200">
+                {/* Author */}
+                <span className="flex items-center gap-2">
+                    <span className="text-gray-400">✍️</span>
+                    Author:{" "}
+                    <span className="text-slate-700 font-medium">
                         Gourango Modak
                     </span>
-                    <span className="text-sm text-gray-500">
-                        Published on {date}
+                </span>
+                {/* Created / Published Date */}
+                {post.createdAt && (
+                    <span className="flex items-center gap-2">
+                        <span className="text-gray-400">📅</span>
+                        Published:{" "}
+                        <span className="text-slate-700 font-medium">
+                            {formatDate(post.createdAt)}
+                        </span>
                     </span>
-                </div>
+                )}
+                {/* Read Time */}
+                {post.readTime && (
+                    <span className="flex items-center gap-1">
+                        <span className="text-gray-400">⌛</span>
+                        Read Time:{" "}
+                        <span className="text-slate-700 font-medium">
+                            {post.readTime} min
+                        </span>
+                    </span>
+                )}
             </div>
-        </div>
+        </header>
     );
 };
 

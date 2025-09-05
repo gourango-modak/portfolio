@@ -24,10 +24,7 @@ const PostDetailPage = () => {
                     <section className="pt-30 min-h-screen bg-gray-50/50">
                         <div className="container mx-auto px-6 md:px-12 md:max-w-4xl pb-24">
                             <Breadcrumb crumbs={crumbs} />
-                            <PostDetailPageHeader
-                                title={post.title}
-                                date={formatDate(post.createdAt)}
-                            />
+                            <PostDetailPageHeader post={post} />
                             <EditorJsContentRenderer content={post.content} />
                         </div>
                     </section>

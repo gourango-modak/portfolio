@@ -24,7 +24,7 @@ const ProjectCard = ({ project, onEdit }) => {
                         {project.updatedAt &&
                         project.updatedAt !== project.createdAt
                             ? `Last Updated on ${formatDate(project.updatedAt)}`
-                            : `Created on ${formatDate(project.startDate)}`}
+                            : `Published on ${formatDate(project.startDate)}`}
                     </p>
 
                     <h3 className="text-xl font-bold mb-2 text-slate-900">
@@ -39,14 +39,14 @@ const ProjectCard = ({ project, onEdit }) => {
                         )}
                     </p>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mt-4">
                         {project.technologies?.length > 0 &&
-                            project.technologies.map((tag) => (
+                            project.technologies.map((tech) => (
                                 <span
-                                    key={tag}
+                                    key={tech}
                                     className="text-xs font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
                                 >
-                                    {tag}
+                                    {tech}
                                 </span>
                             ))}
                     </div>

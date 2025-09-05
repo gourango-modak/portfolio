@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import DataLoader from "../../components/Common/DataLoader";
-import ProjectCard from "./../../components/Project/ProjectCard";
 import { fetchProjects } from "./../../data/projects";
 import Section from "../../components/Section";
 import SectionHeader from "../../components/Section/Header";
+import ProjectGrid from "../../components/Project/ProjectGrid";
 
 const ProjectSection = () => {
     return (
@@ -17,14 +17,7 @@ const ProjectSection = () => {
                 fetchData={fetchProjects}
                 render={(projects) => (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {projects.map((project) => (
-                                <ProjectCard
-                                    key={project.id}
-                                    project={project}
-                                />
-                            ))}
-                        </div>
+                        <ProjectGrid projects={projects} />
                         <div className="mt-12 text-center">
                             <Link
                                 to="/projects"

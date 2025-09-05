@@ -1,6 +1,7 @@
-import { ExternalLink, Github, Calendar } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { Breadcrumb } from "../../components/Common/Breadcrumb";
 import EditorJsContentRenderer from "./../../components/EditorJs/EditorJsContentRenderer";
+import ProjectDetailHeader from "./ProjectDetailHeader";
 
 export const ProjectDetail = ({ project }) => {
     const crumbs = [
@@ -12,48 +13,69 @@ export const ProjectDetail = ({ project }) => {
     return (
         <>
             <Breadcrumb crumbs={crumbs} />
-            <header className="mt-8 mb-12 pb-10 border-b border-slate-200">
-                <h1 className="title font-bold text-slate-900 mb-2 leading-tight">
-                    {project.title}
-                </h1>
-                {project.tagline && (
-                    <p className="text-lg text-slate-600 mt-4 mb-2 max-w-2xl">
-                        {project.tagline}
-                    </p>
-                )}
-                {project.startDate && project.endDate && (
-                    <div className="flex items-center justify-start gap-2 text-slate-500 mb-8">
-                        <Calendar size={16} />
-                        <span>
-                            {project.startDate} - {project.endDate}
-                        </span>
-                    </div>
-                )}
-                <div className="flex flex-col sm:flex-row justify-start gap-4">
-                    <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700"
-                    >
-                        <ExternalLink size={20} />
-                        <span>Live Project</span>
-                    </a>
-                    <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-800 px-6 py-3 font-semibold text-slate-800 shadow-sm transition hover:bg-slate-800 hover:text-white"
-                    >
-                        <Github size={20} />
-                        <span>Repository</span>
-                    </a>
-                </div>
-            </header>
+
+            <ProjectDetailHeader project={project} />
+
             <EditorJsContentRenderer content={project.content} />
-            <div className="flex flex-wrap gap-2 mt-15">
-                {project.technologies?.length > 0 &&
-                    project.technologies.map((tag) => (
+
+            {/* Project Links Card Section */}
+            {(project.liveUrl || project.repoUrl) && (
+                <section>
+                    <h2 className="text-xl md:text-2xl font-bold mb-6 mt-12">
+                        View the Project
+                    </h2>
+                    <div className="grid sm:grid-cols-2 gap-6">
+                        {project.liveUrl && (
+                            <div className="link-card flex flex-col justify-between rounded-xl border border-indigo-100 p-6 shadow hover:shadow-lg transition bg-indigo-50">
+                                <div className="flex flex-col items-start gap-2">
+                                    <span className="text-3xl">🚀</span>
+                                    <h3 className="text-lg font-bold text-indigo-700">
+                                        Live Demo
+                                    </h3>
+                                    <p className="text-sm text-indigo-800">
+                                        Experience the app in action.
+                                    </p>
+                                </div>
+                                <a
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-4 inline-block font-semibold text-indigo-600 hover:text-indigo-800"
+                                >
+                                    Visit Site →
+                                </a>
+                            </div>
+                        )}
+
+                        {project.repoUrl && (
+                            <div className="link-card flex flex-col justify-between rounded-xl border border-slate-200 p-6 shadow hover:shadow-lg transition bg-white">
+                                <div className="flex flex-col items-start gap-2">
+                                    <span className="text-3xl">💻</span>
+                                    <h3 className="text-lg font-bold text-slate-900">
+                                        Source Code
+                                    </h3>
+                                    <p className="text-sm text-slate-700">
+                                        Explore the full code on GitHub.
+                                    </p>
+                                </div>
+                                <a
+                                    href={project.repoUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-4 inline-block font-semibold text-slate-800 hover:text-slate-900"
+                                >
+                                    View Repo →
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            )}
+
+            {/* Project Technologies */}
+            {project.technologies?.length > 0 && (
+                <div className="flex flex-wrap gap-3 mt-12">
+                    {project.technologies.map((tag) => (
                         <span
                             key={tag}
                             className="text-sm font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
@@ -61,7 +83,8 @@ export const ProjectDetail = ({ project }) => {
                             {tag}
                         </span>
                     ))}
-            </div>
+                </div>
+            )}
         </>
     );
 };
