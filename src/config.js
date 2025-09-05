@@ -7,9 +7,11 @@ export const SIMULATE_API_DELAY = false;
 
 export const BASE_URL =
     "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data";
+export const POST_FILES_BASE_URL = `${BASE_URL}/blogs`;
 export const POSTS_MANIFEST_FILE_NAME = "posts-manifest.json";
 export const POSTS_MANIFEST_FILE_URL = `${BASE_URL}/blogs/${POSTS_MANIFEST_FILE_NAME}`;
 
+export const PROJECT_FILES_BASE_URL = `${BASE_URL}/projects`;
 export const PROJECTS_MANIFEST_FILE_NAME = "projects-manifest.json";
 export const PROJECT_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECTS_MANIFEST_FILE_NAME}`;
 

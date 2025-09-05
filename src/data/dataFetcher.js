@@ -16,7 +16,7 @@ export const fetchAllData = async (baseUrl, files, type) => {
     try {
         // Fetch all JSON files in parallel
         const dataPromises = files.map((file) =>
-            fetch(`${baseUrl}${file}`).then((response) => {
+            fetch(`${baseUrl}/${file}`).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch: ${file}`);
                 }

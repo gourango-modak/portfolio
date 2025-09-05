@@ -1,4 +1,4 @@
-import { PROJECT_MANIFEST_FILE_URL } from "../config";
+import { PROJECT_FILES_BASE_URL, PROJECT_MANIFEST_FILE_URL } from "../config";
 import { fetchAllData } from "./dataFetcher";
 
 let cachedProjectFiles = null; // cache manifest in memory
@@ -12,17 +12,13 @@ const getProjectFiles = async () => {
     return cachedProjectFiles;
 };
 
-export const fetchProjects = async (limit) => {
+export const fetchProjects = async () => {
     const projectFiles = await getProjectFiles();
     const projects = await fetchAllData(
-        projectBaseUrl,
+        PROJECT_FILES_BASE_URL,
         projectFiles,
         "projects"
     );
-
-    if (limit && Number.isInteger(limit) && limit > 0) {
-        return projects.slice(0, limit);
-    }
 
     return projects;
 };
