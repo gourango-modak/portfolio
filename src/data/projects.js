@@ -1,5 +1,4 @@
 import { PROJECT_MANIFEST_FILE_URL } from "../config";
-import { log } from "../utils/common";
 import { fetchData } from "./utils";
 
 // Cache manifest in memory
@@ -73,6 +72,18 @@ export const fetchProjectBySlug = async (slug) => {
         throw new Error(
             `Failed to fetch content for project with slug ${slug}`
         );
+    }
+
+    return await res.json();
+};
+
+/**
+ * Fetch a single project by url
+ */
+export const fetchProjectByUrl = async (url) => {
+    const res = await fetchData(url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch content for project with url ${url}`);
     }
 
     return await res.json();

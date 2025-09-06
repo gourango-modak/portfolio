@@ -83,6 +83,10 @@ export const isValidUrl = (url) => {
     }
 };
 
-export const log = (message, data) => {
+export const debugLog = (message, data) => {
     console.log(`[DEBUG] ${message}:`, data);
+};
+
+export const errorLog = (message, data) => {
+    console.log(`[Error] ${message}:`, data);
 };

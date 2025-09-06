@@ -2,11 +2,26 @@ import { Book, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../utils/date";
 import { useAuth } from "../../context/AuthContext";
-import { truncateText } from "../../utils/common";
+import { errorLog, truncateText } from "../../utils/common";
 import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
+import { fetchPostByUrl } from "../../data/posts";
+import { useLoader } from "../../context/LoaderContext";
 
 const PostCard = ({ post, onEdit }) => {
     const { isAuthenticated } = useAuth();
+    const { withLoader } = useLoader();
+
+    const handleEdit = async (post) => {
+        try {
+            const postData = await withLoader(
+                () => fetchPostByUrl(post.url),
+                "Fetching post data..."
+            );
+            onEdit?.(postData);
+        } catch (err) {
+            errorLog("Failed to fetch post", err);
+        }
+    };
 
     return (
         <div className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6 relative">
@@ -47,7 +62,7 @@ const PostCard = ({ post, onEdit }) => {
 
             {isAuthenticated && onEdit && (
                 <button
-                    onClick={() => onEdit(post)}
+                    onClick={() => handleEdit(post)}
                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
                     title="Edit Post"
                 >

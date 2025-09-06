@@ -2,11 +2,26 @@ import { Code, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { formatDate } from "../../utils/date";
-import { truncateText } from "../../utils/common";
+import { errorLog, truncateText } from "../../utils/common";
 import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
+import { fetchProjectByUrl } from "../../data/projects";
+import { useLoader } from "../../context/LoaderContext";
 
 const ProjectCard = ({ ref, project, onEdit }) => {
     const { isAuthenticated } = useAuth();
+    const { withLoader } = useLoader();
+
+    const handleEdit = async (project) => {
+        try {
+            const projectData = await withLoader(
+                () => fetchProjectByUrl(project.url),
+                "Fetching project data..."
+            );
+            onEdit?.(projectData);
+        } catch (err) {
+            errorLog("Failed to fetch project", err);
+        }
+    };
 
     return (
         <div
@@ -58,7 +73,7 @@ const ProjectCard = ({ ref, project, onEdit }) => {
 
             {isAuthenticated && onEdit && (
                 <button
-                    onClick={() => onEdit(project)}
+                    onClick={() => handleEdit(project)}
                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
                     title="Edit Project"
                 >

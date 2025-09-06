@@ -75,3 +75,15 @@ export const fetchPostBySlug = async (slug) => {
 
     return await res.json();
 };
+
+/**
+ * Fetch a single post by url
+ */
+export const fetchPostByUrl = async (url) => {
+    const res = await fetchData(url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch content for post with url ${url}`);
+    }
+
+    return await res.json();
+};

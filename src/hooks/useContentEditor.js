@@ -9,8 +9,8 @@ export const useContentEditor = (prepareDataFn) => {
 
     const openEditorJsModal = (data = null) => {
         setEditorJsModalOpen(true);
-        setEditorJsData(data);
-        setMetaData(null);
+        setEditorJsData(data?.content);
+        setMetaData(data);
     };
 
     const closeEditorJsModal = () => {

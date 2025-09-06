@@ -98,10 +98,12 @@ export default function InfiniteScroll({
                 <div className="flex justify-center items-center py-20">
                     {loadingComponent || (
                         <>
-                            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
-                            <span className="ml-3 text-slate-500">
-                                Loading...
-                            </span>
+                            <div className="flex flex-col items-center justify-center py-6">
+                                <div className="loader border-4 border-t-indigo-600 border-gray-200 rounded-full w-8 h-8 animate-spin"></div>
+                                <span className="text-gray-700 font-medium mt-2 text-sm">
+                                    Loading More....
+                                </span>
+                            </div>
                         </>
                     )}
                 </div>

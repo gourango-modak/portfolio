@@ -21,8 +21,6 @@ const Modal = ({
     style = {},
     showCloseBtn = true,
 }) => {
-    if (!isOpen) return null;
-
     const mergedStyle = { ...defaultStyle, ...style };
 
     // Manage body scroll based on open modals
@@ -41,6 +39,9 @@ const Modal = ({
             }
         };
     }, [isOpen]);
+
+    // Early return only for rendering, hooks are safe
+    if (!isOpen) return null;
 
     const alignmentClass =
         mergedStyle.position === "center"
