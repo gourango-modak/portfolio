@@ -54,7 +54,7 @@ export const extractHeadings = (content) => {
     const headings = [];
     let lastH2 = null;
 
-    content.blocks.forEach((block) => {
+    content?.blocks?.forEach((block) => {
         if (block.type === "header") {
             const level = block.data.level;
             if (level === 2 || level === 3) {

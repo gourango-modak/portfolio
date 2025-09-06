@@ -1,6 +1,6 @@
 import { formatDate } from "./../../utils/date";
 
-const ProjectDetailHeader = ({ project }) => {
+const ProjectDetailPageHeader = ({ project }) => {
     return (
         <header>
             {/* Project Title */}
@@ -47,4 +47,4 @@ const ProjectDetailHeader = ({ project }) => {
     );
 };
 
-export default ProjectDetailHeader;
+export default ProjectDetailPageHeader;

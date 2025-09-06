@@ -1,72 +1,115 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import Loader from "./Loader";
 
 export default function InfiniteScroll({
     fetchData,
     renderItem,
-    pageSize = 10,
-    threshold = 300,
-    containerClasses = "", // for content container styling
+    limit = 10,
+    containerClass = "",
+    itemClass = "",
+    loadingComponent = null,
+    endMessage = null,
+    maxItems = Infinity,
 }) {
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
-    const containerRef = useRef(null);
+    const [hasMore, setHasMore] = useState(true);
+    const [visibleItems, setVisibleItems] = useState([]); // New state
 
-    const loadPage = useCallback(
-        async (nextPage) => {
-            if (!hasMore || loading) return;
-            setLoading(true);
-            try {
-                const result = await fetchData(nextPage, pageSize);
-                setItems((prev) => [...prev, ...result.data]);
-                setHasMore(result.hasMore);
-                setPage(nextPage);
-            } catch (err) {
-                console.error("Error fetching data:", err);
-            } finally {
-                setLoading(false);
-            }
+    const observer = useRef();
+    const lastItemRef = useCallback(
+        (node) => {
+            if (loading || !hasMore) return;
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPage((prevPage) => prevPage + 1);
+                }
+            });
+
+            if (node) observer.current.observe(node);
         },
-        [fetchData, hasMore, loading, pageSize]
+        [loading, hasMore]
     );
 
     useEffect(() => {
-        loadPage(1);
-    }, [loadPage]);
+        const loadData = async () => {
+            if (loading || !hasMore || items.length >= maxItems) return;
 
-    useEffect(() => {
-        const container = containerRef.current;
-        if (!container) return;
+            setLoading(true);
+            const newItems = await fetchData(page, limit);
 
-        const handleScroll = () => {
-            debugger;
-            const { scrollTop, scrollHeight, clientHeight } = container;
-            if (scrollHeight - scrollTop - clientHeight < threshold) {
-                loadPage(page + 1);
+            // This is a simple way to get unique items assuming an 'id' property.
+            // You can replace this with a more robust solution if necessary.
+            setItems((prevItems) => {
+                const combined = [...prevItems, ...newItems];
+                const uniqueIds = new Set(combined.map((item) => item.id));
+                return Array.from(uniqueIds).map((id) =>
+                    combined.find((item) => item.id === id)
+                );
+            });
+
+            // Use a slight delay to apply the "visible" class for the fade-in effect
+            setTimeout(() => {
+                setVisibleItems((prevVisible) => [
+                    ...prevVisible,
+                    ...newItems.map((item) => item.id),
+                ]);
+            }, 50);
+
+            setLoading(false);
+
+            if (
+                newItems.length < limit ||
+                items.length + newItems.length >= maxItems
+            ) {
+                setHasMore(false);
             }
         };
 
-        container.addEventListener("scroll", handleScroll);
-        return () => container.removeEventListener("scroll", handleScroll);
-    }, [loadPage, page, threshold]);
+        if (hasMore) {
+            loadData();
+        }
+    }, [page, fetchData, limit, maxItems, hasMore]);
 
     return (
-        <div
-            ref={containerRef}
-            className="overflow-y-auto"
-            // style={{ height: "80vh" }}
-        >
-            <div className={containerClasses}>
-                {items.map((item, idx) => renderItem(item, idx))}
+        <>
+            <div className={containerClass}>
+                {items.map((item, idx) => {
+                    const isLast = idx === items.length - 1 && hasMore;
+                    const isVisible = visibleItems.includes(item.id);
+
+                    return (
+                        <div
+                            key={item.id}
+                            ref={isLast ? lastItemRef : null}
+                            className={`${itemClass} infinite-scroll-item ${
+                                isVisible ? "visible" : ""
+                            }`}
+                        >
+                            {renderItem(item)}
+                        </div>
+                    );
+                })}
             </div>
 
             {loading && (
-                <div className="flex justify-center my-4">
-                    <Loader />
+                <div className="flex justify-center items-center py-20">
+                    {loadingComponent || (
+                        <>
+                            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600"></div>
+                            <span className="ml-3 text-slate-500">
+                                Loading...
+                            </span>
+                        </>
+                    )}
                 </div>
             )}
-        </div>
+
+            {!hasMore && endMessage && (
+                <div className="flex justify-center py-8">{endMessage}</div>
+            )}
+        </>
     );
 }

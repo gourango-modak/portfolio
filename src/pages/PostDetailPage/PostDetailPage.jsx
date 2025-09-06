@@ -1,25 +1,24 @@
 import { useParams } from "react-router-dom";
-import DataLoader from "../../components/common/DataLoader";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 import PostDetailPageHeader from "./PostDetailPageHeader";
-import { fetchPosts } from "../../data/posts";
+import { fetchPostBySlug } from "../../data/posts";
 import EditorJsContentRenderer from "./../../components/editorJs/EditorJsContentRenderer";
 import TableOfContents from "../../components/tableOfContents/TableOfContents";
 import { extractHeadings } from "../../components/editorJs/editorJsUtils";
+import ResourceLoader from "../../components/common/ResourceLoader";
+import { truncateBreadcrumb } from "../../utils/common";
 
 const PostDetailPage = () => {
     const { slug } = useParams();
 
     return (
         <section className="pt-30 min-h-screen pb-20 bg-gray-50/50">
-            <DataLoader
-                fetchData={fetchPosts}
-                render={(posts) => {
-                    const post = posts.find((p) => p.slug === slug);
+            <ResourceLoader id={slug} fetchFn={fetchPostBySlug}>
+                {(post) => {
                     const crumbs = [
                         { to: "/", label: "Home" },
                         { to: "/Blog", label: "Blog" },
-                        { label: post.title },
+                        { label: truncateBreadcrumb(post.title) },
                     ];
 
                     return (
@@ -42,7 +41,7 @@ const PostDetailPage = () => {
                         </div>
                     );
                 }}
-            />
+            </ResourceLoader>
         </section>
     );
 };

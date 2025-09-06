@@ -3,7 +3,7 @@ export const BREADCRUMB_MAX_LENGTH = 18;
 export const CARD_DESCRIPTION_MAX_LENGTH = 200;
 
 // API simulation
-export const SIMULATE_API_DELAY = false;
+export const SIMULATE_API_DELAY_SEC = 0;
 
 export const BASE_URL =
     "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data";

@@ -1,85 +1,74 @@
-import { useState } from "react";
 import BlogPageHeader from "./BlogPageHeader";
-import DataLoader from "../../components/common/DataLoader";
-import PostList from "./../../components/post/PostList";
-import { fetchPosts } from "../../data/posts";
 import EditorJsModal from "../../components/editorJs/EditorJsModal";
 import PostMetaDataModal from "../../components/post/PostMetaDataModal";
-import { preparePostData } from "../../components/Post/postUtils";
-import { downloadJson, getContentFileName } from "./../../utils/common";
 import { CONTENT_TYPES } from "../../config";
+import { usePostFilters } from "./../../components/post/hooks/usePostFilters";
+import { useContentEditor } from "../../hooks/useContentEditor";
+import { preparePostData } from "../../components/post/postUtils";
+import PostsList from "../../components/post/PostsList";
+import SearchInput from "./../../components/common/SearchInput";
+import TagFilter from "./../../components/common/TagFilter";
 
 const BlogPage = () => {
-    const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
-    const [isPostMetaDataModalOpen, setIsPostMetaDataModalOpen] =
-        useState(false);
-    const [editorJsData, setEditorJsData] = useState(null);
-    const [metaData, setMetaData] = useState(null);
+    const {
+        isEditorJsModalOpen,
+        isMetaDataModalOpen,
+        editorJsData,
+        metaData,
+        openEditorJsModal,
+        closeEditorJsModal,
+        saveEditorJsData,
+        closeMetaDataModal,
+        saveMetaData,
+        backToEditorJsModal,
+    } = useContentEditor(preparePostData);
 
-    const handleAddPost = () => {
-        setIsEditorModalOpen(true);
-        setEditorJsData(null);
-        setMetaData(null);
-    };
-
-    const handleEditorJsModalSave = (data) => {
-        setEditorJsData(data);
-        setIsEditorModalOpen(false);
-        setIsPostMetaDataModalOpen(true);
-    };
-
-    const handleEditorJsModalClose = () => {
-        setEditorJsData(null);
-        setMetaData(null);
-        setIsEditorModalOpen(false);
-    };
-
-    const handlePostMetaDataModalClose = () => {
-        setIsPostMetaDataModalOpen(false);
-        setIsEditorModalOpen(false);
-        setEditorJsData(null);
-        setMetaData(null);
-    };
-
-    const handlePostMetaDataModalSave = (metaData) => {
-        const postData = preparePostData(editorJsData, metaData);
-        downloadJson(postData, getContentFileName(postData.title, postData.id));
-
-        setIsPostMetaDataModalOpen(false);
-        setEditorJsData(null);
-        setMetaData(null);
-    };
-
-    const handlePostMetaDataModalBack = (metaData) => {
-        setMetaData(metaData);
-        setIsPostMetaDataModalOpen(false);
-        setIsEditorModalOpen(true);
-    };
+    const {
+        searchTerm,
+        setSearchTerm,
+        selectedTags,
+        setSelectedTags,
+        topTags,
+        fetchData,
+    } = usePostFilters();
 
     return (
         <>
             <section className="pt-30 pb-20 section-m-h bg-gray-50/50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                    <BlogPageHeader onAddClick={handleAddPost} />
-                    <DataLoader
-                        fetchData={fetchPosts}
-                        render={(posts) => <PostList posts={posts} />}
+                    <BlogPageHeader onAddClick={openEditorJsModal} />
+                    <div className="mb-12">
+                        <SearchInput onSearch={setSearchTerm} />
+                        <TagFilter
+                            topTags={topTags}
+                            selectedTag={selectedTags}
+                            setSelectedTag={setSelectedTags}
+                            allLabel="All Posts"
+                        />
+                    </div>
+
+                    <PostsList
+                        fetchData={fetchData}
+                        searchTerm={searchTerm}
+                        selectedTag={selectedTags}
+                        onEdit={openEditorJsModal}
                     />
                 </div>
             </section>
             <EditorJsModal
-                isOpen={isEditorModalOpen}
-                onClose={handleEditorJsModalClose}
-                onSave={handleEditorJsModalSave}
+                isOpen={isEditorJsModalOpen}
+                onClose={closeEditorJsModal}
+                onSave={saveEditorJsData}
                 initialData={editorJsData}
                 actionBtnTitle="Next"
                 contentType={CONTENT_TYPES.BLOG}
             />
+
             <PostMetaDataModal
-                isOpen={isPostMetaDataModalOpen}
-                onClose={handlePostMetaDataModalClose}
-                onSave={handlePostMetaDataModalSave}
-                onBack={handlePostMetaDataModalBack}
+                isOpen={isMetaDataModalOpen}
+                onClose={closeMetaDataModal}
+                onSave={saveMetaData}
+                onBack={backToEditorJsModal}
                 initialData={metaData}
             />
         </>

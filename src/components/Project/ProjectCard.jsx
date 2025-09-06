@@ -5,11 +5,14 @@ import { formatDate } from "../../utils/date";
 import { truncateText } from "../../utils/common";
 import { CARD_DESCRIPTION_MAX_LENGTH } from "../../config";
 
-const ProjectCard = ({ project, onEdit }) => {
+const ProjectCard = ({ ref, project, onEdit }) => {
     const { isAuthenticated } = useAuth();
 
     return (
-        <div className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6 relative">
+        <div
+            ref={ref}
+            className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6 relative"
+        >
             <Link
                 to={`/projects/${project.slug}`}
                 className="flex flex-1 gap-6"
@@ -53,7 +56,7 @@ const ProjectCard = ({ project, onEdit }) => {
                 </div>
             </Link>
 
-            {isAuthenticated && (
+            {isAuthenticated && onEdit && (
                 <button
                     onClick={() => onEdit(project)}
                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"

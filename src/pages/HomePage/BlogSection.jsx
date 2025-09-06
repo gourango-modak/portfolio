@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import DataLoader from "./../../components/Common/DataLoader";
 import { fetchPosts } from "./../../data/posts";
 import Section from "../../components/Section/Section";
 import SectionHeader from "../../components/Section/SectionHeader";
-import PostGrid from "./../../components/Post/PostGrid";
+import PostsList from "./../../components/post/PostsList";
 
 const BlogSection = () => {
     return (
@@ -13,22 +12,15 @@ const BlogSection = () => {
                 text="I write about technology, development, and everything in
                     between. Here are some of my latest articles."
             />
-            <DataLoader
-                fetchData={fetchPosts}
-                render={(posts) => (
-                    <>
-                        <PostGrid posts={posts} />
-                        <div className="mt-16 text-center">
-                            <Link
-                                to="/blog"
-                                className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"
-                            >
-                                View All Posts
-                            </Link>
-                        </div>
-                    </>
-                )}
-            />
+            <PostsList fetchData={fetchPosts} maxItems={6} />
+            <div className="mt-16 text-center">
+                <Link
+                    to="/blog"
+                    className="bg-white text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-indigo-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center gap-2"
+                >
+                    View All Posts
+                </Link>
+            </div>
         </Section>
     );
 };

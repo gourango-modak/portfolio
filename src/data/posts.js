@@ -1,5 +1,5 @@
 import { POSTS_MANIFEST_FILE_URL } from "../config";
-import { delay } from "../utils/common";
+import { fetchData } from "./utils";
 
 // Cache manifest in memory
 let cachedPostManifest = null;
@@ -8,30 +8,40 @@ let cachedPostManifest = null;
  * Fetch the posts manifest file and cache it
  */
 const getPostManifest = async () => {
-    await delay(10 * 1000);
     if (!cachedPostManifest) {
-        const res = await fetch(POSTS_MANIFEST_FILE_URL);
+        const res = await fetchData(POSTS_MANIFEST_FILE_URL);
         cachedPostManifest = await res.json();
     }
     return cachedPostManifest;
 };
 
-export const fetchPosts = async (page = 1, pageSize = 10) => {
+export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getPostManifest();
     const allPosts = manifest.posts || [];
-    const totalPosts = allPosts.length;
-    const totalPages = Math.ceil(totalPosts / pageSize);
 
+    const { searchTerm = "", selectedTags = [] } = filters;
+
+    // Apply filters
+    const filteredPosts = allPosts.filter((post) => {
+        const matchesTitle = post.title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+
+        // Ensure post.tags is an array, and check intersection with selectedTags
+        const matchesTags =
+            selectedTags.length > 0
+                ? post.tags?.some((tag) => selectedTags.includes(tag))
+                : true;
+
+        return matchesTitle && matchesTags;
+    });
+
+    // Pagination
     const startIndex = (page - 1) * pageSize;
-    const endIndex = Math.min(startIndex + pageSize, totalPosts);
+    const endIndex = Math.min(startIndex + pageSize, filteredPosts.length);
+    const posts = filteredPosts.slice(startIndex, endIndex);
 
-    // Slice posts for the current page
-    const posts = allPosts.slice(startIndex, endIndex);
-
-    return {
-        data: posts,
-        hasMore: page < totalPages,
-    };
+    return posts;
 };
 
 /**
@@ -40,4 +50,28 @@ export const fetchPosts = async (page = 1, pageSize = 10) => {
 export const getTopTags = async () => {
     const manifest = await getPostManifest();
     return manifest.topTags || [];
+};
+
+/**
+ * Fetch a single post by slug
+ */
+export const fetchPostBySlug = async (slug) => {
+    const manifest = await getPostManifest();
+    const allPosts = manifest.posts || [];
+
+    const post = allPosts.find((p) => p.slug === slug);
+    if (!post) {
+        throw new Error(`Post with slug ${slug} not found`);
+    }
+
+    if (!post.url) {
+        throw new Error(`Post with slug ${slug} does not have a url`);
+    }
+
+    const res = await fetchData(post.url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch content for post with slug ${slug}`);
+    }
+
+    return await res.json();
 };

@@ -82,3 +82,7 @@ export const isValidUrl = (url) => {
         return false;
     }
 };
+
+export const log = (message, data) => {
+    console.log(`[DEBUG] ${message}:`, data);
+};
