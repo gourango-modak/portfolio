@@ -22,9 +22,9 @@ const LoginPage = () => {
         <div className="flex items-center justify-center h-screen bg-slate-50">
             <form
                 onSubmit={handleSubmit}
-                className="bg-white shadow-md rounded-lg p-6 w-80"
+                className="bg-white shadow-md rounded-2xl p-12 w-100"
             >
-                <h2 className="text-xl font-semibold text-center mb-4">
+                <h2 className="text-4xl font-semibold text-center mb-12">
                     Login
                 </h2>
                 <input

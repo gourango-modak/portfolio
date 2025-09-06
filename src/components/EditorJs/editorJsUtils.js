@@ -50,7 +50,7 @@ export function extractTagline(editorJsData) {
     return taglineBlock?.data?.text || "";
 }
 
-export const extractHeadings = (content) => {
+export const extractHeadings = (content, contentType) => {
     const headings = [];
     let lastH2 = null;
 
@@ -76,6 +76,14 @@ export const extractHeadings = (content) => {
             }
         }
     });
+
+    if (contentType == CONTENT_TYPES.PROJECT) {
+        headings.push({
+            id: "view-the-project",
+            level: 2,
+            text: "View the Project",
+        });
+    }
 
     return headings;
 };

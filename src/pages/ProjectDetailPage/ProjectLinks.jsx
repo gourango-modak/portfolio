@@ -5,7 +5,10 @@ const ProjectLinks = ({ liveUrl, repoUrl }) => {
 
     return (
         <section>
-            <h2 className="text-xl md:text-2xl font-bold mb-6 mt-12">
+            <h2
+                id="view-the-project"
+                className="text-xl md:text-2xl font-bold mb-6 mt-12"
+            >
                 View the Project
             </h2>
             <div className="grid sm:grid-cols-2 gap-6">

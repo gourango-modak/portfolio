@@ -10,16 +10,17 @@ export const prepareProjectData = (editorJsData, metaData) => {
     const title = extractTitle(editorJsData);
     const tagline = extractTagline(editorJsData);
     const isEditing = Boolean(metaData?.id);
+    const id = isEditing ? metaData.id : generateId();
 
     return {
         ...metaData,
-        id: isEditing ? metaData.id : generateId(),
+        id: id,
         createdAt: isEditing ? metaData.createdAt : Date.now(),
         updatedAt: Date.now(),
         title: title,
         tagline: tagline,
         technologies: tags,
-        slug: buildSlug(title),
+        slug: buildSlug(title, id),
         status: metaData.status.value,
         category: metaData.category.value,
         content: editorJsData,

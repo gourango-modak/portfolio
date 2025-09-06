@@ -7,13 +7,18 @@ import TableOfContents from "../../components/tableOfContents/TableOfContents";
 import { extractHeadings } from "../../components/editorJs/editorJsUtils";
 import ResourceLoader from "../../components/common/ResourceLoader";
 import { truncateBreadcrumb } from "../../utils/common";
+import { CONTENT_TYPES } from "../../config";
 
 const PostDetailPage = () => {
     const { slug } = useParams();
 
     return (
         <section className="pt-30 min-h-screen pb-20 bg-gray-50/50">
-            <ResourceLoader id={slug} fetchFn={fetchPostBySlug}>
+            <ResourceLoader
+                id={slug}
+                fetchFn={fetchPostBySlug}
+                loadingMessage="Fetching post data..."
+            >
                 {(post) => {
                     const crumbs = [
                         { to: "/", label: "Home" },
@@ -26,7 +31,10 @@ const PostDetailPage = () => {
                             {/* Left Column: TOC (fixed inside this space) */}
                             <div className="w-64 hidden lg:block">
                                 <TableOfContents
-                                    headings={extractHeadings(post.content)}
+                                    headings={extractHeadings(
+                                        post.content,
+                                        CONTENT_TYPES.BLOG
+                                    )}
                                 />
                             </div>
 

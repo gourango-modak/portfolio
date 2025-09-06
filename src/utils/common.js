@@ -26,17 +26,8 @@ export const truncateBreadcrumb = (text, maxLength = BREADCRUMB_MAX_LENGTH) => {
     return truncateText(text, maxLength, "...");
 };
 
-export const getContentFileName = (title, id) => {
-    // Convert to lowercase
-    let name = title.toLowerCase();
-
-    // Replace all non-alphanumeric characters (except dash) with a dash
-    name = name.replace(/[^a-z0-9]+/g, "");
-
-    // Remove leading/trailing dashes
-    name = name.replace(/^-+|-+$/g, "");
-
-    return `${id}_${name}.json`;
+export const getContentFileName = (id) => {
+    return `${id}.json`;
 };
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

@@ -1,73 +1,55 @@
 import { useEffect, useState } from "react";
+import { useLoader } from "../../context/LoaderContext";
 
 const ResourceLoader = ({
     id,
     fetchFn,
     children,
-    loader = null,
     errorUI = null,
+    loadingMessage = null,
 }) => {
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
         if (!id) return;
 
         let isMounted = true;
-        setLoading(true);
-        setError(null);
 
-        fetchFn(id)
-            .then((res) => {
+        const loadData = async () => {
+            try {
+                showLoader(loadingMessage || "Loading resource...");
+                const res = await fetchFn(id);
                 if (isMounted) {
                     setData(res);
-                    setLoading(false);
                 }
-            })
-            .catch((err) => {
-                if (isMounted) {
-                    setError(err);
-                    setLoading(false);
-                }
-            });
+            } catch (err) {
+                if (isMounted) setError(err);
+            } finally {
+                hideLoader();
+            }
+        };
+
+        loadData();
 
         return () => {
             isMounted = false;
         };
-    }, [id, fetchFn]);
+    }, [id, fetchFn, showLoader, hideLoader]);
 
-    const CenteredMessage = ({ children }) => (
-        <div className="flex items-center justify-center min-h-[20vh]">
-            {children}
-        </div>
-    );
-
-    if (loading)
-        return (
-            loader || (
-                <CenteredMessage>
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-600 mr-4"></div>
-                    <p className="text-gray-500 text-lg">Loading...</p>
-                </CenteredMessage>
-            )
-        );
     if (error)
         return (
             errorUI || (
-                <CenteredMessage>
+                <div className="flex items-center justify-center min-h-[20vh]">
                     <p className="text-red-500 text-lg">
                         Error loading resource.
                     </p>
-                </CenteredMessage>
+                </div>
             )
         );
-    if (!data)
-        return (
-            <CenteredMessage>
-                <p className="text-gray-400 text-lg">No data found</p>
-            </CenteredMessage>
-        );
+
+    if (!data) return null;
 
     return children(data);
 };

@@ -39,10 +39,7 @@ export const useContentEditor = (prepareDataFn) => {
         }
 
         const finalData = prepareDataFn(editorJsData, meta);
-        downloadJson(
-            finalData,
-            getContentFileName(finalData.title, finalData.id)
-        );
+        downloadJson(finalData, getContentFileName(finalData.id));
 
         setEditorJsData(null);
         setMetaData(null);

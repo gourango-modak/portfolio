@@ -5,16 +5,17 @@ export const preparePostData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);
     const title = extractTitle(editorJsData);
     const isEditing = Boolean(metaData?.id);
+    const id = isEditing ? metaData.id : generateId();
 
     return {
         ...metaData,
-        id: isEditing ? metaData.id : generateId(),
+        id: id,
         createdAt: isEditing ? metaData.createdAt : Date.now(),
         updatedAt: Date.now(),
         readTime: parseInt(metaData.readTime),
         title: title,
         tags: tags,
-        slug: buildSlug(title),
+        slug: buildSlug(title, id),
         content: editorJsData,
     };
 };

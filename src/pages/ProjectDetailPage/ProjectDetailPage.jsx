@@ -4,6 +4,7 @@ import TableOfContents from "../../components/tableOfContents/TableOfContents";
 import { extractHeadings } from "../../components/editorJs/editorJsUtils";
 import ResourceLoader from "../../components/common/ResourceLoader";
 import ProjectContent from "./ProjectContent";
+import { CONTENT_TYPES } from "../../config";
 
 const ProjectDetailPage = () => {
     const { slug } = useParams();
@@ -11,13 +12,20 @@ const ProjectDetailPage = () => {
     return (
         <section className="pt-30 min-h-screen bg-gray-50/50 pb-24">
             <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                <ResourceLoader id={slug} fetchFn={fetchProjectBySlug}>
+                <ResourceLoader
+                    id={slug}
+                    fetchFn={fetchProjectBySlug}
+                    loadingMessage="Fetching project data..."
+                >
                     {(project) => (
                         <div className="lg:flex lg:gap-12">
                             {/* Left Column: TOC */}
                             <div className="w-64 hidden lg:block">
                                 <TableOfContents
-                                    headings={extractHeadings(project.content)}
+                                    headings={extractHeadings(
+                                        project.content,
+                                        CONTENT_TYPES.PROJECT
+                                    )}
                                 />
                             </div>
 
