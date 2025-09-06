@@ -74,9 +74,9 @@ const TableOfContentItem = ({
                         aria-label={isOpen ? "Collapse" : "Expand"}
                     >
                         <ChevronDown
-                            className={`w-5 h-5 transition-transform duration-200 ${
+                            className={`w-5 h-5 transition-transform duration-200 cursor-pointer ${
                                 isOpen
-                                    ? "rotate-180 text-blue-500"
+                                    ? "rotate-180 text-indigo-500"
                                     : "text-gray-400"
                             }`}
                         />

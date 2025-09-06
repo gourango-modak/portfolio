@@ -59,7 +59,7 @@ export const extractHeadings = (content) => {
             const level = block.data.level;
             if (level === 2 || level === 3) {
                 const heading = {
-                    id: block.data.text.replace(/\s+/g, "-").toLowerCase(),
+                    id: generateHeaderBlockId(block.data.text),
                     text: block.data.text,
                     level,
                     children: [],
@@ -86,10 +86,13 @@ export const extractHeadings = (content) => {
 export const flattenHeadings = (headings, parentMap = {}) => {
     let flat = [];
     headings.forEach((heading) => {
-        flat.push(heading);
+        const parentHeaderId = generateHeaderBlockId(heading.text);
+        flat.push({ ...heading, id: parentHeaderId });
         if (heading.children?.length) {
             heading.children.forEach(
-                (child) => (parentMap[child.id] = heading.id)
+                (child) =>
+                    (parentMap[generateHeaderBlockId(child.text)] =
+                        parentHeaderId)
             );
             const { result: childFlat, parentMap: childMap } = flattenHeadings(
                 heading.children,
@@ -160,10 +163,12 @@ export const generateHeaderBlockId = (text, maxLength = 60) => {
 
     return text
         .trim()
-        .replace(/\s+/g, "-") // replace spaces with dashes
         .toLowerCase()
-        .slice(0, maxLength) // limit length
-        .replace(/-+$/, ""); // remove trailing dashes
+        .replace(/\s+/g, "-") // replace spaces with dashes
+        .replace(/[^a-z0-9-]/g, "") // remove special characters
+        .replace(/-+/g, "-") // collapse multiple dashes
+        .replace(/^-+|-+$/g, "") // remove leading/trailing dashes
+        .slice(0, maxLength); // limit length
 };
 
 export const shouldRenderBlock = (block) =>
