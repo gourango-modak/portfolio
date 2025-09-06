@@ -49,6 +49,8 @@ const generatePostsManifest = () => {
                 tags: p.tags || [],
                 description: p.description,
                 slug: p.slug,
+                createdAt: p.createdAt,
+                id: p.id,
             };
         }),
     };
@@ -82,6 +84,8 @@ const generateProjectsManifest = () => {
                 url: `${PROJECT_FILES_BASE_URL}/${p._fileName}`,
                 description: p.description,
                 slug: p.slug,
+                createdAt: p.createdAt,
+                id: p.id,
             };
         }),
     };
