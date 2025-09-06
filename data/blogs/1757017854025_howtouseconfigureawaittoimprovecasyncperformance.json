@@ -8,7 +8,17 @@
     "C++",
     "CSharp",
     "Python",
-    "Golang"
+    "Golang",
+    "Test1",
+    "Test2",
+    "Test3",
+    "Test4",
+    "Test5",
+    "Test6",
+    "Test7",
+    "Test8",
+    "Test9",
+    "Test10"
   ],
   "description": "Learn how to boost your C# async code performance using ConfigureAwait. This blog explains the concept in simple terms with practical examples for faster, scalable, and deadlock-free applications.",
   "slug": "how-to-use-configureawait-to-improve-c-async-performance",
