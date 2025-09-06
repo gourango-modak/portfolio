@@ -41,8 +41,8 @@ const BlogPage = () => {
                         <SearchInput onSearch={setSearchTerm} />
                         <TagFilter
                             topTags={topTags}
-                            selectedTag={selectedTags}
-                            setSelectedTag={setSelectedTags}
+                            selectedTags={selectedTags}
+                            setSelectedTags={setSelectedTags}
                             allLabel="All Posts"
                         />
                     </div>

@@ -41,8 +41,8 @@ const ProjectsPage = () => {
                         <SearchInput onSearch={setSearchTerm} />
                         <TagFilter
                             topTags={topCategories}
-                            selectedTag={selectedCategories}
-                            setSelectedTag={setSelectedCategories}
+                            selectedTags={selectedCategories}
+                            setSelectedTags={setSelectedCategories}
                             allLabel="All Projects"
                         />
                     </div>

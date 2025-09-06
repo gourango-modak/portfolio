@@ -19,7 +19,6 @@ const getProjectManifest = async () => {
 export const fetchProjects = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getProjectManifest();
     const allProjects = manifest.projects || [];
-    log("Filters", filters);
 
     const { searchTerm = "", selectedCategories = [] } = filters;
 
