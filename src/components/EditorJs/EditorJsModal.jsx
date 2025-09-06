@@ -8,7 +8,6 @@ import { getEditorJsInitialData, getEditorJsTools } from "./editorJsConfig";
 const EditorJsModal = ({
     isOpen,
     onClose,
-    title,
     onSave,
     initialData,
     actionBtnTitle = "Save",
@@ -38,13 +37,11 @@ const EditorJsModal = ({
             <Modal
                 isOpen={isOpen}
                 onClose={onClose}
-                title={title}
                 style={{
                     width: "w-7xl",
                     padding: "px-6 pb-6 pt-12",
                     minHeight: "min-h-[80vh]",
                 }}
-                showHeader={title ? true : false}
                 footer={
                     <>
                         <button

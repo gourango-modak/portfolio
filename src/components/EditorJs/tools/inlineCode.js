@@ -11,8 +11,7 @@ export default class InlineCode {
 
     constructor({ api }) {
         this.api = api;
-        this.class =
-            "bg-[#F2F2F2] text-[#242424] font-mono font-bold px-1 py-0.5 rounded inline-code";
+        this.class = "inline-code";
     }
 
     render() {

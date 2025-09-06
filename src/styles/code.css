@@ -28,17 +28,9 @@ pre[class*="language-"]::-moz-selection,
     color: #1e293b;
 }
 
-/* Inline code font sizes */
 .inline-code {
-    font-size: 0.875rem;
-}
-h1 .inline-code {
-    font-size: 1.25rem;
-}
-h2 .inline-code {
-    font-size: 1.125rem;
-}
-h3 .inline-code,
-h4 .inline-code {
-    font-size: 1rem;
+    background-color: #f2f2f2;
+    color: #242424;
+    font-family: monospace;
+    padding: 2px 6px;
 }

@@ -5,9 +5,8 @@ import { useEditor } from "./hooks/useEditor";
 
 const EditorJs = forwardRef(
     ({ onSave, initialData, tools = EDITOR_JS_TOOLS }, ref) => {
-        const holderRef = useRef(null);
         const editorInstance = useEditor({
-            holder: holderRef.current,
+            holder: "editorjs-container",
             tools: tools,
             initialData: initialData || {},
         });
@@ -30,7 +29,7 @@ const EditorJs = forwardRef(
             },
         }));
 
-        return <div ref={holderRef} className="editorjs pr-15"></div>;
+        return <div id="editorjs-container" className="editorjs pr-15"></div>;
     }
 );
 

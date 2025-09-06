@@ -36,7 +36,9 @@ const BlogPage = () => {
         <>
             <section className="pt-30 pb-20 section-m-h bg-gray-50/50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                    <BlogPageHeader onAddClick={openEditorJsModal} />
+                    <BlogPageHeader
+                        onAddClick={() => openEditorJsModal(null)}
+                    />
                     <div className="mb-12">
                         <SearchInput onSearch={setSearchTerm} />
                         <TagFilter

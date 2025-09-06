@@ -60,8 +60,8 @@ const TableOfContentItem = ({
                     onClick={handleClick}
                     className={`transition-colors duration-200 ${marginClass} ${
                         isActive
-                            ? "text-blue-600 font-semibold"
-                            : "text-gray-500 hover:text-blue-500"
+                            ? "text-indigo-600 font-semibold"
+                            : "text-gray-500 hover:text-indigo-500"
                     }`}
                 >
                     {item.text}

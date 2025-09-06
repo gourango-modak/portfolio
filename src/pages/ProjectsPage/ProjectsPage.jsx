@@ -36,7 +36,7 @@ const ProjectsPage = () => {
         <>
             <section className="pt-30 pb-20 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
-                    <ProjectPageHeader onAdd={openEditorJsModal} />
+                    <ProjectPageHeader onAdd={() => openEditorJsModal(null)} />
                     <div className="mb-12">
                         <SearchInput onSearch={setSearchTerm} />
                         <TagFilter
