@@ -8,21 +8,15 @@ export default function RenderRoute(route) {
             <Route
                 key={route.path}
                 path={route.path}
-                element={<ProtectedRoute />}
-            >
-                {route.children.map((child) => (
-                    <Route
-                        key={child.path}
-                        path={child.path}
-                        element={
-                            <PageWrapper
-                                component={child.component}
-                                layout={child.layout}
-                            />
-                        }
-                    />
-                ))}
-            </Route>
+                element={
+                    <ProtectedRoute>
+                        <PageWrapper
+                            component={route.component}
+                            layout={route.layout}
+                        />
+                    </ProtectedRoute>
+                }
+            />
         );
     }
 
