@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import { useAlertModal } from "../../hooks/useAlertModal";
 import Modal from "../modal/Modal";
 import EditorJs from "./EditorJs";
 import { validateEditorJsModal } from "./editorJsUtils";
 import { getEditorJsInitialData, getEditorJsTools } from "./editorJsConfig";
+import { useAlert } from "../../context/AlertProvider";
 
 const EditorJsModal = ({
     isOpen,
@@ -14,7 +14,7 @@ const EditorJsModal = ({
     contentType,
 }) => {
     const editorRef = useRef(null);
-    const { showAlert, AlertModal } = useAlertModal();
+    const { showAlert } = useAlert();
 
     const handleSaveClick = () => {
         if (editorRef.current) {
@@ -38,7 +38,7 @@ const EditorJsModal = ({
                 isOpen={isOpen}
                 onClose={onClose}
                 style={{
-                    width: "w-7xl",
+                    width: "lg:w-7xl w-full",
                     padding: "px-6 pb-6 pt-12",
                     minHeight: "min-h-[80vh]",
                 }}
@@ -59,16 +59,17 @@ const EditorJsModal = ({
                     </>
                 }
             >
-                <EditorJs
-                    ref={editorRef}
-                    onSave={handleDataAfterSave}
-                    initialData={
-                        initialData || getEditorJsInitialData(contentType)
-                    }
-                    tools={getEditorJsTools(contentType)}
-                />
+                <div className="pr-15">
+                    <EditorJs
+                        ref={editorRef}
+                        onSave={handleDataAfterSave}
+                        initialData={
+                            initialData || getEditorJsInitialData(contentType)
+                        }
+                        tools={getEditorJsTools(contentType)}
+                    />
+                </div>
             </Modal>
-            <AlertModal />
         </>
     );
 };

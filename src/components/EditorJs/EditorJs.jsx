@@ -29,7 +29,7 @@ const EditorJs = forwardRef(
             },
         }));
 
-        return <div id="editorjs-container" className="editorjs pr-15"></div>;
+        return <div id="editorjs-container" className="editorjs"></div>;
     }
 );
 

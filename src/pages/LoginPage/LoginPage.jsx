@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const LoginPage = () => {
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    // Redirect if already logged in
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/admin", { replace: true });
+        }
+    }, [isAuthenticated]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

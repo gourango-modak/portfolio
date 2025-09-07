@@ -3,7 +3,7 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import CenteredLoader from "./components/common/CenteredLoader";
 import { ROUTES } from "./config";
 import RenderRoute from "./components/layout/RenderRoute";
-import AppProviders from "./components/layout/AppProviders";
+import AppProviders from "./context/AppProviders";
 
 const App = () => {
     return (

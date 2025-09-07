@@ -120,6 +120,6 @@ export const ROUTES = [
         path: "/admin/tools/richtexteditor",
         component: RichTextEditorPage,
         layout: false,
-        protected: true,
+        protected: false,
     },
 ];

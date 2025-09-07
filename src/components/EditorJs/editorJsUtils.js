@@ -160,7 +160,18 @@ export const validateEditorJsModal = (contentType, editorData, showAlert) => {
 
     // Display all errors if showAlert is provided
     if (showAlert && errors.length > 0) {
-        showAlert(errors.join("\n"));
+        showAlert(errors.join("\n"), {
+            title: "Warning",
+            type: "warning",
+            // buttons: [
+            //     { label: "Cancel", type: "secondary" },
+            //     {
+            //         label: "Delete",
+            //         type: "primary",
+            //         onClick: () => console.log("Deleted!"),
+            //     },
+            // ],
+        });
     }
 
     return errors.length === 0; // valid if no errors
