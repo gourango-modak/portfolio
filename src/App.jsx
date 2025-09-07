@@ -1,35 +1,19 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import { LoaderProvider } from "./context/LoaderContext";
 import ScrollToTop from "./components/common/ScrollToTop";
 import CenteredLoader from "./components/common/CenteredLoader";
 import { ROUTES } from "./config";
-import PageWrapper from "./components/layout/PageWrapper";
+import RenderRoute from "./components/layout/RenderRoute";
+import AppProviders from "./components/layout/AppProviders";
 
 const App = () => {
     return (
-        <AuthProvider>
-            <LoaderProvider>
-                <HashRouter>
-                    <ScrollToTop />
-                    <Routes>
-                        {ROUTES.map(({ path, component, layout }) => (
-                            <Route
-                                key={path}
-                                path={path}
-                                element={
-                                    <PageWrapper
-                                        component={component}
-                                        layout={layout}
-                                    />
-                                }
-                            />
-                        ))}
-                    </Routes>
-                </HashRouter>
-                <CenteredLoader />
-            </LoaderProvider>
-        </AuthProvider>
+        <AppProviders>
+            <HashRouter>
+                <ScrollToTop />
+                <Routes>{ROUTES.map((route) => RenderRoute(route))}</Routes>
+            </HashRouter>
+            <CenteredLoader />
+        </AppProviders>
     );
 };
 

@@ -102,4 +102,10 @@ export const ROUTES = [
     { path: "/contact", component: ContactPage, layout: true },
     { path: "/login", component: LoginPage, layout: false },
     { path: "/test", component: TestPage, layout: false },
+    // Protected routes
+    {
+        path: "/admin",
+        protected: true,
+        children: [{ path: "", component: null, layout: true }],
+    },
 ];
