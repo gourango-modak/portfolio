@@ -1,3 +1,13 @@
+import HomePage from "./pages/HomePage/HomePage";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import BlogPage from "./pages/BlogPage/BlogPage";
+import PostDetailPage from "./pages/PostDetailPage/PostDetailPage";
+import ProjectsPage from "./pages/ProjectsPage/ProjectsPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage/ProjectDetailPage";
+import ContactPage from "./pages/ContactPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import TestPage from "./pages/TestPage";
+
 // Limits
 export const BREADCRUMB_MAX_LENGTH = 18;
 export const CARD_DESCRIPTION_MAX_LENGTH = 200;
@@ -80,4 +90,16 @@ export const SKILLS = [
             "Branching & Merging Strategies",
         ],
     },
+];
+
+export const ROUTES = [
+    { path: "/", component: HomePage, layout: true },
+    { path: "/about", component: AboutPage, layout: true },
+    { path: "/blog", component: BlogPage, layout: true },
+    { path: "/blog/:slug", component: PostDetailPage, layout: true },
+    { path: "/projects", component: ProjectsPage, layout: true },
+    { path: "/projects/:slug", component: ProjectDetailPage, layout: true },
+    { path: "/contact", component: ContactPage, layout: true },
+    { path: "/login", component: LoginPage, layout: false },
+    { path: "/test", component: TestPage, layout: false },
 ];
