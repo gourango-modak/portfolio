@@ -10,12 +10,7 @@ import {
     LogOut,
 } from "lucide-react";
 
-const Sidebar = ({
-    currentPage,
-    setCurrentPage,
-    sidebarOpen,
-    setSidebarOpen,
-}) => {
+const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
     const navItems = [
         {
             page: "dashboard",
@@ -88,7 +83,7 @@ const Sidebar = ({
                         <button
                             key={item.page}
                             onClick={() => {
-                                setCurrentPage(item.page);
+                                onNavigate(item.page);
                                 setSidebarOpen(false);
                             }}
                             className={`flex items-center w-full p-3 rounded-lg text-left transition-colors duration-200 cursor-pointer

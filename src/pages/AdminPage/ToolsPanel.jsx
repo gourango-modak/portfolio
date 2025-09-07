@@ -13,7 +13,7 @@ const ToolCard = ({ title, description, icon, onClick }) => (
             <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
         </div>
         <p className="text-gray-600 flex-1">{description}</p>
-        <button className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+        <button className="mt-6 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition cursor-pointer">
             Open {title}
         </button>
     </div>

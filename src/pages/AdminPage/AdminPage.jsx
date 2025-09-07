@@ -3,10 +3,18 @@ import Sidebar from "./Sidebar";
 import DashboardPanel from "./DashboardPanel";
 import BlogsPanel from "./BlogsPanel";
 import ToolsPanel from "./ToolsPanel";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AdminPage = () => {
-    const [currentPage, setCurrentPage] = useState("dashboard");
+    const { page } = useParams();
+    const navigate = useNavigate();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const currentPage = page || "dashboard";
+
+    const handleNav = (newPage) => {
+        navigate(`/admin/${newPage}`);
+    };
 
     const renderContent = () => {
         switch (currentPage) {
@@ -30,7 +38,7 @@ const AdminPage = () => {
             {/* Sidebar */}
             <Sidebar
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                onNavigate={handleNav}
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
             />

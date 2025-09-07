@@ -105,6 +105,12 @@ export const ROUTES = [
     { path: "/login", component: LoginPage, layout: false },
     { path: "/admin", component: AdminPage, layout: false, protected: false },
     {
+        path: "/admin/:page",
+        component: AdminPage,
+        layout: false,
+        protected: false,
+    },
+    {
         path: "/admin/tools/drawing",
         component: DrawingToolPage,
         layout: false,
