@@ -1,12 +1,7 @@
-import { ToolbarProvider } from "../../components/svgEditor/context/ToolbarContext";
-import SVGDraw from "../../components/svgEditor/SVGDraw";
+import { DrawingEnvironment } from "../../components/vectra/DrawingEnvironment";
 
 const DrawingToolPage = () => {
-    return (
-        <ToolbarProvider>
-            <SVGDraw />
-        </ToolbarProvider>
-    );
+    return <DrawingEnvironment />;
 };
 
 export default DrawingToolPage;
