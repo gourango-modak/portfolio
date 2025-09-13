@@ -6,6 +6,7 @@ export class TextShape extends BaseShape {
         this.text = "";
         this.position = null;
         this.type = "text";
+        this.page = this.settings.page;
     }
 
     defaultSettings() {
@@ -54,6 +55,7 @@ export class TextShape extends BaseShape {
             settings: this.settings,
             position: this.position,
             text: this.text,
+            page: this.page,
         };
     }
 

@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo } from "react";
 import { useToolManager } from "./useToolManager";
 import { useShapeManager } from "./useShapeManager";
 import { useToolbar } from "./useToolbar";
-import { useCanvas } from "./useCanvas";
+import { useCanvasManager } from "./useCanvasManager";
 
 const DrawingStoreContext = createContext(null);
 
@@ -10,7 +10,7 @@ export const DrawingStoreProvider = ({ children }) => {
     const toolManager = useToolManager();
     const shapeManager = useShapeManager();
     const toolbar = useToolbar();
-    const canvas = useCanvas();
+    const canvasManager = useCanvasManager();
 
     // --- Serialization helpers ---
     const serialize = () => {
@@ -19,7 +19,7 @@ export const DrawingStoreProvider = ({ children }) => {
                 selectedTool: toolManager.selectedTool,
                 toolbarSettings: toolbar.toolbarSettings,
                 toolsSettings: toolManager.toolsSettings,
-                canvasSettings: canvas.canvasSettings,
+                canvasSettings: canvasManager.canvasSettings,
                 shapes: shapeManager.shapes.map((shape) => shape.serialize()),
             },
             null,
@@ -38,7 +38,7 @@ export const DrawingStoreProvider = ({ children }) => {
             if (parsed.toolsSettings)
                 toolManager.setToolsSettings(parsed.toolsSettings);
             if (parsed.canvasSettings)
-                canvas.setCanvasSettings(parsed.canvasSettings);
+                canvasManager.setCanvasSettings(parsed.canvasSettings);
 
             if (parsed.shapes) {
                 const restoredShapes = parsed.shapes
@@ -63,7 +63,7 @@ export const DrawingStoreProvider = ({ children }) => {
             ...toolManager,
             ...shapeManager,
             ...toolbar,
-            ...canvas,
+            ...canvasManager,
             serialize,
             deserialize,
         }),
@@ -75,7 +75,7 @@ export const DrawingStoreProvider = ({ children }) => {
             shapeManager.currentShape,
             shapeManager.currentShapeVersion,
             toolbar.toolbarSettings,
-            canvas.canvasSettings,
+            canvasManager.canvasSettings,
         ]
     );
 

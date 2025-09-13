@@ -2,6 +2,7 @@ export class BaseShape {
     constructor(userSettings = {}) {
         // Merge default settings with user settings
         this.settings = { ...this.defaultSettings(), ...userSettings };
+        this.page = 1;
     }
 
     // Default settings for shape (can be overridden)

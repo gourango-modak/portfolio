@@ -20,6 +20,7 @@ export const useToolManager = () => {
         selectedTool,
         setSelectedTool,
         toolsSettings,
+        setToolsSettings,
         updateToolSetting,
         toolRegistry,
         registerTool,

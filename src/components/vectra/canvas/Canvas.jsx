@@ -64,7 +64,7 @@ export const Canvas = () => {
                     position: "fixed",
                     top: 0,
                     left: 0,
-                    backgroundColor: "#fff",
+                    backgroundColor: canvasSettings.infiniteBg,
                     touchAction: "none",
                     userSelect: "none",
                 }}

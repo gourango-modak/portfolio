@@ -7,6 +7,7 @@ export class LineShape extends BaseShape {
         this.start = { x: 0, y: 0 };
         this.end = { x: 0, y: 0 };
         this.type = "line";
+        this.page = this.settings.page;
     }
 
     defaultSettings() {
@@ -43,6 +44,7 @@ export class LineShape extends BaseShape {
             settings: this.settings,
             start: this.start,
             end: this.end,
+            page: this.page,
         };
     }
 

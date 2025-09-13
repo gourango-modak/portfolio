@@ -5,6 +5,7 @@ export class ArrowShape extends LineShape {
     constructor(userSettings) {
         super(userSettings);
         this.type = "arrow";
+        this.page = this.settings.page;
     }
 
     defaultSettings() {
@@ -71,6 +72,7 @@ export class ArrowShape extends LineShape {
             settings: this.settings,
             start: this.start,
             end: this.end,
+            page: this.page,
         };
     }
 

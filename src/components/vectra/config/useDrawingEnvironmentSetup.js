@@ -13,9 +13,11 @@ import { ScaleTool } from "../tools/ScaleTool";
 import { PanTool } from "../tools/PanTool";
 
 export const useDrawingEnvironmentSetup = () => {
-    const { registerTool, registerShape } = useDrawingStore();
+    const { registerTool, registerShape, setMode } = useDrawingStore();
 
     useEffect(() => {
+        setMode("multi-artboard");
+
         // Register tools
         registerTool("pen", new PenTool());
         registerTool("line", new LineTool());

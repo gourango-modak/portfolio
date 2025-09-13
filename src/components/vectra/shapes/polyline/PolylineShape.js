@@ -10,6 +10,7 @@ export class PolylineShape extends BaseShape {
         super(userSettings);
         this.points = [];
         this.type = "polyline";
+        this.page = this.settings.page;
     }
 
     defaultSettings() {
@@ -80,6 +81,7 @@ export class PolylineShape extends BaseShape {
             type: this.type,
             settings: this.settings,
             points: this.points,
+            page: this.page,
         };
     }
 
