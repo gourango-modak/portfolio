@@ -12,10 +12,12 @@ import { TextShape } from "../shapes/text/TextShape";
 import { PanTool } from "../tools/PanTool";
 
 export const useDrawingEnvironmentSetup = () => {
-    const { registerTool, registerShape, setMode } = useDrawingStore();
+    const { registerTool, registerShape, setMode, setSelectedTool } =
+        useDrawingStore();
 
     useEffect(() => {
         setMode("infinite");
+        setSelectedTool("text");
 
         // Register tools
         registerTool("pen", new PenTool());

@@ -54,7 +54,6 @@ export class TextTool extends BaseTool {
         this.currentShape = null;
         // Reset state
         this.editState = "idle";
-        debugger;
 
         if (finished.text != "") {
             return { type: "finalizedShape", shape: finished };
