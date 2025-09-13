@@ -12,7 +12,7 @@ export class EraserTool extends BaseTool {
         };
     }
 
-    onPointerDown(event, shapes) {
+    onPointerDown(event) {
         return {
             type: "erase",
             point: { x: event.x, y: event.y },
@@ -20,7 +20,7 @@ export class EraserTool extends BaseTool {
         };
     }
 
-    onPointerMove(event, shapes) {
+    onPointerMove(event) {
         // Only draw if left button is pressed
         if (event.buttons & 1) {
             return {
@@ -29,10 +29,6 @@ export class EraserTool extends BaseTool {
                 radius: this.settings.radius,
             };
         }
-    }
-
-    onPointerUp() {
-        return null;
     }
 
     getIcon() {

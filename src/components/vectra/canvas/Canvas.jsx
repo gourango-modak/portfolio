@@ -2,9 +2,10 @@ import { useRef, useEffect } from "react";
 import { useDrawingStore } from "../store/DrawingStoreContext";
 import { useDrawingEnvironmentSetup } from "../config/useDrawingEnvironmentSetup";
 import { TextInputOverlay } from "./TextInputOverlay";
-import { useToolShortcuts } from "../tools/useToolShortcuts";
 import { useCanvasEvents } from "./useCanvasEvents";
 import { useRenderShapes } from "./useRenderShapes";
+import { useCanvasZoomPan } from "./useCanvasZoomPan";
+import { useToolShortcuts } from "./../tools/useToolShortcuts";
 
 export const Canvas = () => {
     const {
@@ -41,9 +42,14 @@ export const Canvas = () => {
         canvasSettings,
     };
 
-    // Tool event handlers
-    const { onPointerDown, onPointerMove, onPointerUp, onWheel } =
-        useCanvasEvents(svgRef, selectedTool, toolRegistry, context);
+    // Canvas event handlers
+    const {
+        onPointerDown,
+        onPointerMove,
+        onPointerUp,
+        getTransformedMouseEvent,
+        processEvent,
+    } = useCanvasEvents(svgRef, selectedTool, toolRegistry, context);
 
     // Render shapes
     useRenderShapes(
@@ -52,6 +58,13 @@ export const Canvas = () => {
         currentShape,
         currentShapeVersion,
         canvasSettings
+    );
+
+    useCanvasZoomPan(
+        svgRef,
+        canvasSettings,
+        getTransformedMouseEvent,
+        processEvent
     );
 
     return (
@@ -68,18 +81,18 @@ export const Canvas = () => {
                     touchAction: "none",
                     userSelect: "none",
                 }}
-                onPointerDown={(e) => onPointerDown(e, canvasSettings)}
-                onPointerMove={(e) => onPointerMove(e, canvasSettings)}
+                onPointerDown={(e) => onPointerDown(e)}
+                onPointerMove={(e) => onPointerMove(e)}
                 onPointerUp={onPointerUp}
-                onWheel={(e) => onWheel(e, canvasSettings)}
             />
-
-            <TextInputOverlay
-                currentShape={currentShape}
-                processToolEvent={context.processToolEvent}
-                toolRegistry={toolRegistry}
-                selectedTool={selectedTool}
-            />
+            {selectedTool === "text" && (
+                <TextInputOverlay
+                    currentShape={currentShape}
+                    processEvent={processEvent}
+                    toolRegistry={toolRegistry}
+                    selectedTool={selectedTool}
+                />
+            )}
         </>
     );
 };

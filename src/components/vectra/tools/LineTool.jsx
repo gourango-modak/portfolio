@@ -11,22 +11,20 @@ export class LineTool extends BaseTool {
         return { color: "#000", strokeWidth: 2, minLength: 20 };
     }
 
-    onPointerDown(event) {
+    onPointerDown(event, { canvasSettings }) {
         const point = { x: event.x, y: event.y };
         this.currentShape = new LineShape({
             color: this.settings.color,
             strokeWidth: this.settings.strokeWidth,
             minLength: this.settings.minLength,
+            page: canvasSettings.artboard.currentPageIndex,
         });
 
-        this.currentShape.setPoints(point, point); // start = end initially
-        // Emit event only if valid
-        if (this.currentShape.isValid()) {
-            return { type: "drawStart", shape: this.currentShape };
-        }
+        this.currentShape.setPoints(point, point);
 
-        // Emit special event
-        return { type: "invalidShape", shape: this.currentShape };
+        if (this.currentShape.isValid()) {
+            return { type: "createdShape", shape: this.currentShape };
+        }
     }
 
     onPointerMove(event) {
@@ -36,10 +34,9 @@ export class LineTool extends BaseTool {
             this.currentShape.setPoints(this.currentShape.start, point);
 
             if (this.currentShape.isValid()) {
-                return { type: "drawProgress", shape: this.currentShape };
+                return { type: "updatedShape", shape: this.currentShape };
             }
         }
-        return { type: "invalidShape", shape: this.currentShape };
     }
 
     onPointerUp() {
@@ -47,10 +44,8 @@ export class LineTool extends BaseTool {
         this.currentShape = null;
 
         if (shape?.isValid()) {
-            return { type: "drawEnd", shape: shape };
+            return { type: "finalizedShape", shape: shape };
         }
-
-        return { type: "invalidShape", shape: shape };
     }
 
     getIcon() {

@@ -21,7 +21,7 @@ export const useCanvasManager = () => {
         artboard: {
             ...defaultArtboardTemplate,
             spacing: 40,
-            orientation: "vertical",
+            orientation: "horizontal", // "vertical" | "horizontal"
             preload: 1,
             pages: [
                 { id: 1, ...defaultArtboardTemplate }, // always at least one artboard
@@ -30,7 +30,7 @@ export const useCanvasManager = () => {
         },
     }));
 
-    /** Create a new page with optional settings */
+    /** Create a new page with optional settings and move to it */
     const createPage = (settings = {}) => {
         setCanvasSettings((prev) => {
             const newPage = {
@@ -41,11 +41,16 @@ export const useCanvasManager = () => {
                 border: settings.border ?? prev.artboard.border,
                 customStyle: settings.customStyle ?? {},
             };
+
+            const updatedPages = [...prev.artboard.pages, newPage];
+            const newPageIndex = updatedPages.length - 1;
+
             return {
                 ...prev,
                 artboard: {
                     ...prev.artboard,
-                    pages: [...prev.artboard.pages, newPage],
+                    pages: updatedPages,
+                    currentPageIndex: newPageIndex, // switch to the new page
                 },
             };
         });
@@ -77,7 +82,7 @@ export const useCanvasManager = () => {
             ) {
                 pages = [{ id: 1, ...defaultArtboardTemplate }];
             }
-            debugger;
+
             const currentPage =
                 pages[prev.artboard.currentPageIndex] || pages[0];
             const pan = [
@@ -118,13 +123,12 @@ export const useCanvasManager = () => {
     };
 
     /** Navigate to a specific page index, center it in viewport */
-    const goToPage = (index, viewportWidth = 800, viewportHeight = 600) => {
+    const goToPage = (index) => {
         const page = canvasSettings.artboard.pages[index];
         if (!page) return;
 
         setCanvasSettings((prev) => ({
             ...prev,
-            pan: getCenteredPan(page, viewportWidth, viewportHeight),
             artboard: {
                 ...prev.artboard,
                 currentPageIndex: index,
@@ -132,19 +136,24 @@ export const useCanvasManager = () => {
         }));
     };
 
-    /** Go to next page */
-    const nextPage = (viewportWidth = 800, viewportHeight = 600) => {
-        const current = canvasSettings.artboard.currentPageIndex;
-        if (current < canvasSettings.artboard.pages.length - 1) {
-            goToPage(current + 1, viewportWidth, viewportHeight);
+    /** Go to next page (create a new one if it doesn't exist) */
+    const nextPage = () => {
+        const currentIndex = canvasSettings.artboard.currentPageIndex;
+        const totalPages = canvasSettings.artboard.pages.length;
+
+        if (currentIndex < totalPages - 1) {
+            // Go to the next existing page
+            goToPage(currentIndex + 1);
+        } else {
+            createPage();
         }
     };
 
     /** Go to previous page */
-    const prevPage = (viewportWidth = 800, viewportHeight = 600) => {
+    const prevPage = () => {
         const current = canvasSettings.artboard.currentPageIndex;
         if (current > 0) {
-            goToPage(current - 1, viewportWidth, viewportHeight);
+            goToPage(current - 1);
         }
     };
 

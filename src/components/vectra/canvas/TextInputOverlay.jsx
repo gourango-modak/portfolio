@@ -4,7 +4,7 @@ export const TextInputOverlay = ({
     currentShape,
     selectedTool,
     toolRegistry,
-    processToolEvent,
+    processEvent,
 }) => {
     const inputRef = useRef(null);
     const [text, setText] = useState(currentShape?.text || "");
@@ -23,14 +23,11 @@ export const TextInputOverlay = ({
         }, 0);
     }, [currentShape]);
 
-    if (!currentShape || currentShape.type != "text") return null;
+    if (!currentShape) return;
 
     const finalizeText = () => {
-        if (!currentShape) return;
-        if (text != "") {
-            processToolEvent(toolRegistry[selectedTool].finalizeText(text));
-            setText("");
-        }
+        processEvent(toolRegistry[selectedTool].finalizeText(text));
+        setText("");
     };
 
     const handleChange = (e) => {
@@ -60,13 +57,15 @@ export const TextInputOverlay = ({
             style={{
                 position: "absolute",
                 top: `${
-                    currentShape.position.y - currentShape.settings.fontSize - 1
+                    currentShape.position.ly -
+                    currentShape.settings.fontSize -
+                    1
                 }px`,
-                left: currentShape.position.x,
+                left: currentShape.position.lx,
                 fontSize: currentShape.settings.fontSize,
                 fontFamily: currentShape.settings.fontFamily,
                 color: currentShape.settings.color,
-                border: "0px",
+                border: "1px solid black",
                 outline: "none",
                 padding: "0px",
                 background: "white",

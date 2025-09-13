@@ -13,8 +13,8 @@ export class TextShape extends BaseShape {
         return { color: "#000", fontSize: 16, fontFamily: "Arial" };
     }
 
-    setPosition({ x, y }) {
-        this.position = { x, y };
+    setPosition(position) {
+        this.position = { ...position };
     }
 
     setText(text) {

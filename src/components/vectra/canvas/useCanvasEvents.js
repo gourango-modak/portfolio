@@ -1,4 +1,4 @@
-import { toolEventHandlers } from "./../tools/ToolEventHandlers";
+import { EventHandlers } from "./EventHandlers";
 
 export const useCanvasEvents = (
     svgRef,
@@ -6,6 +6,7 @@ export const useCanvasEvents = (
     toolRegistry,
     context
 ) => {
+    const { canvasSettings } = context;
     const getMouseEvent = (e) => {
         const svg = svgRef.current;
         const pt = svg.createSVGPoint();
@@ -18,12 +19,12 @@ export const useCanvasEvents = (
             buttons: e.buttons,
             pressure: e.pressure,
             deltaY: e.deltaY,
+            shiftKey: e.shiftKey,
         };
     };
 
-    const getTransformedMouseEvent = (e, canvasSettings) => {
+    const transformedMouseEvent = (event) => {
         const { scale, pan } = canvasSettings;
-        const event = getMouseEvent(e);
         return {
             ...event,
             x: (event.x - pan.x) / scale,
@@ -33,40 +34,34 @@ export const useCanvasEvents = (
         };
     };
 
-    const processToolEvent = (toolEvent) => {
-        if (!toolEvent) return;
-        const handler = toolEventHandlers[toolEvent.type];
-        if (handler) handler(toolEvent, context);
+    const getTransformedMouseEvent = (e) => {
+        return transformedMouseEvent(getMouseEvent(e));
+    };
+
+    const processEvent = (event) => {
+        if (!event) return;
+        const handler = EventHandlers[event.type];
+        if (handler) handler(event, context);
     };
 
     const handlers = {
-        onPointerDown: (e, canvasSettings) =>
-            processToolEvent(
+        onPointerDown: (e) =>
+            processEvent(
                 toolRegistry[selectedTool]?.onPointerDown(
-                    getTransformedMouseEvent(e, canvasSettings),
+                    getTransformedMouseEvent(e),
                     context
                 )
             ),
-        onPointerMove: (e, canvasSettings) =>
-            processToolEvent(
+        onPointerMove: (e) =>
+            processEvent(
                 toolRegistry[selectedTool]?.onPointerMove(
-                    getTransformedMouseEvent(e, canvasSettings),
+                    getTransformedMouseEvent(e),
                     context
                 )
             ),
         onPointerUp: () =>
-            processToolEvent(
-                toolRegistry[selectedTool]?.onPointerUp(),
-                context
-            ),
-        onWheel: (e, canvasSettings) =>
-            processToolEvent(
-                toolRegistry[selectedTool]?.onWheel?.(
-                    getTransformedMouseEvent(e, canvasSettings),
-                    context
-                )
-            ),
+            processEvent(toolRegistry[selectedTool]?.onPointerUp(), context),
     };
 
-    return handlers;
+    return { ...handlers, getTransformedMouseEvent, processEvent };
 };

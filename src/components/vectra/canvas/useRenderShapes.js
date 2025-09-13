@@ -1,5 +1,72 @@
 import { useEffect } from "react";
 
+const createPageRect = (page, x = 0, y = 0) => {
+    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rect.setAttribute("x", x);
+    rect.setAttribute("y", y);
+    rect.setAttribute("width", page.width);
+    rect.setAttribute("height", page.height);
+    rect.setAttribute("fill", page.bg || "#fff");
+    rect.setAttribute("stroke", page.border || "#ddd");
+    return rect;
+};
+
+const drawSingleArtboard = (g, artboard) => {
+    const page = artboard.pages?.[0] || artboard;
+    g.appendChild(createPageRect(page));
+};
+
+const drawMultiArtboard = (g, artboard) => {
+    artboard.pages.forEach((page, i) => {
+        let offsetX = 0;
+        let offsetY = 0;
+
+        if (artboard.orientation === "vertical") {
+            offsetY = i * (page.height + artboard.spacing);
+        } else if (artboard.orientation === "horizontal") {
+            offsetX = i * (page.width + artboard.spacing);
+        }
+
+        g.appendChild(createPageRect(page, offsetX, offsetY));
+    });
+};
+
+const drawPagedArtboard = (g, artboard) => {
+    const startPage = Math.max(0, artboard.currentPageIndex - artboard.preload);
+    const endPage = Math.min(
+        artboard.pages.length - 1,
+        artboard.currentPageIndex + artboard.preload
+    );
+
+    for (let i = startPage; i <= endPage; i++) {
+        const page = artboard.pages[i];
+        g.appendChild(createPageRect(page)); // no stacking offset
+    }
+};
+
+const drawShapes = (g, shapes, currentShape, canvasSettings) => {
+    const { mode, artboard } = canvasSettings;
+
+    shapes.forEach((s) => {
+        if (s.page != null) {
+            if (mode === "multi-artboard" && s.page < artboard.pages.length) {
+                s.draw(g, true);
+            } else if (
+                mode === "paged-artboard" &&
+                s.page === artboard.currentPageIndex
+            ) {
+                s.draw(g, true);
+            } else {
+                s.draw(g, true);
+            }
+        } else {
+            s.draw(g, true);
+        }
+    });
+
+    if (currentShape) currentShape.draw(g);
+};
+
 export const useRenderShapes = (
     svgRef,
     shapes,
@@ -22,88 +89,23 @@ export const useRenderShapes = (
             `translate(${pan.x}, ${pan.y}) scale(${scale})`
         );
 
-        // ----------------- Single Artboard -----------------
-        if (mode === "single-artboard") {
-            const page = artboard.pages[0] || artboard;
-            const rect = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "rect"
-            );
-            rect.setAttribute("x", 0);
-            rect.setAttribute("y", 0);
-            rect.setAttribute("width", page.width);
-            rect.setAttribute("height", page.height);
-            rect.setAttribute("fill", page.bg || "#fff");
-            rect.setAttribute("stroke", page.border || "#ddd");
-            g.appendChild(rect);
+        // Draw artboards based on mode
+        switch (mode) {
+            case "single-artboard":
+                drawSingleArtboard(g, artboard);
+                break;
+            case "multi-artboard":
+                drawMultiArtboard(g, artboard);
+                break;
+            case "paged-artboard":
+                drawPagedArtboard(g, artboard);
+                break;
+            default:
+                break;
         }
 
-        // ----------------- Multi Artboard -----------------
-        if (mode === "multi-artboard") {
-            artboard.pages.forEach((page, i) => {
-                const rect = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "rect"
-                );
-
-                const offset = i * (page.height + artboard.spacing);
-                rect.setAttribute("x", 0);
-                rect.setAttribute("y", offset);
-                rect.setAttribute("width", page.width);
-                rect.setAttribute("height", page.height);
-                rect.setAttribute("fill", page.bg || "#fff");
-                rect.setAttribute("stroke", page.border || "#ddd");
-                g.appendChild(rect);
-            });
-        }
-
-        // ----------------- Paged Artboard -----------------
-        if (mode === "paged-artboard") {
-            const startPage = Math.max(
-                0,
-                artboard.currentPageIndex - artboard.preload
-            );
-            const endPage = Math.min(
-                artboard.pages.length - 1,
-                artboard.currentPageIndex + artboard.preload
-            );
-
-            for (let i = startPage; i <= endPage; i++) {
-                const page = artboard.pages[i];
-                const rect = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "rect"
-                );
-                rect.setAttribute("x", 0);
-                rect.setAttribute("y", 0); // no stacking offset
-                rect.setAttribute("width", page.width);
-                rect.setAttribute("height", page.height);
-                rect.setAttribute("fill", page.bg || "#fff");
-                rect.setAttribute("stroke", page.border || "#ddd");
-                g.appendChild(rect);
-            }
-        }
-
-        // ----------------- Draw Shapes -----------------
-        shapes.forEach((s) => {
-            // For paged/multi-artboard, draw only shapes for visible pages
-            if (s.page != null) {
-                if (
-                    (mode === "multi-artboard" &&
-                        s.page < artboard.pages.length) ||
-                    (mode === "paged-artboard" &&
-                        s.page >= startPage &&
-                        s.page <= endPage)
-                ) {
-                    s.draw(g, true);
-                }
-            } else {
-                // shapes without page info are drawn in all modes
-                s.draw(g, true);
-            }
-        });
-
-        if (currentShape) currentShape.draw(g);
+        // Draw shapes on top
+        drawShapes(g, shapes, currentShape, canvasSettings);
 
         svg.appendChild(g);
     }, [shapes, currentShape, currentShapeVersion, canvasSettings]);

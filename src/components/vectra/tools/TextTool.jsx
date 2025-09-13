@@ -18,14 +18,14 @@ export class TextTool extends BaseTool {
     }
 
     // On pointer down, create a new TextShape at the click position
-    onPointerDown(event) {
-        debugger;
+    onPointerDown(event, { canvasSettings }) {
         // Only block clicks if actually editing (not pending)
         if (this.editState === "editing") return null;
 
-        const point = { x: event.x, y: event.y };
+        const point = { x: event.x, y: event.y, lx: event.lx, ly: event.ly };
         this.currentShape = new TextShape({
             ...this.settings,
+            page: canvasSettings.artboard.currentPageIndex,
         });
 
         this.currentShape.setPosition(point);
@@ -33,7 +33,7 @@ export class TextTool extends BaseTool {
         this.editState = "pending";
 
         // Return a createShape event so Canvas can track currentShape
-        return { type: "drawStart", shape: this.currentShape };
+        return { type: "createdShape", shape: this.currentShape };
     }
 
     setText(text) {
@@ -54,12 +54,13 @@ export class TextTool extends BaseTool {
         this.currentShape = null;
         // Reset state
         this.editState = "idle";
+        debugger;
 
         if (finished.text != "") {
-            return { type: "drawEnd", shape: finished };
+            return { type: "finalizedShape", shape: finished };
+        } else {
+            return { type: "resetCurrentShape" };
         }
-
-        return { type: "invalidShape", shape: finished };
     }
 
     getIcon() {

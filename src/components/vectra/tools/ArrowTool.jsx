@@ -19,22 +19,19 @@ export class ArrowTool extends BaseTool {
         };
     }
 
-    onPointerDown(event) {
+    onPointerDown(event, { canvasSettings }) {
         this.currentShape = new ArrowShape({
             color: this.settings.color,
             strokeWidth: this.settings.strokeWidth,
             arrowHeadSize: this.settings.arrowHeadSize,
             minLength: this.settings.minLength,
+            page: canvasSettings.artboard.currentPageIndex,
         });
         this.currentShape.setPoints(event, event); // start = end initially
 
-        // Emit event only if valid
         if (this.currentShape.isValid()) {
-            return { type: "drawStart", shape: this.currentShape };
+            return { type: "createdShape", shape: this.currentShape };
         }
-
-        // Emit special event
-        return { type: "invalidShape", shape: this.currentShape };
     }
 
     onPointerMove(event) {
@@ -42,11 +39,9 @@ export class ArrowTool extends BaseTool {
             this.currentShape.setPoints(this.currentShape.start, event);
 
             if (this.currentShape.isValid()) {
-                return { type: "drawProgress", shape: this.currentShape };
+                return { type: "updatedShape", shape: this.currentShape };
             }
         }
-
-        return { type: "invalidShape", shape: this.currentShape };
     }
 
     onPointerUp() {
@@ -54,10 +49,8 @@ export class ArrowTool extends BaseTool {
         this.currentShape = null;
 
         if (shape?.isValid()) {
-            return { type: "drawEnd", shape: shape };
+            return { type: "finalizedShape", shape: shape };
         }
-
-        return { type: "invalidShape", shape: shape };
     }
 
     getIcon() {

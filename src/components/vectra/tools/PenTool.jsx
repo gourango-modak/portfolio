@@ -18,23 +18,20 @@ export class PenTool extends BaseTool {
         };
     }
 
-    onPointerDown(event) {
+    onPointerDown(event, { canvasSettings }) {
         // create a new polyline shape
         this.currentShape = new PolylineShape({
             color: this.settings.color,
             minPoints: this.settings.minPoints,
             strokeWidth: this.settings.strokeWidth,
+            page: canvasSettings.artboard.currentPageIndex,
         });
         // start with the first point
         this.currentShape.addPoint(event);
 
-        // Emit event only if valid
         if (this.currentShape.isValid()) {
-            return { type: "drawStart", shape: this.currentShape };
+            return { type: "createdShape", shape: this.currentShape };
         }
-
-        // Emit special event
-        return { type: "invalidShape", shape: this.currentShape };
     }
 
     onPointerMove(event) {
@@ -43,10 +40,9 @@ export class PenTool extends BaseTool {
             this.currentShape.addPoint(event);
 
             if (this.currentShape.isValid()) {
-                return { type: "drawProgress", shape: this.currentShape };
+                return { type: "updatedShape", shape: this.currentShape };
             }
         }
-        return { type: "invalidShape", shape: this.currentShape };
     }
 
     onPointerUp() {
@@ -55,10 +51,8 @@ export class PenTool extends BaseTool {
 
         if (shape?.isValid()) {
             shape.finalize();
-            return { type: "drawEnd", shape: shape };
+            return { type: "finalizedShape", shape: shape };
         }
-
-        return { type: "invalidShape", shape: shape };
     }
 
     getIcon() {

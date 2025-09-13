@@ -3,8 +3,14 @@ import { ToolbarItem } from "./ToolbarItem";
 import { useDrawingStore } from "../store/DrawingStoreContext";
 
 export const useToolbarItems = () => {
-    const { toolRegistry, setSelectedTool, serialize, deserialize } =
-        useDrawingStore();
+    const {
+        toolRegistry,
+        setSelectedTool,
+        serialize,
+        deserialize,
+        nextPage,
+        prevPage,
+    } = useDrawingStore();
 
     const handleSave = () => {
         const jsonString = serialize();
@@ -104,18 +110,28 @@ export const useToolbarItems = () => {
             })
         );
 
-        // Dropdown example
         items.push(
             new ToolbarItem({
-                key: "colorDropdown",
-                type: "dropdown",
-                tooltip: "Select Color",
-                options: [
-                    { value: "red", label: "Red" },
-                    { value: "green", label: "Green" },
-                    { value: "blue", label: "Blue" },
-                ],
-                onClick: (value) => console.log("Selected color:", value),
+                key: "next",
+                type: "action",
+                icon: <div>▶️</div>,
+                tooltip: "Load Drawing",
+                onClick: () => {
+                    nextPage();
+                },
+                group: "actions",
+            })
+        );
+
+        items.push(
+            new ToolbarItem({
+                key: "back",
+                type: "action",
+                icon: <div>◀️</div>,
+                tooltip: "Load Drawing",
+                onClick: () => {
+                    prevPage();
+                },
                 group: "actions",
             })
         );

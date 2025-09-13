@@ -1,12 +1,12 @@
-export const toolEventHandlers = {
-    drawStart: (event, { setCurrentShape }) => {
+export const EventHandlers = {
+    createdShape: (event, { setCurrentShape }) => {
         setCurrentShape(event.shape);
     },
-    drawProgress: (event, { setCurrentShape, setCurrentShapeVersion }) => {
+    updatedShape: (event, { setCurrentShape, setCurrentShapeVersion }) => {
         setCurrentShape(event.shape);
         setCurrentShapeVersion((prev) => prev + 1); // As shape mutated in place need a force re-render
     },
-    drawEnd: (event, { setShapes, setCurrentShape }) => {
+    finalizedShape: (event, { setShapes, setCurrentShape }) => {
         setShapes((prev) => [...prev, event.shape]);
         setCurrentShape(null);
     },
@@ -30,5 +30,8 @@ export const toolEventHandlers = {
             ...prev,
             pan: event.pan,
         }));
+    },
+    resetCurrentShape: (event, { setCurrentShape }) => {
+        setCurrentShape(null);
     },
 };

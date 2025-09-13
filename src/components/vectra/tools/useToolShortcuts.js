@@ -7,6 +7,8 @@ export const useToolShortcuts = () => {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
+            if (selectedTool === "text") return;
+
             for (const toolName in toolRegistry) {
                 const tool = toolRegistry[toolName];
                 if (!tool.shortcut) continue;
