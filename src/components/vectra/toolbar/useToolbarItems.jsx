@@ -59,17 +59,19 @@ export const useToolbarItems = () => {
 
         // Group: Drawing tools
         Object.entries(toolRegistry).forEach(([toolName, instance]) => {
-            items.push(
-                new ToolbarItem({
-                    key: toolName,
-                    type: "tool",
-                    icon: instance.getIcon(),
-                    tooltip: toolName,
-                    toolName,
-                    group: "drawing",
-                    onClick: () => setSelectedTool(toolName),
-                })
-            );
+            if (instance.show()) {
+                items.push(
+                    new ToolbarItem({
+                        key: toolName,
+                        type: "tool",
+                        icon: instance.getIcon(),
+                        tooltip: toolName,
+                        toolName,
+                        group: "drawing",
+                        onClick: () => setSelectedTool(toolName),
+                    })
+                );
+            }
         });
 
         // Group: Actions

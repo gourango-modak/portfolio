@@ -9,6 +9,8 @@ import { PenTool } from "./../tools/PenTool";
 import { EraserTool } from "../tools/EraserTool";
 import { TextTool } from "../tools/TextTool";
 import { TextShape } from "../shapes/text/TextShape";
+import { ScaleTool } from "../tools/ScaleTool";
+import { PanTool } from "../tools/PanTool";
 
 export const useDrawingEnvironmentSetup = () => {
     const { registerTool, registerShape } = useDrawingStore();
@@ -20,6 +22,8 @@ export const useDrawingEnvironmentSetup = () => {
         registerTool("arrow", new ArrowTool());
         registerTool("eraser", new EraserTool());
         registerTool("text", new TextTool());
+        registerTool("scale", new ScaleTool());
+        registerTool("pan", new PanTool());
 
         // Register shapes
         registerShape("polyline", PolylineShape);

@@ -1,4 +1,3 @@
-// shapes/PolylineShape.js
 import { BaseShape } from "./../BaseShape";
 import getStroke from "perfect-freehand";
 import {

@@ -1,4 +1,3 @@
-// tools/LineTool.js
 import { LineShape } from "../shapes/line/LineShape";
 import { BaseTool } from "./BaseTool";
 import { Minus } from "lucide-react";

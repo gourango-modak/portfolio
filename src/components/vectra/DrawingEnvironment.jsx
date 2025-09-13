@@ -1,4 +1,4 @@
-import { Canvas } from "./Canvas";
+import { Canvas } from "./canvas/Canvas";
 import { DrawingStoreProvider } from "./store/DrawingStoreContext";
 import { Toolbar } from "./toolbar/Toolbar";
 

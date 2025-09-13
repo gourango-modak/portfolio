@@ -8,7 +8,6 @@ export const TextInputOverlay = ({
 }) => {
     const inputRef = useRef(null);
     const [text, setText] = useState(currentShape?.text || "");
-    // const { shapes, setShapes } = useDrawingStore();
 
     useEffect(() => {
         if (!currentShape) return;

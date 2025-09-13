@@ -1,4 +1,3 @@
-// tools/BaseTool.js
 export class BaseTool {
     constructor(name, userSettings = {}) {
         this.name = name;
@@ -12,6 +11,11 @@ export class BaseTool {
 
     updateSettings(newSettings) {
         this.settings = { ...this.settings, ...newSettings };
+    }
+
+    // Should show the tool in the toolbar
+    show() {
+        return true;
     }
 
     onPointerDown(event) {}

@@ -1,4 +1,3 @@
-// tools/EraserTool.js
 import { Eraser } from "lucide-react"; // Icon for toolbar
 import { BaseTool } from "./BaseTool";
 

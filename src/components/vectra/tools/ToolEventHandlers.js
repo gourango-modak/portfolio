@@ -2,9 +2,9 @@ export const toolEventHandlers = {
     drawStart: (event, { setCurrentShape }) => {
         setCurrentShape(event.shape);
     },
-    drawProgress: (event, { setCurrentShape, setForceRender }) => {
+    drawProgress: (event, { setCurrentShape, setCurrentShapeVersion }) => {
         setCurrentShape(event.shape);
-        setForceRender((prev) => prev + 1); // As shape mutated in place need a force re-render
+        setCurrentShapeVersion((prev) => prev + 1); // As shape mutated in place need a force re-render
     },
     drawEnd: (event, { setShapes, setCurrentShape }) => {
         setShapes((prev) => [...prev, event.shape]);
@@ -17,5 +17,18 @@ export const toolEventHandlers = {
                     !s.containsPoint(event.point, { tolerance: event.radius })
             )
         );
+    },
+    scale: (event, { setCanvasSettings }) => {
+        setCanvasSettings((prev) => ({
+            ...prev,
+            scale: event.scale,
+            pan: event.pan,
+        }));
+    },
+    pan: (event, { setCanvasSettings }) => {
+        setCanvasSettings((prev) => ({
+            ...prev,
+            pan: event.pan,
+        }));
     },
 };

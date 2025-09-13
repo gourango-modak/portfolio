@@ -1,4 +1,3 @@
-// shapes/BaseShape.js
 export class BaseShape {
     constructor(userSettings = {}) {
         // Merge default settings with user settings
