@@ -6,11 +6,10 @@ import {
 } from "../../utils/geometry";
 
 export class PolylineShape extends BaseShape {
-    constructor(userSettings = {}) {
-        super(userSettings);
+    constructor(userSettings, page = null) {
+        super(userSettings, page);
         this.points = [];
         this.type = "polyline";
-        this.page = this.settings.page;
     }
 
     defaultSettings() {

@@ -19,6 +19,7 @@ export const Toolbar = ({ saveAsImage }) => {
     const draggingOffsetRef = useRef({ x: 0, y: 0 });
     const items = useToolbarItems(saveAsImage);
     const toolbarRef = useRef(null);
+    const toolGroupRefs = useRef({});
 
     if (!visible) return null;
     const isVertical = orientation === "vertical";
@@ -66,23 +67,6 @@ export const Toolbar = ({ saveAsImage }) => {
         };
     }, [dragging]);
 
-    // Group items
-    const groupedItems = items.reduce((acc, item) => {
-        if (!item.group) {
-            acc[item.key] = [item];
-        } else {
-            acc[item.group] = acc[item.group] || [];
-            acc[item.group].push(item);
-        }
-        return acc;
-    }, {});
-
-    const handleGroupToolClick = (groupName, buttonRef) => {
-        const rect = buttonRef.current?.getBoundingClientRect();
-        setMainButtonRect(rect);
-        setActiveGroup((prev) => (prev === groupName ? null : groupName));
-    };
-
     const handleGroupToolSelect = (groupName, item) => {
         actions[item.action]?.(item);
         setGroupIcons((prev) => ({ ...prev, [groupName]: item.icon }));
@@ -91,6 +75,7 @@ export const Toolbar = ({ saveAsImage }) => {
 
     const handleToolSelect = (item) => {
         actions[item.action]?.(item);
+        setActiveGroup(null);
     };
 
     return (
@@ -113,14 +98,14 @@ export const Toolbar = ({ saveAsImage }) => {
                     userSelect: "none",
                 }}
             >
-                {Object.entries(groupedItems).map(([groupName, group]) => {
-                    const buttonRef = useRef(null);
+                {items.map((group) => {
+                    // const buttonRef = useRef(null);
 
                     // Drag handle
-                    if (group[0].type === "drag") {
+                    if (group.type === "drag") {
                         return (
                             <ToolbarDragItem
-                                key={groupName}
+                                key={group.groupName}
                                 onMouseDown={handleMouseDown}
                                 dragging={dragging}
                                 orientation={orientation}
@@ -128,49 +113,69 @@ export const Toolbar = ({ saveAsImage }) => {
                         );
                     }
 
-                    // Single tool
-                    if (group.length === 1) {
-                        const item = group[0];
+                    // Single tool group
+                    if (group.tools.length === 1) {
+                        const tool = group.tools[0];
                         return (
                             <ToolbarItem
-                                key={item.name}
-                                icon={item.icon}
-                                tooltip={!dragging ? item.tooltip : null}
-                                selected={selectedTool === item.name}
-                                onClick={() => handleToolSelect(item)}
+                                key={tool.name}
+                                icon={tool.icon}
+                                tooltip={!dragging ? tool.tooltip : null}
+                                selected={selectedTool === tool.name}
+                                onClick={() => handleToolSelect(tool)}
                                 orientation={orientation}
                             />
                         );
                     }
 
                     // Grouped tools
-                    const activeIcon = groupIcons[groupName] || group[0].icon;
+                    const activeIcon =
+                        group.changeGroupIcon && groupIcons[group.groupName]
+                            ? groupIcons[group.groupName]
+                            : group.groupIcon;
 
                     return (
-                        <div key={groupName} ref={buttonRef}>
+                        <div
+                            key={group.groupName}
+                            ref={(el) =>
+                                (toolGroupRefs.current[group.groupName] = el)
+                            }
+                        >
                             <ToolbarItem
                                 icon={activeIcon}
-                                tooltip={!dragging ? group[0].tooltip : null}
-                                selected={group.some(
-                                    (i) => i.name === selectedTool
-                                )}
-                                onClick={() =>
-                                    handleGroupToolClick(groupName, buttonRef)
+                                tooltip={
+                                    !dragging ? group.tools[0].tooltip : null
                                 }
+                                selected={group.tools.some(
+                                    (t) => t.name === selectedTool
+                                )}
+                                onClick={() => {
+                                    const el =
+                                        toolGroupRefs.current[group.groupName];
+                                    if (el)
+                                        setMainButtonRect(
+                                            el.getBoundingClientRect()
+                                        );
+                                    setActiveGroup((prev) =>
+                                        prev === group.groupName
+                                            ? null
+                                            : group.groupName
+                                    );
+                                }}
                                 orientation={orientation}
                             />
-                            {activeGroup === groupName && (
+                            {activeGroup === group.groupName && (
                                 <SecondaryToolbar
-                                    items={group}
+                                    items={group.tools}
                                     mainButtonRect={mainButtonRect}
                                     orientation={orientation}
                                     selectedTool={selectedTool}
                                     onSelect={(toolName) => {
-                                        const selectedItem = group.find(
-                                            (i) => i.name === toolName
+                                        const selectedItem = group.tools.find(
+                                            (t) => t.name === toolName
                                         );
                                         handleGroupToolSelect(
-                                            groupName,
+                                            group.groupName,
                                             selectedItem
                                         );
                                     }}

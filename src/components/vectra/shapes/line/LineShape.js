@@ -2,12 +2,11 @@ import { distance, distancePointToSegment } from "./../../utils/geometry";
 import { BaseShape } from "./../BaseShape";
 
 export class LineShape extends BaseShape {
-    constructor(userSettings) {
-        super(userSettings);
+    constructor(userSettings, page = null) {
+        super(userSettings, page);
         this.start = { x: 0, y: 0 };
         this.end = { x: 0, y: 0 };
         this.type = "line";
-        this.page = this.settings.page;
     }
 
     defaultSettings() {

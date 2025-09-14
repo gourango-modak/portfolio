@@ -20,12 +20,14 @@ export class PenTool extends BaseTool {
 
     onPointerDown(event, { canvasSettings }) {
         // create a new polyline shape
-        this.currentShape = new PolylineShape({
-            color: this.settings.color,
-            minPoints: this.settings.minPoints,
-            strokeWidth: this.settings.strokeWidth,
-            page: canvasSettings.artboard.currentPageIndex,
-        });
+        this.currentShape = new PolylineShape(
+            {
+                color: this.settings.color,
+                minPoints: this.settings.minPoints,
+                strokeWidth: this.settings.strokeWidth,
+            },
+            canvasSettings.artboard.currentPageId
+        );
         // start with the first point
         this.currentShape.addPoint(event);
 

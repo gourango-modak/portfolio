@@ -13,12 +13,14 @@ export class LineTool extends BaseTool {
 
     onPointerDown(event, { canvasSettings }) {
         const point = { x: event.x, y: event.y };
-        this.currentShape = new LineShape({
-            color: this.settings.color,
-            strokeWidth: this.settings.strokeWidth,
-            minLength: this.settings.minLength,
-            page: canvasSettings.artboard.currentPageIndex,
-        });
+        this.currentShape = new LineShape(
+            {
+                color: this.settings.color,
+                strokeWidth: this.settings.strokeWidth,
+                minLength: this.settings.minLength,
+            },
+            canvasSettings.artboard.currentPageId
+        );
 
         this.currentShape.setPoints(point, point);
 

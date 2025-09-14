@@ -16,7 +16,7 @@ export const useDrawingEnvironmentSetup = () => {
         useDrawingStore();
 
     useEffect(() => {
-        setMode("infinite");
+        setMode("paged-artboard");
         setSelectedTool("pen");
 
         // Register tools

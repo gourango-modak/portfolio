@@ -13,65 +13,57 @@ export const useCanvasManager = () => {
         mode: "infinite", // "infinite" | "single-artboard" | "multi-artboard" | "paged-artboard"
         scale: 1,
         pan: { x: 0, y: 0 },
-
-        // Infinite canvas background
         infiniteBg: "#f0f0f0",
-
-        // Artboard configuration
         artboard: {
             ...defaultArtboardTemplate,
             spacing: 40,
-            orientation: "horizontal", // "vertical" | "horizontal"
+            orientation: "horizontal",
             preload: 1,
-            pages: [
-                { id: 1, ...defaultArtboardTemplate }, // always at least one artboard
-            ],
-            currentPageIndex: 0,
+            pages: [{ id: 1, ...defaultArtboardTemplate }],
+            currentPageId: 1, // use ID instead of index
         },
     }));
 
     /** Create a new page with optional settings and move to it */
     const createPage = (settings = {}) => {
         setCanvasSettings((prev) => {
+            const newId =
+                prev.artboard.pages.length > 0
+                    ? Math.max(...prev.artboard.pages.map((p) => p.id)) + 1
+                    : 1;
             const newPage = {
-                id: prev.artboard.pages.length + 1,
+                id: newId,
                 width: settings.width ?? prev.artboard.width,
                 height: settings.height ?? prev.artboard.height,
                 bg: settings.bg ?? prev.artboard.bg,
                 border: settings.border ?? prev.artboard.border,
                 customStyle: settings.customStyle ?? {},
             };
-
-            const updatedPages = [...prev.artboard.pages, newPage];
-            const newPageIndex = updatedPages.length - 1;
-
             return {
                 ...prev,
                 artboard: {
                     ...prev.artboard,
-                    pages: updatedPages,
-                    currentPageIndex: newPageIndex, // switch to the new page
+                    pages: [...prev.artboard.pages, newPage],
+                    currentPageId: newPage.id,
                 },
             };
         });
     };
 
-    const getArtboardPan = (page, viewportWidth, topMargin = 50) => {
-        return {
-            x: (viewportWidth - page.width) / 2, // center horizontally
-            y: topMargin, // fixed top margin
-        };
-    };
+    const getArtboardPan = (page, viewportWidth, topMargin = 50) => ({
+        x: (viewportWidth - page.width) / 2,
+        y: topMargin,
+    });
 
     /** Set canvas mode and optional overrides, center page if applicable */
     const setMode = (mode, options = {}, viewportWidth = 1600) => {
         setCanvasSettings((prev) => {
             let pages = prev.artboard.pages;
 
-            // Clear pages for infinite mode
-            if (mode === "infinite") pages = [];
+            if (mode === "infinite") {
+                pages = [];
+            }
 
-            // Ensure at least one page exists for artboard modes
             if (
                 [
                     "single-artboard",
@@ -84,14 +76,17 @@ export const useCanvasManager = () => {
             }
 
             const currentPage =
-                pages[prev.artboard.currentPageIndex] || pages[0];
-            const pan = [
-                "single-artboard",
-                "multi-artboard",
-                "paged-artboard",
-            ].includes(mode)
-                ? getArtboardPan(currentPage, viewportWidth)
-                : prev.pan;
+                pages.find((p) => p.id === prev.artboard.currentPageId) ||
+                pages[0];
+
+            const pan =
+                [
+                    "single-artboard",
+                    "multi-artboard",
+                    "paged-artboard",
+                ].includes(mode) && currentPage
+                    ? getArtboardPan(currentPage, viewportWidth)
+                    : prev.pan;
 
             return {
                 ...prev,
@@ -102,48 +97,50 @@ export const useCanvasManager = () => {
                     ...prev.artboard,
                     ...options.artboard,
                     pages,
-                    currentPageIndex: prev.artboard.currentPageIndex,
+                    currentPageId: currentPage?.id ?? null,
                 },
             };
         });
     };
 
-    /** Get current page */
+    /** Get current page by ID */
     const getCurrentPage = () => {
         if (
             ["multi-artboard", "paged-artboard", "single-artboard"].includes(
                 canvasSettings.mode
             )
         ) {
-            return canvasSettings.artboard.pages[
-                canvasSettings.artboard.currentPageIndex
-            ];
+            return canvasSettings.artboard.pages.find(
+                (p) => p.id === canvasSettings.artboard.currentPageId
+            );
         }
         return null;
     };
 
-    /** Navigate to a specific page index, center it in viewport */
-    const goToPage = (index) => {
-        const page = canvasSettings.artboard.pages[index];
-        if (!page) return;
+    /** Navigate to a page by ID */
+    const goToPage = (id) => {
+        const pageExists = canvasSettings.artboard.pages.some(
+            (p) => p.id === id
+        );
+        if (!pageExists) return;
 
         setCanvasSettings((prev) => ({
             ...prev,
             artboard: {
                 ...prev.artboard,
-                currentPageIndex: index,
+                currentPageId: id,
             },
         }));
     };
 
     /** Go to next page (create a new one if it doesn't exist) */
     const nextPage = () => {
-        const currentIndex = canvasSettings.artboard.currentPageIndex;
-        const totalPages = canvasSettings.artboard.pages.length;
+        const pages = canvasSettings.artboard.pages;
+        const currentId = canvasSettings.artboard.currentPageId;
+        const currentIndex = pages.findIndex((p) => p.id === currentId);
 
-        if (currentIndex < totalPages - 1) {
-            // Go to the next existing page
-            goToPage(currentIndex + 1);
+        if (currentIndex < pages.length - 1) {
+            goToPage(pages[currentIndex + 1].id);
         } else {
             createPage();
         }
@@ -151,9 +148,12 @@ export const useCanvasManager = () => {
 
     /** Go to previous page */
     const prevPage = () => {
-        const current = canvasSettings.artboard.currentPageIndex;
-        if (current > 0) {
-            goToPage(current - 1);
+        const pages = canvasSettings.artboard.pages;
+        const currentId = canvasSettings.artboard.currentPageId;
+        const currentIndex = pages.findIndex((p) => p.id === currentId);
+
+        if (currentIndex > 0) {
+            goToPage(pages[currentIndex - 1].id);
         }
     };
 
@@ -161,10 +161,10 @@ export const useCanvasManager = () => {
         canvasSettings,
         setCanvasSettings,
         setMode,
-        createPage,
         getCurrentPage,
         goToPage,
         nextPage,
         prevPage,
+        createPage,
     };
 };

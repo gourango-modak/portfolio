@@ -20,13 +20,15 @@ export class ArrowTool extends BaseTool {
     }
 
     onPointerDown(event, { canvasSettings }) {
-        this.currentShape = new ArrowShape({
-            color: this.settings.color,
-            strokeWidth: this.settings.strokeWidth,
-            arrowHeadSize: this.settings.arrowHeadSize,
-            minLength: this.settings.minLength,
-            page: canvasSettings.artboard.currentPageIndex,
-        });
+        this.currentShape = new ArrowShape(
+            {
+                color: this.settings.color,
+                strokeWidth: this.settings.strokeWidth,
+                arrowHeadSize: this.settings.arrowHeadSize,
+                minLength: this.settings.minLength,
+            },
+            canvasSettings.artboard.currentPageId
+        );
         this.currentShape.setPoints(event, event); // start = end initially
 
         if (this.currentShape.isValid()) {

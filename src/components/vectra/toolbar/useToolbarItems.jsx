@@ -1,82 +1,155 @@
+import { useDrawingStore } from "../store/DrawingStoreContext";
 import {
     Pen,
     PenLine,
     MoveUpRight,
+    Italic,
+    Hand,
+    Eraser,
     Save,
     FolderOpen,
     ArrowRight,
     ArrowLeft,
     Move,
-    Italic,
+    StickyNote,
 } from "lucide-react";
 
 export const useToolbarItems = (saveAsImage) => {
-    return [
+    const { canvasSettings } = useDrawingStore();
+
+    const toolbarGroups = [
         {
-            name: "drag",
+            groupName: "drag",
             type: "drag",
             icon: Move,
+            tools: [], // no tools inside drag
         },
         {
-            name: "pen",
+            groupName: "pen",
+            groupIcon: Pen, // main group button icon
+            changeGroupIcon: true, // change icon on tool selection
             type: "tool",
-            icon: Pen,
-            tooltip: "Pen Tool",
-            group: "pen",
-            action: "selectTool",
+            tools: [
+                {
+                    name: "pen",
+                    icon: Pen,
+                    tooltip: "Pen Tool",
+                    action: "selectTool",
+                },
+            ],
         },
         {
-            name: "line",
+            groupName: "line",
+            groupIcon: MoveUpRight,
+            changeGroupIcon: true,
             type: "tool",
-            icon: PenLine,
-            tooltip: "Line Tool",
-            group: "line",
-            action: "selectTool",
+            tools: [
+                {
+                    name: "line",
+                    icon: PenLine,
+                    tooltip: "Line Tool",
+                    action: "selectTool",
+                },
+                {
+                    name: "arrow",
+                    icon: MoveUpRight,
+                    tooltip: "Arrow Tool",
+                    action: "selectTool",
+                },
+            ],
         },
         {
-            name: "arrow",
+            groupName: "text",
+            groupIcon: Italic,
+            changeGroupIcon: false, // main icon remains fixed
             type: "tool",
-            icon: MoveUpRight,
-            tooltip: "Arrow Tool",
-            group: "line",
-            action: "selectTool",
+            tools: [
+                {
+                    name: "text",
+                    icon: Italic,
+                    tooltip: "Text Tool",
+                    action: "selectTool",
+                },
+            ],
         },
         {
-            name: "text",
+            groupName: "pan",
+            groupIcon: Hand,
+            changeGroupIcon: false,
             type: "tool",
-            icon: Italic,
-            tooltip: "Text Tool",
-            group: "text",
-            action: "selectTool",
+            tools: [
+                {
+                    name: "pan",
+                    icon: Hand,
+                    tooltip: "Pan Tool",
+                    action: "selectTool",
+                },
+            ],
         },
         {
-            name: "save",
-            type: "action",
-            icon: Save,
-            tooltip: "Save Drawing",
-            onClick: saveAsImage,
-            group: "actions",
+            groupName: "eraser",
+            groupIcon: Eraser,
+            changeGroupIcon: false,
+            type: "tool",
+            tools: [
+                {
+                    name: "eraser",
+                    icon: Eraser,
+                    tooltip: "Eraser Tool",
+                    action: "selectTool",
+                },
+            ],
+        },
+        ,
+        {
+            groupName: "page",
+            groupIcon: StickyNote,
+            changeGroupIcon: false,
+            type: "page",
+            tools: [
+                {
+                    name: "next",
+                    icon: ArrowRight,
+                    tooltip: "Next Page",
+                    action: "nextPage",
+                },
+                {
+                    name: "back",
+                    icon: ArrowLeft,
+                    tooltip: "Previous Page",
+                    action: "previousPage",
+                },
+            ],
+            condition: (settings) => settings.mode === "paged-artboard",
         },
         {
-            name: "load",
-            type: "action",
-            icon: FolderOpen,
-            tooltip: "Load Drawing",
-            group: "actions",
-        },
-        {
-            name: "next",
-            type: "action",
-            icon: ArrowRight,
-            tooltip: "Next Page",
-            group: "actions",
-        },
-        {
-            name: "back",
-            type: "action",
-            icon: ArrowLeft,
-            tooltip: "Previous Page",
-            group: "actions",
+            groupName: "action",
+            groupIcon: Save,
+            changeGroupIcon: true,
+            tools: [
+                {
+                    name: "save",
+                    icon: Save,
+                    tooltip: "Save Drawing",
+                    action: "saveDrawing",
+                },
+                {
+                    name: "load",
+                    icon: FolderOpen,
+                    tooltip: "Load Drawing",
+                    action: "loadDrawing",
+                },
+            ],
         },
     ];
+
+    // Filter tools/group if needed based on canvasSettings
+    return toolbarGroups
+        .filter((group) => !group.condition || group.condition(canvasSettings))
+        .map((group) => ({
+            ...group,
+            tools: group.tools.filter(
+                (tool) => !tool.condition || tool.condition(canvasSettings)
+            ),
+        }));
 };

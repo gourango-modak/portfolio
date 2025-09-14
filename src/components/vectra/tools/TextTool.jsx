@@ -23,10 +23,12 @@ export class TextTool extends BaseTool {
         if (this.editState === "editing") return null;
 
         const point = { x: event.x, y: event.y, lx: event.lx, ly: event.ly };
-        this.currentShape = new TextShape({
-            ...this.settings,
-            page: canvasSettings.artboard.currentPageIndex,
-        });
+        this.currentShape = new TextShape(
+            {
+                ...this.settings,
+            },
+            canvasSettings.artboard.currentPageId
+        );
 
         this.currentShape.setPosition(point);
         // Move into pending state (waiting for text input)

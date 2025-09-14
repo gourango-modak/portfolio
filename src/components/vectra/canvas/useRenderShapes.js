@@ -32,10 +32,17 @@ const drawMultiArtboard = (g, artboard) => {
 };
 
 const drawPagedArtboard = (g, artboard) => {
-    const startPage = Math.max(0, artboard.currentPageIndex - artboard.preload);
+    // Find current page index by ID
+    const currentIndex = artboard.pages.findIndex(
+        (p) => p.id === artboard.currentPageId
+    );
+
+    if (currentIndex === -1) return; // current page not found
+
+    const startPage = Math.max(0, currentIndex - artboard.preload);
     const endPage = Math.min(
         artboard.pages.length - 1,
-        artboard.currentPageIndex + artboard.preload
+        currentIndex + artboard.preload
     );
 
     for (let i = startPage; i <= endPage; i++) {
@@ -53,10 +60,10 @@ const drawShapes = (g, shapes, currentShape, canvasSettings) => {
                 s.draw(g, true);
             } else if (
                 mode === "paged-artboard" &&
-                s.page === artboard.currentPageIndex
+                s.page === artboard.currentPageId
             ) {
                 s.draw(g, true);
-            } else {
+            } else if (mode === "single-artboard") {
                 s.draw(g, true);
             }
         } else {

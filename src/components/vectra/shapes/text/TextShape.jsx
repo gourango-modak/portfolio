@@ -1,12 +1,12 @@
 import { BaseShape } from "./../BaseShape";
 
 export class TextShape extends BaseShape {
-    constructor(settings) {
-        super(settings);
+    constructor(userSettings, page = null) {
+        super(userSettings, page);
         this.text = "";
         this.position = null;
         this.type = "text";
-        this.page = this.settings.page;
+        this.page = page;
     }
 
     defaultSettings() {
