@@ -81,3 +81,21 @@ export const debugLog = (message, data) => {
 export const errorLog = (message, data) => {
     console.log(`[Error] ${message}:`, data);
 };
+
+export function formatToReadable(text) {
+    if (!text) return "";
+
+    // Replace underscores/hyphens with spaces
+    let result = text.replace(/[_\-]+/g, " ");
+
+    // Add space before uppercase letters (camelCase or PascalCase)
+    result = result.replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+
+    // Capitalize the first letter of each word
+    result = result
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+
+    return result;
+}

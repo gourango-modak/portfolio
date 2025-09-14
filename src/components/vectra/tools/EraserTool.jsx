@@ -3,7 +3,7 @@ import { BaseTool } from "./BaseTool";
 
 export class EraserTool extends BaseTool {
     constructor() {
-        super("eraser");
+        super("eraser", "Eraser");
     }
 
     defaultSettings() {

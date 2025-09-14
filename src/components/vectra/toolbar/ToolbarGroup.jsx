@@ -13,6 +13,7 @@ export const ToolbarGroup = ({
     actions,
     orientation,
     toolGroupRefs,
+    onToolRightClick,
 }) => {
     const handleGroupToolSelect = (item) => {
         actions[item.action]?.(item);
@@ -38,6 +39,11 @@ export const ToolbarGroup = ({
                         prev === group.groupName ? null : group.groupName
                     );
                 }}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    const firstTool = group.tools[0];
+                    if (onToolRightClick) onToolRightClick(firstTool, e);
+                }}
                 orientation={orientation}
             />
             {activeGroup === group.groupName && (
@@ -52,6 +58,7 @@ export const ToolbarGroup = ({
                         );
                         handleGroupToolSelect(selectedItem);
                     }}
+                    onToolRightClick={onToolRightClick} // pass right-click to secondary toolbar
                 />
             )}
         </div>

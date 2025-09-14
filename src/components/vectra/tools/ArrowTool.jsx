@@ -4,7 +4,7 @@ import { BaseTool } from "./BaseTool";
 
 export class ArrowTool extends BaseTool {
     constructor() {
-        super("arrow");
+        super("arrow", "Arrow");
         this.shortcut = {
             code: "KeyA",
         };

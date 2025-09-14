@@ -8,6 +8,7 @@ export const ToolbarItem = ({
     selected,
     onMouseDown,
     orientation = "vertical",
+    onContextMenu,
 }) => {
     const [showTooltip, setShowTooltip] = useState(false);
     const btnRef = useRef(null);
@@ -39,6 +40,7 @@ export const ToolbarItem = ({
                 onMouseDown={onMouseDown}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
+                onContextMenu={onContextMenu}
                 className={`w-[42px] h-[42px] flex items-center justify-center
                     transition-colors active:scale-95 rounded-[12px] cursor-pointer hover:bg-gray-100
                     ${

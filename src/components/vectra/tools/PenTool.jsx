@@ -4,7 +4,7 @@ import { PolylineShape } from "../shapes/polyline/PolylineShape";
 
 export class PenTool extends BaseTool {
     constructor() {
-        super("pen"); // tool name
+        super("pen", "Pen"); // tool name
         this.shortcut = {
             code: "KeyP", // 'Z'
         };
@@ -12,17 +12,16 @@ export class PenTool extends BaseTool {
 
     defaultSettings() {
         return {
-            color: "#000",
+            color: "#000000",
             minPoints: 2, // minimum points to consider a valid line
             strokeWidth: 16,
         };
     }
 
     onPointerDown(event, { canvasSettings }) {
-        // create a new polyline shape
         this.currentShape = new PolylineShape(
             {
-                color: this.settings.color,
+                strokeColor: this.settings.color,
                 minPoints: this.settings.minPoints,
                 strokeWidth: this.settings.strokeWidth,
             },

@@ -4,7 +4,7 @@ import { Minus } from "lucide-react";
 
 export class LineTool extends BaseTool {
     constructor() {
-        super("line");
+        super("line", "Line");
     }
 
     defaultSettings() {

@@ -6,6 +6,7 @@ export const SecondaryToolbar = ({
     orientation = "vertical",
     selectedTool,
     onSelect,
+    onToolRightClick,
 }) => {
     if (!mainButtonRect || !items.length) return null;
 
@@ -49,6 +50,10 @@ export const SecondaryToolbar = ({
                     tooltip={item.tooltip}
                     selected={selectedTool === item.name}
                     onClick={() => onSelect(item.name)}
+                    onContextMenu={(e) => {
+                        e.preventDefault();
+                        onToolRightClick?.(item, e);
+                    }}
                     orientation={orientation}
                 />
             ))}

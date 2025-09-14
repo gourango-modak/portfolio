@@ -14,7 +14,7 @@ export class PolylineShape extends BaseShape {
 
     defaultSettings() {
         return {
-            color: "#000",
+            strokeColor: "#000000",
             strokeWidth: 2,
             minPoints: 2,
             thinning: 0.5,
@@ -59,7 +59,8 @@ export class PolylineShape extends BaseShape {
             "path"
         );
         path.setAttribute("d", pathData);
-        path.setAttribute("fill", "black"); // Pen tool paths are unfilled
+        path.setAttribute("fill", this.settings.strokeColor);
+        path.setAttribute("stroke", this.settings.strokeColor);
         svg.appendChild(path);
     }
 

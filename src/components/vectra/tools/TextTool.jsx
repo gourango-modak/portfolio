@@ -4,7 +4,7 @@ import { Minus } from "lucide-react";
 
 export class TextTool extends BaseTool {
     constructor() {
-        super("text");
+        super("text", "Text");
         this.currentShape = null;
         this.editState = "idle"; // idle | pending | editing
     }

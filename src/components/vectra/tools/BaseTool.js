@@ -1,6 +1,7 @@
 export class BaseTool {
-    constructor(name, userSettings = {}) {
+    constructor(name, label, userSettings = {}) {
         this.name = name;
+        this.label = label;
         this.settings = { ...this.defaultSettings(), ...userSettings };
         this.currentShape = null;
     }
