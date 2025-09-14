@@ -20,7 +20,7 @@ export const SecondaryToolbar = ({
 
     const top = vertical
         ? mainButtonRect.top + mainButtonRect.height / 2 - totalLength / 2
-        : mainButtonRect.bottom + offset;
+        : mainButtonRect.top - offset - buttonSize - padding * 2;
 
     const left = vertical
         ? mainButtonRect.right + offset
@@ -38,7 +38,7 @@ export const SecondaryToolbar = ({
                 background: "#fff",
                 padding: padding,
                 borderRadius: 12,
-                boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
                 zIndex: 2000,
             }}
         >

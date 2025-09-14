@@ -14,7 +14,7 @@ import {
     StickyNote,
 } from "lucide-react";
 
-export const useToolbarItems = (saveAsImage) => {
+export const useToolbarItems = () => {
     const { canvasSettings } = useDrawingStore();
 
     const toolbarGroups = [

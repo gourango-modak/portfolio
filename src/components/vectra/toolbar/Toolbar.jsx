@@ -6,9 +6,14 @@ import { useDrawingStore } from "../store/DrawingStoreContext";
 import { ToolbarDragItem } from "./ToolbarDragItem";
 import { createToolbarActionRegistry } from "./ToolbarActionRegistry";
 
-export const Toolbar = ({ saveAsImage }) => {
+export const Toolbar = () => {
     const store = useDrawingStore();
-    const { toolbarSettings, selectedTool, updateToolbarPosition } = store;
+    const {
+        toolbarSettings,
+        selectedTool,
+        updateToolbarPosition,
+        setToolbarVisiblity,
+    } = store;
     const { visible, position, orientation } = toolbarSettings;
 
     const [dragging, setDragging] = useState(false);
@@ -17,11 +22,10 @@ export const Toolbar = ({ saveAsImage }) => {
     const [groupIcons, setGroupIcons] = useState({}); // store active icons per group
 
     const draggingOffsetRef = useRef({ x: 0, y: 0 });
-    const items = useToolbarItems(saveAsImage);
+    const items = useToolbarItems();
     const toolbarRef = useRef(null);
     const toolGroupRefs = useRef({});
 
-    if (!visible) return null;
     const isVertical = orientation === "vertical";
     const actions = createToolbarActionRegistry(store);
 
@@ -67,6 +71,20 @@ export const Toolbar = ({ saveAsImage }) => {
         };
     }, [dragging]);
 
+    useEffect(() => {
+        if (!toolbarRef.current) return;
+
+        const toolbarRect = toolbarRef.current.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        const x = (viewportWidth - toolbarRect.width) / 2; // center horizontally
+        const y = viewportHeight - toolbarRect.height - 56; // 56px margin from bottom
+
+        updateToolbarPosition({ x, y });
+        setToolbarVisiblity(true);
+    }, [toolbarRef]);
+
     const handleGroupToolSelect = (groupName, item) => {
         actions[item.action]?.(item);
         setGroupIcons((prev) => ({ ...prev, [groupName]: item.icon }));
@@ -96,6 +114,7 @@ export const Toolbar = ({ saveAsImage }) => {
                     padding: "4px",
                     gap: "8px",
                     userSelect: "none",
+                    opacity: visible ? 1 : 0,
                 }}
             >
                 {items.map((group) => {

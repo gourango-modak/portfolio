@@ -24,9 +24,9 @@ export const ToolbarItem = ({
             };
         } else {
             return {
-                top: rect.top - 8, // 8px above the button
+                top: rect.bottom + 8, // 8px below
                 left: rect.left + rect.width / 2,
-                transform: "translateX(-50%) translateY(-100%)",
+                transform: "translateX(-50%)",
             };
         }
     };
