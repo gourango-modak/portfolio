@@ -1,10 +1,11 @@
 import { Pen } from "lucide-react"; // or any icon you prefer
 import { BaseTool } from "./BaseTool";
 import { PolylineShape } from "../shapes/polyline/PolylineShape";
+import { TOOLS } from "./toolUtils";
 
 export class PenTool extends BaseTool {
     constructor() {
-        super("pen", "Pen"); // tool name
+        super(TOOLS.PEN.NAME, TOOLS.PEN.LABEL); // tool name
         this.shortcut = {
             code: "KeyP", // 'Z'
         };

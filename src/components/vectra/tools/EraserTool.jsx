@@ -1,9 +1,10 @@
 import { Eraser } from "lucide-react"; // Icon for toolbar
 import { BaseTool } from "./BaseTool";
+import { TOOLS } from "./toolUtils";
 
 export class EraserTool extends BaseTool {
     constructor() {
-        super("eraser", "Eraser");
+        super(TOOLS.ERASER.NAME, TOOLS.ERASER.LABEL);
     }
 
     defaultSettings() {

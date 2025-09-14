@@ -56,7 +56,7 @@ export const useCanvasManager = () => {
     });
 
     /** Set canvas mode and optional overrides, center page if applicable */
-    const setMode = (mode, options = {}, viewportWidth = 1600) => {
+    const setMode = (mode, options = {}, viewportWidth = window.innerWidth) => {
         setCanvasSettings((prev) => {
             let pages = prev.artboard.pages;
 

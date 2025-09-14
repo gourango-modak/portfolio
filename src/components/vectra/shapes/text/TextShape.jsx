@@ -1,3 +1,4 @@
+import { SHAPES } from "../shapeUtils";
 import { BaseShape } from "./../BaseShape";
 
 export class TextShape extends BaseShape {
@@ -5,7 +6,7 @@ export class TextShape extends BaseShape {
         super(userSettings, page);
         this.text = "";
         this.position = null;
-        this.type = "text";
+        this.type = SHAPES.TEXT.NAME;
         this.page = page;
     }
 

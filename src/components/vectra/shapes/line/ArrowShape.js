@@ -1,10 +1,11 @@
 import { pointInTriangle } from "../../utils/geometry";
 import { LineShape } from "./LineShape";
+import { SHAPES } from "./../shapeUtils";
 
 export class ArrowShape extends LineShape {
     constructor(userSettings, page = null) {
         super(userSettings, page);
-        this.type = "arrow";
+        this.type = SHAPES.ARROW.NAME;
     }
 
     defaultSettings() {

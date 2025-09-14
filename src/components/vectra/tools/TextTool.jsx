@@ -1,10 +1,11 @@
 import { TextShape } from "../shapes/text/TextShape";
 import { BaseTool } from "./BaseTool";
 import { Minus } from "lucide-react";
+import { TOOLS } from "./toolUtils";
 
 export class TextTool extends BaseTool {
     constructor() {
-        super("text", "Text");
+        super(TOOLS.TEXT.NAME, TOOLS.TEXT.LABEL);
         this.currentShape = null;
         this.editState = "idle"; // idle | pending | editing
     }

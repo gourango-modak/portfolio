@@ -1,10 +1,11 @@
 import { LineShape } from "../shapes/line/LineShape";
 import { BaseTool } from "./BaseTool";
 import { Minus } from "lucide-react";
+import { TOOLS } from "./toolUtils";
 
 export class LineTool extends BaseTool {
     constructor() {
-        super("line", "Line");
+        super(TOOLS.LINE.NAME, TOOLS.LINE.LABEL);
     }
 
     defaultSettings() {

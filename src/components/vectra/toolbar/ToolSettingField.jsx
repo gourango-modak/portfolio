@@ -2,6 +2,7 @@ import { formatToReadable } from "./../../../utils/common";
 
 export const ToolSettingField = ({
     keyName,
+    toolLabel,
     value,
     onChange,
     openColorPicker,
@@ -16,7 +17,9 @@ export const ToolSettingField = ({
                     {label}
                 </label>
                 <div
-                    onClick={() => openColorPicker("color")}
+                    onClick={() =>
+                        openColorPicker("color", value, toolLabel + " Color")
+                    }
                     className="w-6 h-6 rounded border border-gray-300 cursor-pointer"
                     style={{ backgroundColor: value }}
                 />

@@ -44,6 +44,7 @@ export const ToolSettingsMenu = ({
                     Object.entries(tool.settings).map(([key, value]) => (
                         <ToolSettingField
                             key={key}
+                            toolLabel={tool.label}
                             keyName={key}
                             value={value}
                             onChange={onChange}

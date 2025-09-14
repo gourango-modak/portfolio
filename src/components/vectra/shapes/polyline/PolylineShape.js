@@ -4,12 +4,13 @@ import {
     distancePointToSegment,
     getSvgPathFromStroke,
 } from "../../utils/geometry";
+import { SHAPES } from "../shapeUtils";
 
 export class PolylineShape extends BaseShape {
     constructor(userSettings, page = null) {
         super(userSettings, page);
         this.points = [];
-        this.type = "polyline";
+        this.type = SHAPES.POLYLINE.NAME;
     }
 
     defaultSettings() {

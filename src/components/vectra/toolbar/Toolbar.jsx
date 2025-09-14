@@ -34,6 +34,7 @@ export const Toolbar = () => {
     const [colorPickerOpen, setColorPickerOpen] = useState(false);
     const [colorPickerValue, setColorPickerValue] = useState("#ff0000");
     const [colorPickerTargetKey, setColorPickerTargetKey] = useState(null);
+    const [colorPickerTitle, setColorPickerTitle] = useState("");
 
     const actions = createToolbarActionRegistry(store);
     const { dragging, handleMouseDown } = useDragHandler(
@@ -83,14 +84,20 @@ export const Toolbar = () => {
         if (!colorPickerTargetKey) return;
         setColorPickerValue(value);
 
-        if (settingsTool) {
+        if (colorPickerTargetKey === "infiniteBg") {
+            store.setCanvasSettings((prev) => ({ ...prev, infiniteBg: value }));
+        }
+
+        if (settingsTool && colorPickerTargetKey === "color") {
             updateToolSetting(settingsTool.name, colorPickerTargetKey, value);
             settingsTool.updateSettings({ [colorPickerTargetKey]: value });
         }
     };
 
-    const handleOpenColorPicker = (colorPickerTargetKey) => {
+    const handleOpenColorPicker = (colorPickerTargetKey, colorValue, title) => {
         setColorPickerTargetKey(colorPickerTargetKey);
+        setColorPickerTitle(title);
+        setColorPickerValue(colorValue);
         setColorPickerOpen(true);
     };
 
@@ -130,21 +137,27 @@ export const Toolbar = () => {
 
                     if (group.groupName === "color") {
                         return (
-                            <div
+                            <ToolbarItem
                                 key={group.groupName}
-                                className="w-[42px] h-[42px] flex justify-center items-center"
-                            >
-                                <div
-                                    onClick={() =>
-                                        handleOpenColorPicker("infiniteBg")
-                                    }
-                                    className="w-[20px] h-[20px] rounded border border-gray-300 cursor-pointer"
-                                    style={{
-                                        backgroundColor: colorPickerValue,
-                                    }}
-                                    title="Palette"
-                                />
-                            </div>
+                                tooltip={group.tooltip}
+                                orientation={orientation}
+                                icon={() => (
+                                    <div
+                                        className="w-[20px] h-[20px] rounded border border-gray-300"
+                                        style={{
+                                            backgroundColor:
+                                                store.canvasSettings.infiniteBg,
+                                        }}
+                                    />
+                                )}
+                                onClick={() =>
+                                    handleOpenColorPicker(
+                                        "infiniteBg",
+                                        store.canvasSettings.infiniteBg,
+                                        "Canvas Color"
+                                    )
+                                }
+                            />
                         );
                     }
 
@@ -202,17 +215,13 @@ export const Toolbar = () => {
             )}
 
             {/* Floating Color Picker */}
-            {colorPickerOpen && (
+            {colorPickerOpen && selectedTool !== "pan" && (
                 <FloatingColorPicker
                     initialColor={colorPickerValue}
                     isOpen={colorPickerOpen}
                     onClose={() => setColorPickerOpen(false)}
                     onChange={handleColorPickerChange}
-                    title={
-                        colorPickerTargetKey === "strokeColor"
-                            ? "Stroke Color"
-                            : "Color"
-                    }
+                    title={colorPickerTitle || "Color"}
                 />
             )}
         </>

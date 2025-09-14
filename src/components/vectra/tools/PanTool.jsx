@@ -1,8 +1,9 @@
 import { BaseTool } from "./BaseTool";
+import { TOOLS } from "./toolUtils";
 
 export class PanTool extends BaseTool {
     constructor() {
-        super("pan");
+        super(TOOLS.PAN.NAME, TOOLS.PAN.LABEL);
         this.shortcut = { code: "Space" }; // activate via Spacebar
         this.isDragging = false;
         this.start = null;

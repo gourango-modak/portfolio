@@ -80,6 +80,7 @@ export const Canvas = () => {
                     backgroundColor: canvasSettings.infiniteBg,
                     touchAction: "none",
                     userSelect: "none",
+                    cursor: selectedTool === "pan" ? "grab" : "default",
                 }}
                 onPointerDown={(e) => onPointerDown(e)}
                 onPointerMove={(e) => onPointerMove(e)}

@@ -1,3 +1,4 @@
+import { SHAPES } from "../shapeUtils";
 import { distance, distancePointToSegment } from "./../../utils/geometry";
 import { BaseShape } from "./../BaseShape";
 
@@ -6,7 +7,7 @@ export class LineShape extends BaseShape {
         super(userSettings, page);
         this.start = { x: 0, y: 0 };
         this.end = { x: 0, y: 0 };
-        this.type = "line";
+        this.type = SHAPES.LINE.NAME;
     }
 
     defaultSettings() {

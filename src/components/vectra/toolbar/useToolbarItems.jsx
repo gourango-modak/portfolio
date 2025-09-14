@@ -1,4 +1,5 @@
 import { useDrawingStore } from "../store/DrawingStoreContext";
+import { TOOLS } from "./../tools/toolUtils";
 import {
     Pen,
     PenLine,
@@ -29,7 +30,7 @@ export const useToolbarItems = () => {
         // Pen tool as standalone
         {
             groupName: "pen",
-            name: "pen",
+            name: TOOLS.PEN.NAME,
             type: "tool",
             icon: Pen,
             tooltip: "Pen Tool",
@@ -44,13 +45,13 @@ export const useToolbarItems = () => {
             changeGroupIcon: true,
             tools: [
                 {
-                    name: "line",
+                    name: TOOLS.LINE.NAME,
                     icon: PenLine,
                     tooltip: "Line Tool",
                     action: "selectTool",
                 },
                 {
-                    name: "arrow",
+                    name: TOOLS.ARROW.NAME,
                     icon: MoveUpRight,
                     tooltip: "Arrow Tool",
                     action: "selectTool",
@@ -61,7 +62,7 @@ export const useToolbarItems = () => {
         // Text
         {
             groupName: "text",
-            name: "text",
+            name: TOOLS.TEXT.NAME,
             type: "tool",
             icon: Italic,
             tooltip: "Text Tool",
@@ -71,7 +72,7 @@ export const useToolbarItems = () => {
         // Pan
         {
             groupName: "pan",
-            name: "pan",
+            name: TOOLS.PAN.NAME,
             type: "tool",
             icon: Hand,
             tooltip: "Pan Tool",
@@ -81,7 +82,7 @@ export const useToolbarItems = () => {
         // Eraser
         {
             groupName: "eraser",
-            name: "eraser",
+            name: TOOLS.ERASER.NAME,
             type: "tool",
             icon: Eraser,
             tooltip: "Eraser Tool",
@@ -139,8 +140,7 @@ export const useToolbarItems = () => {
             name: "color",
             type: "action",
             icon: null,
-            tooltip: "Palette",
-            action: "openPalette",
+            tooltip: "Canvas Color",
         },
     ];
 

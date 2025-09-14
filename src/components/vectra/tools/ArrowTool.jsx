@@ -1,10 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { ArrowShape } from "../shapes/line/ArrowShape";
 import { BaseTool } from "./BaseTool";
+import { TOOLS } from "./toolUtils";
 
 export class ArrowTool extends BaseTool {
     constructor() {
-        super("arrow", "Arrow");
+        super(TOOLS.ARROW.NAME, TOOLS.ARROW.LABEL);
         this.shortcut = {
             code: "KeyA",
         };
