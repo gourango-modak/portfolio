@@ -15,9 +15,7 @@ import {
     StickyNote,
 } from "lucide-react";
 
-export const useToolbarItems = () => {
-    const { canvasSettings } = useDrawingStore();
-
+export const useToolbarItems = (store) => {
     const toolbarGroups = [
         // Drag handle
         {
@@ -145,11 +143,14 @@ export const useToolbarItems = () => {
 
     // Filter based on conditions
     return toolbarGroups
-        .filter((group) => !group.condition || group.condition(canvasSettings))
+        .filter(
+            (group) => !group.condition || group.condition(store.canvasSettings)
+        )
         .map((group) => ({
             ...group,
             tools: group.tools?.filter(
-                (tool) => !tool.condition || tool.condition(canvasSettings)
+                (tool) =>
+                    !tool.condition || tool.condition(store.canvasSettings)
             ),
         }));
 };

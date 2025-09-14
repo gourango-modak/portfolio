@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import { ToolbarItem } from "./ToolbarItem";
 import { useToolbarItems } from "./useToolbarItems";
 import { useDrawingStore } from "../store/DrawingStoreContext";
-import { ToolbarDragItem } from "./ToolbarDragItem";
 import { createToolbarActionRegistry } from "./ToolbarActionRegistry";
 import { useDragHandler } from "./useDragHandler";
-import { ToolbarGroup } from "./ToolbarGroup";
 import { ToolSettingsMenu } from "./ToolSettingsMenu";
 import { FloatingColorPicker } from "./FloatingColorPicker";
 import { ORIENTATION } from "../../../utils/common";
 import { TOOLS } from "../tools/toolUtils";
+import { useToolbarSettings } from "./useToolbarSettings";
+import { ToolbarRenderer } from "./ToolbarRenderer";
 
 export const Toolbar = () => {
     const store = useDrawingStore();
@@ -18,25 +17,15 @@ export const Toolbar = () => {
         selectedTool,
         updateToolbarPosition,
         setToolbarVisiblity,
-        toolRegistry,
-        updateToolSetting,
     } = store;
     const { visible, position, orientation } = toolbarSettings;
 
-    const items = useToolbarItems();
+    const items = useToolbarItems(store);
     const toolbarRef = useRef(null);
     const toolGroupRefs = useRef({});
     const [activeGroup, setActiveGroup] = useState(null);
     const [mainButtonRect, setMainButtonRect] = useState(null);
     const [groupIcons, setGroupIcons] = useState({});
-
-    const [settingsTool, setSettingsTool] = useState(null);
-
-    // --- Color picker state ---
-    const [colorPickerOpen, setColorPickerOpen] = useState(false);
-    const [colorPickerValue, setColorPickerValue] = useState("#ff0000");
-    const [colorPickerTargetKey, setColorPickerTargetKey] = useState(null);
-    const [colorPickerTitle, setColorPickerTitle] = useState("");
 
     const actions = createToolbarActionRegistry(store);
     const { dragging, handleMouseDown } = useDragHandler(
@@ -54,54 +43,14 @@ export const Toolbar = () => {
         setToolbarVisiblity(true);
     }, [toolbarRef]);
 
-    useEffect(() => {
-        if (!settingsTool) return; // menu not open, do nothing
-        const selTool = toolRegistry[selectedTool];
-        if (selTool && selTool !== settingsTool) {
-            setSettingsTool(selTool);
-        }
-    }, [selectedTool, settingsTool, toolRegistry]);
-
-    const handleToolSelect = (item) => {
-        actions[item.action]?.(item);
-        setActiveGroup(null);
-    };
-
-    const handleToolRightClick = (tool, event) => {
-        event.preventDefault();
-        const selTool = toolRegistry[tool.name];
-        setSettingsTool(selTool);
-    };
-
-    const handleSettingChange = (name, value) => {
-        updateToolSetting(settingsTool.name, name, value);
-        settingsTool.updateSettings({ [name]: value });
-    };
-
-    const closeSettingsMenu = () => {
-        setSettingsTool(null);
-    };
-
-    const handleColorPickerChange = (value) => {
-        if (!colorPickerTargetKey) return;
-        setColorPickerValue(value);
-
-        if (colorPickerTargetKey === "infiniteBg") {
-            store.setCanvasSettings((prev) => ({ ...prev, infiniteBg: value }));
-        }
-
-        if (settingsTool && colorPickerTargetKey === "color") {
-            updateToolSetting(settingsTool.name, colorPickerTargetKey, value);
-            settingsTool.updateSettings({ [colorPickerTargetKey]: value });
-        }
-    };
-
-    const handleOpenColorPicker = (colorPickerTargetKey, colorValue, title) => {
-        setColorPickerTargetKey(colorPickerTargetKey);
-        setColorPickerTitle(title);
-        setColorPickerValue(colorValue);
-        setColorPickerOpen(true);
-    };
+    const {
+        settingsTool,
+        closeSettingsMenu,
+        handleSettingChange,
+        handleToolSelect,
+        handleToolRightClick,
+        colorPicker,
+    } = useToolbarSettings(store, selectedTool, actions);
 
     return (
         <>
@@ -124,106 +73,43 @@ export const Toolbar = () => {
                     opacity: visible ? 1 : 0,
                 }}
             >
-                {items.map((group) => {
-                    // --- Drag handle ---
-                    if (group.type === "drag") {
-                        return (
-                            <ToolbarDragItem
-                                key={group.name}
-                                onMouseDown={handleMouseDown}
-                                dragging={dragging}
-                                orientation={orientation}
-                            />
-                        );
-                    }
-
-                    if (group.groupName === "canvasColor") {
-                        return (
-                            <ToolbarItem
-                                key={group.groupName}
-                                tooltip={group.tooltip}
-                                orientation={orientation}
-                                icon={() => (
-                                    <div
-                                        className="w-[20px] h-[20px] rounded border border-gray-300"
-                                        style={{
-                                            backgroundColor:
-                                                store.canvasSettings.infiniteBg,
-                                        }}
-                                    />
-                                )}
-                                onClick={() =>
-                                    handleOpenColorPicker(
-                                        "infiniteBg",
-                                        store.canvasSettings.infiniteBg,
-                                        "Canvas Color"
-                                    )
-                                }
-                            />
-                        );
-                    }
-
-                    // --- Multi-tool groups ---
-                    if (group.tools?.length > 0) {
-                        return (
-                            <ToolbarGroup
-                                key={group.groupName}
-                                group={group}
-                                activeGroup={activeGroup}
-                                setActiveGroup={setActiveGroup}
-                                groupIcons={groupIcons}
-                                setGroupIcons={setGroupIcons}
-                                mainButtonRect={mainButtonRect}
-                                setMainButtonRect={setMainButtonRect}
-                                selectedTool={selectedTool}
-                                actions={actions}
-                                orientation={orientation}
-                                toolGroupRefs={toolGroupRefs}
-                                onToolRightClick={handleToolRightClick}
-                            />
-                        );
-                    }
-
-                    // --- Single-tool groups (no tools array needed) ---
-                    return (
-                        <ToolbarItem
-                            key={group.name}
-                            icon={group.icon}
-                            tooltip={group.tooltip}
-                            selected={selectedTool === group.name}
-                            onClick={() =>
-                                handleToolSelect({
-                                    name: group.name,
-                                    action: group.action,
-                                })
-                            }
-                            onContextMenu={(e) =>
-                                handleToolRightClick(group, e)
-                            }
-                            orientation={orientation}
-                        />
-                    );
-                })}
+                <ToolbarRenderer
+                    items={items}
+                    store={store}
+                    actions={actions}
+                    orientation={orientation}
+                    selectedTool={selectedTool}
+                    activeGroup={activeGroup}
+                    setActiveGroup={setActiveGroup}
+                    toolGroupRefs={toolGroupRefs}
+                    groupIcons={groupIcons}
+                    setGroupIcons={setGroupIcons}
+                    mainButtonRect={mainButtonRect}
+                    setMainButtonRect={setMainButtonRect}
+                    handleToolSelect={handleToolSelect}
+                    handleToolRightClick={handleToolRightClick}
+                    colorPicker={colorPicker}
+                    dragging={dragging}
+                    handleMouseDown={handleMouseDown}
+                />
             </div>
 
-            {/* Tool Settings Menu */}
             {settingsTool && (
                 <ToolSettingsMenu
                     tool={settingsTool}
                     onClose={closeSettingsMenu}
                     onChange={handleSettingChange}
-                    openColorPicker={handleOpenColorPicker}
+                    openColorPicker={colorPicker.open}
                 />
             )}
 
-            {/* Floating Color Picker */}
-            {colorPickerOpen && selectedTool !== TOOLS.PAN.NAME && (
+            {colorPicker.isOpen && selectedTool !== TOOLS.PAN.NAME && (
                 <FloatingColorPicker
-                    initialColor={colorPickerValue}
-                    isOpen={colorPickerOpen}
-                    onClose={() => setColorPickerOpen(false)}
-                    onChange={handleColorPickerChange}
-                    title={colorPickerTitle || "Color"}
+                    initialColor={colorPicker.value}
+                    isOpen={colorPicker.isOpen}
+                    onClose={colorPicker.close}
+                    onChange={colorPicker.onChange}
+                    title={colorPicker.title || "Color"}
                 />
             )}
         </>
