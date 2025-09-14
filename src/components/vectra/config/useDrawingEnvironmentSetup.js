@@ -1,5 +1,4 @@
 import { PolylineShape } from "../shapes/polyline/PolylineShape";
-import { useDrawingStore } from "../store/DrawingStoreContext";
 import { LineTool } from "./../tools/LineTool";
 import { ArrowTool } from "./../tools/ArrowTool";
 import { ArrowShape } from "./../shapes/line/ArrowShape";
@@ -13,6 +12,7 @@ import { PanTool } from "../tools/PanTool";
 import { TOOLS } from "../tools/toolUtils";
 import { SHAPES } from "../shapes/shapeUtils";
 import { CANVAS_MODES } from "./../canvas/canvasUtils";
+import { useDrawingStore } from "../store/useDrawingStore";
 
 export const useDrawingEnvironmentSetup = () => {
     const { registerTool, registerShape, setMode, setSelectedTool } =

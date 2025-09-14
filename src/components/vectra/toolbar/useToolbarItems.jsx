@@ -1,4 +1,3 @@
-import { useDrawingStore } from "../store/DrawingStoreContext";
 import { TOOLS } from "./../tools/toolUtils";
 import {
     Pen,

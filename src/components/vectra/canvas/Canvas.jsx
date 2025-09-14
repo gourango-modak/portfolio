@@ -1,5 +1,4 @@
 import { useRef, useEffect } from "react";
-import { useDrawingStore } from "../store/DrawingStoreContext";
 import { useDrawingEnvironmentSetup } from "../config/useDrawingEnvironmentSetup";
 import { TextInputOverlay } from "./TextInputOverlay";
 import { useCanvasEvents } from "./useCanvasEvents";
@@ -7,6 +6,7 @@ import { useRenderShapes } from "./useRenderShapes";
 import { useCanvasZoomPan } from "./useCanvasZoomPan";
 import { useToolShortcuts } from "./../tools/useToolShortcuts";
 import { TOOLS } from "../tools/toolUtils";
+import { useDrawingStore } from "../store/useDrawingStore";
 
 export const Canvas = () => {
     const {

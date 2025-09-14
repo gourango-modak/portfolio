@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { useToolbarItems } from "./useToolbarItems";
-import { useDrawingStore } from "../store/DrawingStoreContext";
 import { createToolbarActionRegistry } from "./ToolbarActionRegistry";
 import { useDragHandler } from "./useDragHandler";
 import { ToolSettingsMenu } from "./ToolSettingsMenu";
@@ -9,6 +8,7 @@ import { ORIENTATION } from "../../../utils/common";
 import { TOOLS } from "../tools/toolUtils";
 import { useToolbarSettings } from "./useToolbarSettings";
 import { ToolbarRenderer } from "./ToolbarRenderer";
+import { useDrawingStore } from "../store/useDrawingStore";
 
 export const Toolbar = () => {
     const store = useDrawingStore();

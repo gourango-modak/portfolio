@@ -1,10 +1,10 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useMemo } from "react";
 import { useToolManager } from "./useToolManager";
 import { useShapeManager } from "./useShapeManager";
 import { useToolbar } from "./useToolbar";
 import { useCanvasManager } from "./useCanvasManager";
 
-const DrawingStoreContext = createContext(null);
+export const DrawingStoreContext = createContext(null);
 
 export const DrawingStoreProvider = ({ children }) => {
     const toolManager = useToolManager();
@@ -85,5 +85,3 @@ export const DrawingStoreProvider = ({ children }) => {
         </DrawingStoreContext.Provider>
     );
 };
-
-export const useDrawingStore = () => useContext(DrawingStoreContext);

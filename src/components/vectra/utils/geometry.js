@@ -1,4 +1,4 @@
-export function distancePointToSegment(pt, p1, p2) {
+export const distancePointToSegment = (pt, p1, p2) => {
     const A = pt.x - p1.x;
     const B = pt.y - p1.y;
     const C = p2.x - p1.x;
@@ -24,15 +24,15 @@ export function distancePointToSegment(pt, p1, p2) {
     const dx = pt.x - xx;
     const dy = pt.y - yy;
     return Math.sqrt(dx * dx + dy * dy);
-}
+};
 
-export function distance(p1, p2) {
+export const distance = (p1, p2) => {
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
     return Math.sqrt(dx * dx + dy * dy);
-}
+};
 
-export function pointInTriangle(pt, v1, v2, v3) {
+export const pointInTriangle = (pt, v1, v2, v3) => {
     const d1 = sign(pt, v1, v2);
     const d2 = sign(pt, v2, v3);
     const d3 = sign(pt, v3, v1);
@@ -41,13 +41,13 @@ export function pointInTriangle(pt, v1, v2, v3) {
     const hasPos = d1 > 0 || d2 > 0 || d3 > 0;
 
     return !(hasNeg && hasPos);
-}
+};
 
-export function sign(p1, p2, p3) {
+export const sign = (p1, p2, p3) => {
     return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
-}
+};
 
-export function getSvgPathFromStroke(stroke) {
+export const getSvgPathFromStroke = (stroke) => {
     if (!stroke.length) return "";
     const d = stroke.reduce(
         (acc, [x0, y0], i, arr) => {
@@ -59,4 +59,4 @@ export function getSvgPathFromStroke(stroke) {
     );
     d.push("Z");
     return d.join(" ");
-}
+};

@@ -62,9 +62,11 @@ export const useToolbarSettings = (store, selectedTool, actions) => {
 
     const handleToolRightClick = (tool, event) => {
         event.preventDefault();
-        const selTool = store.toolRegistry[tool.name];
-        if (selTool) setSettingsTool(selTool);
-        setColorPickerOpen(false);
+        if (tool.name === selectedTool) {
+            const selTool = store.toolRegistry[tool.name];
+            if (selTool) setSettingsTool(selTool);
+            setColorPickerOpen(false);
+        }
     };
 
     return {

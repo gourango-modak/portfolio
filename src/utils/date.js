@@ -1,4 +1,4 @@
-export function formatDate(dateInput, options = {}) {
+export const formatDate = (dateInput, options = {}) => {
     const { locale = "en-US", format = {} } = options;
 
     if (!dateInput) return "";
@@ -17,4 +17,4 @@ export function formatDate(dateInput, options = {}) {
     });
 
     return formatter.format(date);
-}
+};

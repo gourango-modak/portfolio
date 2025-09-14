@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 /**
  * Hook to track how many times a component renders.
  */
-export function useRenderCount(componentName = "Component", props = {}) {
+export const useRenderCount = (componentName = "Component", props = {}) => {
     const renderCount = useRef(0);
     renderCount.current += 1;
 
@@ -12,4 +12,4 @@ export function useRenderCount(componentName = "Component", props = {}) {
     });
 
     return renderCount.current;
-}
+};

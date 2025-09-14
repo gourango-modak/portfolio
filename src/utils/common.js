@@ -82,7 +82,7 @@ export const errorLog = (message, data) => {
     console.log(`[Error] ${message}:`, data);
 };
 
-export function formatToReadable(text) {
+export const formatToReadable = (text) => {
     if (!text) return "";
 
     // Replace underscores/hyphens with spaces
@@ -98,7 +98,7 @@ export function formatToReadable(text) {
         .join(" ");
 
     return result;
-}
+};
 
 export const ORIENTATION = {
     VERTICAL: "vertical",

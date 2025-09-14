@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { useDrawingStore } from "../store/DrawingStoreContext";
 import { TOOLS } from "./toolUtils";
+import { useDrawingStore } from "../store/useDrawingStore";
 
 export const useToolShortcuts = () => {
     const { selectedTool, setSelectedTool, toolRegistry } = useDrawingStore();
