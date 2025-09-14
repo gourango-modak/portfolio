@@ -1,28 +1,24 @@
 import { formatToReadable } from "./../../../utils/common";
 
-export const ToolSettingField = ({ keyName, value, onChange }) => {
+export const ToolSettingField = ({
+    keyName,
+    value,
+    onChange,
+    openColorPicker,
+}) => {
     const label = formatToReadable(keyName);
 
     // Color picker
     if (keyName === "color" || keyName === "strokeColor") {
         return (
-            <div style={{ marginBottom: "12px" }}>
-                <label
-                    style={{
-                        display: "block",
-                        marginBottom: "4px",
-                        fontSize: "13px",
-                        fontWeight: 500,
-                        color: "#444",
-                    }}
-                >
+            <div className="flex items-center gap-2 mb-3">
+                <label className="text-sm font-medium text-gray-700">
                     {label}
                 </label>
-                <input
-                    type="color"
-                    value={value}
-                    onChange={(e) => onChange(keyName, e.target.value)}
-                    style={{ width: "100%" }}
+                <div
+                    onClick={() => openColorPicker("color")}
+                    className="w-6 h-6 rounded border border-gray-300 cursor-pointer"
+                    style={{ backgroundColor: value }}
                 />
             </div>
         );

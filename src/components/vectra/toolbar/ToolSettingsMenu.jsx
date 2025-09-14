@@ -3,12 +3,17 @@ import { ToolSettingField } from "./ToolSettingField";
 import { ToolSettingsMenuHeader } from "./ToolSettingsMenuHeader";
 import { useDragHandler } from "./useDragHandler";
 
-export const ToolSettingsMenu = ({ tool, onClose, onChange }) => {
+export const ToolSettingsMenu = ({
+    tool,
+    onClose,
+    onChange,
+    openColorPicker,
+}) => {
     const menuRef = useRef(null);
     const [pos, setPos] = useState({ x: 100, y: 100 }); // default position
     const { dragging, handleMouseDown } = useDragHandler(pos, setPos);
 
-    if (!tool) return null;
+    if (!tool || tool.name === "pan") return null;
 
     return (
         <div
@@ -30,7 +35,7 @@ export const ToolSettingsMenu = ({ tool, onClose, onChange }) => {
             }}
         >
             <ToolSettingsMenuHeader
-                title={tool.label || tool.name}
+                title={`${tool.label || tool.name} Settings`}
                 onClose={onClose}
                 onMouseDown={handleMouseDown}
             />
@@ -42,6 +47,7 @@ export const ToolSettingsMenu = ({ tool, onClose, onChange }) => {
                             keyName={key}
                             value={value}
                             onChange={onChange}
+                            openColorPicker={openColorPicker}
                         />
                     ))}
             </div>

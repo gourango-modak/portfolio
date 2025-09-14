@@ -7,6 +7,7 @@ import { createToolbarActionRegistry } from "./ToolbarActionRegistry";
 import { useDragHandler } from "./useDragHandler";
 import { ToolbarGroup } from "./ToolbarGroup";
 import { ToolSettingsMenu } from "./ToolSettingsMenu";
+import { FloatingColorPicker } from "./FloatingColorPicker";
 
 export const Toolbar = () => {
     const store = useDrawingStore();
@@ -28,6 +29,11 @@ export const Toolbar = () => {
     const [groupIcons, setGroupIcons] = useState({});
 
     const [settingsTool, setSettingsTool] = useState(null);
+
+    // --- Color picker state ---
+    const [colorPickerOpen, setColorPickerOpen] = useState(false);
+    const [colorPickerValue, setColorPickerValue] = useState("#ff0000");
+    const [colorPickerTargetKey, setColorPickerTargetKey] = useState(null);
 
     const actions = createToolbarActionRegistry(store);
     const { dragging, handleMouseDown } = useDragHandler(
@@ -73,6 +79,21 @@ export const Toolbar = () => {
         setSettingsTool(null);
     };
 
+    const handleColorPickerChange = (value) => {
+        if (!colorPickerTargetKey) return;
+        setColorPickerValue(value);
+
+        if (settingsTool) {
+            updateToolSetting(settingsTool.name, colorPickerTargetKey, value);
+            settingsTool.updateSettings({ [colorPickerTargetKey]: value });
+        }
+    };
+
+    const handleOpenColorPicker = (colorPickerTargetKey) => {
+        setColorPickerTargetKey(colorPickerTargetKey);
+        setColorPickerOpen(true);
+    };
+
     return (
         <>
             <div
@@ -95,10 +116,11 @@ export const Toolbar = () => {
                 }}
             >
                 {items.map((group) => {
+                    // --- Drag handle ---
                     if (group.type === "drag") {
                         return (
                             <ToolbarDragItem
-                                key={group.groupName}
+                                key={group.name}
                                 onMouseDown={handleMouseDown}
                                 dragging={dragging}
                                 orientation={orientation}
@@ -106,38 +128,64 @@ export const Toolbar = () => {
                         );
                     }
 
-                    if (group.tools.length === 1) {
-                        const tool = group.tools[0];
+                    if (group.groupName === "color") {
                         return (
-                            <ToolbarItem
-                                key={tool.name}
-                                icon={tool.icon}
-                                tooltip={tool.tooltip}
-                                selected={selectedTool === tool.name}
-                                onClick={() => handleToolSelect(tool)}
-                                onContextMenu={(e) =>
-                                    handleToolRightClick(tool, e)
-                                }
+                            <div
+                                key={group.groupName}
+                                className="w-[42px] h-[42px] flex justify-center items-center"
+                            >
+                                <div
+                                    onClick={() =>
+                                        handleOpenColorPicker("infiniteBg")
+                                    }
+                                    className="w-[20px] h-[20px] rounded border border-gray-300 cursor-pointer"
+                                    style={{
+                                        backgroundColor: colorPickerValue,
+                                    }}
+                                    title="Palette"
+                                />
+                            </div>
+                        );
+                    }
+
+                    // --- Multi-tool groups ---
+                    if (group.tools?.length > 0) {
+                        return (
+                            <ToolbarGroup
+                                key={group.groupName}
+                                group={group}
+                                activeGroup={activeGroup}
+                                setActiveGroup={setActiveGroup}
+                                groupIcons={groupIcons}
+                                setGroupIcons={setGroupIcons}
+                                mainButtonRect={mainButtonRect}
+                                setMainButtonRect={setMainButtonRect}
+                                selectedTool={selectedTool}
+                                actions={actions}
                                 orientation={orientation}
+                                toolGroupRefs={toolGroupRefs}
+                                onToolRightClick={handleToolRightClick}
                             />
                         );
                     }
 
+                    // --- Single-tool groups (no tools array needed) ---
                     return (
-                        <ToolbarGroup
-                            key={group.groupName}
-                            group={group}
-                            activeGroup={activeGroup}
-                            setActiveGroup={setActiveGroup}
-                            groupIcons={groupIcons}
-                            setGroupIcons={setGroupIcons}
-                            mainButtonRect={mainButtonRect}
-                            setMainButtonRect={setMainButtonRect}
-                            selectedTool={selectedTool}
-                            actions={actions}
+                        <ToolbarItem
+                            key={group.name}
+                            icon={group.icon}
+                            tooltip={group.tooltip}
+                            selected={selectedTool === group.name}
+                            onClick={() =>
+                                handleToolSelect({
+                                    name: group.name,
+                                    action: group.action,
+                                })
+                            }
+                            onContextMenu={(e) =>
+                                handleToolRightClick(group, e)
+                            }
                             orientation={orientation}
-                            toolGroupRefs={toolGroupRefs}
-                            onToolRightClick={handleToolRightClick} // pass down to group items
                         />
                     );
                 })}
@@ -149,6 +197,22 @@ export const Toolbar = () => {
                     tool={settingsTool}
                     onClose={closeSettingsMenu}
                     onChange={handleSettingChange}
+                    openColorPicker={handleOpenColorPicker}
+                />
+            )}
+
+            {/* Floating Color Picker */}
+            {colorPickerOpen && (
+                <FloatingColorPicker
+                    initialColor={colorPickerValue}
+                    isOpen={colorPickerOpen}
+                    onClose={() => setColorPickerOpen(false)}
+                    onChange={handleColorPickerChange}
+                    title={
+                        colorPickerTargetKey === "strokeColor"
+                            ? "Stroke Color"
+                            : "Color"
+                    }
                 />
             )}
         </>

@@ -18,31 +18,30 @@ export const useToolbarItems = () => {
     const { canvasSettings } = useDrawingStore();
 
     const toolbarGroups = [
+        // Drag handle (no tools)
         {
             groupName: "drag",
             type: "drag",
             icon: Move,
-            tools: [], // no tools inside drag
+            name: "drag",
         },
+
+        // Pen tool as standalone
         {
             groupName: "pen",
-            groupIcon: Pen, // main group button icon
-            changeGroupIcon: true, // change icon on tool selection
+            name: "pen",
             type: "tool",
-            tools: [
-                {
-                    name: "pen",
-                    icon: Pen,
-                    tooltip: "Pen Tool",
-                    action: "selectTool",
-                },
-            ],
+            icon: Pen,
+            tooltip: "Pen Tool",
+            action: "selectTool",
         },
+
+        // Line + Arrow grouped
         {
             groupName: "line",
+            type: "tool",
             groupIcon: MoveUpRight,
             changeGroupIcon: true,
-            type: "tool",
             tools: [
                 {
                     name: "line",
@@ -58,54 +57,43 @@ export const useToolbarItems = () => {
                 },
             ],
         },
+
+        // Text
         {
             groupName: "text",
-            groupIcon: Italic,
-            changeGroupIcon: false, // main icon remains fixed
+            name: "text",
             type: "tool",
-            tools: [
-                {
-                    name: "text",
-                    icon: Italic,
-                    tooltip: "Text Tool",
-                    action: "selectTool",
-                },
-            ],
+            icon: Italic,
+            tooltip: "Text Tool",
+            action: "selectTool",
         },
+
+        // Pan
         {
             groupName: "pan",
-            groupIcon: Hand,
-            changeGroupIcon: false,
+            name: "pan",
             type: "tool",
-            tools: [
-                {
-                    name: "pan",
-                    icon: Hand,
-                    tooltip: "Pan Tool",
-                    action: "selectTool",
-                },
-            ],
+            icon: Hand,
+            tooltip: "Pan Tool",
+            action: "selectTool",
         },
+
+        // Eraser
         {
             groupName: "eraser",
-            groupIcon: Eraser,
-            changeGroupIcon: false,
+            name: "eraser",
             type: "tool",
-            tools: [
-                {
-                    name: "eraser",
-                    icon: Eraser,
-                    tooltip: "Eraser Tool",
-                    action: "selectTool",
-                },
-            ],
+            icon: Eraser,
+            tooltip: "Eraser Tool",
+            action: "selectTool",
         },
-        ,
+
+        // Page navigation
         {
             groupName: "page",
+            type: "tool",
             groupIcon: StickyNote,
             changeGroupIcon: false,
-            type: "page",
             tools: [
                 {
                     name: "next",
@@ -122,8 +110,11 @@ export const useToolbarItems = () => {
             ],
             condition: (settings) => settings.mode === "paged-artboard",
         },
+
+        // Actions
         {
             groupName: "action",
+            type: "tool",
             groupIcon: Save,
             changeGroupIcon: true,
             tools: [
@@ -141,14 +132,24 @@ export const useToolbarItems = () => {
                 },
             ],
         },
+
+        // Palette
+        {
+            groupName: "color",
+            name: "color",
+            type: "action",
+            icon: null,
+            tooltip: "Palette",
+            action: "openPalette",
+        },
     ];
 
-    // Filter tools/group if needed based on canvasSettings
+    // Filter based on conditions
     return toolbarGroups
         .filter((group) => !group.condition || group.condition(canvasSettings))
         .map((group) => ({
             ...group,
-            tools: group.tools.filter(
+            tools: group.tools?.filter(
                 (tool) => !tool.condition || tool.condition(canvasSettings)
             ),
         }));

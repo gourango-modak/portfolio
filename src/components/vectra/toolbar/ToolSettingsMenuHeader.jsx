@@ -14,7 +14,7 @@ export const ToolSettingsMenuHeader = ({ title, onClose, onMouseDown }) => (
         }}
     >
         <span style={{ fontSize: "14px", fontWeight: 600, color: "#333" }}>
-            {title} Settings
+            {title}
         </span>
         <button
             onClick={onClose}
