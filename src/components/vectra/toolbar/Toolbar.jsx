@@ -1,25 +1,34 @@
 import { useState, useRef, useEffect } from "react";
-import { useDrawingStore } from "../store/DrawingStoreContext";
+import { ToolbarItem } from "./ToolbarItem";
+import { SecondaryToolbar } from "./SecondaryToolbar";
 import { useToolbarItems } from "./useToolbarItems";
+import { useDrawingStore } from "../store/DrawingStoreContext";
+import { ToolbarDragItem } from "./ToolbarDragItem";
+import { createToolbarActionRegistry } from "./ToolbarActionRegistry";
 
 export const Toolbar = ({ saveAsImage }) => {
-    const { toolbarSettings, selectedTool, updateToolbarPosition } =
-        useDrawingStore();
+    const store = useDrawingStore();
+    const { toolbarSettings, selectedTool, updateToolbarPosition } = store;
     const { visible, position, orientation } = toolbarSettings;
-    const [dragging, setDragging] = useState(false);
-    const draggingOffsetRef = useRef({ x: 0, y: 0 });
 
+    const [dragging, setDragging] = useState(false);
+    const [activeGroup, setActiveGroup] = useState(null);
+    const [mainButtonRect, setMainButtonRect] = useState(null);
+    const [groupIcons, setGroupIcons] = useState({}); // store active icons per group
+
+    const draggingOffsetRef = useRef({ x: 0, y: 0 });
     const items = useToolbarItems(saveAsImage);
+    const toolbarRef = useRef(null);
 
     if (!visible) return null;
-
     const isVertical = orientation === "vertical";
+    const actions = createToolbarActionRegistry(store);
 
-    // --- Drag handlers ---
     const handleMouseDown = (e) => {
         e.stopPropagation();
         e.preventDefault();
         setDragging(true);
+        setActiveGroup(null);
         draggingOffsetRef.current = {
             x: e.clientX - position.x,
             y: e.clientY - position.y,
@@ -27,8 +36,7 @@ export const Toolbar = ({ saveAsImage }) => {
     };
 
     const handleMouseMove = (e) => {
-        if (!dragging) return;
-        if (e.buttons !== 1) return;
+        if (!dragging || e.buttons !== 1) return;
         e.stopPropagation();
         e.preventDefault();
         updateToolbarPosition({
@@ -44,7 +52,6 @@ export const Toolbar = ({ saveAsImage }) => {
         setDragging(false);
     };
 
-    // Attach global mousemove & mouseup when dragging
     useEffect(() => {
         if (dragging) {
             window.addEventListener("mousemove", handleMouseMove);
@@ -59,53 +66,120 @@ export const Toolbar = ({ saveAsImage }) => {
         };
     }, [dragging]);
 
+    // Group items
     const groupedItems = items.reduce((acc, item) => {
-        const group = item.group || "ungrouped";
-        if (!acc[group]) acc[group] = [];
-        acc[group].push(item);
+        if (!item.group) {
+            acc[item.key] = [item];
+        } else {
+            acc[item.group] = acc[item.group] || [];
+            acc[item.group].push(item);
+        }
         return acc;
     }, {});
 
+    const handleGroupToolClick = (groupName, buttonRef) => {
+        const rect = buttonRef.current?.getBoundingClientRect();
+        setMainButtonRect(rect);
+        setActiveGroup((prev) => (prev === groupName ? null : groupName));
+    };
+
+    const handleGroupToolSelect = (groupName, item) => {
+        actions[item.action]?.(item);
+        setGroupIcons((prev) => ({ ...prev, [groupName]: item.icon }));
+        setActiveGroup(null);
+    };
+
+    const handleToolSelect = (item) => {
+        actions[item.action]?.(item);
+    };
+
     return (
-        <div
-            style={{
-                position: "fixed",
-                top: position.y,
-                left: position.x,
-                zIndex: 1000,
-                background: "#fff",
-                border: "1px solid #ddd",
-                borderRadius: "12px",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
-                display: "flex",
-                flexDirection: isVertical ? "column" : "row",
-                alignItems: "center",
-                padding: "8px 12px",
-                userSelect: "none",
-                width: isVertical ? "56px" : "auto",
-                height: isVertical ? "auto" : "56px",
-                gap: "8px",
-            }}
-        >
-            {Object.values(groupedItems).map((group, idx) => (
-                <div
-                    key={idx}
-                    style={{
-                        display: "flex",
-                        flexDirection: isVertical ? "column" : "row",
-                        gap: "6px",
-                    }}
-                >
-                    {group.map((item) =>
-                        item.render(
-                            selectedTool,
-                            item.draggable
-                                ? { onMouseDown: handleMouseDown }
-                                : null
-                        )
-                    )}
-                </div>
-            ))}
-        </div>
+        <>
+            <div
+                ref={toolbarRef}
+                style={{
+                    position: "fixed",
+                    top: position.y,
+                    left: position.x,
+                    zIndex: 1000,
+                    background: "#fff",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+                    display: "flex",
+                    flexDirection: isVertical ? "column" : "row",
+                    alignItems: "center",
+                    padding: "4px",
+                    gap: "8px",
+                    userSelect: "none",
+                }}
+            >
+                {Object.entries(groupedItems).map(([groupName, group]) => {
+                    const buttonRef = useRef(null);
+
+                    // Drag handle
+                    if (group[0].type === "drag") {
+                        return (
+                            <ToolbarDragItem
+                                key={groupName}
+                                onMouseDown={handleMouseDown}
+                                dragging={dragging}
+                                orientation={orientation}
+                            />
+                        );
+                    }
+
+                    // Single tool
+                    if (group.length === 1) {
+                        const item = group[0];
+                        return (
+                            <ToolbarItem
+                                key={item.name}
+                                icon={item.icon}
+                                tooltip={!dragging ? item.tooltip : null}
+                                selected={selectedTool === item.name}
+                                onClick={() => handleToolSelect(item)}
+                                orientation={orientation}
+                            />
+                        );
+                    }
+
+                    // Grouped tools
+                    const activeIcon = groupIcons[groupName] || group[0].icon;
+
+                    return (
+                        <div key={groupName} ref={buttonRef}>
+                            <ToolbarItem
+                                icon={activeIcon}
+                                tooltip={!dragging ? group[0].tooltip : null}
+                                selected={group.some(
+                                    (i) => i.name === selectedTool
+                                )}
+                                onClick={() =>
+                                    handleGroupToolClick(groupName, buttonRef)
+                                }
+                                orientation={orientation}
+                            />
+                            {activeGroup === groupName && (
+                                <SecondaryToolbar
+                                    items={group}
+                                    mainButtonRect={mainButtonRect}
+                                    orientation={orientation}
+                                    selectedTool={selectedTool}
+                                    onSelect={(toolName) => {
+                                        const selectedItem = group.find(
+                                            (i) => i.name === toolName
+                                        );
+                                        handleGroupToolSelect(
+                                            groupName,
+                                            selectedItem
+                                        );
+                                    }}
+                                />
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </>
     );
 };

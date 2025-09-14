@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useToolbar = () => {
     const [toolbarSettings, setToolbarSettings] = useState({
         visible: true,
-        orientation: "horizontal",
+        orientation: "horizontal", // horizontal | vertical
         position: { x: 20, y: 20 },
     });
 

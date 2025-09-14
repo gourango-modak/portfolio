@@ -17,7 +17,7 @@ export const useDrawingEnvironmentSetup = () => {
 
     useEffect(() => {
         setMode("infinite");
-        setSelectedTool("text");
+        setSelectedTool("pen");
 
         // Register tools
         registerTool("pen", new PenTool());
