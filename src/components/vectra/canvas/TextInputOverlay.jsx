@@ -13,7 +13,7 @@ export const TextInputOverlay = ({
 
     useEffect(() => {
         if (!currentShape) return;
-        setText(currentShape.text || "");
+        setText(currentShape.text);
         setTimeout(() => {
             if (inputRef.current) {
                 inputRef.current.focus();

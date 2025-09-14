@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { TOOLS } from "./../tools/toolUtils";
 
 export const useToolManager = () => {
-    const [selectedTool, setSelectedTool] = useState("pen");
+    const [selectedTool, setSelectedTool] = useState(TOOLS.PEN.NAME);
     const [toolsSettings, setToolsSettings] = useState({ pen: {} });
     const [toolRegistry, setToolRegistry] = useState({});
 

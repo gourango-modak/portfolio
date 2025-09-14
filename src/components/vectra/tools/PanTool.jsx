@@ -4,15 +4,11 @@ import { TOOLS } from "./toolUtils";
 export class PanTool extends BaseTool {
     constructor() {
         super(TOOLS.PAN.NAME, TOOLS.PAN.LABEL);
-        this.shortcut = { code: "Space" }; // activate via Spacebar
+        this.shortcut = { code: "Space" };
         this.isDragging = false;
         this.start = null;
         this.startPan = null;
         this.revertOnRelease = true;
-    }
-
-    show() {
-        return false; // hidden in toolbar
     }
 
     defaultSettings() {
@@ -25,7 +21,7 @@ export class PanTool extends BaseTool {
         this.isDragging = true;
         this.start = { x: event.lx, y: event.ly };
         this.startPan = { ...canvasSettings.pan };
-        return null; // no shape creation
+        return null;
     }
 
     onPointerMove(event) {
@@ -46,6 +42,5 @@ export class PanTool extends BaseTool {
         this.isDragging = false;
         this.start = null;
         this.startPan = null;
-        return null;
     }
 }

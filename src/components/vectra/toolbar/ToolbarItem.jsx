@@ -1,3 +1,4 @@
+import { ORIENTATION } from "../../../utils/common";
 import { TooltipWrapper } from "./TooltipWrapper";
 
 export const ToolbarItem = ({
@@ -6,7 +7,7 @@ export const ToolbarItem = ({
     onClick,
     selected,
     onMouseDown,
-    orientation = "vertical",
+    orientation = ORIENTATION.VERTICAL,
     onContextMenu,
 }) => {
     return (

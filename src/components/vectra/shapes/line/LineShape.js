@@ -11,7 +11,7 @@ export class LineShape extends BaseShape {
     }
 
     defaultSettings() {
-        return { color: "#000", strokeWidth: 2 };
+        return { color: "#000000", strokeWidth: 2 };
     }
 
     setPoints(start, end) {
@@ -49,7 +49,7 @@ export class LineShape extends BaseShape {
     }
 
     static deserialize(data) {
-        const shape = new LineShape(data.settings);
+        const shape = new LineShape(data.settings, data.page);
         shape.setPoints(data.start, data.end);
         return shape;
     }

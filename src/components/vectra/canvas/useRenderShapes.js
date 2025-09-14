@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { ORIENTATION } from "../../../utils/common";
+import { CANVAS_MODES } from "./canvasUtils";
 
 const createPageRect = (page, x = 0, y = 0) => {
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -21,9 +23,9 @@ const drawMultiArtboard = (g, artboard) => {
         let offsetX = 0;
         let offsetY = 0;
 
-        if (artboard.orientation === "vertical") {
+        if (artboard.orientation === ORIENTATION.VERTICAL) {
             offsetY = i * (page.height + artboard.spacing);
-        } else if (artboard.orientation === "horizontal") {
+        } else if (artboard.orientation === ORIENTATION.HORIZONTAL) {
             offsetX = i * (page.width + artboard.spacing);
         }
 
@@ -56,14 +58,17 @@ const drawShapes = (g, shapes, currentShape, canvasSettings) => {
 
     shapes.forEach((s) => {
         if (s.page != null) {
-            if (mode === "multi-artboard" && s.page < artboard.pages.length) {
+            if (
+                mode === CANVAS_MODES.MULTI_ARTBOARD &&
+                s.page < artboard.pages.length
+            ) {
                 s.draw(g, true);
             } else if (
-                mode === "paged-artboard" &&
+                mode === CANVAS_MODES.PAGED_CANVAS &&
                 s.page === artboard.currentPageId
             ) {
                 s.draw(g, true);
-            } else if (mode === "single-artboard") {
+            } else if (mode === CANVAS_MODES.SINGLE_ARTBOARD) {
                 s.draw(g, true);
             }
         } else {
@@ -98,13 +103,13 @@ export const useRenderShapes = (
 
         // Draw artboards based on mode
         switch (mode) {
-            case "single-artboard":
+            case CANVAS_MODES.SINGLE_ARTBOARD:
                 drawSingleArtboard(g, artboard);
                 break;
-            case "multi-artboard":
+            case CANVAS_MODES.MULTI_ARTBOARD:
                 drawMultiArtboard(g, artboard);
                 break;
-            case "paged-artboard":
+            case CANVAS_MODES.PAGED_CANVAS:
                 drawPagedArtboard(g, artboard);
                 break;
             default:

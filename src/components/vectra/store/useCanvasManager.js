@@ -1,26 +1,26 @@
 import { useState } from "react";
+import { CANVAS_MODES } from "./../canvas/canvasUtils";
+import { ORIENTATION } from "./../../../utils/common";
 
 export const useCanvasManager = () => {
     const defaultArtboardTemplate = {
         width: 800,
         height: 1200,
         bg: "#fff",
-        border: "#ddd",
-        customStyle: {},
     };
 
     const [canvasSettings, setCanvasSettings] = useState(() => ({
-        mode: "infinite", // "infinite" | "single-artboard" | "multi-artboard" | "paged-artboard"
+        mode: CANVAS_MODES.INFINITE_CANVAS,
         scale: 1,
         pan: { x: 0, y: 0 },
         infiniteBg: "#f0f0f0",
         artboard: {
             ...defaultArtboardTemplate,
             spacing: 40,
-            orientation: "horizontal",
+            orientation: ORIENTATION.HORIZONTAL,
             preload: 1,
             pages: [{ id: 1, ...defaultArtboardTemplate }],
-            currentPageId: 1, // use ID instead of index
+            currentPageId: 1,
         },
     }));
 
@@ -36,8 +36,6 @@ export const useCanvasManager = () => {
                 width: settings.width ?? prev.artboard.width,
                 height: settings.height ?? prev.artboard.height,
                 bg: settings.bg ?? prev.artboard.bg,
-                border: settings.border ?? prev.artboard.border,
-                customStyle: settings.customStyle ?? {},
             };
             return {
                 ...prev,
@@ -50,25 +48,24 @@ export const useCanvasManager = () => {
         });
     };
 
-    const getArtboardPan = (page, viewportWidth, topMargin = 50) => ({
-        x: (viewportWidth - page.width) / 2,
+    const getArtboardPan = (page, topMargin = 50) => ({
+        x: (window.innerWidth - page.width) / 2,
         y: topMargin,
     });
 
-    /** Set canvas mode and optional overrides, center page if applicable */
-    const setMode = (mode, options = {}, viewportWidth = window.innerWidth) => {
+    const setMode = (mode, options = {}) => {
         setCanvasSettings((prev) => {
             let pages = prev.artboard.pages;
 
-            if (mode === "infinite") {
+            if (mode === CANVAS_MODES.INFINITE_CANVAS) {
                 pages = [];
             }
 
             if (
                 [
-                    "single-artboard",
-                    "multi-artboard",
-                    "paged-artboard",
+                    CANVAS_MODES.SINGLE_ARTBOARD,
+                    CANVAS_MODES.MULTI_ARTBOARD,
+                    CANVAS_MODES.PAGED_CANVAS,
                 ].includes(mode) &&
                 pages.length === 0
             ) {
@@ -81,11 +78,11 @@ export const useCanvasManager = () => {
 
             const pan =
                 [
-                    "single-artboard",
-                    "multi-artboard",
-                    "paged-artboard",
+                    CANVAS_MODES.SINGLE_ARTBOARD,
+                    CANVAS_MODES.MULTI_ARTBOARD,
+                    CANVAS_MODES.PAGED_CANVAS,
                 ].includes(mode) && currentPage
-                    ? getArtboardPan(currentPage, viewportWidth)
+                    ? getArtboardPan(currentPage)
                     : prev.pan;
 
             return {
@@ -103,12 +100,13 @@ export const useCanvasManager = () => {
         });
     };
 
-    /** Get current page by ID */
     const getCurrentPage = () => {
         if (
-            ["multi-artboard", "paged-artboard", "single-artboard"].includes(
-                canvasSettings.mode
-            )
+            [
+                CANVAS_MODES.SINGLE_ARTBOARD,
+                CANVAS_MODES.MULTI_ARTBOARD,
+                CANVAS_MODES.PAGED_CANVAS,
+            ].includes(canvasSettings.mode)
         ) {
             return canvasSettings.artboard.pages.find(
                 (p) => p.id === canvasSettings.artboard.currentPageId
@@ -117,7 +115,6 @@ export const useCanvasManager = () => {
         return null;
     };
 
-    /** Navigate to a page by ID */
     const goToPage = (id) => {
         const pageExists = canvasSettings.artboard.pages.some(
             (p) => p.id === id
@@ -133,7 +130,6 @@ export const useCanvasManager = () => {
         }));
     };
 
-    /** Go to next page (create a new one if it doesn't exist) */
     const nextPage = () => {
         const pages = canvasSettings.artboard.pages;
         const currentId = canvasSettings.artboard.currentPageId;
@@ -146,7 +142,6 @@ export const useCanvasManager = () => {
         }
     };
 
-    /** Go to previous page */
     const prevPage = () => {
         const pages = canvasSettings.artboard.pages;
         const currentId = canvasSettings.artboard.currentPageId;

@@ -13,7 +13,7 @@ export class ArrowTool extends BaseTool {
 
     defaultSettings() {
         return {
-            color: "#000",
+            color: "#000000",
             strokeWidth: 2,
             arrowHeadSize: 10,
             minLength: 20,
@@ -30,7 +30,7 @@ export class ArrowTool extends BaseTool {
             },
             canvasSettings.artboard.currentPageId
         );
-        this.currentShape.setPoints(event, event); // start = end initially
+        this.currentShape.setPoints(event, event);
 
         if (this.currentShape.isValid()) {
             return { type: "createdShape", shape: this.currentShape };
@@ -54,9 +54,5 @@ export class ArrowTool extends BaseTool {
         if (shape?.isValid()) {
             return { type: "finalizedShape", shape: shape };
         }
-    }
-
-    getIcon() {
-        return <ArrowUpRight size={20} />;
     }
 }

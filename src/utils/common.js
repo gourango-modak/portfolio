@@ -99,3 +99,8 @@ export function formatToReadable(text) {
 
     return result;
 }
+
+export const ORIENTATION = {
+    VERTICAL: "vertical",
+    HORIZONTAL: "horizontal",
+};

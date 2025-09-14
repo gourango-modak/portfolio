@@ -14,11 +14,6 @@ export class BaseTool {
         this.settings = { ...this.settings, ...newSettings };
     }
 
-    // Should show the tool in the toolbar
-    show() {
-        return true;
-    }
-
     onPointerDown(event) {}
     onPointerMove(event) {}
     onPointerUp() {}

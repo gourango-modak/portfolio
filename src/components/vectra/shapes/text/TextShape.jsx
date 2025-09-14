@@ -11,7 +11,7 @@ export class TextShape extends BaseShape {
     }
 
     defaultSettings() {
-        return { color: "#000", fontSize: 16, fontFamily: "Arial" };
+        return { color: "#000000", fontSize: 16, fontFamily: "Arial" };
     }
 
     setPosition(position) {
@@ -37,7 +37,6 @@ export class TextShape extends BaseShape {
     }
 
     containsPoint(point, options = {}) {
-        // Very simple bounding box check; can be enhanced
         const tolerance = options.tolerance ?? 5;
         const { x, y } = this.position;
         const width = this.text.length * (this.settings.fontSize * 0.6); // approx width
@@ -52,7 +51,7 @@ export class TextShape extends BaseShape {
 
     serialize() {
         return {
-            type: "text",
+            type: this.type,
             settings: this.settings,
             position: this.position,
             text: this.text,
@@ -61,7 +60,7 @@ export class TextShape extends BaseShape {
     }
 
     static deserialize(data) {
-        const shape = new TextShape(data.settings);
+        const shape = new TextShape(data.settings, data.page);
         shape.position = data.position;
         shape.text = data.text;
         return shape;

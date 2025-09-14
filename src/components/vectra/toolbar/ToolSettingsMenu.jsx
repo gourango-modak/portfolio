@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ToolSettingField } from "./ToolSettingField";
 import { ToolSettingsMenuHeader } from "./ToolSettingsMenuHeader";
 import { useDragHandler } from "./useDragHandler";
+import { TOOLS } from "../tools/toolUtils";
 
 export const ToolSettingsMenu = ({
     tool,
@@ -10,10 +11,10 @@ export const ToolSettingsMenu = ({
     openColorPicker,
 }) => {
     const menuRef = useRef(null);
-    const [pos, setPos] = useState({ x: 100, y: 100 }); // default position
+    const [pos, setPos] = useState({ x: 100, y: 100 });
     const { dragging, handleMouseDown } = useDragHandler(pos, setPos);
 
-    if (!tool || tool.name === "pan") return null;
+    if (!tool || tool.name === TOOLS.PAN.NAME) return null;
 
     return (
         <div

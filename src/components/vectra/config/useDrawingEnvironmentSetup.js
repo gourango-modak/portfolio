@@ -12,13 +12,14 @@ import { TextShape } from "../shapes/text/TextShape";
 import { PanTool } from "../tools/PanTool";
 import { TOOLS } from "../tools/toolUtils";
 import { SHAPES } from "../shapes/shapeUtils";
+import { CANVAS_MODES } from "./../canvas/canvasUtils";
 
 export const useDrawingEnvironmentSetup = () => {
     const { registerTool, registerShape, setMode, setSelectedTool } =
         useDrawingStore();
 
     useEffect(() => {
-        setMode("paged-artboard");
+        setMode(CANVAS_MODES.PAGED_CANVAS);
         setSelectedTool(TOOLS.PEN.NAME);
 
         // Register tools

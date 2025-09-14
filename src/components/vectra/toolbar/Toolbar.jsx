@@ -8,6 +8,8 @@ import { useDragHandler } from "./useDragHandler";
 import { ToolbarGroup } from "./ToolbarGroup";
 import { ToolSettingsMenu } from "./ToolSettingsMenu";
 import { FloatingColorPicker } from "./FloatingColorPicker";
+import { ORIENTATION } from "../../../utils/common";
+import { TOOLS } from "../tools/toolUtils";
 
 export const Toolbar = () => {
     const store = useDrawingStore();
@@ -41,7 +43,7 @@ export const Toolbar = () => {
         position,
         updateToolbarPosition
     );
-    const isVertical = orientation === "vertical";
+    const isVertical = orientation === ORIENTATION.VERTICAL;
 
     useEffect(() => {
         if (!toolbarRef.current) return;
@@ -135,7 +137,7 @@ export const Toolbar = () => {
                         );
                     }
 
-                    if (group.groupName === "color") {
+                    if (group.groupName === "canvasColor") {
                         return (
                             <ToolbarItem
                                 key={group.groupName}
@@ -215,7 +217,7 @@ export const Toolbar = () => {
             )}
 
             {/* Floating Color Picker */}
-            {colorPickerOpen && selectedTool !== "pan" && (
+            {colorPickerOpen && selectedTool !== TOOLS.PAN.NAME && (
                 <FloatingColorPicker
                     initialColor={colorPickerValue}
                     isOpen={colorPickerOpen}

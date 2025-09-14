@@ -1,14 +1,16 @@
+import { ORIENTATION } from "../../../utils/common";
+
 export const ToolbarDragItem = ({
     onMouseDown,
     dragging,
-    orientation = "vertical",
+    orientation = ORIENTATION.HORIZONTAL,
 }) => {
     const dotSize = 4; // px
     const gap = 4; // px spacing between dots
 
     // Layout based on orientation
-    const rows = orientation === "vertical" ? 2 : 2;
-    const cols = orientation === "vertical" ? 2 : 2;
+    const rows = orientation === ORIENTATION.VERTICAL ? 2 : 2;
+    const cols = orientation === ORIENTATION.VERTICAL ? 2 : 2;
 
     return (
         <div

@@ -58,7 +58,7 @@ export const ToolbarGroup = ({
                         );
                         handleGroupToolSelect(selectedItem);
                     }}
-                    onToolRightClick={onToolRightClick} // pass right-click to secondary toolbar
+                    onToolRightClick={onToolRightClick}
                 />
             )}
         </div>

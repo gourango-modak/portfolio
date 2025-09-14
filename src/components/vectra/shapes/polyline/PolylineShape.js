@@ -29,7 +29,7 @@ export class PolylineShape extends BaseShape {
     }
 
     isValid() {
-        return this.points.length >= (this.settings.minPoints || 2);
+        return this.points.length >= this.settings.minPoints;
     }
 
     finalize() {
@@ -66,7 +66,7 @@ export class PolylineShape extends BaseShape {
     }
 
     containsPoint(point, options = {}) {
-        const tolerance = options.tolerance;
+        const tolerance = options.tolerance ?? this.settings.strokeWidth;
 
         for (let i = 0; i < this.points.length - 1; i++) {
             const [x1, y1] = this.points[i];
@@ -87,7 +87,7 @@ export class PolylineShape extends BaseShape {
     }
 
     static deserialize(data) {
-        const shape = new PolylineShape(data.settings);
+        const shape = new PolylineShape(data.settings, data.page);
         shape.points = data.points;
         return shape;
     }

@@ -31,8 +31,4 @@ export class EraserTool extends BaseTool {
             };
         }
     }
-
-    getIcon() {
-        return <Eraser size={20} />;
-    }
 }

@@ -1,4 +1,4 @@
-import { pointInTriangle } from "../../utils/geometry";
+import { distancePointToSegment, pointInTriangle } from "../../utils/geometry";
 import { LineShape } from "./LineShape";
 import { SHAPES } from "./../shapeUtils";
 
@@ -9,7 +9,7 @@ export class ArrowShape extends LineShape {
     }
 
     defaultSettings() {
-        return { color: "#000", strokeWidth: 2, arrowHeadSize: 10 };
+        return { color: "#000000", strokeWidth: 2, arrowHeadSize: 10 };
     }
 
     draw(svg) {
@@ -44,11 +44,11 @@ export class ArrowShape extends LineShape {
 
     containsPoint(point, options = {}) {
         const tolerance = options.tolerance ?? this.settings.strokeWidth;
+
         // Check line segment
         if (super.containsPoint(point, options)) return true;
 
-        // Optional: check arrowhead triangle area
-        // For simplicity, just treat arrowhead as 3 points polygon
+        // Arrowhead geometry
         const { arrowHeadSize } = this.settings;
         const dx = this.end.x - this.start.x;
         const dy = this.end.y - this.start.y;
@@ -63,7 +63,18 @@ export class ArrowShape extends LineShape {
             y: this.end.y - arrowHeadSize * Math.sin(angle + Math.PI / 6),
         };
 
-        return pointInTriangle(point, this.end, arrowLeft, arrowRight);
+        // Instead of strict pointInTriangle, measure distance to edges
+        const d1 = distancePointToSegment(point, this.end, arrowLeft);
+        const d2 = distancePointToSegment(point, this.end, arrowRight);
+        const d3 = distancePointToSegment(point, arrowLeft, arrowRight);
+
+        // Inside triangle or near any edge within tolerance
+        return (
+            pointInTriangle(point, this.end, arrowLeft, arrowRight) ||
+            d1 <= tolerance ||
+            d2 <= tolerance ||
+            d3 <= tolerance
+        );
     }
 
     serialize() {
@@ -77,7 +88,7 @@ export class ArrowShape extends LineShape {
     }
 
     static deserialize(data) {
-        const shape = new ArrowShape(data.settings);
+        const shape = new ArrowShape(data.settings, data.page);
         shape.setPoints(data.start, data.end);
         return shape;
     }

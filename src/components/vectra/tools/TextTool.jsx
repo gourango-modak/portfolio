@@ -12,13 +12,12 @@ export class TextTool extends BaseTool {
 
     defaultSettings() {
         return {
-            color: "#000",
+            color: "#000000",
             fontSize: 16,
             fontFamily: "Arial",
         };
     }
 
-    // On pointer down, create a new TextShape at the click position
     onPointerDown(event, { canvasSettings }) {
         // Only block clicks if actually editing (not pending)
         if (this.editState === "editing") return null;
@@ -32,10 +31,7 @@ export class TextTool extends BaseTool {
         );
 
         this.currentShape.setPosition(point);
-        // Move into pending state (waiting for text input)
         this.editState = "pending";
-
-        // Return a createShape event so Canvas can track currentShape
         return { type: "createdShape", shape: this.currentShape };
     }
 
@@ -43,7 +39,6 @@ export class TextTool extends BaseTool {
         if (this.currentShape) {
             this.currentShape.setText(text);
 
-            // Once text is non-empty, consider it "editing"
             if (text && text.trim() !== "") {
                 this.editState = "editing";
             }
@@ -63,9 +58,5 @@ export class TextTool extends BaseTool {
         } else {
             return { type: "resetCurrentShape" };
         }
-    }
-
-    getIcon() {
-        return <Minus size={20} />;
     }
 }

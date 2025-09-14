@@ -9,7 +9,7 @@ export class LineTool extends BaseTool {
     }
 
     defaultSettings() {
-        return { color: "#000", strokeWidth: 2, minLength: 20 };
+        return { color: "#000000", strokeWidth: 2, minLength: 20 };
     }
 
     onPointerDown(event, { canvasSettings }) {
@@ -49,9 +49,5 @@ export class LineTool extends BaseTool {
         if (shape?.isValid()) {
             return { type: "finalizedShape", shape: shape };
         }
-    }
-
-    getIcon() {
-        return <Minus size={20} />;
     }
 }

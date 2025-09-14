@@ -1,16 +1,17 @@
 import { ToolbarItem } from "./ToolbarItem";
+import { ORIENTATION } from "./../../../utils/common";
 
 export const SecondaryToolbar = ({
     items,
     mainButtonRect,
-    orientation = "vertical",
+    orientation = ORIENTATION.HORIZONTAL,
     selectedTool,
     onSelect,
     onToolRightClick,
 }) => {
     if (!mainButtonRect || !items.length) return null;
 
-    const vertical = orientation === "vertical";
+    const vertical = orientation === ORIENTATION.VERTICAL;
     const buttonSize = 42;
     const spacing = 8; // spacing between buttons
     const offset = 12; // gap between main and secondary toolbar

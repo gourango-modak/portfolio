@@ -19,7 +19,7 @@ export const useToolbarItems = () => {
     const { canvasSettings } = useDrawingStore();
 
     const toolbarGroups = [
-        // Drag handle (no tools)
+        // Drag handle
         {
             groupName: "drag",
             type: "drag",
@@ -27,7 +27,7 @@ export const useToolbarItems = () => {
             name: "drag",
         },
 
-        // Pen tool as standalone
+        // Pen
         {
             groupName: "pen",
             name: TOOLS.PEN.NAME,
@@ -134,10 +134,9 @@ export const useToolbarItems = () => {
             ],
         },
 
-        // Palette
+        // Canvas Color
         {
-            groupName: "color",
-            name: "color",
+            groupName: "canvasColor",
             type: "action",
             icon: null,
             tooltip: "Canvas Color",

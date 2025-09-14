@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import { createPortal } from "react-dom";
+import { ORIENTATION } from "./../../../utils/common";
 
 export const TooltipWrapper = ({
     tooltip,
-    orientation = "vertical",
+    orientation = ORIENTATION.VERTICAL,
     children,
 }) => {
     const [showTooltip, setShowTooltip] = useState(false);
@@ -13,7 +14,7 @@ export const TooltipWrapper = ({
         if (!ref.current) return {};
         const rect = ref.current.getBoundingClientRect();
 
-        return orientation === "vertical"
+        return orientation === ORIENTATION.VERTICAL
             ? {
                   top: rect.top + rect.height / 2,
                   left: rect.right + 8,

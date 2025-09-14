@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDrawingStore } from "../store/DrawingStoreContext";
+import { TOOLS } from "./toolUtils";
 
 export const useToolShortcuts = () => {
     const { selectedTool, setSelectedTool, toolRegistry } = useDrawingStore();
@@ -7,7 +8,7 @@ export const useToolShortcuts = () => {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (selectedTool === "text") return;
+            if (selectedTool === TOOLS.TEXT.NAME) return;
 
             for (const toolName in toolRegistry) {
                 const tool = toolRegistry[toolName];

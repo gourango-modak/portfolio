@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { ORIENTATION } from "./../../../utils/common";
 
 export const useToolbar = () => {
     const [toolbarSettings, setToolbarSettings] = useState({
         visible: false,
-        orientation: "horizontal", // horizontal | vertical
+        orientation: ORIENTATION.HORIZONTAL,
         position: { x: 0, y: 0 },
     });
 

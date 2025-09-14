@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { HexColorPicker } from "react-colorful";
-import { useDragHandler } from "./useDragHandler"; // your existing drag hook
+import { useDragHandler } from "./useDragHandler";
 import { ToolSettingsMenuHeader } from "./ToolSettingsMenuHeader";
 
 export const FloatingColorPicker = ({
@@ -9,10 +9,7 @@ export const FloatingColorPicker = ({
     isOpen,
     onClose,
     title = "Color Picker",
-    initialPosition = {
-        x: window.innerWidth / 2 - 150,
-        y: window.innerHeight / 2 - 150,
-    },
+    initialPosition = { x: 100, y: 300 },
 }) => {
     const pickerRef = useRef(null);
     const [color, setColor] = useState(initialColor);
@@ -33,7 +30,7 @@ export const FloatingColorPicker = ({
         }
     };
 
-    if (!isOpen) return null; // Controlled by parent
+    if (!isOpen) return null;
 
     return (
         <div
@@ -53,7 +50,7 @@ export const FloatingColorPicker = ({
         >
             <ToolSettingsMenuHeader
                 title={title}
-                onClose={onClose} // parent handles close
+                onClose={onClose}
                 onMouseDown={handleMouseDown}
             />
 

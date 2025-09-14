@@ -5,16 +5,16 @@ import { TOOLS } from "./toolUtils";
 
 export class PenTool extends BaseTool {
     constructor() {
-        super(TOOLS.PEN.NAME, TOOLS.PEN.LABEL); // tool name
+        super(TOOLS.PEN.NAME, TOOLS.PEN.LABEL);
         this.shortcut = {
-            code: "KeyP", // 'Z'
+            code: "KeyP",
         };
     }
 
     defaultSettings() {
         return {
             color: "#000000",
-            minPoints: 2, // minimum points to consider a valid line
+            minPoints: 2,
             strokeWidth: 16,
         };
     }
@@ -55,9 +55,5 @@ export class PenTool extends BaseTool {
             shape.finalize();
             return { type: "finalizedShape", shape: shape };
         }
-    }
-
-    getIcon() {
-        return <Pen size={20} />;
     }
 }

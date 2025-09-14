@@ -6,6 +6,7 @@ import { useCanvasEvents } from "./useCanvasEvents";
 import { useRenderShapes } from "./useRenderShapes";
 import { useCanvasZoomPan } from "./useCanvasZoomPan";
 import { useToolShortcuts } from "./../tools/useToolShortcuts";
+import { TOOLS } from "../tools/toolUtils";
 
 export const Canvas = () => {
     const {
@@ -33,7 +34,6 @@ export const Canvas = () => {
         toolRegistry[selectedTool]?.updateSettings(selectedToolSettings);
     }, [selectedTool, selectedToolSettings, toolRegistry]);
 
-    // Shared context for tool events
     const context = {
         setShapes,
         setCurrentShape,
@@ -80,13 +80,14 @@ export const Canvas = () => {
                     backgroundColor: canvasSettings.infiniteBg,
                     touchAction: "none",
                     userSelect: "none",
-                    cursor: selectedTool === "pan" ? "grab" : "default",
+                    cursor:
+                        selectedTool === TOOLS.PAN.NAME ? "grab" : "default",
                 }}
                 onPointerDown={(e) => onPointerDown(e)}
                 onPointerMove={(e) => onPointerMove(e)}
                 onPointerUp={onPointerUp}
             />
-            {selectedTool === "text" && (
+            {selectedTool === TOOLS.TEXT.NAME && (
                 <TextInputOverlay
                     currentShape={currentShape}
                     processEvent={processEvent}
