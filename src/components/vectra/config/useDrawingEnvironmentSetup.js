@@ -12,7 +12,7 @@ import { PanTool } from "../tools/PanTool";
 import { TOOLS } from "../tools/toolUtils";
 import { SHAPES } from "../shapes/shapeUtils";
 import { CANVAS_MODES } from "./../canvas/canvasUtils";
-import { useDrawingStore } from "../store/useDrawingStore";
+import { useDrawingStore } from "../store/DrawingStoreContext";
 
 export const useDrawingEnvironmentSetup = () => {
     const { registerTool, registerShape, setMode, setSelectedTool } =

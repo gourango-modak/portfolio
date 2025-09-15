@@ -6,7 +6,7 @@ import { useRenderShapes } from "./useRenderShapes";
 import { useCanvasZoomPan } from "./useCanvasZoomPan";
 import { useToolShortcuts } from "./../tools/useToolShortcuts";
 import { TOOLS } from "../tools/toolUtils";
-import { useDrawingStore } from "../store/useDrawingStore";
+import { useDrawingStore } from "../store/DrawingStoreContext";
 
 export const Canvas = () => {
     const {

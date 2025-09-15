@@ -8,7 +8,7 @@ import { ORIENTATION } from "../../../utils/common";
 import { TOOLS } from "../tools/toolUtils";
 import { useToolbarSettings } from "./useToolbarSettings";
 import { ToolbarRenderer } from "./ToolbarRenderer";
-import { useDrawingStore } from "../store/useDrawingStore";
+import { useDrawingStore } from "../store/DrawingStoreContext";
 
 export const Toolbar = () => {
     const store = useDrawingStore();
