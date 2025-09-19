@@ -1,4 +1,4 @@
-import { DrawingEnvironment } from "../../components/vectra/DrawingEnvironment";
+import { DrawingEnvironment } from "../../components/vectorDraw/DrawingEnvironment";
 
 const DrawingToolPage = () => {
     return <DrawingEnvironment />;
