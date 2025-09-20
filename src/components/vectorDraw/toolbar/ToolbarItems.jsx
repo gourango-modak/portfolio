@@ -1,14 +1,12 @@
-import { useToolbarStore } from "../store/useToolbarStore";
 import { ToolButton } from "./ToolButton";
 import { ToolGroup } from "./ToolGroup";
 import { toolbarConfig } from "./toolbarConfig";
 import { useRenderLogger } from "../debugging/useRenderLogger";
+import { toolActionHandlers } from "./toolActionHandlers";
 
 export const ToolbarItems = ({ orientation }) => {
-    const setActiveTool = useToolbarStore((s) => s.setActiveTool);
-
-    const handleToolBtnClick = (name) => {
-        setActiveTool(name);
+    const handleToolBtnClick = (tool) => {
+        toolActionHandlers[tool.action](tool);
     };
 
     useRenderLogger("ToolbarItems");

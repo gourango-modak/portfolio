@@ -1,11 +1,23 @@
 import { create } from "zustand";
 import { arrowTool } from "./../tools/arrowTool";
 import { ORIENTATION } from "../../../utils/common";
+import { toolRegistry } from "../tools/toolRegistry";
 
-export const useToolbarStore = create((set, get) => ({
+const initializeUserToolSettings = () => {
+    return Object.fromEntries(
+        Object.keys(toolRegistry).map((name) => [name, {}])
+    );
+};
+
+export const useToolbarStore = create((set) => ({
     activeTool: arrowTool.name,
     position: { x: 20, y: 20 },
     orientation: ORIENTATION.HORIZONTAL,
+    visible: false,
+
+    setActiveTool: (toolName) => set({ activeTool: toolName }),
+    setPosition: ({ x, y }) => set({ position: { x, y } }),
+    setVisibility: (visible) => set({ visible: visible }),
 
     activeGroup: null,
     setActiveGroup: (groupName) => set({ activeGroup: groupName }),
@@ -18,36 +30,78 @@ export const useToolbarStore = create((set, get) => ({
             },
         })),
 
-    toolSettings: {
-        rectangle: {
-            strokeColor: "#000",
-            strokeWidth: 2,
-            fillColor: "transparent",
-        },
-        ellipse: {
-            strokeColor: "#000",
-            strokeWidth: 2,
-            fillColor: "transparent",
-        },
+    settingsPanel: {
+        isVisible: false,
+        position: { x: 60, y: 100 }, // default starting position
+        target: "",
     },
-    userSettings: {},
-
-    setActiveTool: (toolId) => set({ activeTool: toolId }),
-    setPosition: ({ x, y }) => set({ position: { x, y } }),
-    setVisibility: (toolId, visible) =>
+    closeSettingsPanel: () =>
         set((state) => ({
-            tools: state.tools.map((t) =>
-                t.id === toolId ? { ...t, visible: visible } : t
-            ),
+            settingsPanel: {
+                ...state.settingsPanel,
+                isVisible: false,
+            },
         })),
-    updateUserSettings: (toolId, settings) =>
+
+    openSettingsPanel: (target) =>
+        set((state) => {
+            // If already open for the same target, do nothing
+            if (
+                state.settingsPanel.isVisible &&
+                state.settingsPanel.target === target
+            ) {
+                return {};
+            }
+
+            return {
+                settingsPanel: {
+                    ...state.settingsPanel,
+                    isVisible: true,
+                    target: target,
+                },
+            };
+        }),
+    setSettingsPanelPosition: (position) =>
+        set((state) => ({
+            settingsPanel: {
+                ...state.settingsPanel,
+                position,
+            },
+        })),
+
+    userToolSettings: initializeUserToolSettings(),
+    updateUserToolSettings: (toolName, settings) =>
         set((state) => ({
             userSettings: {
                 ...state.userSettings,
-                [toolId]: {
-                    ...state.userSettings[toolId],
+                [toolName]: {
+                    ...state.userSettings[toolName],
                     ...settings,
                 },
             },
+        })),
+
+    colorPicker: {
+        isOpen: false,
+        color: "#000000",
+        anchorEl: null,
+    },
+
+    openColorPicker: (color, anchorEl) =>
+        set({
+            colorPicker: { isOpen: true, color, anchorEl },
+        }),
+
+    closeColorPicker: () =>
+        set((state) => ({
+            colorPicker: {
+                ...state.colorPicker,
+                isOpen: false,
+                anchorEl: null,
+            },
+        })),
+    setColorPickerColor: (color) =>
+        set((state) => ({
+            colorPicker: { ...state.colorPicker, color },
         })),
 }));

@@ -1,24 +1,40 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useToolbarStore } from "../store/useToolbarStore";
 import { useRenderLogger } from "../debugging/useRenderLogger";
 import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
+import SettingsPanel from "./settings/SettingsPanel";
 
 const Toolbar = () => {
+    const visible = useToolbarStore((s) => s.visible);
+    const setPosition = useToolbarStore((s) => s.setPosition);
+    const setVisibility = useToolbarStore((s) => s.setVisibility);
     const orientation = useToolbarStore((s) => s.orientation);
     const toolbarRef = useRef(null);
+
+    useEffect(() => {
+        if (!toolbarRef.current) return;
+        const rect = toolbarRef.current.getBoundingClientRect();
+        const x = (window.innerWidth - rect.width) / 2;
+        const y = window.innerHeight - rect.height - 64;
+        toolbarRef.current.style.left = `${x}px`;
+        toolbarRef.current.style.top = `${y}px`;
+        setPosition({ x, y });
+        setVisibility(true);
+    }, [toolbarRef, visible]);
 
     useRenderLogger("Toolbar");
 
     return (
         <div
-            className={`absolute bg-gray-100 border border-gray-300 rounded-md shadow-md p-2 cursor-default flex gap-2 ${
+            className={`absolute bg-white border border-gray-300 rounded-xl shadow-md p-2 cursor-default gap-2 ${
                 orientation === "horizontal" ? "flex-row" : "flex-col"
-            }`}
+            } ${visible ? "flex" : "hidden"}`}
             ref={toolbarRef}
         >
-            <ToolbarGrabber toolbarRef={toolbarRef} />
+            <ToolbarGrabber toolbarRef={toolbarRef} orientation={orientation} />
             <ToolbarItems orientation={orientation} />
+            <SettingsPanel />
         </div>
     );
 };

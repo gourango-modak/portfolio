@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { genId } from "./shapesHelpers";
+import { genId } from "../temp/shapesHelpers";
 
 export const useCanvasStore = create((set) => ({
     canvasMode: "infinite",

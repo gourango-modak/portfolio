@@ -4,10 +4,13 @@ import MouseManager from "./MouseManager";
 import { toolRegistry } from "./tools/toolRegistry";
 import { useRenderLogger } from "./debugging/useRenderLogger";
 import { getSvgCanvasPointerEvent } from "./svgCanvasUtils";
+import { useCanvasStore } from "./store/useCanvasStore";
+import { FramesLayer } from "./FramesLayer";
 
 const SvgCanvas = () => {
     const svgCanvasRef = useRef(null);
     const activeTool = useToolbarStore((s) => s.activeTool);
+    const canvasBgColor = useCanvasStore((s) => s.bgColor);
     const activeToolRef = useRef(activeTool);
     activeToolRef.current = activeTool;
 
@@ -17,6 +20,12 @@ const SvgCanvas = () => {
             svgCanvasRef.current.style.cursor = tool.cursor;
         }
     }, [activeTool]);
+
+    useEffect(() => {
+        if (svgCanvasRef.current) {
+            svgCanvasRef.current.style.backgroundColor = canvasBgColor;
+        }
+    }, [canvasBgColor]);
 
     useEffect(() => {
         const manager = MouseManager.getInstance();
@@ -46,7 +55,11 @@ const SvgCanvas = () => {
 
     useRenderLogger("SvgCanvas");
 
-    return <svg ref={svgCanvasRef} width="100%" height="100vh"></svg>;
+    return (
+        <svg ref={svgCanvasRef} width="100%" height="100vh">
+            <FramesLayer />
+        </svg>
+    );
 };
 
 export default SvgCanvas;

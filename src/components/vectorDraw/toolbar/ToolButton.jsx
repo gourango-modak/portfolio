@@ -1,5 +1,7 @@
 import { useRenderLogger } from "../debugging/useRenderLogger";
+import { useCanvasStore } from "../store/useCanvasStore";
 import { useToolbarStore } from "../store/useToolbarStore";
+import { SETTINGS_PANEL_TARGETS } from "./settings/settingsUtils";
 
 export const ToolButton = ({
     item,
@@ -8,11 +10,21 @@ export const ToolButton = ({
 }) => {
     const { name, Icon } = item;
     const isActiveTool = useToolbarStore((s) => s.activeTool === name);
+    const openSettingsPanel = useToolbarStore((s) => s.openSettingsPanel);
+    const canvasMode = useCanvasStore((s) => s.mode);
     const isSelected = isSelectedProp ?? isActiveTool;
 
     const handleToolBtnClick = () => {
-        onClick(item.name);
+        onClick(item);
     };
+
+    const handleToolBtnDoubleClick = () => {
+        if (item.isTool) {
+            openSettingsPanel(SETTINGS_PANEL_TARGETS.TOOL);
+        }
+    };
+
+    const shouldShow = item?.visible?.({ canvasMode }) ?? true;
 
     useRenderLogger("ToolButton");
 
@@ -20,11 +32,12 @@ export const ToolButton = ({
         <button
             title={name}
             onClick={handleToolBtnClick}
-            className={`p-2 rounded-md transition-colors duration-200 ${
+            onDoubleClick={handleToolBtnDoubleClick}
+            className={`p-2 w-12 h-12 items-center justify-center rounded-lg bg-gray-50 transition-all cursor-pointer border-2 ${
                 isSelected
-                    ? "bg-blue-500 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-200"
-            }`}
+                    ? "border-indigo-600 bg-indigo-50"
+                    : "border-transparent hover:bg-gray-100"
+            } ${shouldShow ? "flex" : "hidden"}`}
         >
             <Icon className="w-5 h-5" />
         </button>

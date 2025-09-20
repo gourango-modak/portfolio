@@ -7,6 +7,12 @@ export const lineTool = {
     name: "lineTool",
     icon: MoveUpRight,
     cursor: "default",
+    label: "Line",
+    defaultSettings: {
+        strokeColor: { value: "#000", label: "Stroke Color" },
+        strokeWidth: { value: 2, label: "Stroke Width" },
+        isDashed: { value: false, label: "Dashed Line" },
+    },
     onDown: ({ pos }) => {
         // store.startShape({ type: "line", points: [pos] });
     },

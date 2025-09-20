@@ -32,7 +32,7 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
         if (sub) GroupIcon = sub.Icon;
     }
 
-    const handleGroupToolBtnClick = useCallback(() => {
+    const handleGroupToolBtnClick = () => {
         if (activeGroup === group) {
             setActiveGroup(null);
         } else if (selectedSubtool) {
@@ -41,17 +41,17 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
         } else {
             setActiveGroup(group);
         }
-    }, [activeGroup, group, selectedSubtool, onToolBtnClick, setActiveGroup]);
+    };
 
-    const handleSubtoolClick = useCallback(
-        (name) => {
+    const handleSubtoolClick = (subItem) => {
+        if (subItem.isTool) {
             setSelectedSubtool(name);
-            setGroupSelection(group, name);
-            setActiveGroup(null);
-            onToolBtnClick(name);
-        },
-        [group, setGroupSelection, setActiveGroup, onToolBtnClick]
-    );
+            setGroupSelection(group, subItem.name);
+        }
+
+        setActiveGroup(null);
+        onToolBtnClick(subItem);
+    };
 
     const groupItem = useMemo(
         () => ({ name: group, Icon: GroupIcon }),
