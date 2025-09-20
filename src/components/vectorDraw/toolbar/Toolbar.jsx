@@ -4,6 +4,7 @@ import { useRenderLogger } from "../debugging/useRenderLogger";
 import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
 import SettingsPanel from "./settings/SettingsPanel";
+import { ORIENTATION } from "../../../utils/common";
 
 const Toolbar = () => {
     const visible = useToolbarStore((s) => s.visible);
@@ -15,8 +16,15 @@ const Toolbar = () => {
     useEffect(() => {
         if (!toolbarRef.current) return;
         const rect = toolbarRef.current.getBoundingClientRect();
-        const x = (window.innerWidth - rect.width) / 2;
-        const y = window.innerHeight - rect.height - 64;
+        let x = 0;
+        let y = 0;
+        if (orientation === ORIENTATION.HORIZONTAL) {
+            x = (window.innerWidth - rect.width) / 2;
+            y = window.innerHeight - rect.height - 64;
+        } else {
+            x = 40;
+            y = (window.innerHeight - rect.height) / 2;
+        }
         toolbarRef.current.style.left = `${x}px`;
         toolbarRef.current.style.top = `${y}px`;
         setPosition({ x, y });

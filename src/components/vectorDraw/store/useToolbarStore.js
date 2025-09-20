@@ -12,7 +12,7 @@ const initializeUserToolSettings = () => {
 export const useToolbarStore = create((set) => ({
     activeTool: arrowTool.name,
     position: { x: 20, y: 20 },
-    orientation: ORIENTATION.HORIZONTAL,
+    orientation: ORIENTATION.VERTICAL,
     visible: false,
 
     setActiveTool: (toolName) => set({ activeTool: toolName }),
