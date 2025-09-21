@@ -17,10 +17,7 @@ export const CanvasBgProperty = () => {
             <label className="font-medium text-gray-700">
                 Canvas Background
             </label>
-            <ColorProperty
-                triggerId="canvasBgColor"
-                initialColor={canvasBgColor}
-            />
+            <ColorProperty id="canvasBgColor" value={canvasBgColor} />
         </div>
     );
 };

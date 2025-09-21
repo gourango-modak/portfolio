@@ -58,7 +58,7 @@ export const PageProperties = () => {
                         Background Color
                     </label>
                     <ColorProperty
-                        triggerId="pageBgColor"
+                        id="pageBgColor"
                         value={properties.bgColor}
                     />
                 </div>

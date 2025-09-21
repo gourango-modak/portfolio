@@ -1,20 +1,20 @@
 import { useState, useRef, useEffect } from "react";
 import { useRenderLogger } from "../../debugging/useRenderLogger";
-import { useToolbarStore } from "../../store/useToolbarStore";
 import { ColorPicker } from "./../../ColorPicker";
+import { useColorPickerStore } from "../../store/useColorPickerStore";
 
-export const ColorProperty = ({ value: initialColor, triggerId }) => {
+export const ColorProperty = ({ value: initialColor, id }) => {
     const previewRef = useRef(null);
     const [colorInput, setColorInput] = useState(initialColor);
-    const openColorPicker = useToolbarStore((s) => s.openColorPicker);
-    const setColorPickerColor = useToolbarStore((s) => s.setColorPickerColor);
-    const colorPicker = useToolbarStore((s) => s.colorPickers[triggerId]);
+    const openColorPicker = useColorPickerStore((s) => s.open);
+    const setColor = useColorPickerStore((s) => s.setColor);
+    const color = useColorPickerStore((s) => s.colorPickers[id]?.color);
 
     useEffect(() => {
-        if (colorPicker) {
-            setColorInput(colorPicker.color);
+        if (color) {
+            setColorInput(color);
         }
-    }, [colorPicker]);
+    }, [color]);
 
     useRenderLogger("ColorProperty");
 
@@ -23,15 +23,14 @@ export const ColorProperty = ({ value: initialColor, triggerId }) => {
         setColorInput(newColor);
 
         if (/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(newColor)) {
-            setColorPickerColor(triggerId, newColor);
+            setColor(id, newColor);
         }
     };
 
     const handleColorPicker = () => {
         const rect = previewRef.current.getBoundingClientRect();
-        console.log(rect);
         const gap = 2;
-        openColorPicker(triggerId, colorInput, {
+        openColorPicker(id, colorInput, {
             left: rect.left + window.scrollX,
             top: rect.bottom + window.scrollY + gap,
         });
@@ -55,7 +54,7 @@ export const ColorProperty = ({ value: initialColor, triggerId }) => {
                     ></div>
                 </div>
             </div>
-            <ColorPicker triggerId={triggerId} />
+            <ColorPicker id={id} />
         </>
     );
 };

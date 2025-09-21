@@ -1,3 +1,4 @@
+import { usePanelStore } from "../store/usePanelStore";
 import { useToolbarStore } from "../store/useToolbarStore";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
@@ -7,7 +8,7 @@ export const toolActionHandlers = {
         useToolbarStore.getState().setActiveTool(name);
     },
     [TOOL_ACTION_TYPES.OPEN_CANVAS_SETTINGS]: () => {
-        useToolbarStore
+        usePanelStore
             .getState()
             .openInspectorPanel(INSPECTOR_PANEL_TARGETS.CANVAS);
     },

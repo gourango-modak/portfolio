@@ -2,21 +2,21 @@ import { HexColorPicker } from "react-colorful";
 import { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useClickOutside } from "./hooks/useClickOutside";
-import { useToolbarStore } from "./store/useToolbarStore";
 import { useRenderLogger } from "./debugging/useRenderLogger";
+import { useColorPickerStore } from "./store/useColorPickerStore";
 
 const defaultColorPicker = {
     isOpen: false,
     position: { x: 0, y: 0 },
 };
 
-export const ColorPicker = ({ triggerId }) => {
+export const ColorPicker = ({ id }) => {
     const pickerRef = useRef(null);
-    const colorPicker = useToolbarStore(
-        (s) => s.colorPickers[triggerId] || defaultColorPicker
+    const colorPicker = useColorPickerStore(
+        (s) => s.colorPickers[id] || defaultColorPicker
     );
-    const setColorPickerColor = useToolbarStore((s) => s.setColorPickerColor);
-    const closeColorPicker = useToolbarStore((s) => s.closeColorPicker);
+    const setColor = useColorPickerStore((s) => s.setColor);
+    const close = useColorPickerStore((s) => s.close);
 
     useEffect(() => {
         if (colorPicker.isOpen && colorPicker.position) {
@@ -26,7 +26,7 @@ export const ColorPicker = ({ triggerId }) => {
     }, [colorPicker.isOpen, colorPicker.position]);
 
     useClickOutside(pickerRef, () => {
-        if (colorPicker.isOpen) closeColorPicker(triggerId);
+        if (colorPicker.isOpen) close(id);
     });
 
     useRenderLogger("ColorPicker");
@@ -37,7 +37,7 @@ export const ColorPicker = ({ triggerId }) => {
         <div ref={pickerRef} className="absolute z-100">
             <HexColorPicker
                 color={colorPicker.color}
-                onChange={(c) => setColorPickerColor(triggerId, c)}
+                onChange={(c) => setColor(id, c)}
             />
         </div>,
         document.body

@@ -7,12 +7,12 @@ export const useCanvasStore = create((set) => ({
     frames: {},
     frameOrder: [],
     activeFrameId: null,
-    bgColor: "#fff",
+    bgColor: "#ffffff",
     autoFrameTemplate: null, // if set, skip modal and auto-create
     frameTemplate: {
         width: 800,
         height: 1200,
-        bgColor: "#fff",
+        bgColor: "#ffffff",
         x: (window.innerWidth - 800) / 2,
         y: 100,
     },

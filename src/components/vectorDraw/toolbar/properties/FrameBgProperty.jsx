@@ -20,7 +20,7 @@ export const FrameBgProperty = () => {
                     Frame Background
                 </label>
                 <ColorProperty
-                    triggerId="frameBgColor"
+                    id="frameBgColor"
                     initialColor={activeFrame.bgColor}
                 />
             </div>
