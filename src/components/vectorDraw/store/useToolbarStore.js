@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { arrowTool } from "./../tools/arrowTool";
-import { ORIENTATION } from "../../../utils/common";
 import { toolRegistry } from "../tools/toolRegistry";
+import { zustandHmrFix } from "./zustandHmrFix";
 
-const initializeUserToolSettings = () => {
+const initializeUserToolProperties = () => {
     return Object.fromEntries(
         Object.keys(toolRegistry).map((name) => [name, {}])
     );
@@ -11,13 +11,7 @@ const initializeUserToolSettings = () => {
 
 export const useToolbarStore = create((set) => ({
     activeTool: arrowTool.name,
-    position: { x: 20, y: 20 },
-    orientation: ORIENTATION.VERTICAL,
-    visible: false,
-
     setActiveTool: (toolName) => set({ activeTool: toolName }),
-    setPosition: ({ x, y }) => set({ position: { x, y } }),
-    setVisibility: (visible) => set({ visible: visible }),
 
     activeGroup: null,
     setActiveGroup: (groupName) => set({ activeGroup: groupName }),
@@ -30,78 +24,51 @@ export const useToolbarStore = create((set) => ({
             },
         })),
 
-    settingsPanel: {
-        isVisible: false,
-        position: { x: 60, y: 100 }, // default starting position
-        target: "",
-    },
-    closeSettingsPanel: () =>
+    userToolProperties: initializeUserToolProperties(),
+    updateUserToolSettings: (toolName, properties) =>
         set((state) => ({
-            settingsPanel: {
-                ...state.settingsPanel,
-                isVisible: false,
-            },
-        })),
-
-    openSettingsPanel: (target) =>
-        set((state) => {
-            // If already open for the same target, do nothing
-            if (
-                state.settingsPanel.isVisible &&
-                state.settingsPanel.target === target
-            ) {
-                return {};
-            }
-
-            return {
-                settingsPanel: {
-                    ...state.settingsPanel,
-                    isVisible: true,
-                    target: target,
-                },
-            };
-        }),
-    setSettingsPanelPosition: (position) =>
-        set((state) => ({
-            settingsPanel: {
-                ...state.settingsPanel,
-                position,
-            },
-        })),
-
-    userToolSettings: initializeUserToolSettings(),
-    updateUserToolSettings: (toolName, settings) =>
-        set((state) => ({
-            userSettings: {
-                ...state.userSettings,
+            userToolProperties: {
+                ...state.userToolProperties,
                 [toolName]: {
-                    ...state.userSettings[toolName],
-                    ...settings,
+                    ...state.userToolProperties[toolName],
+                    ...properties,
                 },
             },
         })),
 
-    colorPicker: {
-        isOpen: false,
-        color: "#000000",
-        anchorEl: null,
-    },
+    colorPickers: {}, // { [triggerId]: { isOpen, color, position } }
 
-    openColorPicker: (color, anchorEl) =>
-        set({
-            colorPicker: { isOpen: true, color, anchorEl },
-        }),
-
-    closeColorPicker: () =>
-        set((state) => ({
-            colorPicker: {
-                ...state.colorPicker,
-                isOpen: false,
-                anchorEl: null,
+    openColorPicker: (triggerId, initialColor, position) =>
+        set((s) => ({
+            colorPickers: {
+                ...s.colorPickers,
+                [triggerId]: {
+                    isOpen: true,
+                    position,
+                    color: initialColor,
+                },
             },
         })),
-    setColorPickerColor: (color) =>
-        set((state) => ({
-            colorPicker: { ...state.colorPicker, color },
+
+    closeColorPicker: (triggerId) =>
+        set((s) => ({
+            colorPickers: {
+                ...s.colorPickers,
+                [triggerId]: {
+                    ...s.colorPickers[triggerId],
+                    isOpen: false,
+                },
+            },
+        })),
+
+    setColorPickerColor: (triggerId, color) =>
+        set((s) => ({
+            colorPickers: {
+                ...s.colorPickers,
+                [triggerId]: { ...s.colorPickers[triggerId], color },
+            },
         })),
 }));
+
+// Keeps Zustand state across hot reloads in dev (ignored in production)
+zustandHmrFix("toolbarStore2d", useToolbarStore);

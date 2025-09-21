@@ -1,18 +1,18 @@
 import { useRenderLogger } from "../../debugging/useRenderLogger";
 import { useCanvasStore } from "../../store/useCanvasStore";
 import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../svgCanvasUtils";
-import { CanvasBgColorSetting } from "./CavasBgColorSetting";
-import { FrameBgColorSetting } from "./FrameBgColorSetting";
+import { CanvasBgProperty } from "./CavasBgProperty";
+import { FrameBgProperty } from "./FrameBgProperty";
 
-export const CanvasSettingsPanel = () => {
+export const CanvasProperties = () => {
     const canvasMode = useCanvasStore((s) => s.mode);
     const setCanvasMode = useCanvasStore((s) => s.setCanvasMode);
 
-    const handleDropdownChange = (mode) => {
+    const handleChange = (mode) => {
         setCanvasMode(mode);
     };
 
-    useRenderLogger("CanvasSettingsPanel");
+    useRenderLogger("CanvasProperties");
 
     return (
         <div className="flex flex-col gap-4 p-4 text-sm text-gray-800">
@@ -28,7 +28,7 @@ export const CanvasSettingsPanel = () => {
                                     ? "border-indigo-500 bg-indigo-50"
                                     : "border-gray-300"
                             }`}
-                            onClick={() => handleDropdownChange(mode)}
+                            onClick={() => handleChange(mode)}
                         >
                             <Icon className="w-5 h-5" />
                         </button>
@@ -36,10 +36,10 @@ export const CanvasSettingsPanel = () => {
                 </div>
             </div>
 
-            <CanvasBgColorSetting />
+            <CanvasBgProperty />
 
             {/* Frame Background */}
-            {canvasMode !== CANVAS_MODES.INFINITE && <FrameBgColorSetting />}
+            {canvasMode !== CANVAS_MODES.INFINITE && <FrameBgProperty />}
         </div>
     );
 };

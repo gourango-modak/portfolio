@@ -1,48 +1,43 @@
 import { HexColorPicker } from "react-colorful";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useClickOutside } from "./hooks/useClickOutside";
 import { useToolbarStore } from "./store/useToolbarStore";
 import { useRenderLogger } from "./debugging/useRenderLogger";
 
-export const ColorPicker = () => {
-    const pickerRef = useRef(null);
-    const colorPicker = useToolbarStore((s) => s.colorPicker);
-    const closeColorPicker = useToolbarStore((s) => s.closeColorPicker);
-    const setColorPickerColor = useToolbarStore((s) => s.setColorPickerColor);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
+const defaultColorPicker = {
+    isOpen: false,
+    position: { x: 0, y: 0 },
+};
 
-    useRenderLogger("ColorPicker");
+export const ColorPicker = ({ triggerId }) => {
+    const pickerRef = useRef(null);
+    const colorPicker = useToolbarStore(
+        (s) => s.colorPickers[triggerId] || defaultColorPicker
+    );
+    const setColorPickerColor = useToolbarStore((s) => s.setColorPickerColor);
+    const closeColorPicker = useToolbarStore((s) => s.closeColorPicker);
 
     useEffect(() => {
-        if (colorPicker.isOpen && colorPicker.anchorEl) {
-            const rect = colorPicker.anchorEl.getBoundingClientRect();
-            setPosition({
-                top: rect.bottom + window.scrollY,
-                left: rect.left + window.scrollX,
-            });
+        if (colorPicker.isOpen && colorPicker.position) {
+            pickerRef.current.style.left = `${colorPicker.position.left}px`;
+            pickerRef.current.style.top = `${colorPicker.position.top}px`;
         }
-    }, [colorPicker.isOpen, colorPicker.anchorEl]);
+    }, [colorPicker.isOpen, colorPicker.position]);
 
     useClickOutside(pickerRef, () => {
-        if (colorPicker.isOpen) closeColorPicker();
+        if (colorPicker.isOpen) closeColorPicker(triggerId);
     });
+
+    useRenderLogger("ColorPicker");
 
     if (!colorPicker.isOpen) return null;
 
     return createPortal(
-        <div
-            ref={pickerRef}
-            style={{
-                position: "absolute",
-                top: position.top,
-                left: position.left,
-                zIndex: 9999,
-            }}
-        >
+        <div ref={pickerRef} className="absolute z-100">
             <HexColorPicker
                 color={colorPicker.color}
-                onChange={setColorPickerColor}
+                onChange={(c) => setColorPickerColor(triggerId, c)}
             />
         </div>,
         document.body

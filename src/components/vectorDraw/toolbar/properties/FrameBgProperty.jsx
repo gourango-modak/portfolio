@@ -1,17 +1,17 @@
 import { useRenderLogger } from "../../debugging/useRenderLogger";
 import { useCanvasStore } from "../../store/useCanvasStore";
-import { ColorSetting } from "./ColorSetting";
+import { ColorProperty } from "./ColorProperty";
 
-export const FrameBgColorSetting = () => {
+export const FrameBgProperty = () => {
     const activeFrameId = useCanvasStore((s) => s.activeFrameId);
-    const setFrameBgColor = useCanvasStore((s) => s.setFrameBgColor);
+    const setFrameBg = useCanvasStore((s) => s.setFrameBg);
     const activeFrame = useCanvasStore((s) => s.frames[activeFrameId]);
 
-    const handleBgColorChange = (_, bgColor) => {
-        setFrameBgColor(activeFrameId, bgColor);
+    const handleChange = (_, bgColor) => {
+        setFrameBg(activeFrameId, bgColor);
     };
 
-    useRenderLogger("FrameBgColorSetting");
+    useRenderLogger("FrameBgProperty");
 
     return (
         activeFrameId && (
@@ -19,10 +19,9 @@ export const FrameBgColorSetting = () => {
                 <label className="font-medium text-gray-700">
                     Frame Background
                 </label>
-                <ColorSetting
-                    property="frameBgColor"
-                    value={activeFrame.bgColor}
-                    onChange={handleBgColorChange}
+                <ColorProperty
+                    triggerId="frameBgColor"
+                    initialColor={activeFrame.bgColor}
                 />
             </div>
         )

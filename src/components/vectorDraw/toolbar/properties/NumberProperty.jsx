@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRenderLogger } from "../../debugging/useRenderLogger";
 
-export const NumberSetting = ({
+export const NumberProperty = ({
     property,
     value,
     onChange,
@@ -10,7 +10,7 @@ export const NumberSetting = ({
 }) => {
     const [number, setNumber] = useState(value);
 
-    useRenderLogger("NumberSetting");
+    useRenderLogger("NumberProperty");
 
     const handleChange = (e) => {
         setNumber(Number(e.target.value));

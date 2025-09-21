@@ -6,10 +6,9 @@ export const arrowTool = {
     icon: PenLine,
     cursor: "default",
     label: "Arrow Tool",
-    defaultSettings: {
+    defaultProperties: {
         strokeColor: { value: "#000", label: "Stroke Color" },
         strokeWidth: { value: 2, label: "Stroke Width" },
-        isDashed: { value: false, label: "Dashed Line" },
     },
     onDown: (event) => {
         // console.log("Down", event);

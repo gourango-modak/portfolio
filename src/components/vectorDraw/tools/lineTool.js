@@ -8,10 +8,9 @@ export const lineTool = {
     icon: MoveUpRight,
     cursor: "default",
     label: "Line",
-    defaultSettings: {
-        strokeColor: { value: "#000", label: "Stroke Color" },
+    defaultProperties: {
+        color: { value: "#000", label: "Color" },
         strokeWidth: { value: 2, label: "Stroke Width" },
-        isDashed: { value: false, label: "Dashed Line" },
     },
     onDown: ({ pos }) => {
         // store.startShape({ type: "line", points: [pos] });

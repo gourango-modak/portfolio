@@ -1,16 +1,14 @@
 import { useEffect, useRef } from "react";
-import { useToolbarStore } from "../store/useToolbarStore";
 import { useRenderLogger } from "../debugging/useRenderLogger";
 import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
-import SettingsPanel from "./settings/SettingsPanel";
 import { ORIENTATION } from "../../../utils/common";
+import { usePanelStore } from "../store/usePanelStore";
 
-const Toolbar = () => {
-    const visible = useToolbarStore((s) => s.visible);
-    const setPosition = useToolbarStore((s) => s.setPosition);
-    const setVisibility = useToolbarStore((s) => s.setVisibility);
-    const orientation = useToolbarStore((s) => s.orientation);
+const Toolbar = ({ panelId, dragHandleRef }) => {
+    const orientation = usePanelStore((s) => s.panels[panelId].orientation);
+    const setPosition = usePanelStore((s) => s.setPosition);
+    const openToolbarPanel = usePanelStore((s) => s.openToolbarPanel);
     const toolbarRef = useRef(null);
 
     useEffect(() => {
@@ -25,24 +23,24 @@ const Toolbar = () => {
             x = 40;
             y = (window.innerHeight - rect.height) / 2;
         }
-        toolbarRef.current.style.left = `${x}px`;
-        toolbarRef.current.style.top = `${y}px`;
-        setPosition({ x, y });
-        setVisibility(true);
-    }, [toolbarRef, visible]);
+        setPosition(panelId, { x, y });
+        openToolbarPanel();
+    }, [toolbarRef]);
 
     useRenderLogger("Toolbar");
 
     return (
         <div
-            className={`absolute bg-white border border-gray-300 rounded-xl shadow-md p-2 cursor-default gap-2 ${
-                orientation === "horizontal" ? "flex-row" : "flex-col"
-            } ${visible ? "flex" : "hidden"}`}
+            className={`bg-white border border-gray-300 rounded-xl shadow-md p-2 cursor-default gap-2 flex ${
+                orientation === ORIENTATION.HORIZONTAL ? "flex-row" : "flex-col"
+            }`}
             ref={toolbarRef}
         >
-            <ToolbarGrabber toolbarRef={toolbarRef} orientation={orientation} />
+            <ToolbarGrabber
+                dragHandleRef={dragHandleRef}
+                orientation={orientation}
+            />
             <ToolbarItems orientation={orientation} />
-            <SettingsPanel />
         </div>
     );
 };

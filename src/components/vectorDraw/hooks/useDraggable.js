@@ -15,6 +15,8 @@ export const useDraggable = ({
     }, [initialPosition]);
 
     useEffect(() => {
+        if (!dragHandleRef?.current) return;
+
         const manager = MouseManager.getInstance();
 
         const unsubscribe = manager.subscribe((type, e) => {

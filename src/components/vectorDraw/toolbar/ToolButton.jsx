@@ -1,7 +1,7 @@
 import { useRenderLogger } from "../debugging/useRenderLogger";
 import { useCanvasStore } from "../store/useCanvasStore";
+import { usePanelStore } from "../store/usePanelStore";
 import { useToolbarStore } from "../store/useToolbarStore";
-import { SETTINGS_PANEL_TARGETS } from "./settings/settingsUtils";
 
 export const ToolButton = ({
     item,
@@ -10,7 +10,10 @@ export const ToolButton = ({
 }) => {
     const { name, Icon } = item;
     const isActiveTool = useToolbarStore((s) => s.activeTool === name);
-    const openSettingsPanel = useToolbarStore((s) => s.openSettingsPanel);
+    const openToolPropertiesPanel = usePanelStore(
+        (s) => s.openToolPropertiesPanel
+    );
+    const openInspectorPanel = usePanelStore((s) => s.openInspectorPanel);
     const canvasMode = useCanvasStore((s) => s.mode);
     const isSelected = isSelectedProp ?? isActiveTool;
 
@@ -20,7 +23,9 @@ export const ToolButton = ({
 
     const handleToolBtnDoubleClick = () => {
         if (item.isTool) {
-            openSettingsPanel(SETTINGS_PANEL_TARGETS.TOOL);
+            openToolPropertiesPanel();
+        } else if (item.panelTarget) {
+            openInspectorPanel(item.panelTarget);
         }
     };
 

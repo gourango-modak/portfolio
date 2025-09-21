@@ -1,51 +1,40 @@
 import { create } from "zustand";
 import { CANVAS_MODES } from "../svgCanvasUtils";
-import { generateId } from "../../../utils/common";
-
-const defaultFrameTemplate = {
-    width: 800,
-    height: 1200,
-    bgColor: "#fff",
-    x: (window.innerWidth - 800) / 2,
-    y: 100,
-};
-
-const initializeCanvasState = (mode) => {
-    const isFrameMode = mode !== CANVAS_MODES.INFINITE;
-
-    if (isFrameMode) {
-        const defaultFrameId = generateId();
-        return {
-            mode,
-            frames: {
-                [defaultFrameId]: {
-                    ...defaultFrameTemplate,
-                },
-            },
-            frameOrder: [defaultFrameId],
-            activeFrameId: defaultFrameId,
-        };
-    } else {
-        return {
-            mode,
-            frames: {},
-            frameOrder: [],
-            activeFrameId: null,
-        };
-    }
-};
+import { zustandHmrFix } from "./zustandHmrFix";
 
 export const useCanvasStore = create((set) => ({
-    ...initializeCanvasState(CANVAS_MODES.SINGLE_FRAME),
+    mode: CANVAS_MODES.PAGED,
+    frames: {},
+    frameOrder: [],
+    activeFrameId: null,
     bgColor: "#fff",
-    setCanvasMode: (mode) => set(() => initializeCanvasState(mode)),
+    autoFrameTemplate: null, // if set, skip modal and auto-create
+    frameTemplate: {
+        width: 800,
+        height: 1200,
+        bgColor: "#fff",
+        x: (window.innerWidth - 800) / 2,
+        y: 100,
+    },
+    updateFrameTemplate: (property) =>
+        set((state) => ({
+            frameTemplate: {
+                ...state.frameTemplate,
+                ...property,
+            },
+        })),
 
-    setCanvasBgColor: (color) =>
+    setCanvasMode: (mode) =>
+        set({
+            mode,
+        }),
+
+    setCanvasBg: (color) =>
         set({
             bgColor: color,
         }),
 
-    setFrameBgColor: (frameId, color) =>
+    setFrameBg: (frameId, color) =>
         set((state) => ({
             frames: {
                 ...state.frames,
@@ -56,3 +45,6 @@ export const useCanvasStore = create((set) => ({
             },
         })),
 }));
+
+// Keeps Zustand state across hot reloads in dev (ignored in production)
+zustandHmrFix("canvasStored", useCanvasStore);
