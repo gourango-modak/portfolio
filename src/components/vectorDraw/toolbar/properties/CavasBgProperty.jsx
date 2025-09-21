@@ -6,8 +6,8 @@ export const CanvasBgProperty = () => {
     const canvasBgColor = useCanvasStore((s) => s.bgColor);
     const setCanvasBg = useCanvasStore((s) => s.setCanvasBg);
 
-    const handleChange = (_, bgColor) => {
-        setCanvasBg(bgColor);
+    const handleChange = ({ value }) => {
+        setCanvasBg(value);
     };
 
     useRenderLogger("CanvasBgProperty");
@@ -17,7 +17,11 @@ export const CanvasBgProperty = () => {
             <label className="font-medium text-gray-700">
                 Canvas Background
             </label>
-            <ColorProperty id="canvasBgColor" value={canvasBgColor} />
+            <ColorProperty
+                propertyName="canvasBgColor"
+                value={canvasBgColor}
+                onChange={handleChange}
+            />
         </div>
     );
 };

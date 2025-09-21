@@ -14,7 +14,7 @@ export const NumberProperty = ({
 
     const handleChange = (e) => {
         setNumber(Number(e.target.value));
-        onChange(property, Number(e.target.value));
+        onChange({ name: property, value: Number(e.target.value) });
     };
 
     return (

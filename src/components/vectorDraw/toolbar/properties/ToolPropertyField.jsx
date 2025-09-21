@@ -10,22 +10,6 @@ export const ToolPropertyField = ({ propertyName, property, onChange }) => {
         onChange,
     };
 
-    // Special case for ColorPicker
-    if (propertyName === "color" || propertyName === "strokeColor") {
-        return (
-            <div className="flex flex-col gap-1">
-                <label className="text-gray-600 text-sm font-medium">
-                    {property.label}
-                </label>
-                <Component
-                    {...commonProps}
-                    triggerId={`tool-${propertyName}`}
-                />
-            </div>
-        );
-    }
-
-    // Generic case
     return (
         <div className="flex flex-col gap-1">
             <label className="text-gray-600 text-sm font-medium">

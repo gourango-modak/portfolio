@@ -15,11 +15,10 @@ import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
-    OPEN_TOOL_SETTINGS: "openToolSettings",
-    OPEN_CANVAS_SETTINGS: "openCanvasSettings",
-    ADD_FRAME: "addFrame",
-    PREV_FRAME: "prevFrame",
-    NEXT_FRAME: "nextFrame",
+    OPEN_CANVAS_PROPERTIES_PANEL: "openCanvasProperties",
+    ADD_PAGE: "addPage",
+    PREV_PAGE: "prevPage",
+    NEXT_PAGE: "nextPage",
 };
 
 export const toolbarConfig = [
@@ -43,22 +42,22 @@ export const toolbarConfig = [
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.INFINITE,
     },
     {
-        name: "addFrame",
+        name: "addPage",
         Icon: FilePlus2,
-        action: TOOL_ACTION_TYPES.ADD_FRAME,
+        action: TOOL_ACTION_TYPES.ADD_PAGE,
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
         panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
     },
     {
-        name: "prevFrame",
+        name: "prevPage",
         Icon: ChevronLeft,
-        action: TOOL_ACTION_TYPES.PREV_FRAME,
+        action: TOOL_ACTION_TYPES.PREV_PAGE,
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
     },
     {
-        name: "nextFrame",
+        name: "nextPage",
         Icon: ChevronRight,
-        action: TOOL_ACTION_TYPES.NEXT_FRAME,
+        action: TOOL_ACTION_TYPES.NEXT_PAGE,
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
     },
     {
@@ -69,7 +68,7 @@ export const toolbarConfig = [
             {
                 name: "canvasSettings",
                 Icon: Settings,
-                action: TOOL_ACTION_TYPES.OPEN_CANVAS_SETTINGS,
+                action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
                 panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
             },
         ],

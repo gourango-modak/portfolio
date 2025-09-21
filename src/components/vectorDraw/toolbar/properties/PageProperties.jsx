@@ -5,16 +5,17 @@ import { useRenderLogger } from "../../debugging/useRenderLogger";
 
 export const PageProperties = () => {
     const frameTemplate = useCanvasStore((s) => s.frameTemplate);
-    const setFrameTemplate = useCanvasStore((s) => s.setFrameTemplate);
+    const updateFrameTemplate = useCanvasStore((s) => s.updateFrameTemplate);
     const [properties, setProperties] = useState({
         width: frameTemplate.width,
         height: frameTemplate.height,
         bgColor: frameTemplate.bgColor,
     });
 
-    const handleChange = (property) => {
-        setProperties((state) => ({ ...state, ...property }));
-        setFrameTemplate(property);
+    const handleChange = ({ name, value }) => {
+        setProperties((state) => ({ ...state, [name]: value }));
+        console.log(name, value);
+        updateFrameTemplate({ [name]: value });
     };
 
     useRenderLogger("PageSettingsPanel");
@@ -31,7 +32,10 @@ export const PageProperties = () => {
                         type="number"
                         value={properties.width}
                         onChange={(e) =>
-                            handleChange({ width: Number(e.target.value) })
+                            handleChange({
+                                name: "width",
+                                value: Number(e.target.value),
+                            })
                         }
                         className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     />
@@ -46,7 +50,10 @@ export const PageProperties = () => {
                         type="number"
                         value={properties.height}
                         onChange={(e) =>
-                            handleChange({ height: Number(e.target.value) })
+                            handleChange({
+                                name: "height",
+                                value: Number(e.target.value),
+                            })
                         }
                         className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     />
@@ -58,8 +65,9 @@ export const PageProperties = () => {
                         Background Color
                     </label>
                     <ColorProperty
-                        id="pageBgColor"
+                        propertyName="bgColor"
                         value={properties.bgColor}
+                        onChange={handleChange}
                     />
                 </div>
             </div>

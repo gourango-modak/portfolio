@@ -35,39 +35,6 @@ export const useToolbarStore = create((set) => ({
                 },
             },
         })),
-
-    // colorPickers: {}, // { [triggerId]: { isOpen, color, position } }
-
-    // openColorPicker: (triggerId, initialColor, position) =>
-    //     set((s) => ({
-    //         colorPickers: {
-    //             ...s.colorPickers,
-    //             [triggerId]: {
-    //                 isOpen: true,
-    //                 position,
-    //                 color: initialColor,
-    //             },
-    //         },
-    //     })),
-
-    // closeColorPicker: (triggerId) =>
-    //     set((s) => ({
-    //         colorPickers: {
-    //             ...s.colorPickers,
-    //             [triggerId]: {
-    //                 ...s.colorPickers[triggerId],
-    //                 isOpen: false,
-    //             },
-    //         },
-    //     })),
-
-    // setColorPickerColor: (triggerId, color) =>
-    //     set((s) => ({
-    //         colorPickers: {
-    //             ...s.colorPickers,
-    //             [triggerId]: { ...s.colorPickers[triggerId], color },
-    //         },
-    //     })),
 }));
 
 // Keeps Zustand state across hot reloads in dev (ignored in production)

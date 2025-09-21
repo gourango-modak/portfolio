@@ -7,8 +7,8 @@ export const FrameBgProperty = () => {
     const setFrameBg = useCanvasStore((s) => s.setFrameBg);
     const activeFrame = useCanvasStore((s) => s.frames[activeFrameId]);
 
-    const handleChange = (_, bgColor) => {
-        setFrameBg(activeFrameId, bgColor);
+    const handleChange = ({ value }) => {
+        setFrameBg(activeFrameId, value);
     };
 
     useRenderLogger("FrameBgProperty");
@@ -20,8 +20,9 @@ export const FrameBgProperty = () => {
                     Frame Background
                 </label>
                 <ColorProperty
-                    id="frameBgColor"
-                    initialColor={activeFrame.bgColor}
+                    propertyName="frameBgColor"
+                    value={activeFrame.bgColor}
+                    onChange={handleChange}
                 />
             </div>
         )
