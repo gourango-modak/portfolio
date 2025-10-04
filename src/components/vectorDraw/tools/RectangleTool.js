@@ -5,6 +5,9 @@ export class RectangleTool extends BaseTool {
     static name = "RECT";
     static label = "Rectangle Tool";
     static shapeType = RectangleTool.name;
+    static shortcut = {
+        code: "KeyR",
+    };
 
     // Default tool properties
     static defaultProperties = {

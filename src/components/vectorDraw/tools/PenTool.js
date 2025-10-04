@@ -7,6 +7,9 @@ export class PenTool extends BaseTool {
     static name = "PEN";
     static label = "Pen Tool";
     static shapeType = PenTool.name;
+    static shortcut = {
+        code: "KeyP",
+    };
 
     // Default tool properties
     static defaultProperties = {

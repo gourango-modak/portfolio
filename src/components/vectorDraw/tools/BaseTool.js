@@ -4,6 +4,7 @@ export class BaseTool {
     static name = "BASE";
     static label = "Base Tool";
     static shapeType = BaseTool.name;
+    static shortcut = {};
     static defaultProperties = {};
 
     constructor(liveLayerRef) {
