@@ -34,20 +34,19 @@ export const useCanvasStore = create((set) => ({
             type: "color",
             id: "canvasBgColor",
         },
+        pan: { x: 0, y: 0 },
+        scale: 1,
     },
 
-    // setCanvasMode: (mode) =>
-    //     set((state) => {
-    //         if (state.mode === mode) return {};
+    setScale: (scale) =>
+        set((state) => ({
+            properties: { ...state.properties, scale },
+        })),
 
-    //         if (mode === CANVAS_MODES.INFINITE) {
-    //             return {
-    //                 mode,
-    //                 ...initialFrameState,
-    //             };
-    //         }
-    //         return { mode };
-    //     }),
+    setPan: (pan) =>
+        set((state) => ({
+            properties: { ...state.properties, pan },
+        })),
 
     setCanvasMode: (mode) =>
         set((state) => {

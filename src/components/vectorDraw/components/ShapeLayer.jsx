@@ -3,6 +3,9 @@ import { useShapeStore } from "../store/useShapeStore";
 import ShapeRenderer from "./ShapeRenderer";
 
 const ShapeLayer = () => {
+    const scale = useCanvasStore((s) => s.properties.scale);
+    const pan = useCanvasStore((s) => s.properties.pan);
+
     const shapeOrder = useShapeStore((s) => s.shapeOrder);
     const canvasBgColor = useCanvasStore((s) => s.properties.canvasBgColor);
 
@@ -15,9 +18,11 @@ const ShapeLayer = () => {
                 background: canvasBgColor.value,
             }}
         >
-            {shapeOrder.map((id) => (
-                <ShapeRenderer key={id} shapeId={id} />
-            ))}
+            <g transform={`translate(${pan.x}, ${pan.y}) scale(${scale})`}>
+                {shapeOrder.map((id) => (
+                    <ShapeRenderer key={id} shapeId={id} />
+                ))}
+            </g>
         </svg>
     );
 };
