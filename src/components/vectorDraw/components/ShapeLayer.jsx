@@ -3,7 +3,7 @@ import { useShapeStore } from "../store/useShapeStore";
 import ShapeRenderer from "./ShapeRenderer";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useCanvasStore } from "../store/useCanvasStore";
-import { CombinedSelectionRect } from "./CombinedSelectionRect";
+import { GroupedSelectionRect } from "./GroupedSelectionRect";
 
 const ShapeLayer = () => {
     const shapeOrder = useShapeStore((s) => s.shapeOrder);
@@ -24,7 +24,7 @@ const ShapeLayer = () => {
                 <ShapeRenderer key={id} shapeId={id} />
             ))}
 
-            <CombinedSelectionRect />
+            <GroupedSelectionRect />
         </g>
     );
 };

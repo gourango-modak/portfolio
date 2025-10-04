@@ -1,7 +1,4 @@
-import {
-    getCombinedSelectionBounds,
-    getShapeBoundingRect,
-} from "../canvasUtils";
+import { getShapeBoundingRect } from "../canvasUtils";
 import { isPointInRect } from "../geometryUtils";
 import { shapeHitTestRegistry } from "../shapes/shapeHitTestRegistry";
 import { useShapeStore } from "../store/useShapeStore";
@@ -38,44 +35,18 @@ export class SelectionTool extends BaseTool {
         this.lastPointer = null; // Track last pointer for moving
     }
 
-    getSelectionBounds() {
-        const store = useShapeStore.getState();
-        if (store.selectedShapeIds.size <= 0) return null;
-
-        let minX = Infinity,
-            minY = Infinity;
-        let maxX = -Infinity,
-            maxY = -Infinity;
-
-        store.selectedShapeIds.forEach((id) => {
-            const shape = store.shapes[id];
-            if (!shape) return;
-
-            const { x, y, width, height } = getShapeBoundingRect(shape);
-
-            minX = Math.min(minX, x);
-            minY = Math.min(minY, y);
-            maxX = Math.max(maxX, x + width);
-            maxY = Math.max(maxY, y + height);
-        });
-
-        return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
-    }
-
     onPointerDown(e) {
         const store = useShapeStore.getState();
         this.startPoint = { x: e.tx, y: e.ty };
         this.lastPointer = { x: e.tx, y: e.ty };
 
-        const selectionBounds = getCombinedSelectionBounds(
-            store.selectedShapeIds
-        );
+        const selectedShapesBounds = store.selectedShapesBounds;
         const hitId = this.getShapeUnderPoint(e.tx, e.ty);
 
         // Check if clicked inside existing selection
         const clickedInsideSelection =
-            selectionBounds &&
-            isPointInRect({ x: e.tx, y: e.ty }, selectionBounds);
+            selectedShapesBounds &&
+            isPointInRect({ x: e.tx, y: e.ty }, selectedShapesBounds);
 
         this.moving = false;
         this.dragging = false;

@@ -57,7 +57,7 @@ export const getShapeBoundingRect = (shape) => {
     return getBoundingRectFn(shape);
 };
 
-export const getCombinedSelectionBounds = (selectedShapeIds) => {
+export const computeSelectedShapesBounds = (selectedShapeIds, shapes) => {
     if (selectedShapeIds.size <= 0) return null;
 
     let minX = Number.POSITIVE_INFINITY;
@@ -66,7 +66,6 @@ export const getCombinedSelectionBounds = (selectedShapeIds) => {
     let maxY = Number.NEGATIVE_INFINITY;
 
     selectedShapeIds.forEach((id) => {
-        const shapes = useShapeStore.getState().shapes;
         const shape = shapes[id];
         if (!shape) return;
 

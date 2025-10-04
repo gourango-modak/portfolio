@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { zustandHmrFix } from "./zustandHmrFix";
 import { generateId } from "./../../../utils/common";
+import { computeSelectedShapesBounds } from "../canvasUtils";
 
-export const useShapeStore = create((set, get) => ({
+export const useShapeStore = create((set) => ({
     shapes: {},
     shapeOrder: [],
 
@@ -19,40 +20,57 @@ export const useShapeStore = create((set, get) => ({
         set((state) => {
             const shape = state.shapes[id];
             if (!shape) return {};
+
+            const newShapes = {
+                ...state.shapes,
+                [id]: { ...shape, ...updatedProps, version: shape.version + 1 },
+            };
+
+            // Only recompute bounds if the updated shape is selected
+            const newBounds = state.selectedShapeIds.has(id)
+                ? computeSelectedShapesBounds(state.selectedShapeIds, newShapes)
+                : state.selectedShapesBounds;
+
             return {
-                shapes: {
-                    ...state.shapes,
-                    [id]: {
-                        ...shape,
-                        ...updatedProps,
-                        version: shape.version + 1,
-                    },
-                },
+                shapes: newShapes,
+                selectedShapesBounds: newBounds,
             };
         }),
 
     selectedShapeIds: new Set(), // track selected shapes by id
+    selectedShapesBounds: null, // store combined bounds for quick access
 
-    // Select a shape by id (add to current selection)
     selectShape: (id) =>
         set((state) => {
             const newSelected = new Set(state.selectedShapeIds);
             newSelected.add(id);
-            return { selectedShapeIds: newSelected };
+            const newBounds = computeSelectedShapesBounds(
+                newSelected,
+                state.shapes
+            );
+
+            return {
+                selectedShapeIds: newSelected,
+                selectedShapesBounds: newBounds,
+            };
         }),
 
     deselectShape: (id) =>
         set((state) => {
-            const newSet = new Set(state.selectedShapeIds);
-            newSet.delete(id);
-            return { selectedShapeIds: newSet };
+            const newSelected = new Set(state.selectedShapeIds);
+            newSelected.delete(id);
+            const newBounds =
+                newSelected.size > 0
+                    ? computeSelectedShapesBounds(newSelected, state.shapes)
+                    : null;
+            return {
+                selectedShapeIds: newSelected,
+                selectedShapesBounds: newBounds,
+            };
         }),
 
-    // Deselect all shapes
-    deselectAll: () => set({ selectedShapeIds: new Set() }),
-
-    // Utility: check if a shape is selected
-    isSelected: (id) => get().selectedShapeIds.has(id),
+    deselectAll: () =>
+        set({ selectedShapeIds: new Set(), selectedShapesBounds: null }),
 }));
 
 // Keeps Zustand state across hot reloads in dev (ignored in production)
