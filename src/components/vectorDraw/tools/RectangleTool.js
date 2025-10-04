@@ -1,3 +1,5 @@
+import { CANVAS_MODES } from "../canvasUtils";
+import { useCanvasStore } from "../store/useCanvasStore";
 import { useShapeStore } from "../store/useShapeStore";
 import { BaseTool } from "./BaseTool";
 
@@ -62,7 +64,8 @@ export class RectangleTool extends BaseTool {
         const { x, y, width, height } = this.getRectDimensions(e);
         const pathData = this.getPathData(x, y, width, height);
 
-        useShapeStore.getState().addShape({
+        const canvasStore = useCanvasStore.getState();
+        const shape = {
             type: RectangleTool.shapeType,
             x,
             y,
@@ -70,7 +73,19 @@ export class RectangleTool extends BaseTool {
             height,
             path: pathData,
             properties: { ...this.properties },
-        });
+            bounds: {
+                x,
+                y,
+                width,
+                height,
+            },
+        };
+
+        if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
+            shape.frameId = canvasStore.activeFrameId;
+        }
+
+        useShapeStore.getState().addShape(shape);
 
         this.startPoint = null;
         this.cleanUp();

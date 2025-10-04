@@ -5,7 +5,7 @@ import { Frame } from "./Frame";
 import { CANVAS_MODES } from "../canvasUtils";
 
 export const FrameLayer = memo(() => {
-    const mode = useCanvasStore((s) => s.mode);
+    const canvasMode = useCanvasStore((s) => s.properties.mode);
     const frameOrder = useCanvasStore((s) => s.frameOrder);
     const activeFrameId = useCanvasStore((s) => s.activeFrameId);
 
@@ -13,15 +13,9 @@ export const FrameLayer = memo(() => {
 
     if (frameOrder.length === 0) return null;
 
-    if (mode === CANVAS_MODES.PAGED) {
+    if (canvasMode.value === CANVAS_MODES.PAGED) {
         if (!activeFrameId) return null;
-        return (
-            <Frame
-                key={activeFrameId}
-                frameId={activeFrameId}
-                isActive={true}
-            />
-        );
+        return <Frame key={activeFrameId} frameId={activeFrameId} />;
     }
 
     return (

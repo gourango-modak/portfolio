@@ -8,8 +8,8 @@ const initialFrameState = {
     frameOrder: [],
     activeFrameId: null,
     frameTemplate: {
-        width: { value: 800, label: "Width", type: "numeric" },
-        height: { value: 1200, label: "Height", type: "numeric" },
+        width: { value: window.innerWidth, label: "Width", type: "numeric" },
+        height: { value: window.innerHeight, label: "Height", type: "numeric" },
         bgColor: {
             value: "#ffffff",
             label: "Frame Background",
@@ -17,19 +17,18 @@ const initialFrameState = {
             id: "frameColor",
         },
         x: {
-            value: (window.innerWidth - 800) / 2,
+            value: 0,
             label: "X",
-            type: "numeric",
         },
-        y: { value: 100, label: "Y", type: "numeric" },
+        y: { value: 0, label: "Y" },
     },
 };
 
 export const useCanvasStore = create((set) => ({
     properties: {
-        mode: { value: CANVAS_MODES.INFINITE, label: "Canvas Mode" },
+        mode: { value: CANVAS_MODES.PAGED, label: "Canvas Mode" },
         canvasBgColor: {
-            value: "#ffffff",
+            value: "#F9F9F9",
             label: "Canvas Background",
             type: "color",
             id: "canvasBgColor",
@@ -60,16 +59,12 @@ export const useCanvasStore = create((set) => ({
                 },
             };
 
-            if (mode === CANVAS_MODES.INFINITE) {
-                return {
-                    properties: {
-                        ...updatedProperties,
-                    },
-                    ...initialFrameState,
-                };
-            }
-
-            return { properties: updatedProperties };
+            return {
+                properties: {
+                    ...updatedProperties,
+                },
+                ...initialFrameState,
+            };
         }),
 
     setCanvasBg: (color) =>
@@ -85,19 +80,22 @@ export const useCanvasStore = create((set) => ({
 
     ...initialFrameState,
     updateFrameTemplate: (updates) =>
-        set((state) => ({
-            frameTemplate: {
+        set((state) => {
+            const entries = Object.entries(updates).map(([key, value]) => [
+                key,
+                {
+                    ...state.frameTemplate[key],
+                    value,
+                },
+            ]);
+
+            const newTemplate = {
                 ...state.frameTemplate,
-                ...Object.fromEntries(
-                    Object.entries(updates).map(([key, value]) => ({
-                        [key]: {
-                            ...state.frameTemplate[key], // keep existing label if exists
-                            value, // update value
-                        },
-                    }))
-                ),
-            },
-        })),
+                ...Object.fromEntries(entries),
+            };
+
+            return { frameTemplate: newTemplate };
+        }),
 
     setFrameBg: (frameId, color) =>
         set((state) => ({

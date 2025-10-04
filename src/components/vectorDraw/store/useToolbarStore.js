@@ -1,17 +1,22 @@
 import { create } from "zustand";
 import { zustandHmrFix } from "./zustandHmrFix";
-// import { toolRegistry } from "../tools/toolRegistry";
-
-// const initializeToolProperties = () => {
-//     console.log(toolRegistry);
-//     return Object.fromEntries(
-//         Object.keys(toolRegistry).map((name) => [name, {}])
-//     );
-// };
+import { usePanelStore } from "./usePanelStore";
+import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../toolbar/toolbarUtils";
 
 export const useToolbarStore = create((set) => ({
-    activeTool: "PEN",
-    setActiveTool: (toolName) => set({ activeTool: toolName }),
+    activeTool: "SELECT",
+    setActiveTool: (toolName) =>
+        set(() => {
+            if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName))
+                usePanelStore.getState().closeToolPropertiesPanel();
+            else {
+                usePanelStore.getState().openToolPropertiesPanel();
+            }
+
+            return {
+                activeTool: toolName,
+            };
+        }),
 
     activeToolInstance: null,
     setActiveToolInstance: (instance) => set({ activeToolInstance: instance }),
@@ -27,7 +32,6 @@ export const useToolbarStore = create((set) => ({
             },
         })),
 
-    // toolProperties: initializeToolProperties(),
     toolProperties: {},
     updateToolProperties: (toolName, key, property) =>
         set((state) => ({

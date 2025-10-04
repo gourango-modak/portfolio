@@ -1,6 +1,8 @@
 import { TOOL_PROPERTIES_COMPONENTS } from "./propertiesUtils";
 
 export const ToolPropertyField = ({ propertyName, property, onChange }) => {
+    if (!property?.type) return null;
+
     const Component = TOOL_PROPERTIES_COMPONENTS[property.type];
     if (!Component) return null;
 

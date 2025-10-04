@@ -2,11 +2,8 @@ import { memo } from "react";
 import { useCanvasStore } from "../store/useCanvasStore";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 
-export const Frame = memo(({ frameId, isActive }) => {
-    const frame = useCanvasStore(
-        (s) => s.frames[frameId],
-        (a, b) => a === b
-    );
+export const Frame = memo(({ frameId }) => {
+    const frame = useCanvasStore((s) => s.frames[frameId]);
 
     useRenderLogger("Frame");
 
@@ -14,13 +11,11 @@ export const Frame = memo(({ frameId, isActive }) => {
 
     return (
         <rect
-            x={frame.x}
-            y={frame.y}
-            width={frame.width}
-            height={frame.height}
-            fill={frame.bgColor ?? "red"}
-            stroke={isActive ? "blue" : "gray"}
-            strokeWidth={isActive ? 2 : 1}
+            x={frame.x.value}
+            y={frame.y.value}
+            width={frame.width.value}
+            height={frame.height.value}
+            fill={frame.bgColor.value}
         />
     );
 });

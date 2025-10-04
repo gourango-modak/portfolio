@@ -1,7 +1,8 @@
 import getStroke from "perfect-freehand";
 import { useShapeStore } from "../store/useShapeStore";
-import { getSvgPathFromStroke } from "../canvasUtils";
+import { CANVAS_MODES, getSvgPathFromStroke } from "../canvasUtils";
 import { BaseTool } from "./BaseTool";
+import { useCanvasStore } from "../store/useCanvasStore";
 
 export class PenTool extends BaseTool {
     static name = "PEN";
@@ -61,12 +62,20 @@ export class PenTool extends BaseTool {
     onPointerUp() {
         if (!this.livePath) return;
 
-        useShapeStore.getState().addShape({
+        const canvasStore = useCanvasStore.getState();
+        const shape = {
             type: PenTool.shapeType,
             points: this.points,
             strokePoints: this.getStrokePoints(),
             properties: { ...this.properties },
-        });
+            bounds: this.getBounds(),
+        };
+
+        if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
+            shape.frameId = canvasStore.activeFrameId;
+        }
+
+        useShapeStore.getState().addShape(shape);
 
         this.points = [];
         this.cleanUp();
@@ -83,5 +92,15 @@ export class PenTool extends BaseTool {
 
     getPathFromStrokePoints() {
         return getSvgPathFromStroke(this.getStrokePoints());
+    }
+
+    getBounds() {
+        const xs = this.points.map((p) => p.x);
+        const ys = this.points.map((p) => p.y);
+        const minX = Math.min(...xs);
+        const minY = Math.min(...ys);
+        const maxX = Math.max(...xs);
+        const maxY = Math.max(...ys);
+        return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
     }
 }
