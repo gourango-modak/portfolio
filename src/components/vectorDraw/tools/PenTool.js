@@ -47,14 +47,14 @@ export class PenTool extends BaseTool {
     }
 
     onPointerDown(e) {
-        this.points = [{ x: e.clientX, y: e.clientY }];
+        this.points = [{ x: e.tx, y: e.ty, pressure: e.pressure }];
         this.createLivePath();
         this.livePath.setAttribute("fill", this.properties.color.value);
     }
 
     onPointerMove(e) {
         if (!this.livePath) return;
-        this.points.push({ x: e.clientX, y: e.clientY });
+        this.points.push({ x: e.tx, y: e.ty, pressure: e.pressure });
         this.livePath.setAttribute("d", this.getPathFromStrokePoints());
     }
 

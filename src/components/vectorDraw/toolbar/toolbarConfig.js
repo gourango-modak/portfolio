@@ -3,6 +3,7 @@ import {
     ChevronRight,
     FilePlus2,
     Frame,
+    Hand,
     PenIcon,
     Settings,
     Square,
@@ -11,6 +12,7 @@ import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { PenTool } from "../tools/PenTool";
 import { RectangleTool } from "../tools/RectangleTool";
+import { PanTool } from "../tools/PanTool";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
@@ -30,6 +32,12 @@ export const toolbarConfig = [
     {
         name: RectangleTool.name,
         Icon: Square,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+        isTool: true,
+    },
+    {
+        name: PanTool.name,
+        Icon: Hand,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
         isTool: true,
     },

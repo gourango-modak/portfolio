@@ -3,7 +3,7 @@ import Toolbar from "./toolbar/Toolbar";
 import { Panel } from "./components/Panel";
 import InspectorPanel from "./toolbar/properties/InspectorPanel";
 import ToolPropertiesPanel from "./toolbar/properties/ToolPropertiesPanel";
-import CanvasStage from "./components/CanvasStage";
+import Canvas from "./components/Canvas";
 
 export const DrawingEnvironment = () => {
     return (
@@ -17,7 +17,7 @@ export const DrawingEnvironment = () => {
             <Panel panelId={PANELS.TOOL_PROPERTIES_PANEL}>
                 <ToolPropertiesPanel />
             </Panel>
-            <CanvasStage />
+            <Canvas />
         </>
     );
 };

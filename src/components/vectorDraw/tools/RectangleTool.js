@@ -41,7 +41,7 @@ export class RectangleTool extends BaseTool {
     }
 
     onPointerDown(e) {
-        this.startPoint = { x: e.clientX, y: e.clientY };
+        this.startPoint = { x: e.tx, y: e.ty };
         this.createLivePath();
         this.livePath.setAttribute("stroke", this.properties.color.value);
         this.livePath.setAttribute(
@@ -77,10 +77,10 @@ export class RectangleTool extends BaseTool {
     }
 
     getRectDimensions(e) {
-        const x = Math.min(e.clientX, this.startPoint.x);
-        const y = Math.min(e.clientY, this.startPoint.y);
-        const width = Math.abs(e.clientX - this.startPoint.x);
-        const height = Math.abs(e.clientY - this.startPoint.y);
+        const x = Math.min(e.tx, this.startPoint.x);
+        const y = Math.min(e.ty, this.startPoint.y);
+        const width = Math.abs(e.tx - this.startPoint.x);
+        const height = Math.abs(e.ty - this.startPoint.y);
         return { x, y, width, height };
     }
 
