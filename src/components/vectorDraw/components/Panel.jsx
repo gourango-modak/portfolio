@@ -1,0 +1,108 @@
+import { useEffect, useRef, useState } from "react";
+import { usePanelStore } from "../store/usePanelStore";
+import { useRenderLogger } from "../hooks/useRenderLogger";
+import { PANELS } from "../canvasUtils";
+import { PANEL_INIT_POSITION_FUNCTIONS } from "../toolbar/toolbarUtils";
+
+export const Panel = ({
+    panelId,
+    children,
+    handleSelector = ".drag-handle",
+}) => {
+    const isVisible = usePanelStore((s) => s.panels[panelId].isVisible);
+    const orientation = usePanelStore((s) => s.panels[panelId].orientation);
+    const bringToFront = usePanelStore((s) => s.bringToFront);
+    const setPanelPosition = usePanelStore((s) => s.setPosition);
+    const zIndex = usePanelStore((s) => s.getZIndex(panelId));
+    const [position, setPosition] = useState(
+        PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
+    );
+
+    const draggingRef = useRef(null);
+    const dragElementRef = useRef(null);
+    const offsetRef = useRef({ x: 0, y: 0 });
+    const frameRef = useRef(null);
+
+    useEffect(() => {
+        if (dragElementRef.current) {
+            dragElementRef.current.style.zIndex = zIndex;
+        }
+    }, [zIndex]);
+
+    useEffect(() => {
+        if (panelId === PANELS.TOOLBAR_PANEL) {
+            setPosition(
+                PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
+            );
+        }
+    }, [orientation]);
+
+    useRenderLogger("Panel");
+
+    const handleMouseDown = (e) => {
+        bringToFront(panelId);
+
+        if (!e.target.closest(handleSelector)) return;
+
+        draggingRef.current = true;
+
+        const rect = dragElementRef.current.getBoundingClientRect();
+        offsetRef.current = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+
+        e.preventDefault();
+    };
+
+    const handleMouseMove = (e) => {
+        if (!draggingRef.current || !dragElementRef.current) return;
+
+        const elementWidth = dragElementRef.current.offsetWidth;
+        const elementHeight = dragElementRef.current.offsetHeight;
+
+        let newX = e.clientX - offsetRef.current.x;
+        let newY = e.clientY - offsetRef.current.y;
+
+        // Constrain within viewport
+        newX = Math.max(0, Math.min(newX, window.innerWidth - elementWidth));
+        newY = Math.max(0, Math.min(newY, window.innerHeight - elementHeight));
+
+        // Use requestAnimationFrame to throttle state updates
+        if (frameRef.current) cancelAnimationFrame(frameRef.current);
+        frameRef.current = requestAnimationFrame(() => {
+            setPosition((prev) => {
+                if (prev.x === newX && prev.y === newY) return prev;
+                return { x: newX, y: newY };
+            });
+        });
+    };
+
+    const handleMouseUp = (e) => {
+        const newX = e.clientX - offsetRef.current.x;
+        const newY = e.clientY - offsetRef.current.y;
+        setPanelPosition(panelId, { x: newX, y: newY });
+
+        draggingRef.current = false;
+        if (frameRef.current) cancelAnimationFrame(frameRef.current);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    return (
+        <div
+            ref={dragElementRef}
+            onMouseDown={handleMouseDown}
+            style={{
+                left: position.x,
+                top: position.y,
+            }}
+            className={`absolute ${isVisible ? "visible" : "invisible"}`}
+        >
+            {children}
+        </div>
+    );
+};

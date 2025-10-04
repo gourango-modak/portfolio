@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ORIENTATION } from "../../../utils/common";
-import { PANELS } from "../svgCanvasUtils";
+import { PANELS } from "../canvasUtils";
 
 export const usePanelStore = create((set, get) => ({
     panels: {

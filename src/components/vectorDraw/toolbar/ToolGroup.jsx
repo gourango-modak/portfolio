@@ -1,9 +1,9 @@
 import { useRef, useState, useCallback, useMemo } from "react";
 import { ToolButton } from "./ToolButton";
 import { useToolbarStore } from "../store/useToolbarStore";
-import { useRenderLogger } from "../debugging/useRenderLogger";
+import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SecondaryToolbar } from "./SecondaryToolbar";
-import { useClickOutside } from "../hooks/useClickOutside";
+// import { useClickOutside } from "../hooks/useClickOutside";
 
 export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     const [selectedSubtool, setSelectedSubtool] = useState(null);
@@ -19,11 +19,11 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     );
     const setGroupSelection = useToolbarStore((s) => s.setGroupSelection);
 
-    const handleClickOutside = useCallback(() => {
-        if (activeGroup === group) setActiveGroup(null);
-    }, [activeGroup, group, setActiveGroup]);
+    // const handleClickOutside = useCallback(() => {
+    //     if (activeGroup === group) setActiveGroup(null);
+    // }, [activeGroup, group, setActiveGroup]);
 
-    useClickOutside(groupRef, handleClickOutside);
+    // useClickOutside(groupRef, handleClickOutside);
 
     // pick group icon
     let GroupIcon = Icon;

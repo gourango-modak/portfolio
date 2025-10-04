@@ -1,17 +1,20 @@
 import { create } from "zustand";
-import { arrowTool } from "./../tools/arrowTool";
-import { toolRegistry } from "../tools/toolRegistry";
 import { zustandHmrFix } from "./zustandHmrFix";
+// import { toolRegistry } from "../tools/toolRegistry";
 
-const initializeUserToolProperties = () => {
-    return Object.fromEntries(
-        Object.keys(toolRegistry).map((name) => [name, {}])
-    );
-};
+// const initializeToolProperties = () => {
+//     console.log(toolRegistry);
+//     return Object.fromEntries(
+//         Object.keys(toolRegistry).map((name) => [name, {}])
+//     );
+// };
 
 export const useToolbarStore = create((set) => ({
-    activeTool: arrowTool.name,
+    activeTool: "PEN",
     setActiveTool: (toolName) => set({ activeTool: toolName }),
+
+    activeToolInstance: null,
+    setActiveToolInstance: (instance) => set({ activeToolInstance: instance }),
 
     activeGroup: null,
     setActiveGroup: (groupName) => set({ activeGroup: groupName }),
@@ -24,18 +27,21 @@ export const useToolbarStore = create((set) => ({
             },
         })),
 
-    userToolProperties: initializeUserToolProperties(),
-    updateUserToolSettings: (toolName, properties) =>
+    // toolProperties: initializeToolProperties(),
+    toolProperties: {},
+    updateToolProperties: (toolName, key, property) =>
         set((state) => ({
-            userToolProperties: {
-                ...state.userToolProperties,
+            toolProperties: {
+                ...state.toolProperties,
                 [toolName]: {
-                    ...state.userToolProperties[toolName],
-                    ...properties,
+                    ...(state.toolProperties[toolName] || {}),
+                    [key]: {
+                        ...property,
+                    },
                 },
             },
         })),
 }));
 
 // Keeps Zustand state across hot reloads in dev (ignored in production)
-zustandHmrFix("toolbarStore2d", useToolbarStore);
+zustandHmrFix("toolbarStorexxx", useToolbarStore);

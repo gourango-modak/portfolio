@@ -1,7 +1,7 @@
 import { ToolButton } from "./ToolButton";
 import { ToolGroup } from "./ToolGroup";
 import { toolbarConfig } from "./toolbarConfig";
-import { useRenderLogger } from "../debugging/useRenderLogger";
+import { useRenderLogger } from "../hooks/useRenderLogger";
 import { toolActionHandlers } from "./toolActionHandlers";
 
 export const ToolbarItems = ({ orientation }) => {

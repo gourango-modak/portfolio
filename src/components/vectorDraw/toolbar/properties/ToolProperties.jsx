@@ -1,21 +1,24 @@
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useToolbarStore } from "../../store/useToolbarStore";
-import { getToolProperties } from "../../svgCanvasUtils";
 import { toolRegistry } from "../../tools/toolRegistry";
 import { ToolPropertyField } from "./ToolPropertyField";
 
 export const ToolProperties = ({ activeTool }) => {
-    const userActiveToolProperties = useToolbarStore(
-        (s) => s.userToolProperties[activeTool]
-    );
-    const tool = toolRegistry[activeTool];
-    const toolProperties = getToolProperties(
-        userActiveToolProperties,
-        activeTool
+    const activeToolProperties = useToolbarStore(
+        (s) => s.toolProperties[activeTool]
     );
 
-    const handlePropertyChange = (property) => {
-        console.log(property);
+    const updateToolProperties = useToolbarStore((s) => s.updateToolProperties);
+    const tool = toolRegistry[activeTool];
+    const toolProperties = {
+        ...tool.defaultProperties,
+        ...activeToolProperties,
+    };
+
+    const handlePropertyChange = (propertyName, property) => {
+        updateToolProperties(activeTool, propertyName, property);
+        const tool = useToolbarStore.getState().activeToolInstance;
+        tool.updateProperties();
     };
 
     useRenderLogger("ToolProperties");
@@ -37,16 +40,14 @@ export const ToolProperties = ({ activeTool }) => {
 
             {toolProperties && (
                 <div className="flex flex-col gap-4">
-                    {Object.entries(toolProperties).map(
-                        ([propertyName, property]) => (
-                            <ToolPropertyField
-                                key={property.label}
-                                propertyName={propertyName}
-                                property={property}
-                                onChange={handlePropertyChange}
-                            />
-                        )
-                    )}
+                    {Object.entries(toolProperties).map(([key, prop]) => (
+                        <ToolPropertyField
+                            key={key}
+                            property={prop}
+                            propertyName={key}
+                            onChange={handlePropertyChange}
+                        />
+                    ))}
                 </div>
             )}
         </div>

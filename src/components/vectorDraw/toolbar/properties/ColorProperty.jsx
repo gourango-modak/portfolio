@@ -1,13 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { useRenderLogger } from "../../debugging/useRenderLogger";
-import { ColorPicker } from "./../../ColorPicker";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useColorPickerStore } from "../../store/useColorPickerStore";
+import { ColorPicker } from "../../components/ColorPicker";
 
-export const ColorProperty = ({
-    value: initialColor,
-    propertyName: id,
-    onChange,
-}) => {
+export const ColorProperty = ({ propertyName, property, onChange }) => {
+    const { id, value: initialColor } = property;
     const previewRef = useRef(null);
     const [colorInput, setColorInput] = useState(initialColor);
     const openColorPicker = useColorPickerStore((s) => s.open);
@@ -17,9 +14,15 @@ export const ColorProperty = ({
     useEffect(() => {
         if (color) {
             setColorInput(color);
-            onChange({ name: id, value: color });
+            onChange(propertyName, { ...property, value: color });
         }
     }, [color]);
+
+    useEffect(() => {
+        if (initialColor) {
+            setColorInput(initialColor);
+        }
+    }, [initialColor]);
 
     useRenderLogger("ColorProperty");
 

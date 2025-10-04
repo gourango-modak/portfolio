@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCanvasStore } from "../../store/useCanvasStore";
 import { ColorProperty } from "./ColorProperty";
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 
 export const PageProperties = () => {
     const frameTemplate = useCanvasStore((s) => s.frameTemplate);

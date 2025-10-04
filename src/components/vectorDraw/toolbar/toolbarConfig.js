@@ -4,14 +4,13 @@ import {
     FilePlus2,
     Frame,
     PenIcon,
-    PenOff,
     Settings,
-    Settings2,
+    Square,
 } from "lucide-react";
-import { arrowTool } from "../tools/arrowTool";
-import { lineTool } from "../tools/lineTool";
-import { CANVAS_MODES } from "../svgCanvasUtils";
+import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
+import { PenTool } from "../tools/PenTool";
+import { RectangleTool } from "../tools/RectangleTool";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
@@ -23,14 +22,14 @@ export const TOOL_ACTION_TYPES = {
 
 export const toolbarConfig = [
     {
-        name: arrowTool.name,
+        name: PenTool.name,
         Icon: PenIcon,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
         isTool: true,
     },
     {
-        name: lineTool.name,
-        Icon: PenOff,
+        name: RectangleTool.name,
+        Icon: Square,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
         isTool: true,
     },
@@ -61,16 +60,22 @@ export const toolbarConfig = [
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
     },
     {
-        group: "canvas-related",
-        Icon: Settings2,
-        useSelectedIcon: false,
-        tools: [
-            {
-                name: "canvasSettings",
-                Icon: Settings,
-                action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
-                panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
-            },
-        ],
+        name: "canvasSettings",
+        Icon: Settings,
+        action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
+        panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
     },
+    // {
+    //     group: "canvas-related",
+    //     Icon: Settings2,
+    //     useSelectedIcon: false,
+    //     tools: [
+    //         {
+    //             name: "canvasSettings",
+    //             Icon: Settings,
+    //             action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
+    //             panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
+    //         },
+    //     ],
+    // },
 ];

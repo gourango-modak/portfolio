@@ -1,40 +1,23 @@
-import { useRef } from "react";
-import { useRenderLogger } from "./debugging/useRenderLogger";
-import { PanelWrapper } from "./PanelWrapper";
-import SvgCanvas from "./SvgCanvas";
+import { PANELS } from "./canvasUtils";
+import Toolbar from "./toolbar/Toolbar";
+import { Panel } from "./components/Panel";
 import InspectorPanel from "./toolbar/properties/InspectorPanel";
 import ToolPropertiesPanel from "./toolbar/properties/ToolPropertiesPanel";
-import Toolbar from "./toolbar/Toolbar";
-import { PANELS } from "./svgCanvasUtils";
+import CanvasStage from "./components/CanvasStage";
 
 export const DrawingEnvironment = () => {
-    const toolbarPanelRef = useRef(null);
-    const inspectorPanelRef = useRef(null);
-    const toolPropertiesPanelRef = useRef(null);
-
-    useRenderLogger("DrawingEnvironment");
-
     return (
         <>
-            <PanelWrapper
-                panelId={PANELS.TOOLBAR_PANEL}
-                dragHandleRef={toolbarPanelRef}
-            >
+            <Panel panelId={PANELS.TOOLBAR_PANEL}>
                 <Toolbar />
-            </PanelWrapper>
-            <PanelWrapper
-                panelId={PANELS.INSPECTOR_PANEL}
-                dragHandleRef={inspectorPanelRef}
-            >
+            </Panel>
+            <Panel panelId={PANELS.INSPECTOR_PANEL}>
                 <InspectorPanel />
-            </PanelWrapper>
-            <PanelWrapper
-                panelId={PANELS.TOOL_PROPERTIES_PANEL}
-                dragHandleRef={toolPropertiesPanelRef}
-            >
+            </Panel>
+            <Panel panelId={PANELS.TOOL_PROPERTIES_PANEL}>
                 <ToolPropertiesPanel />
-            </PanelWrapper>
-            <SvgCanvas />
+            </Panel>
+            <CanvasStage />
         </>
     );
 };

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { ToolButton } from "./ToolButton";
 import { ORIENTATION } from "../../../utils/common";
-import { useRenderLogger } from "../debugging/useRenderLogger";
+import { useRenderLogger } from "../hooks/useRenderLogger";
 
 export const SecondaryToolbar = memo(
     ({ tools, activeTool, onSubtoolClick, orientation }) => {

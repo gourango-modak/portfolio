@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 
-export const NumberProperty = ({
-    property,
-    value,
-    onChange,
-    min = 0,
-    max = 100,
-}) => {
-    const [number, setNumber] = useState(value);
+export const NumberProperty = ({ propertyName, property, onChange }) => {
+    const [number, setNumber] = useState(property.value);
+    const { min = 0, max = 100 } = property;
 
     useRenderLogger("NumberProperty");
 
     const handleChange = (e) => {
         setNumber(Number(e.target.value));
-        onChange({ name: property, value: Number(e.target.value) });
+        onChange(propertyName, {
+            ...property,
+            value: Number(e.target.value),
+        });
     };
 
     return (

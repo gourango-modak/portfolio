@@ -1,11 +1,11 @@
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useCanvasStore } from "../../store/useCanvasStore";
-import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../svgCanvasUtils";
+import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../canvasUtils";
 import { CanvasBgProperty } from "./CavasBgProperty";
 import { FrameBgProperty } from "./FrameBgProperty";
 
 export const CanvasProperties = () => {
-    const canvasMode = useCanvasStore((s) => s.mode);
+    const canvasMode = useCanvasStore((s) => s.properties.mode);
     const setCanvasMode = useCanvasStore((s) => s.setCanvasMode);
 
     const handleChange = (mode) => {
@@ -18,13 +18,15 @@ export const CanvasProperties = () => {
         <div className="flex flex-col gap-4 p-4 text-sm text-gray-800">
             {/* Canvas Mode */}
             <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700">Canvas Mode</label>
+                <label className="font-medium text-gray-700">
+                    {canvasMode.label}
+                </label>
                 <div className="flex gap-2">
                     {Object.entries(CANVAS_MODE_ICONS).map(([mode, Icon]) => (
                         <button
                             key={mode}
                             className={`p-2 rounded border cursor-pointer ${
-                                canvasMode === mode
+                                canvasMode.value === mode
                                     ? "border-indigo-500 bg-indigo-50"
                                     : "border-gray-300"
                             }`}

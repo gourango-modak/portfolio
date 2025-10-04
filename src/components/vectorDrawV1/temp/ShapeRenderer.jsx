@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { shapeRegistry } from "./shapeRegistry";
 
 const ShapeRenderer = memo(function ShapeRenderer({ shape }) {

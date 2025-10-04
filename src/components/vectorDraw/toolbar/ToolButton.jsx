@@ -1,4 +1,4 @@
-import { useRenderLogger } from "../debugging/useRenderLogger";
+import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useCanvasStore } from "../store/useCanvasStore";
 import { usePanelStore } from "../store/usePanelStore";
 import { useToolbarStore } from "../store/useToolbarStore";

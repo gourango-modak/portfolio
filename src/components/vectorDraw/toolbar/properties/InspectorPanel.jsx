@@ -1,12 +1,15 @@
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useMemo } from "react";
 import { INSPECTOR_PANEL_TARGETS } from "./propertiesUtils";
 import { CanvasProperties } from "./CanvasProperties";
 import { PageProperties } from "./PageProperties";
 import { usePanelStore } from "../../store/usePanelStore";
+import { PANELS } from "../../canvasUtils";
 
-const InspectorPanel = ({ panelId, dragHandleRef }) => {
-    const target = usePanelStore((s) => s.panels[panelId].target);
+const InspectorPanel = () => {
+    const target = usePanelStore(
+        (s) => s.panels[PANELS.INSPECTOR_PANEL].target
+    );
     const closeInspectorPanel = usePanelStore((s) => s.closeInspectorPanel);
 
     const { title, content } = useMemo(() => {
@@ -30,10 +33,7 @@ const InspectorPanel = ({ panelId, dragHandleRef }) => {
 
     return (
         <div className="select-none w-60 shadow-md bg-white rounded-md border border-gray-300 flex flex-col">
-            <div
-                className="flex items-center justify-between px-3 py-2 border-b border-gray-100 cursor-grab active:cursor-grabbing select-none"
-                ref={dragHandleRef}
-            >
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100 cursor-grab active:cursor-grabbing select-none drag-handle">
                 <h2 className="text-sm font-medium text-gray-800 truncate">
                     {title}
                 </h2>

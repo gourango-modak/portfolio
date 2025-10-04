@@ -1,12 +1,12 @@
 import { TOOL_PROPERTIES_COMPONENTS } from "./propertiesUtils";
 
 export const ToolPropertyField = ({ propertyName, property, onChange }) => {
-    const Component = TOOL_PROPERTIES_COMPONENTS[propertyName];
+    const Component = TOOL_PROPERTIES_COMPONENTS[property.type];
     if (!Component) return null;
 
     const commonProps = {
         propertyName,
-        value: property.value,
+        property,
         onChange,
     };
 

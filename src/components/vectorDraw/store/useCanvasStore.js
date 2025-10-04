@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CANVAS_MODES } from "../svgCanvasUtils";
+import { CANVAS_MODES } from "../canvasUtils";
 import { zustandHmrFix } from "./zustandHmrFix";
 import { generateId } from "../../../utils/common";
 
@@ -8,42 +8,95 @@ const initialFrameState = {
     frameOrder: [],
     activeFrameId: null,
     frameTemplate: {
-        width: 800,
-        height: 1200,
-        bgColor: "#ffffff",
-        x: (window.innerWidth - 800) / 2,
-        y: 100,
+        width: { value: 800, label: "Width", type: "numeric" },
+        height: { value: 1200, label: "Height", type: "numeric" },
+        bgColor: {
+            value: "#ffffff",
+            label: "Frame Background",
+            type: "color",
+            id: "frameColor",
+        },
+        x: {
+            value: (window.innerWidth - 800) / 2,
+            label: "X",
+            type: "numeric",
+        },
+        y: { value: 100, label: "Y", type: "numeric" },
     },
 };
 
 export const useCanvasStore = create((set) => ({
-    mode: CANVAS_MODES.PAGED,
-    bgColor: "#ffffff",
+    properties: {
+        mode: { value: CANVAS_MODES.INFINITE, label: "Canvas Mode" },
+        canvasBgColor: {
+            value: "#ffffff",
+            label: "Canvas Background",
+            type: "color",
+            id: "canvasBgColor",
+        },
+    },
+
+    // setCanvasMode: (mode) =>
+    //     set((state) => {
+    //         if (state.mode === mode) return {};
+
+    //         if (mode === CANVAS_MODES.INFINITE) {
+    //             return {
+    //                 mode,
+    //                 ...initialFrameState,
+    //             };
+    //         }
+    //         return { mode };
+    //     }),
 
     setCanvasMode: (mode) =>
         set((state) => {
-            if (state.mode === mode) return {};
+            if (state.properties.mode.value === mode) return {};
+
+            const updatedProperties = {
+                ...state.properties,
+                mode: {
+                    ...state.properties.mode,
+                    value: mode,
+                },
+            };
 
             if (mode === CANVAS_MODES.INFINITE) {
                 return {
-                    mode,
+                    properties: {
+                        ...updatedProperties,
+                    },
                     ...initialFrameState,
                 };
             }
-            return { mode };
+
+            return { properties: updatedProperties };
         }),
 
     setCanvasBg: (color) =>
-        set({
-            bgColor: color,
-        }),
+        set((state) => ({
+            properties: {
+                ...state.properties,
+                canvasBgColor: {
+                    ...state.properties.canvasBgColor,
+                    value: color,
+                },
+            },
+        })),
 
     ...initialFrameState,
-    updateFrameTemplate: (property) =>
+    updateFrameTemplate: (updates) =>
         set((state) => ({
             frameTemplate: {
                 ...state.frameTemplate,
-                ...property,
+                ...Object.fromEntries(
+                    Object.entries(updates).map(([key, value]) => ({
+                        [key]: {
+                            ...state.frameTemplate[key], // keep existing label if exists
+                            value, // update value
+                        },
+                    }))
+                ),
             },
         })),
 
@@ -53,7 +106,10 @@ export const useCanvasStore = create((set) => ({
                 ...state.frames,
                 [frameId]: {
                     ...state.frames[frameId],
-                    bgColor: color,
+                    bgColor: {
+                        ...state.frames[frameId].bgColor,
+                        value: color,
+                    },
                 },
             },
         })),

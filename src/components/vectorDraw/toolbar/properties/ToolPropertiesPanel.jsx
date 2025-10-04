@@ -1,10 +1,10 @@
 import { useToolbarStore } from "../../store/useToolbarStore";
-import { useRenderLogger } from "../../debugging/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { toolRegistry } from "../../tools/toolRegistry";
 import { ToolProperties } from "./ToolProperties";
 import { usePanelStore } from "../../store/usePanelStore";
 
-const ToolPropertiesPanel = ({ dragHandleRef }) => {
+const ToolPropertiesPanel = () => {
     const closeToolPropertiesPanel = usePanelStore(
         (s) => s.closeToolPropertiesPanel
     );
@@ -15,10 +15,7 @@ const ToolPropertiesPanel = ({ dragHandleRef }) => {
 
     return (
         <div className="w-60 shadow-md bg-white rounded-md border border-gray-300 flex-col flex">
-            <div
-                className="flex items-center justify-between px-3 py-2 border-b border-gray-100 cursor-grab active:cursor-grabbing select-none"
-                ref={dragHandleRef}
-            >
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100 cursor-grab active:cursor-grabbing select-none drag-handle">
                 <h2 className="text-sm font-medium text-gray-800 truncate">
                     {tool.label} Properties
                 </h2>

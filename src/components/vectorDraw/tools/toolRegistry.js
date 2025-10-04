@@ -1,7 +1,7 @@
-import { lineTool } from "./lineTool";
-import { arrowTool } from "./arrowTool";
+import { PenTool } from "./PenTool";
+import { RectangleTool } from "./RectangleTool";
 
 export const toolRegistry = {
-    [lineTool.name]: lineTool,
-    [arrowTool.name]: arrowTool,
+    [PenTool.name]: PenTool,
+    [RectangleTool.name]: RectangleTool,
 };
