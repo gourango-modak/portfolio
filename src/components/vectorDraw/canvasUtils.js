@@ -1,17 +1,6 @@
 import { Copy, Infinity } from "lucide-react";
-
-export const getSvgCanvasPointerEvent = (svgCanvasRef, e) => {
-    const svg = svgCanvasRef.current;
-    const pt = svg.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-    const coords = pt.matrixTransform(svg.getScreenCTM().inverse());
-    return {
-        x: coords.x,
-        y: coords.y,
-        originalEvent: e,
-    };
-};
+import { shapeBoundingRectRegistry } from "./shapes/shapeBoundingRectRegistry";
+import { useShapeStore } from "./store/useShapeStore";
 
 export const CANVAS_MODES = {
     PAGED: "Paged",
@@ -41,4 +30,52 @@ export const getSvgPathFromStroke = (stroke) => {
     );
     d.push("Z");
     return d.join(" ");
+};
+
+export const getRoughRectPath = (x, y, w, h, roughness = 0) => {
+    const jitter = (v) => v + (Math.random() - 0.5) * roughness;
+
+    const makePath = () => {
+        const x1 = jitter(x),
+            y1 = jitter(y);
+        const x2 = jitter(x + w),
+            y2 = jitter(y);
+        const x3 = jitter(x + w),
+            y3 = jitter(y + h);
+        const x4 = jitter(x),
+            y4 = jitter(y + h);
+        return `M${x1},${y1} L${x2},${y2} L${x3},${y3} L${x4},${y4} Z`;
+    };
+
+    return roughness > 0
+        ? `${makePath()} ${makePath()}`
+        : `M${x},${y} L${x + w},${y} L${x + w},${y + h} L${x},${y + h} Z`;
+};
+
+export const getShapeBoundingRect = (shape) => {
+    const getBoundingRectFn = shapeBoundingRectRegistry[shape.type];
+    return getBoundingRectFn(shape);
+};
+
+export const getCombinedSelectionBounds = (selectedShapeIds) => {
+    if (selectedShapeIds.size <= 0) return null;
+
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
+
+    selectedShapeIds.forEach((id) => {
+        const shapes = useShapeStore.getState().shapes;
+        const shape = shapes[id];
+        if (!shape) return;
+
+        const { x, y, width, height } = getShapeBoundingRect(shape);
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x + width);
+        maxY = Math.max(maxY, y + height);
+    });
+
+    return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
 };

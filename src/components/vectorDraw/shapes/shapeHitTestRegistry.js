@@ -1,6 +1,5 @@
 import { distancePointToSegment, isPointInPolygon } from "../geometryUtils";
-import { PenTool } from "../tools/PenTool";
-import { RectangleTool } from "../tools/RectangleTool";
+import { SHAPES } from "./shapesUtils";
 
 function hitTestPenShape(shape, x, y) {
     const rawPoints = shape.points;
@@ -8,17 +7,20 @@ function hitTestPenShape(shape, x, y) {
 
     const threshold = shape.properties?.strokeWidth?.value / 2 + 3;
 
-    // Fast check — distance to path segments
+    // Convert global → local coordinates
+    const localX = x - shape.x;
+    const localY = y - shape.y;
+
     for (let i = 0; i < rawPoints.length - 1; i++) {
         const p1 = rawPoints[i];
         const p2 = rawPoints[i + 1];
-        const dist = distancePointToSegment({ x, y }, p1, p2);
+        const dist = distancePointToSegment({ x: localX, y: localY }, p1, p2);
         if (dist <= threshold) return true;
     }
 
-    // Optional fallback for very thick strokes
     if (threshold > 12 && shape.strokePoints?.length > 2) {
-        if (isPointInPolygon({ x, y }, shape.strokePoints)) return true;
+        if (isPointInPolygon({ x: localX, y: localY }, shape.strokePoints))
+            return true;
     }
 
     return false;
@@ -60,6 +62,6 @@ function hitTestRectShape(shape, x, y) {
 
 // Registry of all hit test functions
 export const shapeHitTestRegistry = {
-    [PenTool.shapeType]: hitTestPenShape,
-    [RectangleTool.shapeType]: hitTestRectShape,
+    [SHAPES.PEN]: hitTestPenShape,
+    [SHAPES.RECTANGLE]: hitTestRectShape,
 };

@@ -2,10 +2,13 @@ import { memo } from "react";
 import { useShapeStore } from "./../store/useShapeStore";
 import { shapeRegistry } from "../shapes/shapeRegistry";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { SelectionRectShape } from "../shapes/SelectionRectShape";
+import { SelectionRect } from "./SelectionRect";
 
 const ShapeRenderer = memo(({ shapeId }) => {
-    const shape = useShapeStore((s) => s.shapes[shapeId]);
+    const shape = useShapeStore(
+        (s) => s.shapes[shapeId],
+        (oldShape, newShape) => oldShape?.version === newShape?.version
+    );
     const isSelected = useShapeStore((s) => s.selectedShapeIds.has(shapeId));
 
     useRenderLogger("ShapeRenderer");
@@ -17,7 +20,7 @@ const ShapeRenderer = memo(({ shapeId }) => {
     return (
         <>
             <Renderer shape={shape} isSelected={isSelected} />
-            {isSelected && <SelectionRectShape shape={shape} />}
+            {isSelected && <SelectionRect shape={shape} />}
         </>
     );
 });

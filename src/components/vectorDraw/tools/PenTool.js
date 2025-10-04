@@ -3,11 +3,12 @@ import { useShapeStore } from "../store/useShapeStore";
 import { CANVAS_MODES, getSvgPathFromStroke } from "../canvasUtils";
 import { BaseTool } from "./BaseTool";
 import { useCanvasStore } from "../store/useCanvasStore";
+import { TOOLS } from "./toolsUtils";
+import { SHAPES } from "../shapes/shapesUtils";
 
 export class PenTool extends BaseTool {
-    static name = "PEN";
+    static name = TOOLS.PEN;
     static label = "Pen Tool";
-    static shapeType = PenTool.name;
     static shortcut = {
         code: "KeyP",
     };
@@ -63,12 +64,35 @@ export class PenTool extends BaseTool {
         if (!this.livePath) return;
 
         const canvasStore = useCanvasStore.getState();
+
+        // Compute stroke points
+        const strokePoints = this.getStrokePoints();
+
+        // Compute the bounding box of the stroke
+        const xs = this.points.map((p) => p.x);
+        const ys = this.points.map((p) => p.y);
+        const minX = Math.min(...xs);
+        const minY = Math.min(...ys);
+
+        // Normalize points to local space (so shape.x/y become the transform)
+        const normalizedPoints = this.points.map((p) => ({
+            x: p.x - minX,
+            y: p.y - minY,
+            pressure: p.pressure,
+        }));
+
+        const normalizedStrokePoints = strokePoints.map(([x, y]) => [
+            x - minX,
+            y - minY,
+        ]);
+
         const shape = {
-            type: PenTool.shapeType,
-            points: this.points,
-            strokePoints: this.getStrokePoints(),
+            type: SHAPES.PEN,
+            points: normalizedPoints,
+            strokePoints: normalizedStrokePoints,
             properties: { ...this.properties },
-            bounds: this.getBounds(),
+            x: minX,
+            y: minY,
         };
 
         if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
@@ -92,15 +116,5 @@ export class PenTool extends BaseTool {
 
     getPathFromStrokePoints() {
         return getSvgPathFromStroke(this.getStrokePoints());
-    }
-
-    getBounds() {
-        const xs = this.points.map((p) => p.x);
-        const ys = this.points.map((p) => p.y);
-        const minX = Math.min(...xs);
-        const minY = Math.min(...ys);
-        const maxX = Math.max(...xs);
-        const maxY = Math.max(...ys);
-        return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
     }
 }

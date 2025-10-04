@@ -1,8 +1,9 @@
 import { useCanvasStore } from "../store/useCanvasStore";
 import { BaseTool } from "./BaseTool";
+import { TOOLS } from "./toolsUtils";
 
 export class PanTool extends BaseTool {
-    static name = "PAN";
+    static name = TOOLS.PAN;
     static label = "Pan Tool";
     static shortcut = {
         code: "Space",

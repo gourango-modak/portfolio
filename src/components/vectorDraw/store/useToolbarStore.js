@@ -2,9 +2,10 @@ import { create } from "zustand";
 import { zustandHmrFix } from "./zustandHmrFix";
 import { usePanelStore } from "./usePanelStore";
 import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../toolbar/toolbarUtils";
+import { TOOLS } from "../tools/toolsUtils";
 
 export const useToolbarStore = create((set) => ({
-    activeTool: "SELECT",
+    activeTool: TOOLS.SELECTION,
     setActiveTool: (toolName) =>
         set(() => {
             if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName))

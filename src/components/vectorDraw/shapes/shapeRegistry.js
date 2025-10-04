@@ -1,9 +1,8 @@
-import { PenTool } from "../tools/PenTool";
-import { RectangleTool } from "../tools/RectangleTool";
 import { PenShape } from "./PenShape";
 import { RectShape } from "./RectShape";
+import { SHAPES } from "./shapesUtils";
 
 export const shapeRegistry = {
-    [PenTool.shapeType]: PenShape,
-    [RectangleTool.shapeType]: RectShape,
+    [SHAPES.PEN]: PenShape,
+    [SHAPES.RECTANGLE]: RectShape,
 };
