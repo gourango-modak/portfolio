@@ -3,6 +3,7 @@ import { zustandHmrFix } from "./zustandHmrFix";
 import { usePanelStore } from "./usePanelStore";
 import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../toolbar/toolbarUtils";
 import { TOOLS } from "../tools/toolsUtils";
+import { useShapeStore } from "./useShapeStore";
 
 export const useToolbarStore = create((set) => ({
     activeTool: TOOLS.SELECTION,
@@ -13,6 +14,9 @@ export const useToolbarStore = create((set) => ({
             else {
                 usePanelStore.getState().openToolPropertiesPanel();
             }
+
+            if (useShapeStore.getState().selectedShapeIds.size > 0)
+                useShapeStore.getState().deselectAll();
 
             return {
                 activeTool: toolName,

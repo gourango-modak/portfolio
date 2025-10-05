@@ -1,6 +1,6 @@
 import { Copy, Infinity } from "lucide-react";
 import { shapeBoundingRectRegistry } from "./shapes/shapeBoundingRectRegistry";
-import { useShapeStore } from "./store/useShapeStore";
+import { shapeHitTestRegistry } from "./shapes/shapeHitTestRegistry";
 
 export const CANVAS_MODES = {
     PAGED: "Paged",
@@ -77,4 +77,9 @@ export const computeSelectedShapesBounds = (selectedShapeIds, shapes) => {
     });
 
     return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+};
+
+export const findShapeAtPoint = (shape, { x, y }) => {
+    const hitTestFn = shapeHitTestRegistry[shape.type];
+    return hitTestFn && hitTestFn(shape, x, y);
 };

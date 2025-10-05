@@ -10,7 +10,6 @@ export class PanTool extends BaseTool {
     };
     static revertOnRelease = true;
     static cursor = "grab";
-    static cursorDragging = "grabbing";
 
     constructor(liveLayerRef) {
         super(liveLayerRef);
@@ -22,6 +21,8 @@ export class PanTool extends BaseTool {
         const canvasStore = useCanvasStore.getState();
         this.startPoint = { x: e.clientX, y: e.clientY };
         this.startPan = { ...canvasStore.properties.pan };
+
+        canvasStore.setCursor("grabbing");
     }
 
     onPointerMove(e) {
@@ -38,7 +39,9 @@ export class PanTool extends BaseTool {
     }
 
     onPointerUp(e) {
+        const canvasStore = useCanvasStore.getState();
         this.startPoint = null;
         this.startPan = null;
+        canvasStore.setCursor(PanTool.cursor);
     }
 }

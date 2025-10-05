@@ -1,11 +1,8 @@
 import { useEffect } from "react";
 import { useCanvasStore } from "../store/useCanvasStore";
 
-export const useZoomPan = (viewportRef) => {
+export const useZoomPan = () => {
     useEffect(() => {
-        const viewport = viewportRef.current;
-        if (!viewport) return;
-
         const ZOOM_CONFIG = {
             factor: 1.1,
             minScale: 0.2,
@@ -28,10 +25,9 @@ export const useZoomPan = (viewportRef) => {
                 ZOOM_CONFIG.maxScale
             );
 
-            const rect = viewport.getBoundingClientRect();
             const anchor = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
+                x: e.clientX,
+                y: e.clientY,
             };
 
             const newPan = {
@@ -67,10 +63,10 @@ export const useZoomPan = (viewportRef) => {
             }
         };
 
-        viewport.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("wheel", handleWheel, { passive: false });
 
         return () => {
-            viewport.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("wheel", handleWheel);
         };
-    }, [viewportRef]);
+    }, []);
 };

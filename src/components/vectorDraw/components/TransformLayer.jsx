@@ -1,10 +1,12 @@
-import { useEffect, useRef } from "react";
-import ShapeLayer from "./ShapeLayer";
+import { memo, useEffect, useRef } from "react";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { FrameLayer } from "./FrameLayer";
+import { useCanvasStore } from "../store/useCanvasStore";
 
-const TransformLayer = ({ liveLayerRef, scale, pan }) => {
+const TransformLayer = memo(({ children }) => {
     const transformRef = useRef(null);
+
+    const scale = useCanvasStore((s) => s.properties.scale);
+    const pan = useCanvasStore((s) => s.properties.pan);
 
     useEffect(() => {
         transformRef.current.setAttribute(
@@ -15,13 +17,7 @@ const TransformLayer = ({ liveLayerRef, scale, pan }) => {
 
     useRenderLogger("TransformLayer");
 
-    return (
-        <g ref={transformRef}>
-            <FrameLayer />
-            <ShapeLayer />
-            <g ref={liveLayerRef}></g>
-        </g>
-    );
-};
+    return <g ref={transformRef}>{children}</g>;
+});
 
 export default TransformLayer;

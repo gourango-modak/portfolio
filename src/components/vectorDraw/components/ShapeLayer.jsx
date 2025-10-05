@@ -1,9 +1,8 @@
 import React, { useMemo } from "react";
 import { useShapeStore } from "../store/useShapeStore";
-import ShapeRenderer from "./ShapeRenderer";
+import Shape from "./Shape";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useCanvasStore } from "../store/useCanvasStore";
-import { GroupedSelectionRect } from "./GroupedSelectionRect";
 
 const ShapeLayer = () => {
     const shapeOrder = useShapeStore((s) => s.shapeOrder);
@@ -21,10 +20,8 @@ const ShapeLayer = () => {
     return (
         <g>
             {filteredShapeOrder.map((id) => (
-                <ShapeRenderer key={id} shapeId={id} />
+                <Shape key={id} shapeId={id} />
             ))}
-
-            <GroupedSelectionRect />
         </g>
     );
 };

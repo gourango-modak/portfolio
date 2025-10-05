@@ -1,6 +1,6 @@
-import { getShapeBoundingRect } from "../canvasUtils";
+import { findShapeAtPoint, getShapeBoundingRect } from "../canvasUtils";
 import { isPointInRect } from "../geometryUtils";
-import { shapeHitTestRegistry } from "../shapes/shapeHitTestRegistry";
+import { useCanvasStore } from "../store/useCanvasStore";
 import { useShapeStore } from "../store/useShapeStore";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
@@ -41,7 +41,7 @@ export class SelectionTool extends BaseTool {
         this.lastPointer = { x: e.tx, y: e.ty };
 
         const selectedShapesBounds = store.selectedShapesBounds;
-        const hitId = this.getShapeUnderPoint(e.tx, e.ty);
+        const hitId = this.getShapeUnderPoint({ x: e.tx, y: e.ty });
 
         // Check if clicked inside existing selection
         const clickedInsideSelection =
@@ -55,8 +55,42 @@ export class SelectionTool extends BaseTool {
     }
 
     onPointerMove(e) {
-        if (!this.startPoint) return;
         const store = useShapeStore.getState();
+        const pointer = { x: e.tx, y: e.ty };
+        const { shapes, selectedShapesBounds, selectedShapeIds } = store;
+
+        // --- CURSOR LOGIC ---
+        let cursorSet = false;
+
+        // 1. Check if pointer is inside selected shapes bounding box
+        if (
+            selectedShapesBounds &&
+            isPointInRect(pointer, selectedShapesBounds)
+        ) {
+            useCanvasStore.getState().setCursor("move");
+            cursorSet = true;
+        }
+
+        // 2. Check if pointer is over any individual shape (skip selected shapes)
+        if (!cursorSet) {
+            for (const id in shapes) {
+                if (selectedShapeIds.has(id)) continue;
+                const shape = shapes[id];
+                if (findShapeAtPoint(shape, pointer)) {
+                    useCanvasStore.getState().setCursor("move");
+                    cursorSet = true;
+                    break; // early exit for performance
+                }
+            }
+        }
+
+        // 3. Default cursor if not over any shape
+        if (!cursorSet) {
+            useCanvasStore.getState().setCursor("default");
+        }
+
+        // --- MOVEMENT / DRAG LOGIC ---
+        if (!this.startPoint) return;
 
         const dx = e.tx - this.lastPointer.x;
         const dy = e.ty - this.lastPointer.y;
@@ -67,7 +101,7 @@ export class SelectionTool extends BaseTool {
         );
         const moveThreshold = 3;
 
-        // Start moving if clicked inside selection and dragged beyond threshold
+        // Start moving selected shapes if clicked inside selection and dragged beyond threshold
         if (
             !this.moving &&
             this.clickedInsideSelection &&
@@ -76,17 +110,17 @@ export class SelectionTool extends BaseTool {
             this.moving = true;
         }
 
-        // Move shapes
+        // Move selected shapes
         if (this.moving) {
-            store.selectedShapeIds.forEach((id) => {
-                const shape = store.shapes[id];
+            selectedShapeIds.forEach((id) => {
+                const shape = shapes[id];
                 store.updateShape(id, { x: shape.x + dx, y: shape.y + dy });
             });
             this.lastPointer = { x: e.tx, y: e.ty };
             return;
         }
 
-        // Handle drag selection rect
+        // Handle drag-selection rectangle
         if (dist > moveThreshold && !this.clickedInsideSelection) {
             if (!this.dragging) {
                 this.dragging = true;
@@ -172,12 +206,11 @@ export class SelectionTool extends BaseTool {
         } L${x},${y + height} Z`;
     }
 
-    getShapeUnderPoint(x, y) {
+    getShapeUnderPoint({ x, y }) {
         const { shapes, shapeOrder } = useShapeStore.getState();
         const hitShapeId = shapeOrder.find((id) => {
             const shape = shapes[id];
-            const hitTestFn = shapeHitTestRegistry[shape.type];
-            return hitTestFn && hitTestFn(shape, x, y);
+            return findShapeAtPoint(shape, { x, y });
         });
         return hitShapeId || null;
     }

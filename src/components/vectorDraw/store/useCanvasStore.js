@@ -35,7 +35,13 @@ export const useCanvasStore = create((set) => ({
         },
         pan: { x: 0, y: 0 },
         scale: 1,
+        cursor: "default",
     },
+
+    setCursor: (cursor) =>
+        set((state) => ({
+            properties: { ...state.properties, cursor },
+        })),
 
     setScale: (scale) =>
         set((state) => ({
