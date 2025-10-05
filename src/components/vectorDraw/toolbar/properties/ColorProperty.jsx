@@ -30,8 +30,12 @@ export const ColorProperty = ({ propertyName, property, onChange }) => {
         const newColor = e.target.value;
         setColorInput(newColor);
 
-        if (/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(newColor)) {
+        // Regex to support: #RGB, #RGBA, #RRGGBB, #RRGGBBAA
+        if (
+            /^#([0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(newColor)
+        ) {
             setColor(id, newColor);
+            onChange(propertyName, { ...property, value: newColor });
         }
     };
 
@@ -46,22 +50,23 @@ export const ColorProperty = ({ propertyName, property, onChange }) => {
 
     return (
         <>
-            <div className="flex flex-col items-start gap-2">
-                <div className="flex items-center gap-2">
+            <div className="flex flex-col items-start gap-2 w-full">
+                <div className="flex items-center gap-2 w-full">
                     <input
                         type="text"
                         value={colorInput}
                         onChange={handleInputChange}
-                        className="w-20 p-1 border border-gray-300 rounded text-sm text-center"
+                        className="flex-1 min-w-0 p-1 border border-gray-300 rounded text-sm text-center"
                     />
                     <div
                         ref={previewRef}
-                        className="w-8 h-8 rounded border border-gray-300 cursor-pointer"
+                        className="w-8 h-8 rounded border border-gray-300 cursor-pointer flex-shrink-0"
                         style={{ backgroundColor: colorInput }}
                         onClick={handleColorPicker}
                     ></div>
                 </div>
             </div>
+
             <ColorPicker id={id} />
         </>
     );

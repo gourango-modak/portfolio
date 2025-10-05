@@ -7,6 +7,11 @@ export const useToolShortcuts = () => {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
+            // If the key event originated from an input, skip shortcut handling
+            // so that normal typing, pasting, and editing still work.
+            const tag = e.target.tagName;
+            if (tag === "INPUT") return;
+
             const activeTool = useToolbarStore.getState().activeTool;
 
             for (const toolName in toolRegistry) {

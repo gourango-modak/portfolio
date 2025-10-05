@@ -5,6 +5,11 @@ import { useShapeStore } from "../store/useShapeStore";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
 
+export const SELECTION_MODE = {
+    FULL: "FULL",
+    TOUCH: "TOUCH",
+};
+
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
     static label = "Selection Tool";
@@ -21,9 +26,13 @@ export class SelectionTool extends BaseTool {
             step: 1,
         },
         fillColor: {
-            value: "rgba(0, 122, 255, 0.1)",
+            value: "#007AFF19",
             label: "Selection Fill",
             type: "color",
+        },
+        selectionMode: {
+            value: SELECTION_MODE.TOUCH,
+            label: "Selection Mode",
         },
     };
 
@@ -87,15 +96,33 @@ export class SelectionTool extends BaseTool {
         } L${x},${y + height} Z`;
     }
 
-    /** Check if a shape is fully inside a rectangle */
-    _isShapeFullyInsideRect(shape, rect) {
+    /** Check if shape is selected by rectangle based on selectionMode */
+    _isShapeSelectedByRect(shape, rect) {
         const { x, y, width, height } = getShapeBoundingRect(shape);
-        return (
-            x >= rect.x &&
-            y >= rect.y &&
-            x + width <= rect.x + rect.width &&
-            y + height <= rect.y + rect.height
-        );
+
+        if (this.properties.selectionMode.value === SELECTION_MODE.FULL) {
+            // Fully inside selection
+            return (
+                x >= rect.x &&
+                y >= rect.y &&
+                x + width <= rect.x + rect.width &&
+                y + height <= rect.y + rect.height
+            );
+        } else if (
+            this.properties.selectionMode.value === SELECTION_MODE.TOUCH
+        ) {
+            // Hit-test: check a few points inside the selection rect to see if they touch the shape
+            const step = 5; // sampling step in px
+            for (let px = rect.x; px <= rect.x + rect.width; px += step) {
+                for (let py = rect.y; py <= rect.y + rect.height; py += step) {
+                    if (findShapeAtPoint(shape, { x: px, y: py })) {
+                        return true; // at least one point hits the shape
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /** Returns the first shape under a point or null */
@@ -231,7 +258,7 @@ export class SelectionTool extends BaseTool {
             });
 
             const selected = Object.values(store.shapes)
-                .filter((shape) => this._isShapeFullyInsideRect(shape, rect))
+                .filter((shape) => this._isShapeSelectedByRect(shape, rect))
                 .map((s) => s.id);
 
             store.deselectAll();
