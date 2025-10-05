@@ -1,13 +1,17 @@
 import { distancePointToSegment, isPointInPolygon } from "../geometryUtils";
 import { SHAPES } from "./shapesUtils";
 
-function hitTestPenShape(shape, x, y) {
+// options: { type: "point" | "circle", radius?: number }
+function hitTestPenShape(shape, x, y, options = { type: "point" }) {
     const rawPoints = shape.points;
     if (!rawPoints || rawPoints.length < 2) return false;
 
-    const threshold = shape.properties?.strokeWidth?.value / 2 + 3;
+    const baseThreshold = shape.properties?.strokeWidth?.value / 2 + 3;
+    const threshold =
+        options.type === "circle"
+            ? baseThreshold + (options.radius || 0)
+            : baseThreshold;
 
-    // Convert global → local coordinates
     const localX = x - shape.x;
     const localY = y - shape.y;
 
@@ -26,15 +30,18 @@ function hitTestPenShape(shape, x, y) {
     return false;
 }
 
-function hitTestRectShape(shape, x, y) {
-    const { x: sx, y: sy, width, height } = shape;
+function hitTestRectShape(shape, x, y, options = { type: "point" }) {
     const strokeWidth = shape.properties.strokeWidth.value;
-    const tolerance = Math.max(4, strokeWidth * 2);
+    const baseTolerance = Math.max(4, strokeWidth * 2);
+    const tolerance =
+        options.type === "circle"
+            ? baseTolerance + (options.radius || 0)
+            : baseTolerance;
 
-    const left = sx;
-    const right = sx + width;
-    const top = sy;
-    const bottom = sy + height;
+    const left = shape.x;
+    const right = shape.x + shape.width;
+    const top = shape.y;
+    const bottom = shape.y + shape.height;
 
     const nearLeft =
         x >= left - tolerance &&
@@ -60,11 +67,14 @@ function hitTestRectShape(shape, x, y) {
     return nearLeft || nearRight || nearTop || nearBottom;
 }
 
-function hitTestArrowShape(shape, x, y) {
-    const strokeWidth = shape.properties?.strokeWidth?.value || 2;
-    const threshold = strokeWidth / 2 + 3;
+function hitTestArrowShape(shape, x, y, options = { type: "point" }) {
+    const strokeWidth = shape.properties?.strokeWidth?.value;
+    const baseThreshold = strokeWidth / 2 + 3;
+    const threshold =
+        options.type === "circle"
+            ? baseThreshold + (options.radius || 0)
+            : baseThreshold;
 
-    // Convert global → local coordinates
     const localX = x - shape.x;
     const localY = y - shape.y;
 
@@ -88,7 +98,7 @@ function hitTestArrowShape(shape, x, y) {
     return false;
 }
 
-// Registry of all hit test functions
+// Registry
 export const shapeHitTestRegistry = {
     [SHAPES.PEN]: hitTestPenShape,
     [SHAPES.RECTANGLE]: hitTestRectShape,

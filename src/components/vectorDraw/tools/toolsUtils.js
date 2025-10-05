@@ -4,6 +4,7 @@ export const TOOLS = {
     PAN: "PAN",
     RECTANGLE: "RECTANGLE",
     ARROW: "ARROW",
+    ERASER: "ERASER",
 };
 
 export const getRoughRectPath = (x, y, w, h, roughness = 0) => {

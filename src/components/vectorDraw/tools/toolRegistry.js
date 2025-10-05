@@ -1,4 +1,5 @@
 import { ArrowTool } from "./ArrowTool";
+import { EraserTool } from "./EraserTool";
 import { PanTool } from "./PanTool";
 import { PenTool } from "./PenTool";
 import { RectangleTool } from "./RectangleTool";
@@ -11,4 +12,5 @@ export const toolRegistry = {
     [TOOLS.PAN]: PanTool,
     [TOOLS.SELECTION]: SelectionTool,
     [TOOLS.ARROW]: ArrowTool,
+    [TOOLS.ERASER]: EraserTool,
 };

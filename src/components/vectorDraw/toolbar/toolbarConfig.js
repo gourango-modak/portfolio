@@ -2,6 +2,7 @@ import {
     ArrowRight,
     ChevronLeft,
     ChevronRight,
+    Eraser,
     FilePlus2,
     Frame,
     Hand,
@@ -41,6 +42,11 @@ export const toolbarConfig = [
     {
         name: TOOLS.ARROW,
         Icon: ArrowRight,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
+    {
+        name: TOOLS.ERASER,
+        Icon: Eraser,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {

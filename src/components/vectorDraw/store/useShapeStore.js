@@ -7,6 +7,13 @@ export const useShapeStore = create((set) => ({
     shapes: {},
     shapeOrder: [],
 
+    setShapes: (newShapes, newShapeOrder) => {
+        set(() => ({
+            shapes: newShapes,
+            shapeOrder: newShapeOrder,
+        }));
+    },
+
     addShape: (shape) => {
         const id = generateId();
         set((state) => ({
