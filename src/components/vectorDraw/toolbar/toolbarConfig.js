@@ -1,4 +1,5 @@
 import {
+    ArrowRight,
     ChevronLeft,
     ChevronRight,
     FilePlus2,
@@ -11,10 +12,7 @@ import {
 } from "lucide-react";
 import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
-import { PenTool } from "../tools/PenTool";
-import { RectangleTool } from "../tools/RectangleTool";
-import { PanTool } from "../tools/PanTool";
-import { SelectionTool } from "../tools/SelectionTool";
+import { TOOLS } from "../tools/toolsUtils";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
@@ -26,22 +24,27 @@ export const TOOL_ACTION_TYPES = {
 
 export const toolbarConfig = [
     {
-        name: SelectionTool.name,
+        name: TOOLS.SELECTION,
         Icon: MousePointer,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {
-        name: PenTool.name,
+        name: TOOLS.PEN,
         Icon: PenIcon,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {
-        name: RectangleTool.name,
+        name: TOOLS.RECTANGLE,
         Icon: Square,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {
-        name: PanTool.name,
+        name: TOOLS.ARROW,
+        Icon: ArrowRight,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
+    {
+        name: TOOLS.PAN,
         Icon: Hand,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
         visible: () => false,

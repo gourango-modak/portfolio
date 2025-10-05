@@ -1,9 +1,9 @@
-import { CANVAS_MODES, getRoughRectPath } from "../canvasUtils";
+import { CANVAS_MODES } from "../canvasUtils";
 import { SHAPES } from "../shapes/shapesUtils";
 import { useCanvasStore } from "../store/useCanvasStore";
 import { useShapeStore } from "../store/useShapeStore";
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./toolsUtils";
+import { getRoughRectPath, TOOLS } from "./toolsUtils";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;

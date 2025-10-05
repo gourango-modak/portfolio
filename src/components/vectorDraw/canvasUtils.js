@@ -32,26 +32,6 @@ export const getSvgPathFromStroke = (stroke) => {
     return d.join(" ");
 };
 
-export const getRoughRectPath = (x, y, w, h, roughness = 0) => {
-    const jitter = (v) => v + (Math.random() - 0.5) * roughness;
-
-    const makePath = () => {
-        const x1 = jitter(x),
-            y1 = jitter(y);
-        const x2 = jitter(x + w),
-            y2 = jitter(y);
-        const x3 = jitter(x + w),
-            y3 = jitter(y + h);
-        const x4 = jitter(x),
-            y4 = jitter(y + h);
-        return `M${x1},${y1} L${x2},${y2} L${x3},${y3} L${x4},${y4} Z`;
-    };
-
-    return roughness > 0
-        ? `${makePath()} ${makePath()}`
-        : `M${x},${y} L${x + w},${y} L${x + w},${y + h} L${x},${y + h} Z`;
-};
-
 export const getShapeBoundingRect = (shape) => {
     const getBoundingRectFn = shapeBoundingRectRegistry[shape.type];
     return getBoundingRectFn(shape);

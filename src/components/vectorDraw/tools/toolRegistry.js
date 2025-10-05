@@ -1,3 +1,4 @@
+import { ArrowTool } from "./ArrowTool";
 import { PanTool } from "./PanTool";
 import { PenTool } from "./PenTool";
 import { RectangleTool } from "./RectangleTool";
@@ -9,4 +10,5 @@ export const toolRegistry = {
     [TOOLS.RECTANGLE]: RectangleTool,
     [TOOLS.PAN]: PanTool,
     [TOOLS.SELECTION]: SelectionTool,
+    [TOOLS.ARROW]: ArrowTool,
 };

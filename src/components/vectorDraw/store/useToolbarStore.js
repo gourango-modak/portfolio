@@ -6,7 +6,7 @@ import { TOOLS } from "../tools/toolsUtils";
 import { useShapeStore } from "./useShapeStore";
 
 export const useToolbarStore = create((set) => ({
-    activeTool: TOOLS.SELECTION,
+    activeTool: TOOLS.ARROW,
     setActiveTool: (toolName) =>
         set(() => {
             if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName))

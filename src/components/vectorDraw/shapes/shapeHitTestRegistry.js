@@ -60,8 +60,37 @@ function hitTestRectShape(shape, x, y) {
     return nearLeft || nearRight || nearTop || nearBottom;
 }
 
+function hitTestArrowShape(shape, x, y) {
+    const strokeWidth = shape.properties?.strokeWidth?.value || 2;
+    const threshold = strokeWidth / 2 + 3;
+
+    // Convert global → local coordinates
+    const localX = x - shape.x;
+    const localY = y - shape.y;
+
+    const pts = shape.points;
+    if (!pts || pts.length < 4) return false;
+
+    // Shaft: first two points
+    if (
+        distancePointToSegment({ x: localX, y: localY }, pts[0], pts[1]) <=
+        threshold
+    ) {
+        return true;
+    }
+
+    // Arrowhead: last three points (tip + left + right)
+    const arrowHeadPoints = [pts[1], pts[2], pts[3]];
+    if (isPointInPolygon({ x: localX, y: localY }, arrowHeadPoints)) {
+        return true;
+    }
+
+    return false;
+}
+
 // Registry of all hit test functions
 export const shapeHitTestRegistry = {
     [SHAPES.PEN]: hitTestPenShape,
     [SHAPES.RECTANGLE]: hitTestRectShape,
+    [SHAPES.ARROW]: hitTestArrowShape,
 };

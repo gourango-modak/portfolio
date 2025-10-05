@@ -27,8 +27,30 @@ export const getPenShapeBounds = (shape) => {
     };
 };
 
+export function getArrowShapeBounds(shape) {
+    const pts = shape.points;
+    if (!pts || !pts.length)
+        return { x: shape.x, y: shape.y, width: 0, height: 0 };
+
+    const xs = pts.map((p) => p.x);
+    const ys = pts.map((p) => p.y);
+
+    const minX = Math.min(...xs);
+    const maxX = Math.max(...xs);
+    const minY = Math.min(...ys);
+    const maxY = Math.max(...ys);
+
+    return {
+        x: shape.x + minX,
+        y: shape.y + minY,
+        width: maxX - minX,
+        height: maxY - minY,
+    };
+}
+
 // Registry of all shape bounding rectangle functions
 export const shapeBoundingRectRegistry = {
     [SHAPES.PEN]: getPenShapeBounds,
     [SHAPES.RECTANGLE]: getRectShapeBounds,
+    [SHAPES.ARROW]: getArrowShapeBounds,
 };
