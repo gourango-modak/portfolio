@@ -29,37 +29,20 @@ export class SelectionTool extends BaseTool {
 
     constructor(liveLayerRef) {
         super(liveLayerRef);
+
+        // --- Pointer & interaction state ---
         this.startPoint = null;
-        this.dragging = false; // For selection rectangle
-        this.moving = false; // For moving selected shapes
-        this.lastPointer = null; // Track last pointer for moving
+        this.lastPointer = null;
+        this.dragging = false; // dragging selection rectangle
+        this.moving = false; // moving selected shapes
+        this.clickCandidateId = null; // shape clicked on pointer down
+        this.clickedInsideSelection = false; // pointer inside selection bounding box
     }
 
-    onPointerDown(e) {
-        const store = useShapeStore.getState();
-        this.startPoint = { x: e.tx, y: e.ty };
-        this.lastPointer = { x: e.tx, y: e.ty };
+    /** --- PRIVATE UTILITY METHODS --- */
 
-        const selectedShapesBounds = store.selectedShapesBounds;
-        const hitId = this.getShapeUnderPoint({ x: e.tx, y: e.ty });
-
-        // Check if clicked inside existing selection
-        const clickedInsideSelection =
-            selectedShapesBounds &&
-            isPointInRect({ x: e.tx, y: e.ty }, selectedShapesBounds);
-
-        this.moving = false;
-        this.dragging = false;
-        this.clickCandidateId = hitId || null; // store which shape was clicked
-        this.clickedInsideSelection = clickedInsideSelection;
-    }
-
-    onPointerMove(e) {
-        const store = useShapeStore.getState();
-        const pointer = { x: e.tx, y: e.ty };
-        const { shapes, selectedShapesBounds, selectedShapeIds } = store;
-
-        // --- CURSOR LOGIC ---
+    /** Update cursor based on pointer position and shapes */
+    _updateCursor(pointer, shapes, selectedShapeIds, selectedShapesBounds) {
         let cursorSet = false;
 
         // 1. Check if pointer is inside selected shapes bounding box
@@ -75,8 +58,7 @@ export class SelectionTool extends BaseTool {
         if (!cursorSet) {
             for (const id in shapes) {
                 if (selectedShapeIds.has(id)) continue;
-                const shape = shapes[id];
-                if (findShapeAtPoint(shape, pointer)) {
+                if (findShapeAtPoint(shapes[id], pointer)) {
                     useCanvasStore.getState().setCursor("move");
                     cursorSet = true;
                     break; // early exit for performance
@@ -84,24 +66,98 @@ export class SelectionTool extends BaseTool {
             }
         }
 
-        // 3. Default cursor if not over any shape
-        if (!cursorSet) {
-            useCanvasStore.getState().setCursor("default");
-        }
+        // 3. Default cursor if pointer not over any shape
+        if (!cursorSet) useCanvasStore.getState().setCursor("default");
+    }
+
+    /** Calculate rectangle dimensions from two points */
+    _getRectFromPoints(p1, p2) {
+        const x = Math.min(p1.x, p2.x);
+        const y = Math.min(p1.y, p2.y);
+        const width = Math.abs(p2.x - p1.x);
+        const height = Math.abs(p2.y - p1.y);
+        return { x, y, width, height };
+    }
+
+    /** Convert rectangle to SVG path data */
+    _rectToPathData(rect) {
+        const { x, y, width, height } = rect;
+        return `M${x},${y} L${x + width},${y} L${x + width},${
+            y + height
+        } L${x},${y + height} Z`;
+    }
+
+    /** Check if a shape is fully inside a rectangle */
+    _isShapeFullyInsideRect(shape, rect) {
+        const { x, y, width, height } = getShapeBoundingRect(shape);
+        return (
+            x >= rect.x &&
+            y >= rect.y &&
+            x + width <= rect.x + rect.width &&
+            y + height <= rect.y + rect.height
+        );
+    }
+
+    /** Returns the first shape under a point or null */
+    getShapeUnderPoint({ x, y }) {
+        const { shapes, shapeOrder } = useShapeStore.getState();
+        const hitShapeId = shapeOrder.find((id) =>
+            findShapeAtPoint(shapes[id], { x, y })
+        );
+        return hitShapeId || null;
+    }
+
+    /** --- EVENT HANDLERS --- */
+
+    /** Handle pointer down */
+    onPointerDown(e) {
+        const store = useShapeStore.getState();
+        const pointer = { x: e.tx, y: e.ty };
+
+        this.startPoint = pointer;
+        this.lastPointer = pointer;
+
+        const selectedShapesBounds = store.selectedShapesBounds;
+        const hitId = this.getShapeUnderPoint(pointer);
+
+        // Check if clicked inside existing selection
+        this.clickedInsideSelection =
+            selectedShapesBounds &&
+            isPointInRect(pointer, selectedShapesBounds);
+
+        // Reset state
+        this.moving = false;
+        this.dragging = false;
+        this.clickCandidateId = hitId || null;
+    }
+
+    /** Handle pointer move */
+    onPointerMove(e) {
+        const store = useShapeStore.getState();
+        const pointer = { x: e.tx, y: e.ty };
+        const { shapes, selectedShapeIds, selectedShapesBounds } = store;
+
+        // --- CURSOR LOGIC ---
+        this._updateCursor(
+            pointer,
+            shapes,
+            selectedShapeIds,
+            selectedShapesBounds
+        );
 
         // --- MOVEMENT / DRAG LOGIC ---
         if (!this.startPoint) return;
 
-        const dx = e.tx - this.lastPointer.x;
-        const dy = e.ty - this.lastPointer.y;
-
+        const dx = pointer.x - this.lastPointer.x;
+        const dy = pointer.y - this.lastPointer.y;
         const dist = Math.hypot(
-            e.tx - this.startPoint.x,
-            e.ty - this.startPoint.y
+            pointer.x - this.startPoint.x,
+            pointer.y - this.startPoint.y
         );
         const moveThreshold = 3;
 
-        // Start moving selected shapes if clicked inside selection and dragged beyond threshold
+        // Start moving selected shapes if clicked inside selection
+        // and dragged beyond threshold (moveThreshold)
         if (
             !this.moving &&
             this.clickedInsideSelection &&
@@ -116,7 +172,7 @@ export class SelectionTool extends BaseTool {
                 const shape = shapes[id];
                 store.updateShape(id, { x: shape.x + dx, y: shape.y + dy });
             });
-            this.lastPointer = { x: e.tx, y: e.ty };
+            this.lastPointer = pointer;
             return;
         }
 
@@ -125,6 +181,8 @@ export class SelectionTool extends BaseTool {
             if (!this.dragging) {
                 this.dragging = true;
                 this.createLivePath();
+
+                // Apply live selection rectangle styles
                 this.livePath.setAttribute(
                     "stroke",
                     this.properties.borderColor.value
@@ -139,91 +197,54 @@ export class SelectionTool extends BaseTool {
                 );
             }
 
-            const { x, y, width, height } = this.getRectDimensions(e);
-            this.livePath.setAttribute(
-                "d",
-                this.getPathData(x, y, width, height)
-            );
+            const rect = this._getRectFromPoints(this.startPoint, pointer);
+            this.livePath.setAttribute("d", this._rectToPathData(rect));
         }
     }
 
+    /** Handle pointer up */
     onPointerUp(e) {
         const store = useShapeStore.getState();
 
-        // Case 1: no drag or move (pure click)
+        // --- Case 1: no drag or move (pure click) ---
         if (!this.dragging && !this.moving) {
             const clickedId = this.clickCandidateId;
             const isSelected =
                 clickedId && store.selectedShapeIds.has(clickedId);
 
             if (clickedId) {
-                // toggle selection if already selected
-                if (isSelected) {
-                    store.deselectShape(clickedId);
-                } else {
+                if (isSelected) store.deselectShape(clickedId);
+                else {
                     store.deselectAll();
                     store.selectShape(clickedId);
                 }
             } else {
-                // empty area click — clear selection
-                store.deselectAll();
+                store.deselectAll(); // empty area click
             }
         }
 
-        // Case 2: dragged selection box
+        // --- Case 2: dragged selection rectangle ---
         else if (this.dragging) {
-            const { x, y, width, height } = this.getRectDimensions(e);
-            const rect = { x, y, width, height };
+            const rect = this._getRectFromPoints(this.startPoint, {
+                x: e.tx,
+                y: e.ty,
+            });
+
             const selected = Object.values(store.shapes)
-                .filter((shape) => this.isShapeInsideRect(shape, rect))
+                .filter((shape) => this._isShapeFullyInsideRect(shape, rect))
                 .map((s) => s.id);
 
             store.deselectAll();
             selected.forEach((id) => store.selectShape(id));
         }
 
-        // Cleanup
+        // --- Cleanup ---
         this.cleanUp();
         this.startPoint = null;
+        this.lastPointer = null;
         this.dragging = false;
         this.moving = false;
-        this.lastPointer = null;
         this.clickCandidateId = null;
         this.clickedInsideSelection = false;
-    }
-
-    getRectDimensions(e) {
-        const x = Math.min(e.tx, this.startPoint.x);
-        const y = Math.min(e.ty, this.startPoint.y);
-        const width = Math.abs(e.tx - this.startPoint.x);
-        const height = Math.abs(e.ty - this.startPoint.y);
-        return { x, y, width, height };
-    }
-
-    getPathData(x, y, width, height) {
-        return `M${x},${y} L${x + width},${y} L${x + width},${
-            y + height
-        } L${x},${y + height} Z`;
-    }
-
-    getShapeUnderPoint({ x, y }) {
-        const { shapes, shapeOrder } = useShapeStore.getState();
-        const hitShapeId = shapeOrder.find((id) => {
-            const shape = shapes[id];
-            return findShapeAtPoint(shape, { x, y });
-        });
-        return hitShapeId || null;
-    }
-
-    isShapeInsideRect(shape, rect) {
-        const { x, y, width, height } = getShapeBoundingRect(shape);
-        const shapeRight = x + width;
-        const shapeBottom = y + height;
-        return (
-            x >= rect.x &&
-            y >= rect.y &&
-            shapeRight <= rect.x + rect.width &&
-            shapeBottom <= rect.y + rect.height
-        );
     }
 }
