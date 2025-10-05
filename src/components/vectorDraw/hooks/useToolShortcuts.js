@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useToolbarStore } from "../store/useToolbarStore";
 import { toolRegistry } from "../tools/toolRegistry";
+import { TOOLS } from "../tools/toolsUtils";
 
 export const useToolShortcuts = () => {
     const lastActivatedToolRef = useRef(null);
@@ -13,6 +14,8 @@ export const useToolShortcuts = () => {
             if (tag === "INPUT") return;
 
             const activeTool = useToolbarStore.getState().activeTool;
+
+            if (activeTool === TOOLS.TEXT) return;
 
             for (const toolName in toolRegistry) {
                 const tool = toolRegistry[toolName];

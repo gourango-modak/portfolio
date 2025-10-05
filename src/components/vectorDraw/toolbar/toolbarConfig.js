@@ -7,6 +7,7 @@ import {
     FilePlus2,
     Frame,
     Hand,
+    Italic,
     MousePointer,
     PenIcon,
     Settings,
@@ -45,6 +46,11 @@ export const toolbarConfig = [
     {
         name: TOOLS.ARROW,
         Icon: ArrowRight,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
+    {
+        name: TOOLS.TEXT,
+        Icon: Italic,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {
@@ -123,17 +129,4 @@ export const toolbarConfig = [
         action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
         panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
     },
-    // {
-    //     group: "canvas-related",
-    //     Icon: Settings2,
-    //     useSelectedIcon: false,
-    //     tools: [
-    //         {
-    //             name: "canvasSettings",
-    //             Icon: Settings,
-    //             action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
-    //             panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
-    //         },
-    //     ],
-    // },
 ];

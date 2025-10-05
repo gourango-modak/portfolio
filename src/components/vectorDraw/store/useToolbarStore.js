@@ -4,9 +4,10 @@ import { usePanelStore } from "./usePanelStore";
 import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../toolbar/toolbarUtils";
 import { TOOLS } from "../tools/toolsUtils";
 import { useShapeStore } from "./useShapeStore";
+import { useTextInputOverlayStore } from "./useTextInputOverlayStore";
 
 export const useToolbarStore = create((set) => ({
-    activeTool: TOOLS.ARROW,
+    activeTool: TOOLS.TEXT,
     setActiveTool: (toolName) =>
         set(() => {
             if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName))
@@ -17,6 +18,10 @@ export const useToolbarStore = create((set) => ({
 
             if (useShapeStore.getState().selectedShapeIds.size > 0)
                 useShapeStore.getState().deselectAll();
+
+            if (toolName !== TOOLS.TEXT) {
+                useTextInputOverlayStore.getState().close();
+            }
 
             return {
                 activeTool: toolName,

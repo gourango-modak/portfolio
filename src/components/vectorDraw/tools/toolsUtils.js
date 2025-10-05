@@ -1,3 +1,5 @@
+import { useCanvasStore } from "../store/useCanvasStore";
+
 export const TOOLS = {
     PEN: "PEN",
     SELECTION: "SELECTION",
@@ -5,6 +7,7 @@ export const TOOLS = {
     RECTANGLE: "RECTANGLE",
     ARROW: "ARROW",
     ERASER: "ERASER",
+    TEXT: "TEXT",
 };
 
 export const getRoughRectPath = (x, y, w, h, roughness = 0) => {
@@ -84,3 +87,12 @@ export const getRoughArrowPath = (x1, y1, x2, y2, properties) => {
     // Combine shaft + single arrowhead
     return `${roughLines} M${hx1},${hy1} L${x2},${y2} L${hx2},${hy2}`;
 };
+
+export function getScreenPoint({ x, y }) {
+    const scale = useCanvasStore.getState().properties.scale;
+    const pan = useCanvasStore.getState().properties.pan;
+    return {
+        x: x * scale + pan.x,
+        y: y * scale + pan.y,
+    };
+}

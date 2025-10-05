@@ -1,5 +1,6 @@
 import { distancePointToSegment, isPointInPolygon } from "../geometryUtils";
 import { SHAPES } from "./shapesUtils";
+import { getTextShapeBounds } from "./shapeBoundingRectRegistry";
 
 // options: { type: "point" | "circle", radius?: number }
 function hitTestPenShape(shape, x, y, options = { type: "point" }) {
@@ -98,9 +99,24 @@ function hitTestArrowShape(shape, x, y, options = { type: "point" }) {
     return false;
 }
 
+export const hitTestTextShape = (shape, x, y, options = { type: "point" }) => {
+    const bounds = getTextShapeBounds(shape);
+    if (!bounds) return false;
+
+    const tolerance = options.type === "circle" ? options.radius || 0 : 0;
+
+    return (
+        x >= bounds.x - tolerance &&
+        x <= bounds.x + bounds.width + tolerance &&
+        y >= bounds.y - tolerance &&
+        y <= bounds.y + bounds.height + tolerance
+    );
+};
+
 // Registry
 export const shapeHitTestRegistry = {
     [SHAPES.PEN]: hitTestPenShape,
     [SHAPES.RECTANGLE]: hitTestRectShape,
     [SHAPES.ARROW]: hitTestArrowShape,
+    [SHAPES.TEXT]: hitTestTextShape,
 };
