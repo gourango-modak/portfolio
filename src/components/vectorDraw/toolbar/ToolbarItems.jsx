@@ -6,7 +6,9 @@ import { toolActionHandlers } from "./toolActionHandlers";
 
 export const ToolbarItems = ({ orientation }) => {
     const handleToolBtnClick = (tool) => {
-        toolActionHandlers[tool.action](tool);
+        if (tool.action) {
+            toolActionHandlers[tool.action](tool);
+        }
     };
 
     useRenderLogger("ToolbarItems");

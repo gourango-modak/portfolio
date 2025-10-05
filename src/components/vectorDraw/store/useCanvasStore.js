@@ -24,7 +24,7 @@ const initialFrameState = {
     },
 };
 
-export const useCanvasStore = create((set) => ({
+export const useCanvasStore = create((set, get) => ({
     properties: {
         mode: { value: CANVAS_MODES.PAGED, label: "Canvas Mode" },
         canvasBgColor: {
@@ -148,6 +148,23 @@ export const useCanvasStore = create((set) => ({
             }
             return {};
         }),
+
+    hasFrame: () => {
+        const state = get();
+        return state.frameOrder.length;
+    },
+
+    hasNextFrame: (frameId) => {
+        const state = get();
+        const idx = state.frameOrder.indexOf(frameId);
+        return idx >= 0 && idx < state.frameOrder.length - 1;
+    },
+
+    hasPrevFrame: (frameId) => {
+        const state = get();
+        const idx = state.frameOrder.indexOf(frameId);
+        return idx > 0;
+    },
 }));
 
 // Keeps Zustand state across hot reloads in dev (ignored in production)

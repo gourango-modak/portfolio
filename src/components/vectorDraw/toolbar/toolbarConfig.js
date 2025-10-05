@@ -3,6 +3,7 @@ import {
     ChevronLeft,
     ChevronRight,
     Eraser,
+    FileCog,
     FilePlus2,
     Frame,
     Hand,
@@ -10,10 +11,12 @@ import {
     PenIcon,
     Settings,
     Square,
+    StickyNote,
 } from "lucide-react";
 import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOLS } from "../tools/toolsUtils";
+import { useCanvasStore } from "../store/useCanvasStore";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
@@ -62,23 +65,57 @@ export const toolbarConfig = [
         visible: ({ canvasMode }) => canvasMode.value === CANVAS_MODES.INFINITE,
     },
     {
-        name: "addPage",
-        Icon: FilePlus2,
-        action: TOOL_ACTION_TYPES.ADD_PAGE,
-        visible: ({ canvasMode }) => canvasMode.value === CANVAS_MODES.PAGED,
-        panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
-    },
-    {
-        name: "prevPage",
-        Icon: ChevronLeft,
-        action: TOOL_ACTION_TYPES.PREV_PAGE,
-        visible: ({ canvasMode }) => canvasMode.value === CANVAS_MODES.PAGED,
-    },
-    {
-        name: "nextPage",
-        Icon: ChevronRight,
-        action: TOOL_ACTION_TYPES.NEXT_PAGE,
-        visible: ({ canvasMode }) => canvasMode.value === CANVAS_MODES.PAGED,
+        group: "page-related",
+        Icon: StickyNote,
+        useSelectedIcon: false,
+        tools: [
+            {
+                name: "addPage",
+                Icon: FilePlus2,
+                action: TOOL_ACTION_TYPES.ADD_PAGE,
+                visible: ({ canvasMode }) =>
+                    canvasMode.value === CANVAS_MODES.PAGED,
+            },
+            {
+                name: "addCustomPage",
+                Icon: FileCog,
+                visible: ({ canvasMode }) =>
+                    canvasMode.value === CANVAS_MODES.PAGED,
+                panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
+            },
+            {
+                name: "prevPage",
+                Icon: ChevronLeft,
+                action: TOOL_ACTION_TYPES.PREV_PAGE,
+                visible: ({ canvasMode }) => {
+                    return (
+                        useCanvasStore.getState().hasFrame() &&
+                        canvasMode.value === CANVAS_MODES.PAGED
+                    );
+                },
+                disable: ({ activeFrameId }) => {
+                    return !useCanvasStore
+                        .getState()
+                        .hasPrevFrame(activeFrameId);
+                },
+            },
+            {
+                name: "nextPage",
+                Icon: ChevronRight,
+                action: TOOL_ACTION_TYPES.NEXT_PAGE,
+                visible: ({ canvasMode }) => {
+                    return (
+                        useCanvasStore.getState().hasFrame() &&
+                        canvasMode.value === CANVAS_MODES.PAGED
+                    );
+                },
+                disable: ({ activeFrameId }) => {
+                    return !useCanvasStore
+                        .getState()
+                        .hasNextFrame(activeFrameId);
+                },
+            },
+        ],
     },
     {
         name: "canvasSettings",
