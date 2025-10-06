@@ -1,7 +1,10 @@
 import { CANVAS_MODES } from "../canvasUtils";
 import { SHAPES } from "../shapes/shapesUtils";
-import { useCanvasStore } from "../store/useCanvasStore";
-import { useShapeStore } from "../store/useShapeStore";
+import {
+    canvasPropertiesSlice,
+    frameSlice,
+    shapeSlice,
+} from "../store/storeUtils";
 import { BaseTool } from "./BaseTool";
 import { getRoughRectPath, TOOLS } from "./toolsUtils";
 
@@ -82,7 +85,6 @@ export class RectangleTool extends BaseTool {
             this.properties.roughness.value
         );
 
-        const canvasStore = useCanvasStore.getState();
         const shape = {
             type: SHAPES.RECTANGLE,
             x,
@@ -93,11 +95,16 @@ export class RectangleTool extends BaseTool {
             properties: { ...this.properties },
         };
 
-        if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
-            shape.frameId = canvasStore.activeFrameId;
+        const { addShape } = shapeSlice.getSlice();
+        const { activeFrameId } = frameSlice.getSlice();
+        const canvasMode =
+            canvasPropertiesSlice.getSlice().properties.mode.value;
+
+        if (canvasMode === CANVAS_MODES.PAGED) {
+            shape.frameId = activeFrameId;
         }
 
-        useShapeStore.getState().addShape(shape);
+        addShape(shape);
 
         this.startPoint = null;
         this.seed = null;

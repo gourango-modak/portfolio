@@ -1,4 +1,4 @@
-import { useCanvasStore } from "../store/useCanvasStore";
+import { canvasPropertiesSlice } from "../store/storeUtils";
 
 export const TOOLS = {
     PEN: "PEN",
@@ -89,8 +89,7 @@ export const getRoughArrowPath = (x1, y1, x2, y2, properties) => {
 };
 
 export function getScreenPoint({ x, y }) {
-    const scale = useCanvasStore.getState().properties.scale;
-    const pan = useCanvasStore.getState().properties.pan;
+    const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
     return {
         x: x * scale + pan.x,
         y: y * scale + pan.y,

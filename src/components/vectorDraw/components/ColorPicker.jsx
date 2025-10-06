@@ -3,19 +3,19 @@ import { useRef, useEffect, memo } from "react";
 import { createPortal } from "react-dom";
 import { colorPickerSlice } from "../store/storeUtils";
 import { useRenderLogger } from "../hooks/useRenderLogger";
+import {
+    useColorPickerColor,
+    useColorPickerOpen,
+    useColorPickerPosition,
+} from "../store/selectors/colorPickerSelectors";
 
 export const ColorPicker = memo(({ id }) => {
     const pickerRef = useRef(null);
 
-    const isOpen = colorPickerSlice.useSliceProperty(
-        (slice) => slice.colorPickers[id]?.isOpen
-    );
-    const color = colorPickerSlice.useSliceProperty(
-        (slice) => slice.colorPickers[id]?.color
-    );
-    const position = colorPickerSlice.useSliceProperty(
-        (slice) => slice.colorPickers[id]?.position
-    );
+    const isOpen = useColorPickerOpen(id);
+    const color = useColorPickerColor(id);
+    const position = useColorPickerPosition(id);
+    const { close, setColor } = colorPickerSlice.getSlice();
 
     // Handle click outside to close picker
     useEffect(() => {
@@ -23,7 +23,7 @@ export const ColorPicker = memo(({ id }) => {
 
         const handleClickOutside = (e) => {
             if (pickerRef.current && !pickerRef.current.contains(e.target)) {
-                colorPickerSlice.getSlice().close(id);
+                close(id);
             }
         };
 
@@ -43,7 +43,7 @@ export const ColorPicker = memo(({ id }) => {
     useRenderLogger("ColorPicker");
 
     function handleChange(color) {
-        colorPickerSlice.getSlice().setColor(id, color);
+        setColor(id, color);
     }
 
     if (!isOpen) return null;

@@ -1,7 +1,6 @@
 import { findShapeAtPoint, getShapeBoundingRect } from "../canvasUtils";
 import { isPointInRect } from "../geometryUtils";
-import { useCanvasStore } from "../store/useCanvasStore";
-import { useShapeStore } from "../store/useShapeStore";
+import { canvasPropertiesSlice, shapeSlice } from "../store/storeUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
 
@@ -54,12 +53,14 @@ export class SelectionTool extends BaseTool {
     _updateCursor(pointer, shapes, selectedShapeIds, selectedShapesBounds) {
         let cursorSet = false;
 
+        const { setCursor } = canvasPropertiesSlice.getSlice();
+
         // 1. Check if pointer is inside selected shapes bounding box
         if (
             selectedShapesBounds &&
             isPointInRect(pointer, selectedShapesBounds)
         ) {
-            useCanvasStore.getState().setCursor("move");
+            setCursor("move");
             cursorSet = true;
         }
 
@@ -68,7 +69,7 @@ export class SelectionTool extends BaseTool {
             for (const id in shapes) {
                 if (selectedShapeIds.has(id)) continue;
                 if (findShapeAtPoint(shapes[id], pointer)) {
-                    useCanvasStore.getState().setCursor("move");
+                    setCursor("move");
                     cursorSet = true;
                     break; // early exit for performance
                 }
@@ -76,7 +77,7 @@ export class SelectionTool extends BaseTool {
         }
 
         // 3. Default cursor if pointer not over any shape
-        if (!cursorSet) useCanvasStore.getState().setCursor("default");
+        if (!cursorSet) setCursor("default");
     }
 
     /** Calculate rectangle dimensions from two points */
@@ -127,7 +128,7 @@ export class SelectionTool extends BaseTool {
 
     /** Returns the first shape under a point or null */
     getShapeUnderPoint({ x, y }) {
-        const { shapes, shapeOrder } = useShapeStore.getState();
+        const { shapes, shapeOrder } = shapeSlice.getSlice();
         const hitShapeId = shapeOrder.find((id) =>
             findShapeAtPoint(shapes[id], { x, y })
         );
@@ -138,13 +139,12 @@ export class SelectionTool extends BaseTool {
 
     /** Handle pointer down */
     onPointerDown(e) {
-        const store = useShapeStore.getState();
         const pointer = { x: e.tx, y: e.ty };
 
         this.startPoint = pointer;
         this.lastPointer = pointer;
 
-        const selectedShapesBounds = store.selectedShapesBounds;
+        const { selectedShapesBounds } = shapeSlice.getSlice();
         const hitId = this.getShapeUnderPoint(pointer);
 
         // Check if clicked inside existing selection
@@ -160,9 +160,9 @@ export class SelectionTool extends BaseTool {
 
     /** Handle pointer move */
     onPointerMove(e) {
-        const store = useShapeStore.getState();
         const pointer = { x: e.tx, y: e.ty };
-        const { shapes, selectedShapeIds, selectedShapesBounds } = store;
+        const { shapes, selectedShapeIds, selectedShapesBounds, updateShape } =
+            shapeSlice.getSlice();
 
         // --- CURSOR LOGIC ---
         this._updateCursor(
@@ -197,7 +197,7 @@ export class SelectionTool extends BaseTool {
         if (this.moving) {
             selectedShapeIds.forEach((id) => {
                 const shape = shapes[id];
-                store.updateShape(id, { x: shape.x + dx, y: shape.y + dy });
+                updateShape(id, { x: shape.x + dx, y: shape.y + dy });
             });
             this.lastPointer = pointer;
             return;
@@ -231,22 +231,27 @@ export class SelectionTool extends BaseTool {
 
     /** Handle pointer up */
     onPointerUp(e) {
-        const store = useShapeStore.getState();
+        const {
+            shapes,
+            selectedShapeIds,
+            deselectShape,
+            deselectAll,
+            selectShape,
+        } = shapeSlice.getSlice();
 
         // --- Case 1: no drag or move (pure click) ---
         if (!this.dragging && !this.moving) {
             const clickedId = this.clickCandidateId;
-            const isSelected =
-                clickedId && store.selectedShapeIds.has(clickedId);
+            const isSelected = clickedId && selectedShapeIds.has(clickedId);
 
             if (clickedId) {
-                if (isSelected) store.deselectShape(clickedId);
+                if (isSelected) deselectShape(clickedId);
                 else {
-                    store.deselectAll();
-                    store.selectShape(clickedId);
+                    deselectAll();
+                    selectShape(clickedId);
                 }
             } else {
-                store.deselectAll(); // empty area click
+                deselectAll(); // empty area click
             }
         }
 
@@ -257,12 +262,12 @@ export class SelectionTool extends BaseTool {
                 y: e.ty,
             });
 
-            const selected = Object.values(store.shapes)
+            const selected = Object.values(shapes)
                 .filter((shape) => this._isShapeSelectedByRect(shape, rect))
                 .map((s) => s.id);
 
-            store.deselectAll();
-            selected.forEach((id) => store.selectShape(id));
+            deselectAll();
+            selected.forEach((id) => selectShape(id));
         }
 
         // --- Cleanup ---

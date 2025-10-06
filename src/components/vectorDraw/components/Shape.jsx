@@ -1,13 +1,10 @@
 import { memo } from "react";
-import { useShapeStore } from "../store/useShapeStore";
 import { shapeRegistry } from "../shapes/shapeRegistry";
 import { useRenderLogger } from "../hooks/useRenderLogger";
+import { useShapeById } from "../store/selectors/shapeSelectors";
 
 const Shape = memo(({ shapeId }) => {
-    const shape = useShapeStore(
-        (s) => s.shapes[shapeId],
-        (oldShape, newShape) => oldShape?.version === newShape?.version
-    );
+    const shape = useShapeById(shapeId);
 
     useRenderLogger("Shape");
 

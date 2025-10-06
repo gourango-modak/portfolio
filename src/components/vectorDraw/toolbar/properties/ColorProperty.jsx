@@ -2,15 +2,16 @@ import { useRef, useEffect } from "react";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { ColorPicker } from "../../components/ColorPicker";
 import { colorPickerSlice } from "../../store/storeUtils";
+import { useColorPickerColor } from "../../store/selectors/colorPickerSelectors";
 
 export const ColorProperty = ({ propertyName, property, onChange }) => {
     const { id, value: initialColor } = property;
     const previewRef = useRef(null);
 
-    const color = colorPickerSlice.useSliceProperty(
-        (slice) => slice.colorPickers[id]?.color
-    );
+    const color = useColorPickerColor(id);
     const inputColor = color || initialColor;
+
+    const { setColor, open: openColorPicker } = colorPickerSlice.getSlice();
 
     useEffect(() => {
         if (color && color !== initialColor) {
@@ -27,14 +28,14 @@ export const ColorProperty = ({ propertyName, property, onChange }) => {
         if (
             /^#([0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(newColor)
         ) {
-            colorPickerSlice.getSlice().setColor(id, newColor);
+            setColor(id, newColor);
         }
     };
 
     const handleColorPicker = () => {
         const rect = previewRef.current.getBoundingClientRect();
         const gap = 2;
-        colorPickerSlice.getSlice().open(id, inputColor, {
+        openColorPicker(id, inputColor, {
             x: rect.left + window.scrollX,
             y: rect.bottom + window.scrollY + gap,
         });

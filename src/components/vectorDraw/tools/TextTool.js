@@ -1,9 +1,8 @@
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
-import { useTextInputOverlayStore } from "./../store/useTextInputOverlayStore";
 import { SHAPES } from "../shapes/shapesUtils";
-import { useShapeStore } from "../store/useShapeStore";
 import { hitTestTextShape } from "../shapes/shapeHitTestRegistry";
+import { shapeSlice, textOverlaySlice } from "../store/storeUtils";
 
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
@@ -28,19 +27,20 @@ export class TextTool extends BaseTool {
     }
 
     onPointerDown(e) {
-        const overlayStore = useTextInputOverlayStore.getState();
-        const shapeStore = useShapeStore.getState();
+        const { isOpen, close, open } = textOverlaySlice.getSlice();
+        const { shapeOrder, shapes, updateShape } = shapeSlice.getSlice();
+
         const clickX = e.tx;
         const clickY = e.ty;
 
         // Commit/update current overlay automatically
-        if (overlayStore.isOpen) {
-            overlayStore.close();
+        if (isOpen) {
+            close();
         }
 
         // Hit-test existing text shapes
-        const textShapes = shapeStore.shapeOrder
-            .map((id) => shapeStore.shapes[id])
+        const textShapes = shapeOrder
+            .map((id) => shapes[id])
             .filter((s) => s && s.type === SHAPES.TEXT);
 
         const hitShape = textShapes.find((s) =>
@@ -49,9 +49,9 @@ export class TextTool extends BaseTool {
 
         if (hitShape) {
             // Mark shape as editing
-            shapeStore.updateShape(hitShape.id, { isEditing: true });
+            updateShape(hitShape.id, { isEditing: true });
 
-            overlayStore.open({
+            open({
                 position: { x: hitShape.x, y: hitShape.y },
                 properties: hitShape.properties,
                 text: hitShape.text,
@@ -62,7 +62,7 @@ export class TextTool extends BaseTool {
         }
 
         // Open new overlay
-        overlayStore.open({
+        open({
             position: { x: clickX, y: clickY },
             startPoint: { x: clickX, y: clickY },
             properties: this.properties,

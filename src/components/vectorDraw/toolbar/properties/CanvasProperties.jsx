@@ -1,12 +1,13 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { useCanvasStore } from "../../store/useCanvasStore";
 import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../canvasUtils";
 import { CanvasBgProperty } from "./CavasBgProperty";
 import { FrameBgProperty } from "./FrameBgProperty";
+import { canvasPropertiesSlice } from "../../store/storeUtils";
+import { useCanvasModeProperty } from "../../store/selectors/canvasPropertiesSelectors";
 
 export const CanvasProperties = () => {
-    const canvasMode = useCanvasStore((s) => s.properties.mode);
-    const setCanvasMode = useCanvasStore((s) => s.setCanvasMode);
+    const canvasModeProperty = useCanvasModeProperty();
+    const { setCanvasMode } = canvasPropertiesSlice.getSlice();
 
     const handleChange = (mode) => {
         setCanvasMode(mode);
@@ -19,14 +20,14 @@ export const CanvasProperties = () => {
             {/* Canvas Mode */}
             <div className="flex flex-col gap-2">
                 <label className="font-medium text-gray-700">
-                    {canvasMode.label}
+                    {canvasModeProperty.label}
                 </label>
                 <div className="flex gap-2">
                     {Object.entries(CANVAS_MODE_ICONS).map(([mode, Icon]) => (
                         <button
                             key={mode}
                             className={`p-2 rounded border cursor-pointer ${
-                                canvasMode.value === mode
+                                canvasModeProperty.value === mode
                                     ? "border-indigo-500 bg-indigo-50"
                                     : "border-gray-300"
                             }`}
@@ -41,7 +42,9 @@ export const CanvasProperties = () => {
             <CanvasBgProperty />
 
             {/* Frame Background */}
-            {canvasMode !== CANVAS_MODES.INFINITE && <FrameBgProperty />}
+            {canvasModeProperty.value !== CANVAS_MODES.INFINITE && (
+                <FrameBgProperty />
+            )}
         </div>
     );
 };

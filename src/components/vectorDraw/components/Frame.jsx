@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { useCanvasStore } from "../store/useCanvasStore";
 import { useRenderLogger } from "../hooks/useRenderLogger";
+import { useFrame } from "../store/selectors/frameSelectors";
 
 export const Frame = memo(({ frameId }) => {
-    const frame = useCanvasStore((s) => s.frames[frameId]);
+    const frame = useFrame(frameId);
 
     useRenderLogger("Frame");
 

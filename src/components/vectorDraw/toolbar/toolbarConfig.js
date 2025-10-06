@@ -17,7 +17,7 @@ import {
 import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOLS } from "../tools/toolsUtils";
-import { useCanvasStore } from "../store/useCanvasStore";
+import { frameSlice } from "../store/storeUtils";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "selectTool",
@@ -68,7 +68,7 @@ export const toolbarConfig = [
         name: "frameTool",
         Icon: Frame,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
-        visible: ({ canvasMode }) => canvasMode.value === CANVAS_MODES.INFINITE,
+        visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.INFINITE,
     },
     {
         group: "page-related",
@@ -79,14 +79,12 @@ export const toolbarConfig = [
                 name: "addPage",
                 Icon: FilePlus2,
                 action: TOOL_ACTION_TYPES.ADD_PAGE,
-                visible: ({ canvasMode }) =>
-                    canvasMode.value === CANVAS_MODES.PAGED,
+                visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
             },
             {
                 name: "addCustomPage",
                 Icon: FileCog,
-                visible: ({ canvasMode }) =>
-                    canvasMode.value === CANVAS_MODES.PAGED,
+                visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
                 panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
             },
             {
@@ -95,14 +93,12 @@ export const toolbarConfig = [
                 action: TOOL_ACTION_TYPES.PREV_PAGE,
                 visible: ({ canvasMode }) => {
                     return (
-                        useCanvasStore.getState().hasFrame() &&
-                        canvasMode.value === CANVAS_MODES.PAGED
+                        frameSlice.getSlice().hasFrame() &&
+                        canvasMode === CANVAS_MODES.PAGED
                     );
                 },
                 disable: ({ activeFrameId }) => {
-                    return !useCanvasStore
-                        .getState()
-                        .hasPrevFrame(activeFrameId);
+                    return !frameSlice.getSlice().hasPrevFrame(activeFrameId);
                 },
             },
             {
@@ -111,14 +107,12 @@ export const toolbarConfig = [
                 action: TOOL_ACTION_TYPES.NEXT_PAGE,
                 visible: ({ canvasMode }) => {
                     return (
-                        useCanvasStore.getState().hasFrame() &&
-                        canvasMode.value === CANVAS_MODES.PAGED
+                        frameSlice.getSlice().hasFrame() &&
+                        canvasMode === CANVAS_MODES.PAGED
                     );
                 },
                 disable: ({ activeFrameId }) => {
-                    return !useCanvasStore
-                        .getState()
-                        .hasNextFrame(activeFrameId);
+                    return !frameSlice.getSlice().hasNextFrame(activeFrameId);
                 },
             },
         ],

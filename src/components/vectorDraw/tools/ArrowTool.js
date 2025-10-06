@@ -1,7 +1,10 @@
 import { CANVAS_MODES } from "../canvasUtils";
 import { SHAPES } from "../shapes/shapesUtils";
-import { useCanvasStore } from "../store/useCanvasStore";
-import { useShapeStore } from "../store/useShapeStore";
+import {
+    canvasPropertiesSlice,
+    frameSlice,
+    shapeSlice,
+} from "../store/storeUtils";
 import { BaseTool } from "./BaseTool";
 import { getRoughArrowPath, TOOLS } from "./toolsUtils";
 
@@ -93,8 +96,6 @@ export class ArrowTool extends BaseTool {
             return; // Skip creating tiny arrows
         }
 
-        const canvasStore = useCanvasStore.getState();
-
         // Compute arrowhead points
         const headLength = this.properties.headLength?.value;
         const headAngle = (this.properties.headAngle?.value * Math.PI) / 180;
@@ -138,11 +139,16 @@ export class ArrowTool extends BaseTool {
             ),
         };
 
-        if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
-            shape.frameId = canvasStore.activeFrameId;
+        const { addShape } = shapeSlice.getSlice();
+        const { activeFrameId } = frameSlice.getSlice();
+        const canvasMode =
+            canvasPropertiesSlice.getSlice().properties.mode.value;
+
+        if (canvasMode === CANVAS_MODES.PAGED) {
+            shape.frameId = activeFrameId;
         }
 
-        useShapeStore.getState().addShape(shape);
+        addShape(shape);
 
         this.startPoint = null;
         this.cleanUp();

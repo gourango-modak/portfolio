@@ -1,17 +1,18 @@
 import React, { useMemo } from "react";
-import { useShapeStore } from "../store/useShapeStore";
 import Shape from "./Shape";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { useCanvasStore } from "../store/useCanvasStore";
+import { shapeSlice } from "../store/storeUtils";
+import { useActiveFrameId } from "../store/selectors/frameSelectors";
+import { useShapeOrder } from "../store/selectors/shapeSelectors";
 
 const ShapeLayer = () => {
-    const shapeOrder = useShapeStore((s) => s.shapeOrder);
-    const activeFrameId = useCanvasStore((s) => s.activeFrameId);
+    const shapeOrder = useShapeOrder();
+    const activeFrameId = useActiveFrameId();
 
     const filteredShapeOrder = useMemo(() => {
         if (!activeFrameId) return shapeOrder;
 
-        const shapes = useShapeStore.getState().shapes;
+        const { shapes } = shapeSlice.getSlice();
         return shapeOrder.filter((id) => shapes[id].frameId === activeFrameId);
     }, [shapeOrder, activeFrameId]);
 

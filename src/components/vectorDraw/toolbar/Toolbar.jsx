@@ -3,14 +3,15 @@ import { useRenderLogger } from "../hooks/useRenderLogger";
 import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
 import { ORIENTATION } from "../../../utils/common";
-import { usePanelStore } from "../store/usePanelStore";
 import { PANELS } from "../canvasUtils";
+import { panelSlice } from "../store/storeUtils";
+import { usePanelOrientation } from "../store/selectors/panelSelectors";
 
 const Toolbar = () => {
     const panelId = PANELS.TOOLBAR_PANEL;
-    const orientation = usePanelStore((s) => s.panels[panelId].orientation);
-    const openToolbarPanel = usePanelStore((s) => s.openToolbarPanel);
+    const orientation = usePanelOrientation(panelId);
     const toolbarRef = useRef(null);
+    const { openToolbarPanel } = panelSlice.getSlice();
 
     useEffect(() => {
         openToolbarPanel();

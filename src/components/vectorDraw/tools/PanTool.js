@@ -1,4 +1,4 @@
-import { useCanvasStore } from "../store/useCanvasStore";
+import { canvasPropertiesSlice } from "../store/storeUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
 
@@ -18,11 +18,15 @@ export class PanTool extends BaseTool {
     }
 
     onPointerDown(e) {
-        const canvasStore = useCanvasStore.getState();
-        this.startPoint = { x: e.clientX, y: e.clientY };
-        this.startPan = { ...canvasStore.properties.pan };
+        const {
+            properties: { pan },
+            setCursor,
+        } = canvasPropertiesSlice.getSlice();
 
-        canvasStore.setCursor("grabbing");
+        this.startPoint = { x: e.clientX, y: e.clientY };
+        this.startPan = { ...pan };
+
+        setCursor("grabbing");
     }
 
     onPointerMove(e) {
@@ -31,17 +35,18 @@ export class PanTool extends BaseTool {
         const dx = e.clientX - this.startPoint.x;
         const dy = e.clientY - this.startPoint.y;
 
-        const canvasStore = useCanvasStore.getState();
-        canvasStore.setPan({
+        const { setPan } = canvasPropertiesSlice.getSlice();
+        setPan({
             x: this.startPan.x + dx,
             y: this.startPan.y + dy,
         });
     }
 
     onPointerUp(e) {
-        const canvasStore = useCanvasStore.getState();
+        const { setCursor } = canvasPropertiesSlice.getSlice();
+        setCursor(PanTool.cursor);
+
         this.startPoint = null;
         this.startPan = null;
-        canvasStore.setCursor(PanTool.cursor);
     }
 }

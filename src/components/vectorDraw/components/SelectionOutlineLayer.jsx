@@ -1,16 +1,20 @@
 import { getShapeBoundingRect } from "../canvasUtils";
-import { useShapeStore } from "../store/useShapeStore";
 import { useRenderLogger } from "../hooks/useRenderLogger";
+import {
+    useSelectedShapeIds,
+    useSelectedShapesBounds,
+} from "../store/selectors/shapeSelectors";
+import { shapeSlice } from "../store/storeUtils";
 
 export const SelectionOutlineLayer = () => {
-    const selectedShapeIds = useShapeStore((s) => s.selectedShapeIds);
-    const selectedShapesBounds = useShapeStore((s) => s.selectedShapesBounds);
+    const selectedShapeIds = useSelectedShapeIds();
+    const selectedShapesBounds = useSelectedShapesBounds();
 
     useRenderLogger("SelectionOutlineLayer");
 
     if (!selectedShapeIds?.size) return null;
 
-    const shapes = useShapeStore.getState().shapes;
+    const { shapes } = shapeSlice.getSlice();
 
     const INDIVIDUAL_PADDING = 4;
     const GROUP_PADDING = 10;

@@ -1,25 +1,23 @@
-import { useCanvasStore } from "../store/useCanvasStore";
-import { usePanelStore } from "../store/usePanelStore";
-import { useToolbarStore } from "../store/useToolbarStore";
+import { frameSlice, panelSlice, toolbarSlice } from "../store/storeUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
 
 export const toolActionHandlers = {
     [TOOL_ACTION_TYPES.SELECT_TOOL]: ({ name }) => {
-        useToolbarStore.getState().setActiveTool(name);
+        toolbarSlice.getSlice().setActiveTool(name);
     },
     [TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL]: () => {
-        usePanelStore
-            .getState()
+        panelSlice
+            .getSlice()
             .openInspectorPanel(INSPECTOR_PANEL_TARGETS.CANVAS);
     },
     [TOOL_ACTION_TYPES.ADD_PAGE]: () => {
-        useCanvasStore.getState().addFrame();
+        frameSlice.getSlice().addFrame();
     },
     [TOOL_ACTION_TYPES.PREV_PAGE]: () => {
-        useCanvasStore.getState().prevFrame();
+        frameSlice.getSlice().prevFrame();
     },
     [TOOL_ACTION_TYPES.NEXT_PAGE]: () => {
-        useCanvasStore.getState().nextFrame();
+        frameSlice.getSlice().nextFrame();
     },
 };

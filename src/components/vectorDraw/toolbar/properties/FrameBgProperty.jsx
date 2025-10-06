@@ -1,11 +1,16 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { useCanvasStore } from "../../store/useCanvasStore";
+import {
+    useActiveFrameBgColor,
+    useActiveFrameId,
+} from "../../store/selectors/frameSelectors";
+import { frameSlice } from "../../store/storeUtils";
 import { ColorProperty } from "./ColorProperty";
 
 export const FrameBgProperty = () => {
-    const activeFrameId = useCanvasStore((s) => s.activeFrameId);
-    const setFrameBg = useCanvasStore((s) => s.setFrameBg);
-    const activeFrame = useCanvasStore((s) => s.frames[activeFrameId]);
+    const activeFrameId = useActiveFrameId();
+    const activeFrameBgColor = useActiveFrameBgColor();
+
+    const { setFrameBg } = frameSlice.getSlice();
 
     const handleChange = (_, { value }) => {
         setFrameBg(activeFrameId, value);
@@ -17,10 +22,10 @@ export const FrameBgProperty = () => {
         activeFrameId && (
             <div className="flex flex-col gap-2">
                 <label className="font-medium text-gray-700">
-                    {activeFrame.bgColor.label}
+                    {activeFrameBgColor.label}
                 </label>
                 <ColorProperty
-                    property={activeFrame.bgColor}
+                    property={activeFrameBgColor}
                     onChange={handleChange}
                 />
             </div>

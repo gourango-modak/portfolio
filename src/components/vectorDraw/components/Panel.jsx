@@ -1,22 +1,29 @@
 import { useEffect, useRef, useState } from "react";
-import { usePanelStore } from "../store/usePanelStore";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { PANELS } from "../canvasUtils";
 import { PANEL_INIT_POSITION_FUNCTIONS } from "../toolbar/toolbarUtils";
+import { panelSlice } from "../store/storeUtils";
+import {
+    usePanelOrientation,
+    usePanelVisible,
+    usePanelZIndex,
+} from "../store/selectors/panelSelectors";
 
 export const Panel = ({
     panelId,
     children,
     handleSelector = ".drag-handle",
 }) => {
-    const isVisible = usePanelStore((s) => s.panels[panelId].isVisible);
-    const orientation = usePanelStore((s) => s.panels[panelId].orientation);
-    const bringToFront = usePanelStore((s) => s.bringToFront);
-    const setPanelPosition = usePanelStore((s) => s.setPosition);
-    const zIndex = usePanelStore((s) => s.zIndexMap[panelId]);
+    const isVisible = usePanelVisible(panelId);
+    const orientation = usePanelOrientation(panelId);
+    const zIndex = usePanelZIndex(panelId);
+
     const [position, setPosition] = useState(
         PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
     );
+
+    const { bringToFront, setPosition: setPanelPosition } =
+        panelSlice.getSlice();
 
     const draggingRef = useRef(null);
     const dragElementRef = useRef(null);
@@ -42,13 +49,10 @@ export const Panel = ({
     const handleMouseDown = (e) => {
         // Skipped if clicking the panel close button
         if (e.target.closest(".close-btn")) return;
-
         if (!e.target.closest(handleSelector)) return;
 
         bringToFront(panelId);
-
         draggingRef.current = true;
-
         const rect = dragElementRef.current.getBoundingClientRect();
         offsetRef.current = {
             x: e.clientX - rect.left,
@@ -57,8 +61,6 @@ export const Panel = ({
 
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseup", handleMouseUp);
-
-        e.preventDefault();
     };
 
     const handleMouseMove = (e) => {

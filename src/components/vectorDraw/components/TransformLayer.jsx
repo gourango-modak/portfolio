@@ -1,12 +1,15 @@
 import { memo, useEffect, useRef } from "react";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { useCanvasStore } from "../store/useCanvasStore";
+import {
+    useCanvasPan,
+    useCanvasScale,
+} from "../store/selectors/canvasPropertiesSelectors";
 
 const TransformLayer = memo(({ children }) => {
     const transformRef = useRef(null);
 
-    const scale = useCanvasStore((s) => s.properties.scale);
-    const pan = useCanvasStore((s) => s.properties.pan);
+    const scale = useCanvasScale();
+    const pan = useCanvasPan();
 
     useEffect(() => {
         transformRef.current.setAttribute(

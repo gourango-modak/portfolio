@@ -1,7 +1,8 @@
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { useCanvasStore } from "../store/useCanvasStore";
-import { usePanelStore } from "../store/usePanelStore";
-import { useToolbarStore } from "../store/useToolbarStore";
+import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
+import { useActiveFrameId } from "../store/selectors/frameSelectors";
+import { useIsActiveTool } from "../store/selectors/toolbarSelectors";
+import { panelSlice } from "../store/storeUtils";
 
 export const ToolButton = ({
     item,
@@ -9,16 +10,19 @@ export const ToolButton = ({
     onClick,
 }) => {
     const { name, Icon } = item;
-    const isActiveTool = useToolbarStore((s) => s.activeTool === name);
-    const canvasMode = useCanvasStore((s) => s.properties.mode);
-    const activeFrameId = useCanvasStore((s) => s.activeFrameId);
+    const isActiveTool = useIsActiveTool(name);
+    const canvasMode = useCanvasMode();
+    const activeFrameId = useActiveFrameId();
+
+    const { openInspectorPanel } = panelSlice.getSlice();
+
     const isSelected = isSelectedProp ?? isActiveTool;
 
     const handleToolBtnClick = () => {
         onClick(item);
 
         if (item.panelTarget) {
-            usePanelStore.getState().openInspectorPanel(item.panelTarget);
+            openInspectorPanel(item.panelTarget);
         }
     };
 

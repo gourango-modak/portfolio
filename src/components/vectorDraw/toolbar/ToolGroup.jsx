@@ -1,9 +1,13 @@
-import { useRef, useState, useCallback, useMemo } from "react";
+import { useRef, useState, useMemo } from "react";
 import { ToolButton } from "./ToolButton";
-import { useToolbarStore } from "../store/useToolbarStore";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SecondaryToolbar } from "./SecondaryToolbar";
-// import { useClickOutside } from "../hooks/useClickOutside";
+import { toolbarSlice } from "../store/storeUtils";
+import {
+    useActiveGroup,
+    useIsActiveToolInGroup,
+    useSelectedSubtoolForGroup,
+} from "../store/selectors/toolbarSelectors";
 
 export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     const [selectedSubtool, setSelectedSubtool] = useState(null);
@@ -11,19 +15,12 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
 
     const { group, tools, Icon, useSelectedIcon } = item;
 
-    const activeGroup = useToolbarStore((s) => s.activeGroup);
-    const setActiveGroup = useToolbarStore((s) => s.setActiveGroup);
-    const rememberedSubtool = useToolbarStore((s) => s.groupSelections[group]);
-    const isGroupActive = useToolbarStore((s) =>
-        tools.some((t) => t.name === s.activeTool)
-    );
-    const setGroupSelection = useToolbarStore((s) => s.setGroupSelection);
+    const activeGroup = useActiveGroup();
+    const rememberedSubtool = useSelectedSubtoolForGroup(group);
+    const isGroupActive = useIsActiveToolInGroup(tools);
 
-    // const handleClickOutside = useCallback(() => {
-    //     if (activeGroup === group) setActiveGroup(null);
-    // }, [activeGroup, group, setActiveGroup]);
-
-    // useClickOutside(groupRef, handleClickOutside);
+    const { setActiveGroup } = toolbarSlice.getSlice();
+    const { setGroupSelection } = toolbarSlice.getSlice();
 
     // pick group icon
     let GroupIcon = Icon;

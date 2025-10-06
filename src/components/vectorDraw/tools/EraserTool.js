@@ -1,5 +1,5 @@
 import { shapeHitTestRegistry } from "../shapes/shapeHitTestRegistry";
-import { useShapeStore } from "../store/useShapeStore";
+import { shapeSlice } from "../store/storeUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./toolsUtils";
 
@@ -66,9 +66,8 @@ export class EraserTool extends BaseTool {
     }
 
     eraseAt(x, y) {
-        const shapeStore = useShapeStore.getState();
         const eraserRadius = this.properties.size.value / 2;
-        const { shapes, shapeOrder } = shapeStore;
+        const { shapes, shapeOrder, setShapes } = shapeSlice.getSlice();
         const remainingShapes = {};
         const remainingOrder = [];
         let anyRemoved = false;
@@ -92,7 +91,7 @@ export class EraserTool extends BaseTool {
         }
 
         if (anyRemoved) {
-            shapeStore.setShapes(remainingShapes, remainingOrder);
+            setShapes(remainingShapes, remainingOrder);
         }
     }
 }

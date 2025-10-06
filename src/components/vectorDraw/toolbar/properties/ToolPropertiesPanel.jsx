@@ -1,15 +1,14 @@
-import { useToolbarStore } from "../../store/useToolbarStore";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { toolRegistry } from "../../tools/toolRegistry";
 import { ToolProperties } from "./ToolProperties";
-import { usePanelStore } from "../../store/usePanelStore";
+import { panelSlice } from "./../../store/storeUtils";
+import { useActiveTool } from "../../store/selectors/toolbarSelectors";
 
 const ToolPropertiesPanel = () => {
-    const closeToolPropertiesPanel = usePanelStore(
-        (s) => s.closeToolPropertiesPanel
-    );
-    const activeTool = useToolbarStore((s) => s.activeTool);
+    const activeTool = useActiveTool();
     const tool = toolRegistry[activeTool];
+
+    const { closeToolPropertiesPanel } = panelSlice.getSlice();
 
     useRenderLogger("ToolPropertiesPanel");
 

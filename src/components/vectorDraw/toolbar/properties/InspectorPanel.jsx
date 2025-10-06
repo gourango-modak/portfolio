@@ -3,14 +3,15 @@ import { useMemo } from "react";
 import { INSPECTOR_PANEL_TARGETS } from "./propertiesUtils";
 import { CanvasProperties } from "./CanvasProperties";
 import { PageProperties } from "./PageProperties";
-import { usePanelStore } from "../../store/usePanelStore";
 import { PANELS } from "../../canvasUtils";
+import { panelSlice } from "../../store/storeUtils";
+import { usePanelTarget } from "../../store/selectors/panelSelectors";
 
 const InspectorPanel = () => {
-    const target = usePanelStore(
-        (s) => s.panels[PANELS.INSPECTOR_PANEL].target
-    );
-    const closeInspectorPanel = usePanelStore((s) => s.closeInspectorPanel);
+    const panelId = PANELS.INSPECTOR_PANEL;
+    const target = usePanelTarget(panelId);
+
+    const { closeInspectorPanel } = panelSlice.getSlice();
 
     const { title, content } = useMemo(() => {
         switch (target) {

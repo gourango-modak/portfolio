@@ -1,4 +1,4 @@
-import { useToolbarStore } from "../store/useToolbarStore";
+import { toolbarSlice } from "../store/storeUtils";
 
 export class BaseTool {
     static name = "BASE";
@@ -16,8 +16,8 @@ export class BaseTool {
 
     // Merge defaults + user's properties
     getMergedProperties() {
-        const store = useToolbarStore.getState();
-        const userProps = store.toolProperties?.[this.constructor.name] || {};
+        const { toolProperties } = toolbarSlice.getSlice();
+        const userProps = toolProperties?.[this.constructor.name] || {};
 
         // Merge: keep label from default, value from user's properties if available
         const merged = {};

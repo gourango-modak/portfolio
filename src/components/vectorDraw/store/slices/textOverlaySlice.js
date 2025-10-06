@@ -53,7 +53,7 @@ export const createTextOverlaySlice = (set, get) => ({
                         canvasPropertiesSlice.properties.mode.value ===
                         CANVAS_MODES.PAGED
                     ) {
-                        shape.frameId = canvasStore.activeFrameId;
+                        shape.frameId = get().frameSlice.activeFrameId;
                     }
                     shapeSlice.addShape(shape);
                 } else if (shapeId) {

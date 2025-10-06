@@ -1,10 +1,13 @@
 import getStroke from "perfect-freehand";
-import { useShapeStore } from "../store/useShapeStore";
 import { CANVAS_MODES, getSvgPathFromStroke } from "../canvasUtils";
 import { BaseTool } from "./BaseTool";
-import { useCanvasStore } from "../store/useCanvasStore";
 import { TOOLS } from "./toolsUtils";
 import { SHAPES } from "../shapes/shapesUtils";
+import {
+    canvasPropertiesSlice,
+    frameSlice,
+    shapeSlice,
+} from "../store/storeUtils";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;
@@ -63,8 +66,6 @@ export class PenTool extends BaseTool {
     onPointerUp() {
         if (!this.livePath) return;
 
-        const canvasStore = useCanvasStore.getState();
-
         // Compute stroke points
         const strokePoints = this.getStrokePoints();
 
@@ -95,11 +96,16 @@ export class PenTool extends BaseTool {
             y: minY,
         };
 
-        if (canvasStore.properties.mode.value === CANVAS_MODES.PAGED) {
-            shape.frameId = canvasStore.activeFrameId;
+        const { addShape } = shapeSlice.getSlice();
+        const { activeFrameId } = frameSlice.getSlice();
+        const canvasMode =
+            canvasPropertiesSlice.getSlice().properties.mode.value;
+
+        if (canvasMode === CANVAS_MODES.PAGED) {
+            shape.frameId = activeFrameId;
         }
 
-        useShapeStore.getState().addShape(shape);
+        addShape(shape);
 
         this.points = [];
         this.cleanUp();

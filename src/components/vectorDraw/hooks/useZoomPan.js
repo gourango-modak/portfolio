@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useCanvasStore } from "../store/useCanvasStore";
+import { canvasPropertiesSlice } from "../store/storeUtils";
 
 export const useZoomPan = () => {
     useEffect(() => {
@@ -10,8 +10,8 @@ export const useZoomPan = () => {
         };
 
         const handleZoom = (e) => {
-            const canvasStore = useCanvasStore.getState();
-            const { scale, pan } = canvasStore.properties;
+            const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
+            const { setScale, setPan } = canvasPropertiesSlice.getSlice();
 
             const direction = e.deltaY < 0 ? 1 : -1;
             const newScale = Math.min(
@@ -35,13 +35,13 @@ export const useZoomPan = () => {
                 y: anchor.y - (anchor.y - pan.y) * (newScale / scale),
             };
 
-            canvasStore.setScale(newScale);
-            canvasStore.setPan(newPan);
+            setScale(newScale);
+            setPan(newPan);
         };
 
         const handlePan = (e) => {
-            const canvasStore = useCanvasStore.getState();
-            const { pan } = canvasStore.properties;
+            const { pan } = canvasPropertiesSlice.getSlice().properties;
+            const { setPan } = canvasPropertiesSlice.getSlice();
 
             const deltaX = e.shiftKey ? e.deltaY : e.deltaX;
             const deltaY = e.shiftKey ? 0 : e.deltaY;
@@ -51,7 +51,7 @@ export const useZoomPan = () => {
                 y: pan.y - deltaY,
             };
 
-            canvasStore.setPan(newPan);
+            setPan(newPan);
         };
 
         const handleWheel = (e) => {

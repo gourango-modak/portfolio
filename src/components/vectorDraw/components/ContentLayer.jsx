@@ -1,12 +1,12 @@
-import { useCanvasStore } from "../store/useCanvasStore";
 import TransformLayer from "./TransformLayer";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { FrameLayer } from "./FrameLayer";
 import ShapeLayer from "./ShapeLayer";
 import { useMemo } from "react";
+import { useCanvasBgColor } from "../store/selectors/canvasPropertiesSelectors";
 
 const ContentLayer = () => {
-    const canvasBgColor = useCanvasStore((s) => s.properties.canvasBgColor);
+    const canvasBgColor = useCanvasBgColor();
     const transformChildren = useMemo(
         () => (
             <>
@@ -22,7 +22,7 @@ const ContentLayer = () => {
     return (
         <svg
             style={{
-                background: canvasBgColor.value,
+                background: canvasBgColor,
             }}
             className="canvas"
         >

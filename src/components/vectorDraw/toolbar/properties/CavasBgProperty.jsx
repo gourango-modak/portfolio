@@ -1,10 +1,12 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { useCanvasStore } from "../../store/useCanvasStore";
+import { canvasPropertiesSlice } from "../../store/storeUtils";
 import { ColorProperty } from "./ColorProperty";
 
 export const CanvasBgProperty = () => {
-    const setCanvasBg = useCanvasStore.getState().setCanvasBg;
-    const canvasBgColor = useCanvasStore.getState().properties.canvasBgColor;
+    const {
+        properties: { canvasBgColor },
+        setCanvasBg,
+    } = canvasPropertiesSlice.getSlice();
 
     const handleChange = (_, { value }) => {
         setCanvasBg(value);

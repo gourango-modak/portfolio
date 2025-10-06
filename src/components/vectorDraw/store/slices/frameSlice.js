@@ -18,21 +18,21 @@ const initialFrameState = {
     },
 };
 
-export const createFramesSlice = (set, get) => ({
-    framesSlice: {
+export const createFrameSlice = (set, get) => ({
+    frameSlice: {
         ...initialFrameState,
 
         updateFrameTemplate: (updates) =>
             set((state) => {
                 const entries = Object.entries(updates).map(([key, value]) => [
                     key,
-                    { ...state.framesSlice.frameTemplate[key], value },
+                    { ...state.frameSlice.frameTemplate[key], value },
                 ]);
                 return {
-                    framesSlice: {
-                        ...state.framesSlice,
+                    frameSlice: {
+                        ...state.frameSlice,
                         frameTemplate: {
-                            ...state.framesSlice.frameTemplate,
+                            ...state.frameSlice.frameTemplate,
                             ...Object.fromEntries(entries),
                         },
                     },
@@ -42,12 +42,12 @@ export const createFramesSlice = (set, get) => ({
         addFrame: () =>
             set((state) => {
                 const id = generateId();
-                const newFrame = { id, ...state.framesSlice.frameTemplate };
+                const newFrame = { id, ...state.frameSlice.frameTemplate };
                 return {
-                    framesSlice: {
-                        ...state.framesSlice,
-                        frames: { ...state.framesSlice.frames, [id]: newFrame },
-                        frameOrder: [...state.framesSlice.frameOrder, id],
+                    frameSlice: {
+                        ...state.frameSlice,
+                        frames: { ...state.frameSlice.frames, [id]: newFrame },
+                        frameOrder: [...state.frameSlice.frameOrder, id],
                         activeFrameId: id,
                     },
                 };
@@ -55,14 +55,14 @@ export const createFramesSlice = (set, get) => ({
 
         setFrameBg: (frameId, color) =>
             set((state) => ({
-                framesSlice: {
-                    ...state.framesSlice,
+                frameSlice: {
+                    ...state.frameSlice,
                     frames: {
-                        ...state.framesSlice.frames,
+                        ...state.frameSlice.frames,
                         [frameId]: {
-                            ...state.framesSlice.frames[frameId],
+                            ...state.frameSlice.frames[frameId],
                             bgColor: {
-                                ...state.framesSlice.frames[frameId].bgColor,
+                                ...state.frameSlice.frames[frameId].bgColor,
                                 value: color,
                             },
                         },
@@ -72,15 +72,14 @@ export const createFramesSlice = (set, get) => ({
 
         nextFrame: () =>
             set((state) => {
-                const idx = state.framesSlice.frameOrder.indexOf(
-                    state.framesSlice.activeFrameId
+                const idx = state.frameSlice.frameOrder.indexOf(
+                    state.frameSlice.activeFrameId
                 );
-                if (idx >= 0 && idx < state.framesSlice.frameOrder.length - 1) {
+                if (idx >= 0 && idx < state.frameSlice.frameOrder.length - 1) {
                     return {
-                        framesSlice: {
-                            ...state.framesSlice,
-                            activeFrameId:
-                                state.framesSlice.frameOrder[idx + 1],
+                        frameSlice: {
+                            ...state.frameSlice,
+                            activeFrameId: state.frameSlice.frameOrder[idx + 1],
                         },
                     };
                 }
@@ -89,27 +88,26 @@ export const createFramesSlice = (set, get) => ({
 
         prevFrame: () =>
             set((state) => {
-                const idx = state.framesSlice.frameOrder.indexOf(
-                    state.framesSlice.activeFrameId
+                const idx = state.frameSlice.frameOrder.indexOf(
+                    state.frameSlice.activeFrameId
                 );
                 if (idx > 0) {
                     return {
-                        framesSlice: {
-                            ...state.framesSlice,
-                            activeFrameId:
-                                state.framesSlice.frameOrder[idx - 1],
+                        frameSlice: {
+                            ...state.frameSlice,
+                            activeFrameId: state.frameSlice.frameOrder[idx - 1],
                         },
                     };
                 }
                 return {};
             }),
 
-        hasFrame: () => get().framesSlice.frameOrder.length > 0,
+        hasFrame: () => get().frameSlice.frameOrder.length > 0,
         hasNextFrame: (frameId) => {
-            const idx = get().framesSlice.frameOrder.indexOf(frameId);
-            return idx >= 0 && idx < get().framesSlice.frameOrder.length - 1;
+            const idx = get().frameSlice.frameOrder.indexOf(frameId);
+            return idx >= 0 && idx < get().frameSlice.frameOrder.length - 1;
         },
         hasPrevFrame: (frameId) =>
-            get().framesSlice.frameOrder.indexOf(frameId) > 0,
+            get().frameSlice.frameOrder.indexOf(frameId) > 0,
     },
 });

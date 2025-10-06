@@ -121,14 +121,14 @@ export const createPanelSlice = (set, get) => ({
 
         bringToFront: (panelId) => {
             set((state) => {
-                const stack = [...state.stack];
-                const zIndexMap = { ...state.zIndexMap };
+                const stack = [...state.panelSlice.stack];
+                const zIndexMap = { ...state.panelSlice.zIndexMap };
 
                 const index = stack.indexOf(panelId);
-                if (index === -1) return state;
+                if (index === -1) return state.panelSlice;
 
                 const prevTop = stack[stack.length - 1];
-                if (prevTop === panelId) return state; // already top
+                if (prevTop === panelId) return state.panelSlice; // already top
 
                 // Remove clicked panel and push to top
                 stack.splice(index, 1);
@@ -138,7 +138,9 @@ export const createPanelSlice = (set, get) => ({
                 const maxZ = Math.max(...Object.values(zIndexMap));
                 zIndexMap[panelId] = maxZ + 1;
 
-                return { stack, zIndexMap };
+                return {
+                    panelSlice: { ...state.panelSlice, stack, zIndexMap },
+                };
             });
         },
     },

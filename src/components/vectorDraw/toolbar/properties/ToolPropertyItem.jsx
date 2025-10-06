@@ -1,19 +1,19 @@
 import { ToolPropertyField } from "./ToolPropertyField";
-import { useToolbarStore } from "./../../store/useToolbarStore";
 import { toolRegistry } from "../../tools/toolRegistry";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { toolbarSlice } from "../../store/storeUtils";
 
 export const ToolPropertyItem = ({ propertyName }) => {
-    const activeTool = useToolbarStore.getState().activeTool;
+    const { activeTool, toolProperties, updateToolProperties } =
+        toolbarSlice.getSlice();
     const property =
-        useToolbarStore.getState().toolProperties[activeTool]?.[propertyName] ??
+        toolProperties[activeTool]?.[propertyName] ??
         toolRegistry[activeTool]?.defaultProperties?.[propertyName];
-
-    const updateToolProperties = useToolbarStore((s) => s.updateToolProperties);
 
     const handlePropertyChange = (propertyName, property) => {
         updateToolProperties(activeTool, propertyName, property);
-        const toolInstance = useToolbarStore.getState().activeToolInstance;
+
+        const toolInstance = toolbarSlice.getSlice().activeToolInstance;
         toolInstance?.updateProperties?.();
     };
 

@@ -1,22 +1,22 @@
-import { useCanvasStore } from "../store/useCanvasStore";
 import TransformLayer from "./TransformLayer";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SelectionOutlineLayer } from "./SelectionOutlineLayer";
 import LiveDrawingLayer from "./LiveDrawingLayer";
 import { useEffect, useMemo, useRef } from "react";
+import { canvasPropertiesSlice } from "../store/storeUtils";
+import { useCanvasCursor } from "../store/selectors/canvasPropertiesSelectors";
 
 const InteractionOverlay = () => {
     const interactionOverlayRef = useRef(null);
     const toolRef = useRef(null);
-    const cursor = useCanvasStore((s) => s.properties.cursor);
+    const cursor = useCanvasCursor();
 
     useEffect(() => {
         interactionOverlayRef.current.style.cursor = cursor;
     }, [cursor]);
 
     const getTransformedEvent = (e) => {
-        const scale = useCanvasStore.getState().properties.scale;
-        const pan = useCanvasStore.getState().properties.pan;
+        const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
         return {
             ...e,
             tx: (e.clientX - pan.x) / scale,

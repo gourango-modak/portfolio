@@ -1,14 +1,12 @@
-import { useCanvasStore } from "../../store/useCanvasStore";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { ToolPropertyField } from "./ToolPropertyField";
+import { frameSlice } from "../../store/storeUtils";
 
 export const PageProperties = () => {
-    const frameTemplate = useCanvasStore.getState().frameTemplate;
+    const { frameTemplate, updateFrameTemplate } = frameSlice.getSlice();
 
     const handlePropertyChange = (propertyName, { value }) => {
-        useCanvasStore
-            .getState()
-            .updateFrameTemplate({ [propertyName]: value });
+        updateFrameTemplate({ [propertyName]: value });
     };
 
     useRenderLogger("PageSettingsPanel");

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import { useToolbarStore } from "../store/useToolbarStore";
 import { toolRegistry } from "../tools/toolRegistry";
 import { TOOLS } from "../tools/toolsUtils";
+import { toolbarSlice } from "../store/storeUtils";
 
 export const useToolShortcuts = () => {
     const lastActivatedToolRef = useRef(null);
@@ -13,7 +13,7 @@ export const useToolShortcuts = () => {
             const tag = e.target.tagName;
             if (tag === "INPUT") return;
 
-            const activeTool = useToolbarStore.getState().activeTool;
+            const { activeTool, setActiveTool } = toolbarSlice.getSlice();
 
             if (activeTool === TOOLS.TEXT) return;
 
@@ -34,7 +34,7 @@ export const useToolShortcuts = () => {
                 // Activate tool only if not already selected
                 if (activeTool !== tool.name) {
                     lastActivatedToolRef.current = activeTool;
-                    useToolbarStore.getState().setActiveTool(tool.name);
+                    setActiveTool(tool.name);
                 }
 
                 break;
@@ -42,14 +42,12 @@ export const useToolShortcuts = () => {
         };
 
         const handleKeyUp = (e) => {
-            const activeTool = useToolbarStore.getState().activeTool;
+            const { activeTool, setActiveTool } = toolbarSlice.getSlice();
 
             const tool = toolRegistry[activeTool];
             if (tool?.revertOnRelease) {
                 if (lastActivatedToolRef.current) {
-                    useToolbarStore
-                        .getState()
-                        .setActiveTool(lastActivatedToolRef.current);
+                    setActiveTool(lastActivatedToolRef.current);
                     lastActivatedToolRef.current = null;
                 }
             }

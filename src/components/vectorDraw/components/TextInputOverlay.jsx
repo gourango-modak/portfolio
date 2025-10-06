@@ -1,57 +1,68 @@
 import { useRef, useState, useLayoutEffect } from "react";
-import { useTextInputOverlayStore } from "../store/useTextInputOverlayStore";
-import { useCanvasStore } from "./../store/useCanvasStore";
+import { textOverlaySlice } from "../store/storeUtils";
+import {
+    useCanvasScale,
+    useCanvasPan,
+} from "../store/selectors/canvasPropertiesSelectors";
+import {
+    useTextOverlayOpen,
+    useTextOverlayPosition,
+    useTextOverlayProperties,
+} from "../store/selectors/textOverlaySelectors";
 
 export const TextInputOverlay = () => {
     const inputRef = useRef(null);
     const spanRef = useRef(null);
     const [text, setText] = useState("");
 
-    const scaleFactor = useCanvasStore((s) => s.properties.scale);
-    const pan = useCanvasStore((s) => s.properties.pan);
-    const isOpen = useTextInputOverlayStore((s) => s.isOpen);
-    const position = useTextInputOverlayStore((s) => s.position);
-    const properties = useTextInputOverlayStore((s) => s.properties);
+    const scale = useCanvasScale();
+    const pan = useCanvasPan();
+
+    const isOpen = useTextOverlayOpen();
+    const position = useTextOverlayPosition();
+    const properties = useTextOverlayProperties();
+
     const fontSize = properties?.fontSize?.value;
     const fontFamily = properties?.fontFamily?.value;
     const color = properties?.color?.value;
 
     const [inputWidth, setInputWidth] = useState(fontSize);
 
+    const { setText: setOverlayText, close: closeTextOverlay } =
+        textOverlaySlice.getSlice();
+
     // Update width whenever text changes
     useLayoutEffect(() => {
         if (spanRef.current) {
-            const spanWidth =
-                spanRef.current.offsetWidth + fontSize * scaleFactor;
-            const maxWidth =
-                window.innerWidth - (position.x * scaleFactor + pan.x);
+            const spanWidth = spanRef.current.offsetWidth + fontSize * scale;
+            const maxWidth = window.innerWidth - (position.x * scale + pan.x);
             setInputWidth(Math.min(spanWidth, maxWidth));
         }
-    }, [text, position.x, scaleFactor, pan.x]);
+    }, [text, position.x, scale, pan.x]);
 
     useLayoutEffect(() => {
         if (isOpen) {
             setTimeout(() => {
                 if (inputRef.current) inputRef.current.focus();
             }, 0);
-            setText(useTextInputOverlayStore.getState().text);
+            setText(textOverlaySlice.getSlice().text);
         }
     }, [position]);
 
     const handleChange = (e) => {
         setText(e.target.value);
-        useTextInputOverlayStore.getState().setText(e.target.value);
+        setOverlayText(e.target.value);
     };
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            useTextInputOverlayStore.getState().close();
+            closeTextOverlay();
         }
     };
 
     if (!isOpen) return null;
 
-    const scaledFontSize = scaleFactor * fontSize;
+    const scaledFontSize = scale * fontSize;
 
     return (
         <>
@@ -78,9 +89,9 @@ export const TextInputOverlay = () => {
                 style={{
                     position: "absolute",
                     top: `${
-                        position.y * scaleFactor + pan.y - scaledFontSize * 0.8
+                        position.y * scale + pan.y - scaledFontSize * 0.8
                     }px`,
-                    left: `${position.x * scaleFactor + pan.x}px`,
+                    left: `${position.x * scale + pan.x}px`,
                     fontSize: `${scaledFontSize}px`,
                     height: `${scaledFontSize}px`,
                     fontFamily: fontFamily,
