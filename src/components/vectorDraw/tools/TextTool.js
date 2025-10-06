@@ -7,7 +7,7 @@ import { shapeSlice, textOverlaySlice } from "../store/storeUtils";
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
     static label = "Text Tool";
-
+    static shortcut = { code: "KeyI" };
     static defaultProperties = {
         color: { value: "#000", label: "Color", type: "color" },
         fontSize: {

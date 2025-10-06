@@ -1,4 +1,11 @@
-import { frameSlice, panelSlice, toolbarSlice } from "../store/storeUtils";
+import { downloadJson, generateId } from "../../../utils/common";
+import {
+    deserializeDrawingAppState,
+    frameSlice,
+    panelSlice,
+    serializeDrawingAppState,
+    toolbarSlice,
+} from "../store/storeUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
 
@@ -19,5 +26,43 @@ export const toolActionHandlers = {
     },
     [TOOL_ACTION_TYPES.NEXT_PAGE]: () => {
         frameSlice.getSlice().nextFrame();
+    },
+    [TOOL_ACTION_TYPES.EXPORT_DRAWING_STATE]: () => {
+        downloadJson(serializeDrawingAppState(), generateId());
+    },
+    [TOOL_ACTION_TYPES.IMPORT_DRAWING_STATE]: () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+
+        input.style.display = "none";
+        document.body.appendChild(input);
+
+        const cleanup = () => {
+            if (input.parentNode) {
+                document.body.removeChild(input);
+            }
+        };
+
+        input.onchange = (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const jsonString = event.target.result;
+                    deserializeDrawingAppState(jsonString);
+                } catch (err) {
+                    console.error("Failed to import drawing state:", err);
+                }
+            };
+            reader.readAsText(file);
+        };
+
+        input.click();
+
+        // Ensure cleanup if user cancels file selection (onchange won’t fire)
+        setTimeout(cleanup, 1000);
     },
 };

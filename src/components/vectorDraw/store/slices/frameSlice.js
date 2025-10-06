@@ -109,5 +109,32 @@ export const createFrameSlice = (set, get) => ({
         },
         hasPrevFrame: (frameId) =>
             get().frameSlice.frameOrder.indexOf(frameId) > 0,
+
+        serialize: () => {
+            const { frames, frameOrder, activeFrameId, frameTemplate } =
+                get().frameSlice;
+            return {
+                frames,
+                frameOrder,
+                activeFrameId,
+                frameTemplate,
+            };
+        },
+
+        deserialize: (data) => {
+            if (!data) return;
+
+            set((state) => ({
+                frameSlice: {
+                    ...state.frameSlice,
+                    frames: data.frames ?? state.frameSlice.frames,
+                    frameOrder: data.frameOrder ?? state.frameSlice.frameOrder,
+                    activeFrameId:
+                        data.activeFrameId ?? state.frameSlice.activeFrameId,
+                    frameTemplate:
+                        data.frameTemplate ?? state.frameSlice.frameTemplate,
+                },
+            }));
+        },
     },
 });

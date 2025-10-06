@@ -2,17 +2,20 @@ import {
     ArrowRight,
     ChevronLeft,
     ChevronRight,
+    Download,
     Eraser,
     FileCog,
     FilePlus2,
     Frame,
     Hand,
     Italic,
+    Menu,
     MousePointer,
     PenIcon,
     Settings,
     Square,
     StickyNote,
+    Upload,
 } from "lucide-react";
 import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
@@ -25,6 +28,8 @@ export const TOOL_ACTION_TYPES = {
     ADD_PAGE: "addPage",
     PREV_PAGE: "prevPage",
     NEXT_PAGE: "nextPage",
+    EXPORT_DRAWING_STATE: "exportDrawingState",
+    IMPORT_DRAWING_STATE: "importDrawingState",
 };
 
 export const toolbarConfig = [
@@ -118,9 +123,26 @@ export const toolbarConfig = [
         ],
     },
     {
-        name: "canvasSettings",
-        Icon: Settings,
-        action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
-        panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
+        group: "others",
+        Icon: Menu,
+        useSelectedIcon: false,
+        tools: [
+            {
+                name: "canvasSettings",
+                Icon: Settings,
+                action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
+                panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
+            },
+            {
+                name: "exportDrawingState",
+                Icon: Download,
+                action: TOOL_ACTION_TYPES.EXPORT_DRAWING_STATE,
+            },
+            {
+                name: "importDrawingState",
+                Icon: Upload,
+                action: TOOL_ACTION_TYPES.IMPORT_DRAWING_STATE,
+            },
+        ],
     },
 ];

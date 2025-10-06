@@ -1,7 +1,7 @@
 import { generateId } from "../../../../utils/common";
 import { computeSelectedShapesBounds } from "../../canvasUtils";
 
-export const createShapeSlice = (set) => ({
+export const createShapeSlice = (set, get) => ({
     shapeSlice: {
         shapes: {},
         shapeOrder: [],
@@ -110,5 +110,21 @@ export const createShapeSlice = (set) => ({
                     selectedShapesBounds: null,
                 },
             })),
+
+        serialize: () => {
+            const { shapes, shapeOrder } = get().shapeSlice;
+            return { shapes, shapeOrder }; // return plain object
+        },
+
+        deserialize: (data) => {
+            if (!data) return;
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice,
+                    shapes: data.shapes ?? state.shapeSlice.shapes,
+                    shapeOrder: data.shapeOrder ?? state.shapeSlice.shapeOrder,
+                },
+            }));
+        },
     },
 });

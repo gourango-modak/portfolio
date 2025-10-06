@@ -1,6 +1,6 @@
 import { CANVAS_MODES } from "../../canvasUtils";
 
-export const createCanvasPropertiesSlice = (set) => ({
+export const createCanvasPropertiesSlice = (set, get) => ({
     canvasPropertiesSlice: {
         properties: {
             mode: { value: CANVAS_MODES.PAGED, label: "Canvas Mode" },
@@ -81,5 +81,48 @@ export const createCanvasPropertiesSlice = (set) => ({
                     },
                 },
             })),
+
+        serialize: () => {
+            const { properties } = get().canvasPropertiesSlice;
+            return {
+                pan: properties.pan,
+                scale: properties.scale,
+                mode: properties.mode.value,
+                canvasBgColor: properties.canvasBgColor.value,
+            };
+        },
+
+        deserialize: (data) => {
+            if (!data) return;
+            set((state) => ({
+                canvasPropertiesSlice: {
+                    ...state.canvasPropertiesSlice,
+                    properties: {
+                        ...state.canvasPropertiesSlice.properties,
+                        pan:
+                            data.pan ??
+                            state.canvasPropertiesSlice.properties.pan,
+                        scale:
+                            data.scale ??
+                            state.canvasPropertiesSlice.properties.scale,
+                        mode: {
+                            ...state.canvasPropertiesSlice.properties.mode,
+                            value:
+                                data.mode ??
+                                state.canvasPropertiesSlice.properties.mode
+                                    .value,
+                        },
+                        canvasBgColor: {
+                            ...state.canvasPropertiesSlice.properties
+                                .canvasBgColor,
+                            value:
+                                data.canvasBgColor ??
+                                state.canvasPropertiesSlice.properties
+                                    .canvasBgColor.value,
+                        },
+                    },
+                },
+            }));
+        },
     },
 });

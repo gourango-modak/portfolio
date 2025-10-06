@@ -3,7 +3,7 @@ import { TOOLS } from "../../tools/toolsUtils";
 
 export const createToolbarSlice = (set, get) => ({
     toolbarSlice: {
-        activeTool: TOOLS.TEXT,
+        activeTool: TOOLS.SELECTION,
         activeToolInstance: null,
         activeGroup: null,
         groupSelections: {}, // { [groupName]: subtoolName }
@@ -78,5 +78,35 @@ export const createToolbarSlice = (set, get) => ({
                     },
                 },
             })),
+
+        serialize: () => {
+            const { activeTool, activeGroup, groupSelections, toolProperties } =
+                get().toolbarSlice;
+            return {
+                activeTool,
+                activeGroup,
+                groupSelections,
+                toolProperties,
+            };
+        },
+
+        deserialize: (data) => {
+            if (!data) return;
+            set((state) => ({
+                toolbarSlice: {
+                    ...state.toolbarSlice,
+                    activeTool:
+                        data.activeTool ?? state.toolbarSlice.activeTool,
+                    activeGroup:
+                        data.activeGroup ?? state.toolbarSlice.activeGroup,
+                    groupSelections:
+                        data.groupSelections ??
+                        state.toolbarSlice.groupSelections,
+                    toolProperties:
+                        data.toolProperties ??
+                        state.toolbarSlice.toolProperties,
+                },
+            }));
+        },
     },
 });

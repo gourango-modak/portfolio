@@ -1,4 +1,4 @@
-export const createColorPickerSlice = (set) => ({
+export const createColorPickerSlice = (set, get) => ({
     colorPickerSlice: {
         colorPickers: {},
 
