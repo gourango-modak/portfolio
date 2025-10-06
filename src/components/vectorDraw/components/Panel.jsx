@@ -13,7 +13,7 @@ export const Panel = ({
     const orientation = usePanelStore((s) => s.panels[panelId].orientation);
     const bringToFront = usePanelStore((s) => s.bringToFront);
     const setPanelPosition = usePanelStore((s) => s.setPosition);
-    const zIndex = usePanelStore((s) => s.getZIndex(panelId));
+    const zIndex = usePanelStore((s) => s.zIndexMap[panelId]);
     const [position, setPosition] = useState(
         PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
     );
@@ -40,9 +40,12 @@ export const Panel = ({
     useRenderLogger("Panel");
 
     const handleMouseDown = (e) => {
-        bringToFront(panelId);
+        // Skipped if clicking the panel close button
+        if (e.target.closest(".close-btn")) return;
 
         if (!e.target.closest(handleSelector)) return;
+
+        bringToFront(panelId);
 
         draggingRef.current = true;
 

@@ -1,3 +1,4 @@
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { TOOL_PROPERTIES_COMPONENTS } from "./propertiesUtils";
 
 export const ToolPropertyField = ({ propertyName, property, onChange }) => {
@@ -11,6 +12,8 @@ export const ToolPropertyField = ({ propertyName, property, onChange }) => {
         property,
         onChange,
     };
+
+    useRenderLogger("ToolPropertyField");
 
     return (
         <div className="flex flex-col gap-1">

@@ -20,7 +20,7 @@ const ToolPropertiesPanel = () => {
                     {tool.label} Properties
                 </h2>
                 <button
-                    className="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full cursor-pointer"
+                    className="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full cursor-pointer close-btn"
                     onClick={closeToolPropertiesPanel}
                     aria-label="Close Properties Panel"
                 >

@@ -19,8 +19,16 @@ export const usePanelStore = create((set, get) => ({
             orientation: ORIENTATION.HORIZONTAL,
         },
     },
-    stack: [], // z-index order
-    baseZ: 50,
+    stack: [
+        PANELS.INSPECTOR_PANEL,
+        PANELS.TOOL_PROPERTIES_PANEL,
+        PANELS.TOOLBAR_PANEL,
+    ],
+    zIndexMap: {
+        [PANELS.INSPECTOR_PANEL]: 50,
+        [PANELS.TOOL_PROPERTIES_PANEL]: 51,
+        [PANELS.TOOLBAR_PANEL]: 52,
+    },
 
     openToolbarPanel: () =>
         set((s) => ({
@@ -86,11 +94,28 @@ export const usePanelStore = create((set, get) => ({
             },
         })),
 
-    bringToFront: (panelId) =>
-        set((s) => {
-            const stack = [...s.stack.filter((id) => id !== panelId), panelId];
-            return { stack };
-        }),
+    bringToFront: (panelId) => {
+        set((state) => {
+            const stack = [...state.stack];
+            const zIndexMap = { ...state.zIndexMap };
+
+            const index = stack.indexOf(panelId);
+            if (index === -1) return state;
+
+            const prevTop = stack[stack.length - 1];
+            if (prevTop === panelId) return state; // already top
+
+            // Remove clicked panel and push to top
+            stack.splice(index, 1);
+            stack.push(panelId);
+
+            // New top z-index = current top z-index + 1
+            const maxZ = Math.max(...Object.values(zIndexMap));
+            zIndexMap[panelId] = maxZ + 1;
+
+            return { stack, zIndexMap };
+        });
+    },
 
     getZIndex: (panelId) => {
         const stack = get().stack;

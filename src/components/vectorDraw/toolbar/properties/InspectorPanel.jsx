@@ -38,7 +38,7 @@ const InspectorPanel = () => {
                     {title}
                 </h2>
                 <button
-                    className="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full cursor-pointer"
+                    className="text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-full cursor-pointer close-btn"
                     onClick={closeInspectorPanel}
                     aria-label="Close Settings Panel"
                 >

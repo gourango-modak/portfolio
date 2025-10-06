@@ -3,8 +3,8 @@ import { useCanvasStore } from "../../store/useCanvasStore";
 import { ColorProperty } from "./ColorProperty";
 
 export const CanvasBgProperty = () => {
-    const canvasBgColor = useCanvasStore((s) => s.properties.canvasBgColor);
-    const setCanvasBg = useCanvasStore((s) => s.setCanvasBg);
+    const setCanvasBg = useCanvasStore.getState().setCanvasBg;
+    const canvasBgColor = useCanvasStore.getState().properties.canvasBgColor;
 
     const handleChange = (_, { value }) => {
         setCanvasBg(value);

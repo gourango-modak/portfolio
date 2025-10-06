@@ -1,55 +1,57 @@
 import { HexColorPicker } from "react-colorful";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, memo } from "react";
 import { createPortal } from "react-dom";
-import { useColorPickerStore } from "../store/useColorPickerStore";
+import { colorPickerSlice } from "../store/storeUtils";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 
-const defaultColorPicker = {
-    isOpen: false,
-    position: { x: 0, y: 0 },
-};
-
-export const ColorPicker = ({ id }) => {
+export const ColorPicker = memo(({ id }) => {
     const pickerRef = useRef(null);
-    const colorPicker = useColorPickerStore(
-        (s) => s.colorPickers[id] || defaultColorPicker
-    );
-    const setColor = useColorPickerStore((s) => s.setColor);
-    const close = useColorPickerStore((s) => s.close);
 
+    const isOpen = colorPickerSlice.useSliceProperty(
+        (slice) => slice.colorPickers[id]?.isOpen
+    );
+    const color = colorPickerSlice.useSliceProperty(
+        (slice) => slice.colorPickers[id]?.color
+    );
+    const position = colorPickerSlice.useSliceProperty(
+        (slice) => slice.colorPickers[id]?.position
+    );
+
+    // Handle click outside to close picker
     useEffect(() => {
-        if (!colorPicker.isOpen) return;
+        if (!isOpen) return;
 
         const handleClickOutside = (e) => {
             if (pickerRef.current && !pickerRef.current.contains(e.target)) {
-                close(id);
+                colorPickerSlice.getSlice().close(id);
             }
         };
 
         document.addEventListener("mousedown", handleClickOutside);
-        return () => {
+        return () =>
             document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [colorPicker.isOpen, close, id]);
+    }, [isOpen, id]);
 
+    // Update position of the picker
     useEffect(() => {
-        if (colorPicker.isOpen && colorPicker.position && pickerRef.current) {
-            pickerRef.current.style.left = `${colorPicker.position.left}px`;
-            pickerRef.current.style.top = `${colorPicker.position.top}px`;
+        if (isOpen && position && pickerRef.current) {
+            pickerRef.current.style.left = `${position.x}px`;
+            pickerRef.current.style.top = `${position.y}px`;
         }
-    }, [colorPicker.isOpen, colorPicker.position]);
+    }, [isOpen, position]);
 
     useRenderLogger("ColorPicker");
 
-    if (!colorPicker.isOpen) return null;
+    function handleChange(color) {
+        colorPickerSlice.getSlice().setColor(id, color);
+    }
+
+    if (!isOpen) return null;
 
     return createPortal(
         <div ref={pickerRef} className="absolute z-100">
-            <HexColorPicker
-                color={colorPicker.color}
-                onChange={(c) => setColor(id, c)}
-            />
+            <HexColorPicker color={color} onChange={handleChange} />
         </div>,
         document.body
     );
-};
+});
