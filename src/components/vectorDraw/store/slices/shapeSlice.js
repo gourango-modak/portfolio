@@ -111,6 +111,17 @@ export const createShapeSlice = (set, get) => ({
                 },
             })),
 
+        reset: () =>
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice,
+                    shapes: {},
+                    shapeOrder: [],
+                    selectedShapeIds: new Set(),
+                    selectedShapesBounds: null,
+                },
+            })),
+
         serialize: () => {
             const { shapes, shapeOrder } = get().shapeSlice;
             return { shapes, shapeOrder }; // return plain object

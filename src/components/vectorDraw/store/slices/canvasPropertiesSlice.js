@@ -82,6 +82,18 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                 },
             })),
 
+        resetViewport: () =>
+            set((state) => ({
+                canvasPropertiesSlice: {
+                    ...state.canvasPropertiesSlice,
+                    properties: {
+                        ...state.canvasPropertiesSlice.properties,
+                        pan: { x: 0, y: 0 },
+                        scale: 1,
+                    },
+                },
+            })),
+
         serialize: () => {
             const { properties } = get().canvasPropertiesSlice;
             return {

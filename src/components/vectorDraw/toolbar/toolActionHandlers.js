@@ -1,9 +1,11 @@
 import { downloadJson, generateId } from "../../../utils/common";
 import {
+    canvasPropertiesSlice,
     deserializeDrawingAppState,
     frameSlice,
     panelSlice,
     serializeDrawingAppState,
+    shapeSlice,
     toolbarSlice,
 } from "../store/storeUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
@@ -64,5 +66,11 @@ export const toolActionHandlers = {
 
         // Ensure cleanup if user cancels file selection (onchange won’t fire)
         setTimeout(cleanup, 1000);
+    },
+    [TOOL_ACTION_TYPES.CLEAR_CANVAS]: () => {
+        shapeSlice.getSlice().reset();
+    },
+    [TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN]: () => {
+        canvasPropertiesSlice.getSlice().resetViewport();
     },
 };

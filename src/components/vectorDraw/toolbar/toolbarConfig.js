@@ -12,9 +12,11 @@ import {
     Menu,
     MousePointer,
     PenIcon,
+    RotateCcw,
     Settings,
     Square,
     StickyNote,
+    Trash2,
     Upload,
 } from "lucide-react";
 import { CANVAS_MODES } from "../canvasUtils";
@@ -23,13 +25,15 @@ import { TOOLS } from "../tools/toolsUtils";
 import { frameSlice } from "../store/storeUtils";
 
 export const TOOL_ACTION_TYPES = {
-    SELECT_TOOL: "selectTool",
-    OPEN_CANVAS_PROPERTIES_PANEL: "openCanvasProperties",
-    ADD_PAGE: "addPage",
-    PREV_PAGE: "prevPage",
-    NEXT_PAGE: "nextPage",
-    EXPORT_DRAWING_STATE: "exportDrawingState",
-    IMPORT_DRAWING_STATE: "importDrawingState",
+    SELECT_TOOL: "SELECT_TOOL",
+    OPEN_CANVAS_PROPERTIES_PANEL: "OPEN_CANVAS_PROPERTIES_PANEL",
+    ADD_PAGE: "ADD_PAGE",
+    PREV_PAGE: "PREV_PAGE",
+    NEXT_PAGE: "NEXT_PAGE",
+    IMPORT_DRAWING_STATE: "IMPORT_DRAWING_STATE",
+    EXPORT_DRAWING_STATE: "EXPORT_DRAWING_STATE",
+    CLEAR_CANVAS: "CLEAR_CANVAS",
+    RESET_ZOOM_AND_PAN: "RESET_ZOOM_AND_PAN",
 };
 
 export const toolbarConfig = [
@@ -142,6 +146,16 @@ export const toolbarConfig = [
                 name: "importDrawingState",
                 Icon: Upload,
                 action: TOOL_ACTION_TYPES.IMPORT_DRAWING_STATE,
+            },
+            {
+                name: "clearCanvas",
+                Icon: Trash2,
+                action: TOOL_ACTION_TYPES.CLEAR_CANVAS,
+            },
+            {
+                name: "resetZoomAndPan",
+                Icon: RotateCcw,
+                action: TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN,
             },
         ],
     },

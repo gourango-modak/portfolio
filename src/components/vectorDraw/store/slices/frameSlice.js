@@ -42,7 +42,26 @@ export const createFrameSlice = (set, get) => ({
         addFrame: () =>
             set((state) => {
                 const id = generateId();
-                const newFrame = { id, ...state.frameSlice.frameTemplate };
+
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                const frameWidth = state.frameSlice.frameTemplate.width.value;
+                const frameHeight = state.frameSlice.frameTemplate.height.value;
+
+                // Calculate center in canvas coordinates
+                const x = viewportWidth / 2 - frameWidth / 2;
+                const y = viewportHeight / 2 - frameHeight / 2;
+
+                const newFrame = {
+                    id,
+                    ...state.frameSlice.frameTemplate,
+                    x: { value: x, label: "X" },
+                    y: { value: y, label: "Y" },
+                };
+
+                console.log(newFrame);
+
                 return {
                     frameSlice: {
                         ...state.frameSlice,
