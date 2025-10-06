@@ -1,8 +1,12 @@
+import { ORIENTATION } from "../../../utils/common";
+import { PANELS } from "../canvasUtils";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
 import { useActiveFrameId } from "../store/selectors/frameSelectors";
+import { usePanelOrientation } from "../store/selectors/panelSelectors";
 import { useIsActiveTool } from "../store/selectors/toolbarSelectors";
 import { panelSlice } from "../store/storeUtils";
+import { Tooltip } from "./Tooltip";
 
 export const ToolButton = ({
     item,
@@ -15,6 +19,7 @@ export const ToolButton = ({
     const activeFrameId = useActiveFrameId();
 
     const { openInspectorPanel } = panelSlice.getSlice();
+    const orientation = usePanelOrientation(PANELS.TOOLBAR_PANEL);
 
     const isSelected = isSelectedProp ?? isActiveTool;
 
@@ -32,20 +37,32 @@ export const ToolButton = ({
     useRenderLogger("ToolButton");
 
     return (
-        <button
-            title={name}
-            onClick={handleToolBtnClick}
-            className={`p-2 w-12 h-12 items-center justify-center rounded-lg transition-all cursor-pointer border-2 ${
-                isSelected
-                    ? "border-indigo-600 bg-indigo-50"
-                    : "border-transparent hover:bg-gray-100"
-            } ${shouldShow ? "flex" : "hidden"} ${
-                shouldDisable
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none"
-                    : "bg-gray-50"
+        <div
+            className={`relative items-center justify-center group ${
+                shouldShow ? "flex" : "hidden"
             }`}
         >
-            <Icon className="w-5 h-5" />
-        </button>
+            <button
+                onClick={handleToolBtnClick}
+                className={`p-2 w-12 h-12 flex items-center justify-center rounded-lg transition-all cursor-pointer border-2 ${
+                    isSelected
+                        ? "border-indigo-600 bg-indigo-50"
+                        : "border-transparent hover:bg-gray-100"
+                }  ${
+                    shouldDisable
+                        ? "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none"
+                        : "bg-gray-50"
+                }`}
+            >
+                <Icon className="w-5 h-5" />
+            </button>
+
+            <Tooltip
+                text={name}
+                orientation={
+                    orientation === ORIENTATION.VERTICAL ? "right" : "top"
+                }
+            />
+        </div>
     );
 };

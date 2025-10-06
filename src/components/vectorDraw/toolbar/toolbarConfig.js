@@ -80,24 +80,24 @@ export const toolbarConfig = [
         visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.INFINITE,
     },
     {
-        group: "page-related",
+        group: "Page",
         Icon: StickyNote,
         useSelectedIcon: false,
         tools: [
             {
-                name: "addPage",
+                name: "Add Page",
                 Icon: FilePlus2,
                 action: TOOL_ACTION_TYPES.ADD_PAGE,
                 visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
             },
             {
-                name: "addCustomPage",
+                name: "Page Settings",
                 Icon: FileCog,
                 visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
                 panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
             },
             {
-                name: "prevPage",
+                name: "Go To Previous Page",
                 Icon: ChevronLeft,
                 action: TOOL_ACTION_TYPES.PREV_PAGE,
                 visible: ({ canvasMode }) => {
@@ -111,7 +111,7 @@ export const toolbarConfig = [
                 },
             },
             {
-                name: "nextPage",
+                name: "Go To Next Page",
                 Icon: ChevronRight,
                 action: TOOL_ACTION_TYPES.NEXT_PAGE,
                 visible: ({ canvasMode }) => {
@@ -127,33 +127,33 @@ export const toolbarConfig = [
         ],
     },
     {
-        group: "others",
+        group: "Others",
         Icon: Menu,
         useSelectedIcon: false,
         tools: [
             {
-                name: "canvasSettings",
+                name: "Settings",
                 Icon: Settings,
                 action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
                 panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
             },
             {
-                name: "exportDrawingState",
+                name: "Export Drawing",
                 Icon: Download,
                 action: TOOL_ACTION_TYPES.EXPORT_DRAWING_STATE,
             },
             {
-                name: "importDrawingState",
+                name: "Import Drawing",
                 Icon: Upload,
                 action: TOOL_ACTION_TYPES.IMPORT_DRAWING_STATE,
             },
             {
-                name: "clearCanvas",
+                name: "Clear Canvas",
                 Icon: Trash2,
                 action: TOOL_ACTION_TYPES.CLEAR_CANVAS,
             },
             {
-                name: "resetZoomAndPan",
+                name: "Reset Viewport",
                 Icon: RotateCcw,
                 action: TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN,
             },
