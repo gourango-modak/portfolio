@@ -19,11 +19,13 @@ import {
     Trash2,
     Upload,
 } from "lucide-react";
+
 import { INSPECTOR_PANEL_TARGETS } from "./properties/constants";
 import { frameSlice } from "../store/utils";
 import { TOOLS } from "../tools/constants";
 import { CANVAS_MODES } from "../constants";
 
+// -------------------- TOOL ACTION TYPES --------------------
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "SELECT_TOOL",
     OPEN_CANVAS_PROPERTIES_PANEL: "OPEN_CANVAS_PROPERTIES_PANEL",
@@ -36,7 +38,22 @@ export const TOOL_ACTION_TYPES = {
     RESET_ZOOM_AND_PAN: "RESET_ZOOM_AND_PAN",
 };
 
+// -------------------- HELPER FUNCTIONS --------------------
+const isPagedCanvas = ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED;
+const isInfiniteCanvas = ({ canvasMode }) =>
+    canvasMode === CANVAS_MODES.INFINITE;
+
+const canGoPrev = ({ activeFrameId }) =>
+    frameSlice.getSlice().hasPrevFrame(activeFrameId);
+const canGoNext = ({ activeFrameId }) =>
+    frameSlice.getSlice().hasNextFrame(activeFrameId);
+
+const hasFrameAndPaged = ({ canvasMode }) =>
+    frameSlice.getSlice().hasFrame() && canvasMode === CANVAS_MODES.PAGED;
+
+// -------------------- TOOLBAR CONFIG --------------------
 export const toolbarConfig = [
+    // Primary Tools
     {
         name: TOOLS.SELECTION,
         Icon: MousePointer,
@@ -77,8 +94,10 @@ export const toolbarConfig = [
         name: "frameTool",
         Icon: Frame,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
-        visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.INFINITE,
+        visible: isInfiniteCanvas,
     },
+
+    // Page Tools
     {
         group: "Page",
         Icon: StickyNote,
@@ -88,44 +107,32 @@ export const toolbarConfig = [
                 name: "Add Page",
                 Icon: FilePlus2,
                 action: TOOL_ACTION_TYPES.ADD_PAGE,
-                visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
+                visible: isPagedCanvas,
             },
             {
                 name: "Page Settings",
                 Icon: FileCog,
-                visible: ({ canvasMode }) => canvasMode === CANVAS_MODES.PAGED,
+                visible: isPagedCanvas,
                 panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
             },
             {
                 name: "Go To Previous Page",
                 Icon: ChevronLeft,
                 action: TOOL_ACTION_TYPES.PREV_PAGE,
-                visible: ({ canvasMode }) => {
-                    return (
-                        frameSlice.getSlice().hasFrame() &&
-                        canvasMode === CANVAS_MODES.PAGED
-                    );
-                },
-                disable: ({ activeFrameId }) => {
-                    return !frameSlice.getSlice().hasPrevFrame(activeFrameId);
-                },
+                visible: hasFrameAndPaged,
+                disable: (props) => !canGoPrev(props),
             },
             {
                 name: "Go To Next Page",
                 Icon: ChevronRight,
                 action: TOOL_ACTION_TYPES.NEXT_PAGE,
-                visible: ({ canvasMode }) => {
-                    return (
-                        frameSlice.getSlice().hasFrame() &&
-                        canvasMode === CANVAS_MODES.PAGED
-                    );
-                },
-                disable: ({ activeFrameId }) => {
-                    return !frameSlice.getSlice().hasNextFrame(activeFrameId);
-                },
+                visible: hasFrameAndPaged,
+                disable: (props) => !canGoNext(props),
             },
         ],
     },
+
+    // Other Tools
     {
         group: "Others",
         Icon: Menu,

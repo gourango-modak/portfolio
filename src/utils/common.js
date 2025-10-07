@@ -16,6 +16,37 @@ export const downloadJson = (data, fileName) => {
     URL.revokeObjectURL(url);
 };
 
+export const importJsonFile = (onJsonLoaded) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.style.display = "none";
+    document.body.appendChild(input);
+
+    const cleanup = () => {
+        if (input.parentNode) document.body.removeChild(input);
+    };
+
+    input.onchange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                onJsonLoaded(event.target.result);
+            } catch (err) {
+                console.error("Failed to import drawing state:", err);
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    input.click();
+    // Fallback cleanup in case user cancels file selection
+    setTimeout(cleanup, 1000);
+};
+
 export const truncateText = (text, maxLength = 0, suffix = "") => {
     if (typeof text !== "string") return "";
     const limit = maxLength === 0 ? text.length : maxLength;

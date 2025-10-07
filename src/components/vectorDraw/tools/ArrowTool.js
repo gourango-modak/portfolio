@@ -10,6 +10,7 @@ export class ArrowTool extends BaseTool {
     static label = "Arrow Tool";
     static shortcut = { code: "KeyA" };
 
+    // Default properties for the arrow
     static defaultProperties = {
         color: {
             value: "#000",
@@ -51,11 +52,58 @@ export class ArrowTool extends BaseTool {
 
     constructor(liveLayerRef) {
         super(liveLayerRef);
-        this.startPoint = null;
+        this.startPoint = null; // Store the starting point of the arrow while drawing
     }
 
     onPointerDown(e) {
+        // Record the start point when user begins drawing
         this.startPoint = { x: e.tx, y: e.ty };
+
+        // Initialize the live arrow path for visual feedback
+        this._createLiveArrow();
+    }
+
+    onPointerMove(e) {
+        if (!this.startPoint || !this.livePath) return;
+
+        const { x: x1, y: y1 } = this.startPoint;
+        const x2 = e.tx;
+        const y2 = e.ty;
+
+        // Skip drawing if arrow is too short
+        if (!this._isArrowLongEnough(x1, y1, x2, y2)) return;
+
+        // Update the live arrow path dynamically as pointer moves
+        this._updateLiveArrowPath(x1, y1, x2, y2);
+    }
+
+    onPointerUp(e) {
+        if (!this.startPoint || !this.livePath) return;
+
+        const { x: x1, y: y1 } = this.startPoint;
+        const x2 = e.tx;
+        const y2 = e.ty;
+
+        // Skip creating arrow if it's too short
+        if (!this._isArrowLongEnough(x1, y1, x2, y2)) {
+            this.startPoint = null;
+            this.cleanUp();
+            return;
+        }
+
+        // Generate the final arrow shape with normalized points
+        const shape = this._createArrowShape(x1, y1, x2, y2);
+
+        // Add the arrow shape to the canvas or frame
+        this._addShapeToCanvas(shape);
+
+        // Reset for next drawing
+        this.startPoint = null;
+        this.cleanUp();
+    }
+
+    _createLiveArrow() {
+        // Create an SVG path element for live drawing
         this.createLivePath();
         this.livePath.setAttribute("stroke", this.properties.color.value);
         this.livePath.setAttribute(
@@ -65,63 +113,53 @@ export class ArrowTool extends BaseTool {
         this.livePath.setAttribute("fill", "transparent");
     }
 
-    onPointerMove(e) {
-        if (!this.startPoint || !this.livePath) return;
-
-        const x1 = this.startPoint.x;
-        const y1 = this.startPoint.y;
-        const x2 = e.tx;
-        const y2 = e.ty;
-
-        if (!this._isValidArrow(x1, y1, x2, y2, 25)) return;
-
+    _updateLiveArrowPath(x1, y1, x2, y2) {
+        // Compute rough arrow path for live preview
         const pathData = getRoughArrowPath(x1, y1, x2, y2, this.properties);
         this.livePath.setAttribute("d", pathData);
     }
 
-    onPointerUp(e) {
-        if (!this.startPoint || !this.livePath) return;
+    _isArrowLongEnough(x1, y1, x2, y2, minLength = 25) {
+        // Calculate the Euclidean distance between start and end points
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        return Math.sqrt(dx * dx + dy * dy) >= minLength;
+    }
 
-        const x1 = this.startPoint.x;
-        const y1 = this.startPoint.y;
-        const x2 = e.tx;
-        const y2 = e.ty;
+    _createArrowShape(x1, y1, x2, y2) {
+        const { headLength, headAngle } = this.properties;
 
-        if (!this._isValidArrow(x1, y1, x2, y2, 25)) {
-            this.startPoint = null;
-            this.cleanUp();
-            return; // Skip creating tiny arrows
-        }
-
-        // Compute arrowhead points
-        const headLength = this.properties.headLength?.value;
-        const headAngle = (this.properties.headAngle?.value * Math.PI) / 180;
+        // Angle of the main arrow line
         const angle = Math.atan2(y2 - y1, x2 - x1);
 
-        const hx1 = x2 - headLength * Math.cos(angle - headAngle);
-        const hy1 = y2 - headLength * Math.sin(angle - headAngle);
+        // Convert arrowhead angle to radians
+        const headRad = (headAngle.value * Math.PI) / 180;
 
-        const hx2 = x2 - headLength * Math.cos(angle + headAngle);
-        const hy2 = y2 - headLength * Math.sin(angle + headAngle);
+        // Compute the two points of the arrowhead
+        const hx1 = x2 - headLength.value * Math.cos(angle - headRad);
+        const hy1 = y2 - headLength.value * Math.sin(angle - headRad);
+        const hx2 = x2 - headLength.value * Math.cos(angle + headRad);
+        const hy2 = y2 - headLength.value * Math.sin(angle + headRad);
 
-        const allPoints = [
+        // All points of the arrow (line + head)
+        const points = [
             { x: x1, y: y1 },
             { x: x2, y: y2 },
             { x: hx1, y: hy1 },
             { x: hx2, y: hy2 },
         ];
 
-        const xs = allPoints.map((p) => p.x);
-        const ys = allPoints.map((p) => p.y);
-        const minX = Math.min(...xs);
-        const minY = Math.min(...ys);
+        // Find top-left corner for normalization
+        const minX = Math.min(...points.map((p) => p.x));
+        const minY = Math.min(...points.map((p) => p.y));
 
-        const normalizedPoints = allPoints.map((p) => ({
+        // Normalize points relative to top-left corner
+        const normalizedPoints = points.map((p) => ({
             x: p.x - minX,
             y: p.y - minY,
         }));
 
-        const shape = {
+        return {
             type: SHAPES.ARROW,
             points: normalizedPoints,
             properties: { ...this.properties },
@@ -135,27 +173,20 @@ export class ArrowTool extends BaseTool {
                 this.properties
             ),
         };
+    }
 
+    _addShapeToCanvas(shape) {
         const { addShape } = shapeSlice.getSlice();
         const { activeFrameId } = frameSlice.getSlice();
         const canvasMode =
             canvasPropertiesSlice.getSlice().properties.mode.value;
 
+        // Assign frameId if canvas is in paged mode
         if (canvasMode === CANVAS_MODES.PAGED) {
             shape.frameId = activeFrameId;
         }
 
+        // Add the final arrow shape to the canvas state
         addShape(shape);
-
-        this.startPoint = null;
-        this.cleanUp();
-    }
-
-    // returns true if arrow is long enough
-    _isValidArrow(x1, y1, x2, y2, minLength = 25) {
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const length = Math.sqrt(dx * dx + dy * dy);
-        return length >= minLength;
     }
 }
