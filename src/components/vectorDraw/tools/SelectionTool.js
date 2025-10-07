@@ -43,7 +43,6 @@ export class SelectionTool extends BaseTool {
         this.lastPointer = null; // Last pointer move coordinates
         this.dragging = false; // True if drawing a selection rectangle
         this.moving = false; // True if moving selected shapes
-        this.clickCandidateId = null; // Shape under pointer down (potential click)
         this.clickedInsideSelection = false; // Whether pointer was inside current selection
     }
 
@@ -57,19 +56,42 @@ export class SelectionTool extends BaseTool {
 
         const { selectedShapesBounds, selectedShapeIds, shapes } =
             shapeSlice.getSlice();
-        const shape = getShapeAtPoint(pointer);
+
+        // Check if pointer hits any shape
+        const clickedShape = getShapeAtPoint(pointer);
 
         // Determine if click occurred inside current selection bounds
-        this.clickedInsideSelection =
+        const clickedInsideSelection =
             selectedShapesBounds &&
             isPointInRect(pointer, selectedShapesBounds);
 
-        // Store clicked shape ID (if any)
-        this.clickCandidateId = shape?.id || null;
+        if (clickedShape) {
+            if (!selectedShapeIds.has(clickedShape.id)) {
+                // Clicked a shape that is NOT selected: select only this shape
+                shapeSlice.getSlice().deselectAll();
+                shapeSlice.getSlice().selectShape(clickedShape.id);
+            }
+            // Now this shape is selected (either newly or already)
+            this.clickedInsideSelection = true;
 
-        // If about to move selected shapes, begin command batch
-        if (this.clickedInsideSelection && selectedShapeIds.size > 0) {
+            // Begin move command immediately so user can drag
+            const {
+                selectedShapeIds: updatedSelection,
+                shapes: currentShapes,
+            } = shapeSlice.getSlice();
+            if (updatedSelection.size > 0) {
+                this.beginMoveCommand(updatedSelection, currentShapes);
+            }
+        } else if (clickedInsideSelection) {
+            // Clicked inside current selection (already selected shapes)
+            this.clickedInsideSelection = true;
+
+            // Begin move command for existing selection
             this.beginMoveCommand(selectedShapeIds, shapes);
+        } else {
+            // Clicked empty space, deselect all
+            shapeSlice.getSlice().deselectAll();
+            this.clickedInsideSelection = false;
         }
     }
 
@@ -135,18 +157,8 @@ export class SelectionTool extends BaseTool {
             selectShape,
         } = shapeSlice.getSlice();
 
-        // CASE 1: Pure click (no drag or move)
-        if (!this.dragging && !this.moving) {
-            this.handleClick(
-                this.clickCandidateId,
-                selectedShapeIds,
-                deselectAll,
-                deselectShape,
-                selectShape
-            );
-        }
-        // CASE 2: Drag-selection rectangle
-        else if (this.dragging) {
+        // CASE 1: Drag-selection rectangle
+        if (this.dragging) {
             this.selectShapesInRect(
                 this.startPoint,
                 { x: e.tx, y: e.ty },
@@ -155,7 +167,7 @@ export class SelectionTool extends BaseTool {
                 selectShape
             );
         }
-        // CASE 3: Moved shapes, finalize command
+        // CASE 2: Moved shapes, finalize command
         else if (this.moving) {
             this.finalizeMoveCommand(selectedShapeIds, shapes);
         }
@@ -198,27 +210,6 @@ export class SelectionTool extends BaseTool {
     }
 
     /** --- SELECTION HELPERS --- */
-
-    /** Handle single click selection logic */
-    handleClick(
-        clickedId,
-        selectedShapeIds,
-        deselectAll,
-        deselectShape,
-        selectShape
-    ) {
-        const isSelected = clickedId && selectedShapeIds.has(clickedId);
-
-        if (clickedId) {
-            if (isSelected) deselectShape(clickedId);
-            else {
-                deselectAll();
-                selectShape(clickedId);
-            }
-        } else {
-            deselectAll(); // Clicked empty area
-        }
-    }
 
     /** Select shapes inside a dragged rectangle */
     selectShapesInRect(start, end, shapes, deselectAll, selectShape) {
