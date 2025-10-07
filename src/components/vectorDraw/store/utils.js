@@ -17,6 +17,7 @@ export const colorPickerSlice = createSliceGetter("colorPickerSlice");
 export const toolbarSlice = createSliceGetter("toolbarSlice");
 export const canvasPropertiesSlice = createSliceGetter("canvasPropertiesSlice");
 export const frameSlice = createSliceGetter("frameSlice");
+export const commandHistorySlice = createSliceGetter("commandHistorySlice");
 
 export const serializeDrawingAppState = () => {
     return {

@@ -1,4 +1,4 @@
-import { toolbarSlice } from "../storeUtils";
+import { toolbarSlice } from "../utils";
 
 export const useActiveTool = () =>
     toolbarSlice.useSliceProperty((s) => s.activeTool);

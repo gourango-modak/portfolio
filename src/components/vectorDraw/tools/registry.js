@@ -1,11 +1,11 @@
 import { ArrowTool } from "./ArrowTool";
+import { TOOLS } from "./constants";
 import { EraserTool } from "./EraserTool";
 import { PanTool } from "./PanTool";
 import { PenTool } from "./PenTool";
 import { RectangleTool } from "./RectangleTool";
 import { SelectionTool } from "./SelectionTool";
 import { TextTool } from "./TextTool";
-import { TOOLS } from "./toolsUtils";
 
 export const toolRegistry = {
     [TOOLS.PEN]: PenTool,

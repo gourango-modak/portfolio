@@ -4,7 +4,7 @@ import {
     useSelectedShapeIds,
     useSelectedShapesBounds,
 } from "../store/selectors/shapeSelectors";
-import { shapeSlice } from "../store/storeUtils";
+import { shapeSlice } from "../store/utils";
 
 export const SelectionOutlineLayer = () => {
     const selectedShapeIds = useSelectedShapeIds();

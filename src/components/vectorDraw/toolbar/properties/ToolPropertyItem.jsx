@@ -1,7 +1,7 @@
 import { ToolPropertyField } from "./ToolPropertyField";
-import { toolRegistry } from "../../tools/toolRegistry";
+import { toolRegistry } from "../../tools/registry";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { toolbarSlice } from "../../store/storeUtils";
+import { toolbarSlice } from "../../store/utils";
 
 export const ToolPropertyItem = ({ propertyName }) => {
     const { activeTool, toolProperties, updateToolProperties } =

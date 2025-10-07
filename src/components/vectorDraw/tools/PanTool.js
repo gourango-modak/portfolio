@@ -1,6 +1,6 @@
-import { canvasPropertiesSlice } from "../store/storeUtils";
+import { canvasPropertiesSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./toolsUtils";
+import { TOOLS } from "./constants";
 
 export class PanTool extends BaseTool {
     static name = TOOLS.PAN;

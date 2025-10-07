@@ -5,7 +5,7 @@ import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
 import { useActiveFrameId } from "../store/selectors/frameSelectors";
 import { usePanelOrientation } from "../store/selectors/panelSelectors";
 import { useIsActiveTool } from "../store/selectors/toolbarSelectors";
-import { panelSlice } from "../store/storeUtils";
+import { panelSlice } from "../store/utils";
 import { Tooltip } from "./Tooltip";
 
 export const ToolButton = ({

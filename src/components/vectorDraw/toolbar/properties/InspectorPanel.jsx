@@ -4,7 +4,7 @@ import { INSPECTOR_PANEL_TARGETS } from "./propertiesUtils";
 import { CanvasProperties } from "./CanvasProperties";
 import { PageProperties } from "./PageProperties";
 import { PANELS } from "../../canvasUtils";
-import { panelSlice } from "../../store/storeUtils";
+import { panelSlice } from "../../store/utils";
 import { usePanelTarget } from "../../store/selectors/panelSelectors";
 
 const InspectorPanel = () => {

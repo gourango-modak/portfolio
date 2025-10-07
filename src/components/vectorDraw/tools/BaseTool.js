@@ -1,4 +1,4 @@
-import { toolbarSlice } from "../store/storeUtils";
+import { toolbarSlice } from "../store/utils";
 
 export class BaseTool {
     static name = "BASE";

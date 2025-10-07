@@ -6,6 +6,7 @@ import { createColorPickerSlice } from "./slices/colorPickerSlice";
 import { createToolbarSlice } from "./slices/toolbarSlice";
 import { createCanvasPropertiesSlice } from "./slices/canvasPropertiesSlice";
 import { createFrameSlice } from "./slices/frameSlice";
+import { createCommandHistorySlice } from "./slices/commandHistorySlice";
 
 export const useDrawingAppStore = create((set, get) => ({
     ...createTextOverlaySlice(set, get),
@@ -15,4 +16,5 @@ export const useDrawingAppStore = create((set, get) => ({
     ...createToolbarSlice(set, get),
     ...createCanvasPropertiesSlice(set, get),
     ...createFrameSlice(set, get),
+    ...createCommandHistorySlice(set, get),
 }));

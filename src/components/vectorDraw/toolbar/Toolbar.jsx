@@ -4,7 +4,7 @@ import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
 import { ORIENTATION } from "../../../utils/common";
 import { PANELS } from "../canvasUtils";
-import { panelSlice } from "../store/storeUtils";
+import { panelSlice } from "../store/utils";
 import { usePanelOrientation } from "../store/selectors/panelSelectors";
 
 const Toolbar = () => {

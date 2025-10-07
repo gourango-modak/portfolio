@@ -1,5 +1,5 @@
 import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../../toolbar/toolbarUtils";
-import { TOOLS } from "../../tools/toolsUtils";
+import { TOOLS } from "../../tools/constants";
 
 export const createToolbarSlice = (set, get) => ({
     toolbarSlice: {
@@ -11,25 +11,32 @@ export const createToolbarSlice = (set, get) => ({
 
         setActiveTool: (toolName) =>
             set(() => {
-                const panelSlice = get().panelSlice;
-                const shapeSlice = get().shapeSlice;
-                const textOverlaySlice = get().textOverlaySlice;
+                const { closeToolPropertiesPanel, openToolPropertiesPanel } =
+                    get().panelSlice;
+                const { close } = get().textOverlaySlice;
+                const { deselectAll, selectedShapeIds } = get().shapeSlice;
+                const { activeGroup, setActiveGroup } = get().toolbarSlice;
 
                 // Manage tool properties panel visibility
                 if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName)) {
-                    panelSlice.closeToolPropertiesPanel();
+                    closeToolPropertiesPanel();
                 } else {
-                    panelSlice.openToolPropertiesPanel();
+                    openToolPropertiesPanel();
                 }
 
                 // Deselect shapes if any are selected
-                if (shapeSlice.selectedShapeIds.size > 0) {
-                    shapeSlice.deselectAll();
+                if (selectedShapeIds.size > 0) {
+                    deselectAll();
                 }
 
                 // Close text overlay if active tool is not TEXT
                 if (toolName !== TOOLS.TEXT) {
-                    textOverlaySlice.close();
+                    close();
+                }
+
+                // Close secondary toolbar if opened
+                if (activeGroup) {
+                    setActiveGroup(null);
                 }
 
                 return {

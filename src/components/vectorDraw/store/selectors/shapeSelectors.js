@@ -1,4 +1,4 @@
-import { shapeSlice } from "../storeUtils";
+import { shapeSlice } from "../utils";
 
 export const useSelectedShapeIds = () =>
     shapeSlice.useSliceProperty((s) => s.selectedShapeIds);

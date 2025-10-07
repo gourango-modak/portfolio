@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
-import { toolRegistry } from "../tools/toolRegistry";
+import { toolRegistry } from "../tools/registry";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { canvasPropertiesSlice, toolbarSlice } from "../store/storeUtils";
+import { canvasPropertiesSlice, toolbarSlice } from "../store/utils";
 import { useActiveTool } from "../store/selectors/toolbarSelectors";
 
 const LiveDrawingLayer = ({ toolRef }) => {

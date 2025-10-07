@@ -1,5 +1,5 @@
 import { useRef, useState, useLayoutEffect } from "react";
-import { textOverlaySlice } from "../store/storeUtils";
+import { textOverlaySlice } from "../store/utils";
 import {
     useCanvasScale,
     useCanvasPan,

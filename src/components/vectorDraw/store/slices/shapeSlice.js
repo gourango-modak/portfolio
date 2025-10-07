@@ -1,5 +1,6 @@
 import { generateId } from "../../../../utils/common";
 import { computeSelectedShapesBounds } from "../../canvasUtils";
+import { COMMANDS } from "./commandHistorySlice/constants";
 
 export const createShapeSlice = (set, get) => ({
     shapeSlice: {
@@ -20,24 +21,21 @@ export const createShapeSlice = (set, get) => ({
 
         addShape: (shape) => {
             const id = generateId();
-            set((state) => ({
-                shapeSlice: {
-                    ...state.shapeSlice,
-                    shapes: {
-                        ...state.shapeSlice.shapes,
-                        [id]: { id, version: 1, ...shape },
-                    },
-                    shapeOrder: [...state.shapeSlice.shapeOrder, id],
-                },
-            }));
+            const newShape = { id, version: 1, ...shape };
+
+            get().commandHistorySlice.executeCommand({
+                type: COMMANDS.ADD_SHAPE,
+                shape: newShape,
+            });
+
             return id;
         },
 
-        updateShape: (id, updatedProps) =>
-            set((state) => {
-                const shape = state.shapeSlice.shapes[id];
-                if (!shape) return {};
+        updateShape: (id, updatedProps) => {
+            const shape = get().shapeSlice.shapes[id];
+            if (!shape) return;
 
+            set((state) => {
                 const newShapes = {
                     ...state.shapeSlice.shapes,
                     [id]: {
@@ -61,7 +59,8 @@ export const createShapeSlice = (set, get) => ({
                         selectedShapesBounds: newBounds,
                     },
                 };
-            }),
+            });
+        },
 
         selectShape: (id) =>
             set((state) => {

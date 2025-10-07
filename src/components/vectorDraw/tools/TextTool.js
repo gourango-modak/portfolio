@@ -1,8 +1,8 @@
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./toolsUtils";
 import { SHAPES } from "../shapes/shapesUtils";
 import { hitTestTextShape } from "../shapes/shapeHitTestRegistry";
-import { shapeSlice, textOverlaySlice } from "../store/storeUtils";
+import { shapeSlice, textOverlaySlice } from "../store/utils";
+import { TOOLS } from "./constants";
 
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;

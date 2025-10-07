@@ -2,7 +2,7 @@ import { useRef, useState, useMemo } from "react";
 import { ToolButton } from "./ToolButton";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SecondaryToolbar } from "./SecondaryToolbar";
-import { toolbarSlice } from "../store/storeUtils";
+import { toolbarSlice } from "../store/utils";
 import {
     useActiveGroup,
     useIsActiveToolInGroup,

@@ -1,5 +1,5 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { canvasPropertiesSlice } from "../../store/storeUtils";
+import { canvasPropertiesSlice } from "../../store/utils";
 import { ColorProperty } from "./ColorProperty";
 
 export const CanvasBgProperty = () => {

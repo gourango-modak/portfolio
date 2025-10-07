@@ -1,7 +1,8 @@
 import { shapeHitTestRegistry } from "../shapes/shapeHitTestRegistry";
-import { shapeSlice } from "../store/storeUtils";
+import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
+import { commandHistorySlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./toolsUtils";
+import { TOOLS } from "./constants";
 
 export class EraserTool extends BaseTool {
     static name = TOOLS.ERASER;
@@ -50,6 +51,17 @@ export class EraserTool extends BaseTool {
 
     onPointerDown(e) {
         this.isErasing = true;
+
+        this.deletedShapes = {};
+        const { shapeOrder } = shapeSlice.getSlice();
+
+        // Start command
+        commandHistorySlice.getSlice().beginCommand(COMMANDS.DELETE_SHAPES, {
+            shapeOrderBeforeDelete: [...shapeOrder],
+            shapeIds: [],
+            deletedShapes: {},
+        });
+
         this.showPreview(e.tx, e.ty);
         this.eraseAt(e.tx, e.ty);
     }
@@ -63,6 +75,15 @@ export class EraserTool extends BaseTool {
     onPointerUp(e) {
         this.isErasing = false;
         this.hidePreview();
+
+        // Finalize command if anything was deleted
+        const deletedIds = Object.keys(this.deletedShapes);
+        if (deletedIds.length > 0) {
+            commandHistorySlice.getSlice().finalizeCommand({
+                shapeIds: deletedIds,
+                deletedShapes: { ...this.deletedShapes },
+            });
+        }
     }
 
     eraseAt(x, y) {
@@ -86,6 +107,7 @@ export class EraserTool extends BaseTool {
                 remainingShapes[id] = shape;
                 remainingOrder.push(id);
             } else {
+                this.deletedShapes[id] = shape;
                 anyRemoved = true;
             }
         }

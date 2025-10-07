@@ -1,4 +1,4 @@
-import { canvasPropertiesSlice } from "../storeUtils";
+import { canvasPropertiesSlice } from "../utils";
 
 export const useCanvasBgColor = () =>
     canvasPropertiesSlice.useSliceProperty(

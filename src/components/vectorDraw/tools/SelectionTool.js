@@ -1,13 +1,13 @@
 import { findShapeAtPoint, getShapeBoundingRect } from "../canvasUtils";
 import { isPointInRect } from "../geometryUtils";
-import { canvasPropertiesSlice, shapeSlice } from "../store/storeUtils";
+import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
+import {
+    canvasPropertiesSlice,
+    commandHistorySlice,
+    shapeSlice,
+} from "../store/utils";
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./toolsUtils";
-
-export const SELECTION_MODE = {
-    FULL: "FULL",
-    TOUCH: "TOUCH",
-};
+import { SELECTION_MODE, TOOLS } from "./constants";
 
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
@@ -144,7 +144,8 @@ export class SelectionTool extends BaseTool {
         this.startPoint = pointer;
         this.lastPointer = pointer;
 
-        const { selectedShapesBounds } = shapeSlice.getSlice();
+        const { selectedShapesBounds, selectedShapeIds, shapes } =
+            shapeSlice.getSlice();
         const hitId = this.getShapeUnderPoint(pointer);
 
         // Check if clicked inside existing selection
@@ -156,6 +157,22 @@ export class SelectionTool extends BaseTool {
         this.moving = false;
         this.dragging = false;
         this.clickCandidateId = hitId || null;
+
+        // Start batching command if about to move selected shapes
+        if (this.clickedInsideSelection && selectedShapeIds.size > 0) {
+            // capture all current shapes’ starting positions
+            const prevProps = {};
+            selectedShapeIds.forEach((id) => {
+                const s = shapes[id];
+                prevProps[id] = { x: s.x, y: s.y };
+            });
+
+            commandHistorySlice
+                .getSlice()
+                .beginCommand(COMMANDS.UPDATE_SHAPES, {
+                    prevProps,
+                });
+        }
     }
 
     /** Handle pointer move */
@@ -268,6 +285,16 @@ export class SelectionTool extends BaseTool {
 
             deselectAll();
             selected.forEach((id) => selectShape(id));
+        }
+        // --- Case 3: moved shapes (end drag, finalize command) ---
+        else if (this.moving) {
+            const newProps = {};
+            selectedShapeIds.forEach((id) => {
+                const s = shapes[id];
+                newProps[id] = { x: s.x, y: s.y };
+            });
+
+            commandHistorySlice.getSlice().finalizeCommand({ newProps }); // commit the batch
         }
 
         // --- Cleanup ---

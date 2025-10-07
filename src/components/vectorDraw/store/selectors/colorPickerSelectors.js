@@ -1,4 +1,4 @@
-import { colorPickerSlice } from "../storeUtils";
+import { colorPickerSlice } from "../utils";
 
 export const useColorPickerOpen = (id) =>
     colorPickerSlice.useSliceProperty((s) => s.colorPickers[id]?.isOpen);

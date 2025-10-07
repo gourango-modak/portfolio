@@ -1,4 +1,4 @@
-import { panelSlice } from "../storeUtils";
+import { panelSlice } from "../utils";
 
 export const usePanelVisible = (panelId) =>
     panelSlice.useSliceProperty((s) => s.panels[panelId]?.isVisible);

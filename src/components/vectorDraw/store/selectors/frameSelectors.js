@@ -1,4 +1,4 @@
-import { frameSlice } from "../storeUtils";
+import { frameSlice } from "../utils";
 
 export const useFrame = (frameId) =>
     frameSlice.useSliceProperty((s) => s.frames[frameId]);

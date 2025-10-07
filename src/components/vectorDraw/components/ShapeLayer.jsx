@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import Shape from "./Shape";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { shapeSlice } from "../store/storeUtils";
+import { shapeSlice } from "../store/utils";
 import { useActiveFrameId } from "../store/selectors/frameSelectors";
 import { useShapeOrder } from "../store/selectors/shapeSelectors";
 

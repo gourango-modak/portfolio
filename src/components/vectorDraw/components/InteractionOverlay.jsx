@@ -3,7 +3,7 @@ import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SelectionOutlineLayer } from "./SelectionOutlineLayer";
 import LiveDrawingLayer from "./LiveDrawingLayer";
 import { useEffect, useMemo, useRef } from "react";
-import { canvasPropertiesSlice } from "../store/storeUtils";
+import { canvasPropertiesSlice } from "../store/utils";
 import { useCanvasCursor } from "../store/selectors/canvasPropertiesSelectors";
 
 const InteractionOverlay = () => {

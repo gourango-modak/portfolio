@@ -1,14 +1,4 @@
-import { canvasPropertiesSlice } from "../store/storeUtils";
-
-export const TOOLS = {
-    PEN: "PEN",
-    SELECTION: "SELECTION",
-    PAN: "PAN",
-    RECTANGLE: "RECTANGLE",
-    ARROW: "ARROW",
-    ERASER: "ERASER",
-    TEXT: "TEXT",
-};
+import { canvasPropertiesSlice } from "../store/utils";
 
 export const getRoughRectPath = (x, y, w, h, roughness = 0) => {
     const jitter = (v) => v + (Math.random() - 0.5) * roughness;

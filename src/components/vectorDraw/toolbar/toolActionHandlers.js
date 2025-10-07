@@ -7,7 +7,7 @@ import {
     serializeDrawingAppState,
     shapeSlice,
     toolbarSlice,
-} from "../store/storeUtils";
+} from "../store/utils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
 

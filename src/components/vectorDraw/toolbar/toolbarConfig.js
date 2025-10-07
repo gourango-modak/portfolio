@@ -21,8 +21,8 @@ import {
 } from "lucide-react";
 import { CANVAS_MODES } from "../canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
-import { TOOLS } from "../tools/toolsUtils";
-import { frameSlice } from "../store/storeUtils";
+import { frameSlice } from "../store/utils";
+import { TOOLS } from "../tools/constants";
 
 export const TOOL_ACTION_TYPES = {
     SELECT_TOOL: "SELECT_TOOL",

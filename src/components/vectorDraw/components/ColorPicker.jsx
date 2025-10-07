@@ -1,7 +1,7 @@
 import { HexColorPicker } from "react-colorful";
 import { useRef, useEffect, memo } from "react";
 import { createPortal } from "react-dom";
-import { colorPickerSlice } from "../store/storeUtils";
+import { colorPickerSlice } from "../store/utils";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import {
     useColorPickerColor,

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { canvasPropertiesSlice } from "../store/storeUtils";
+import { canvasPropertiesSlice } from "../store/utils";
 
 export const useZoomPan = () => {
     useEffect(() => {

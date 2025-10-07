@@ -1,7 +1,7 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { toolRegistry } from "../../tools/toolRegistry";
+import { toolRegistry } from "../../tools/registry";
 import { ToolProperties } from "./ToolProperties";
-import { panelSlice } from "./../../store/storeUtils";
+import { panelSlice } from "../../store/utils";
 import { useActiveTool } from "../../store/selectors/toolbarSelectors";
 
 const ToolPropertiesPanel = () => {

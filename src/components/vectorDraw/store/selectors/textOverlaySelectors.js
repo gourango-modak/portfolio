@@ -1,4 +1,4 @@
-import { textOverlaySlice } from "../storeUtils";
+import { textOverlaySlice } from "../utils";
 
 export const useTextOverlayOpen = () =>
     textOverlaySlice.useSliceProperty((s) => s.isOpen);
