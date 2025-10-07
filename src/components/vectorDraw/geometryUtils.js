@@ -52,3 +52,11 @@ export const isPointInRect = ({ x, y }, rect) => {
         y <= rect.y + rect.height
     );
 };
+
+export const getRectFromPoints = (p1, p2) => {
+    const x = Math.min(p1.x, p2.x);
+    const y = Math.min(p1.y, p2.y);
+    const width = Math.abs(p2.x - p1.x);
+    const height = Math.abs(p2.y - p1.y);
+    return { x, y, width, height };
+};

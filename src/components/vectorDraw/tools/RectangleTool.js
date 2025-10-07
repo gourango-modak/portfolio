@@ -3,7 +3,7 @@ import { SHAPES } from "../shapes/constants";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
-import { getRoughRectPath } from "./utils";
+import { getRoughRectPath } from "./../svgUtils";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;

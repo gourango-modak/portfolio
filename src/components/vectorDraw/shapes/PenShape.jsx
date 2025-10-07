@@ -1,4 +1,4 @@
-import { getSvgPathFromStroke } from "../canvasUtils";
+import { getSvgPathFromStroke } from "../svgUtils";
 
 export const PenShape = ({ shape }) => {
     const { x, y } = shape;

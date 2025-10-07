@@ -1,9 +1,9 @@
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { getRoughArrowPath } from "../svgUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
-import { getRoughArrowPath } from "./utils";
 
 export class ArrowTool extends BaseTool {
     static name = TOOLS.ARROW;
