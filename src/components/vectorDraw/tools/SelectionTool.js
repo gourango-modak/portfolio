@@ -1,5 +1,9 @@
-import { findShapeAtPoint, getShapeBoundingRect } from "../canvasUtils";
 import { isPointInRect } from "../geometryUtils";
+import {
+    findShapeAtPoint,
+    getShapeAtPoint,
+    isShapeSelectedByRect,
+} from "../shapes/utils";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import {
     canvasPropertiesSlice,
@@ -97,44 +101,6 @@ export class SelectionTool extends BaseTool {
         } L${x},${y + height} Z`;
     }
 
-    /** Check if shape is selected by rectangle based on selectionMode */
-    _isShapeSelectedByRect(shape, rect) {
-        const { x, y, width, height } = getShapeBoundingRect(shape);
-
-        if (this.properties.selectionMode.value === SELECTION_MODE.FULL) {
-            // Fully inside selection
-            return (
-                x >= rect.x &&
-                y >= rect.y &&
-                x + width <= rect.x + rect.width &&
-                y + height <= rect.y + rect.height
-            );
-        } else if (
-            this.properties.selectionMode.value === SELECTION_MODE.TOUCH
-        ) {
-            // Hit-test: check a few points inside the selection rect to see if they touch the shape
-            const step = 5; // sampling step in px
-            for (let px = rect.x; px <= rect.x + rect.width; px += step) {
-                for (let py = rect.y; py <= rect.y + rect.height; py += step) {
-                    if (findShapeAtPoint(shape, { x: px, y: py })) {
-                        return true; // at least one point hits the shape
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /** Returns the first shape under a point or null */
-    getShapeUnderPoint({ x, y }) {
-        const { shapes, shapeOrder } = shapeSlice.getSlice();
-        const hitShapeId = shapeOrder.find((id) =>
-            findShapeAtPoint(shapes[id], { x, y })
-        );
-        return hitShapeId || null;
-    }
-
     /** --- EVENT HANDLERS --- */
 
     /** Handle pointer down */
@@ -146,7 +112,7 @@ export class SelectionTool extends BaseTool {
 
         const { selectedShapesBounds, selectedShapeIds, shapes } =
             shapeSlice.getSlice();
-        const hitId = this.getShapeUnderPoint(pointer);
+        const shape = getShapeAtPoint(pointer);
 
         // Check if clicked inside existing selection
         this.clickedInsideSelection =
@@ -156,7 +122,7 @@ export class SelectionTool extends BaseTool {
         // Reset state
         this.moving = false;
         this.dragging = false;
-        this.clickCandidateId = hitId || null;
+        this.clickCandidateId = shape?.id || null;
 
         // Start batching command if about to move selected shapes
         if (this.clickedInsideSelection && selectedShapeIds.size > 0) {
@@ -280,7 +246,13 @@ export class SelectionTool extends BaseTool {
             });
 
             const selected = Object.values(shapes)
-                .filter((shape) => this._isShapeSelectedByRect(shape, rect))
+                .filter((shape) =>
+                    isShapeSelectedByRect(
+                        shape,
+                        rect,
+                        this.properties.selectionMode.value
+                    )
+                )
                 .map((s) => s.id);
 
             deselectAll();

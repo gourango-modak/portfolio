@@ -1,5 +1,5 @@
-import { getShapeBoundingRect } from "../canvasUtils";
 import { useRenderLogger } from "../hooks/useRenderLogger";
+import { getShapeBoundingRect } from "../shapes/utils";
 import {
     useSelectedShapeIds,
     useSelectedShapesBounds,

@@ -1,5 +1,5 @@
 import { generateId } from "../../../../utils/common";
-import { computeSelectedShapesBounds } from "../../canvasUtils";
+import { computeSelectedShapesBounds } from "../../shapes/utils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
 export const createShapeSlice = (set, get) => ({

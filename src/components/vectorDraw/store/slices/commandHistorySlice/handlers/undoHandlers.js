@@ -1,4 +1,4 @@
-import { computeSelectedShapesBounds } from "../../../../canvasUtils";
+import { computeSelectedShapesBounds } from "../../../../shapes/utils";
 import { COMMANDS } from "../constants";
 
 export const undoHandlers = {
