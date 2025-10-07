@@ -67,4 +67,23 @@ export const executeCommandHandlers = {
                 },
             };
         }),
+
+    [COMMANDS.ADD_SHAPES]: (set, cmd) =>
+        set((s) => {
+            const newShapes = { ...s.shapeSlice.shapes };
+            const newOrder = [...s.shapeSlice.shapeOrder];
+
+            cmd.shapes.forEach((shape) => {
+                newShapes[shape.id] = shape;
+                newOrder.push(shape.id);
+            });
+
+            return {
+                shapeSlice: {
+                    ...s.shapeSlice,
+                    shapes: newShapes,
+                    shapeOrder: newOrder,
+                },
+            };
+        }),
 };

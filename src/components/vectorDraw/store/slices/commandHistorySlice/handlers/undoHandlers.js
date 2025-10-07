@@ -69,4 +69,23 @@ export const undoHandlers = {
                 },
             };
         }),
+
+    [COMMANDS.ADD_SHAPES]: (set, cmd) =>
+        set((s) => {
+            const newShapes = { ...s.shapeSlice.shapes };
+            const idsToRemove = cmd.shapes.map((shape) => shape.id);
+            idsToRemove.forEach((id) => delete newShapes[id]);
+
+            const newOrder = s.shapeSlice.shapeOrder.filter(
+                (id) => !idsToRemove.includes(id)
+            );
+
+            return {
+                shapeSlice: {
+                    ...s.shapeSlice,
+                    shapes: newShapes,
+                    shapeOrder: newOrder,
+                },
+            };
+        }),
 };

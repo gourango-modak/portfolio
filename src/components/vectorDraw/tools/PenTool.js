@@ -4,7 +4,7 @@ import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { TOOLS } from "./constants";
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
-import { getSvgPathFromStroke } from "../svgUtils";
+import { getSvgPathFromStroke } from "../utils/svgUtils";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;

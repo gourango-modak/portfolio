@@ -3,7 +3,7 @@ import { SHAPES } from "../shapes/constants";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
-import { getRoughRectPath } from "./../svgUtils";
+import { getRoughRectPath } from "../utils/svgUtils";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;
@@ -72,6 +72,13 @@ export class RectangleTool extends BaseTool {
     onPointerUp(e) {
         if (!this.startPoint || !this.livePath) return;
         const { x, y, width, height } = this.getRectDimensions(e);
+
+        // Skip small rectangles
+        if (width <= 20) {
+            this.cleanUp();
+            this.startPoint = null;
+            return;
+        }
 
         // Create a local (normalized) path starting from (0, 0)
         const pathData = getRoughRectPath(

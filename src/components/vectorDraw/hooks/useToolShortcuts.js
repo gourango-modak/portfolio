@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { toolRegistry } from "../tools/registry";
-import { commandHistorySlice, toolbarSlice } from "../store/utils";
+import { commandHistorySlice, shapeSlice, toolbarSlice } from "../store/utils";
 import { TOOLS } from "../tools/constants";
+import { getCanvasLastPointerPosition } from "../utils/canvasUtils";
 
 export const useToolShortcuts = () => {
     const lastActivatedToolRef = useRef(null);
@@ -29,6 +30,28 @@ export const useToolShortcuts = () => {
         if (key === "y") {
             e.preventDefault();
             redo();
+            return true;
+        }
+
+        return false;
+    };
+
+    const handleCopyPaste = (e) => {
+        const { copySelectedShapes, pasteShapesAt } = shapeSlice.getSlice();
+
+        if (!e.ctrlKey) return false;
+
+        const key = e.key.toLowerCase();
+
+        if (key === "c") {
+            e.preventDefault();
+            copySelectedShapes();
+            return true;
+        }
+
+        if (key === "v") {
+            e.preventDefault();
+            pasteShapesAt(getCanvasLastPointerPosition());
             return true;
         }
 
@@ -83,6 +106,7 @@ export const useToolShortcuts = () => {
         const handleKeyDown = (e) => {
             if (isTypingInInput(e)) return;
             if (handleUndoRedo(e)) return;
+            if (handleCopyPaste(e)) return;
             handleToolShortcut(e);
         };
 

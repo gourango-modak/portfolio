@@ -1,8 +1,8 @@
-import { getRectFromPoints, isPointInRect } from "../geometryUtils";
+import { getRectFromPoints, isPointInRect } from "../utils/geometryUtils";
 import { getShapeAtPoint, isShapeSelectedByRect } from "../shapes/utils";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice, shapeSlice } from "../store/utils";
-import { getRectToPathData } from "../svgUtils";
+import { getRectToPathData } from "../utils/svgUtils";
 import { BaseTool } from "./BaseTool";
 import { SELECTION_MODE, TOOLS } from "./constants";
 import { updateSelectionToolCursor } from "./utils";

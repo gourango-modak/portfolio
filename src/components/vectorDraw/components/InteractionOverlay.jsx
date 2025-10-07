@@ -3,8 +3,11 @@ import { useRenderLogger } from "../hooks/useRenderLogger";
 import { SelectionOutlineLayer } from "./SelectionOutlineLayer";
 import LiveDrawingLayer from "./LiveDrawingLayer";
 import { useEffect, useMemo, useRef } from "react";
-import { canvasPropertiesSlice } from "../store/utils";
 import { useCanvasCursor } from "../store/selectors/canvasPropertiesSelectors";
+import {
+    getTransformedEvent,
+    updateCanvasLastPointerPosition,
+} from "../utils/canvasUtils";
 
 const InteractionOverlay = () => {
     const interactionOverlayRef = useRef(null);
@@ -15,20 +18,12 @@ const InteractionOverlay = () => {
         interactionOverlayRef.current.style.cursor = cursor;
     }, [cursor]);
 
-    const getTransformedEvent = (e) => {
-        const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
-        return {
-            ...e,
-            tx: (e.clientX - pan.x) / scale,
-            ty: (e.clientY - pan.y) / scale,
-        };
-    };
-
     const handlePointerDown = (e) => {
         toolRef.current?.onPointerDown(getTransformedEvent(e));
     };
 
     const handlePointerMove = (e) => {
+        updateCanvasLastPointerPosition(e);
         toolRef.current?.onPointerMove(getTransformedEvent(e));
     };
 

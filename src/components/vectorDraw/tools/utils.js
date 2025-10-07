@@ -1,4 +1,4 @@
-import { isPointInRect } from "../geometryUtils";
+import { isPointInRect } from "../utils/geometryUtils";
 import { findShapeAtPoint } from "../shapes/utils";
 import { canvasPropertiesSlice } from "../store/utils";
 

@@ -10,6 +10,8 @@ export const createShapeSlice = (set, get) => ({
         selectedShapeIds: new Set(), // track selected shapes by id
         selectedShapesBounds: null, // store combined bounds for quick access
 
+        copiedShapes: null, // store copied shapes temporarily
+
         setShapes: (newShapes, newShapeOrder) =>
             set((state) => ({
                 shapeSlice: {
@@ -120,6 +122,68 @@ export const createShapeSlice = (set, get) => ({
                     selectedShapesBounds: null,
                 },
             })),
+
+        copySelectedShapes: () => {
+            const { shapes, selectedShapeIds } = get().shapeSlice;
+            if (selectedShapeIds.size === 0) return;
+
+            // Create deep copies of selected shapes (without IDs)
+            const copied = Array.from(selectedShapeIds)
+                .map((id) => {
+                    const shape = shapes[id];
+                    if (!shape) return null;
+                    const { id: _, ...rest } = shape; // remove original id
+                    return { ...rest };
+                })
+                .filter(Boolean);
+
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice,
+                    copiedShapes: copied,
+                },
+            }));
+        },
+
+        pasteShapesAt: (position) => {
+            const { copiedShapes, deselectAll } = get().shapeSlice;
+            const { executeCommand } = get().commandHistorySlice;
+
+            if (!copiedShapes || copiedShapes.length === 0) return;
+
+            deselectAll();
+
+            const newShapes = copiedShapes.map((shape) => ({
+                ...shape,
+                id: generateId(),
+                version: 1,
+                x: position.x + ((shape.x || 0) - (copiedShapes[0].x || 0)),
+                y: position.y + ((shape.y || 0) - (copiedShapes[0].y || 0)),
+            }));
+
+            // Execute single command for all shapes
+            executeCommand({
+                type: COMMANDS.ADD_SHAPES,
+                shapes: newShapes,
+            });
+
+            // Select all pasted shapes
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice,
+                    selectedShapeIds: new Set(newShapes.map((s) => s.id)),
+                    selectedShapesBounds: computeSelectedShapesBounds(
+                        new Set(newShapes.map((s) => s.id)),
+                        {
+                            ...state.shapeSlice.shapes,
+                            ...Object.fromEntries(
+                                newShapes.map((s) => [s.id, s])
+                            ),
+                        }
+                    ),
+                },
+            }));
+        },
 
         serialize: () => {
             const { shapes, shapeOrder } = get().shapeSlice;

@@ -1,4 +1,7 @@
-import { distancePointToSegment, isPointInPolygon } from "../geometryUtils";
+import {
+    distancePointToSegment,
+    isPointInPolygon,
+} from "../utils/geometryUtils";
 import { getTextShapeBounds } from "./boundingRectRegistry";
 import { SHAPES } from "./constants";
 
