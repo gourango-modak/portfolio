@@ -1,5 +1,5 @@
-import { shapeBoundingRectRegistry } from "./shapes/shapeBoundingRectRegistry";
-import { shapeHitTestRegistry } from "./shapes/shapeHitTestRegistry";
+import { shapeBoundingRectRegistry } from "./shapes/boundingRectRegistry";
+import { shapeHitTestRegistry } from "./shapes/hitTestRegistry";
 
 export const getSvgPathFromStroke = (stroke) => {
     if (!stroke.length) return "";

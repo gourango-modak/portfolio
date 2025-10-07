@@ -1,7 +1,7 @@
 import { memo } from "react";
-import { shapeRegistry } from "../shapes/shapeRegistry";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useShapeById } from "../store/selectors/shapeSelectors";
+import { shapeRegistry } from "../shapes/registry";
 
 const Shape = memo(({ shapeId }) => {
     const shape = useShapeById(shapeId);

@@ -1,10 +1,10 @@
 import getStroke from "perfect-freehand";
 import { getSvgPathFromStroke } from "../canvasUtils";
 import { BaseTool } from "./BaseTool";
-import { SHAPES } from "../shapes/shapesUtils";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { TOOLS } from "./constants";
 import { CANVAS_MODES } from "../constants";
+import { SHAPES } from "../shapes/constants";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;

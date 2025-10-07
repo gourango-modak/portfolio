@@ -1,6 +1,6 @@
 import { distancePointToSegment, isPointInPolygon } from "../geometryUtils";
-import { SHAPES } from "./shapesUtils";
-import { getTextShapeBounds } from "./shapeBoundingRectRegistry";
+import { getTextShapeBounds } from "./boundingRectRegistry";
+import { SHAPES } from "./constants";
 
 // options: { type: "point" | "circle", radius?: number }
 function hitTestPenShape(shape, x, y, options = { type: "point" }) {

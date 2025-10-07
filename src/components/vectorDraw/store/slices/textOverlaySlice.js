@@ -1,4 +1,4 @@
-import { SHAPES } from "../../shapes/shapesUtils";
+import { SHAPES } from "../../shapes/constants";
 import { CANVAS_MODES } from "./../../constants";
 
 export const createTextOverlaySlice = (set, get) => ({

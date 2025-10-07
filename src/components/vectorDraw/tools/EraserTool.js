@@ -1,4 +1,4 @@
-import { shapeHitTestRegistry } from "../shapes/shapeHitTestRegistry";
+import { shapeHitTestRegistry } from "../shapes/hitTestRegistry";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";

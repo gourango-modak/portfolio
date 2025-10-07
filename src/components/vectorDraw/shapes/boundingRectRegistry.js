@@ -1,4 +1,4 @@
-import { SHAPES } from "./shapesUtils";
+import { SHAPES } from "./constants";
 
 function getRectShapeBounds(shape) {
     const { x, y, width, height } = shape;
