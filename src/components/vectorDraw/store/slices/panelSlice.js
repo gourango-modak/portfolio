@@ -1,5 +1,5 @@
 import { ORIENTATION } from "../../../../utils/common";
-import { PANELS } from "../../canvasUtils";
+import { PANELS } from "../../constants";
 
 export const createPanelSlice = (set, get) => ({
     panelSlice: {

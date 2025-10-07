@@ -1,22 +1,5 @@
-import { Copy, Infinity } from "lucide-react";
 import { shapeBoundingRectRegistry } from "./shapes/shapeBoundingRectRegistry";
 import { shapeHitTestRegistry } from "./shapes/shapeHitTestRegistry";
-
-export const CANVAS_MODES = {
-    PAGED: "Paged",
-    INFINITE: "Infinite",
-};
-
-export const CANVAS_MODE_ICONS = {
-    [CANVAS_MODES.PAGED]: Copy,
-    [CANVAS_MODES.INFINITE]: Infinity,
-};
-
-export const PANELS = {
-    INSPECTOR_PANEL: "inspectorPanel",
-    TOOL_PROPERTIES_PANEL: "toolPropertiesPanel",
-    TOOLBAR_PANEL: "toolbarPanel",
-};
 
 export const getSvgPathFromStroke = (stroke) => {
     if (!stroke.length) return "";

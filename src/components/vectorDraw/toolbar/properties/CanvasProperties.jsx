@@ -1,9 +1,9 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../canvasUtils";
 import { CanvasBgProperty } from "./CavasBgProperty";
 import { FrameBgProperty } from "./FrameBgProperty";
 import { canvasPropertiesSlice } from "../../store/utils";
 import { useCanvasModeProperty } from "../../store/selectors/canvasPropertiesSelectors";
+import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../constants";
 
 export const CanvasProperties = () => {
     const canvasModeProperty = useCanvasModeProperty();

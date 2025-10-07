@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { Frame } from "./Frame";
-import { CANVAS_MODES } from "../canvasUtils";
 import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
 import {
     useActiveFrameId,
     useFrameOrder,
 } from "../store/selectors/frameSelectors";
+import { CANVAS_MODES } from "../constants";
 
 export const FrameLayer = memo(() => {
     const canvasMode = useCanvasMode();

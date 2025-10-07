@@ -1,7 +1,5 @@
 import { ORIENTATION } from "../../../utils/common";
-import { PANELS } from "../canvasUtils";
-import { PanTool } from "../tools/PanTool";
-import { SelectionTool } from "../tools/SelectionTool";
+import { PANELS } from "../constants";
 
 export const getToolbarPanelInitialPosition = ({ orientation }) => {
     const panel = document.getElementById(PANELS.TOOLBAR_PANEL);
@@ -29,14 +27,3 @@ export const getInspectorPanelInitialPosition = () => {
 export const getToolPropertiesPanelInitialPosition = () => {
     return { x: 20, y: 300 };
 };
-
-export const PANEL_INIT_POSITION_FUNCTIONS = {
-    [PANELS.TOOLBAR_PANEL]: getToolbarPanelInitialPosition,
-    [PANELS.INSPECTOR_PANEL]: getInspectorPanelInitialPosition,
-    [PANELS.TOOL_PROPERTIES_PANEL]: getToolPropertiesPanelInitialPosition,
-};
-
-export const TOOLS_PROPERTIES_PANEL_DISABLED = [
-    SelectionTool.name,
-    PanTool.name,
-];

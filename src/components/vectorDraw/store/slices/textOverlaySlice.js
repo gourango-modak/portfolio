@@ -1,5 +1,5 @@
-import { CANVAS_MODES } from "../../canvasUtils";
 import { SHAPES } from "../../shapes/shapesUtils";
+import { CANVAS_MODES } from "./../../constants";
 
 export const createTextOverlaySlice = (set, get) => ({
     textOverlaySlice: {
@@ -37,7 +37,8 @@ export const createTextOverlaySlice = (set, get) => ({
             const { text, startPoint, properties, isNew, shapeId } =
                 get().textOverlaySlice;
             const shapeSlice = get().shapeSlice;
-            const canvasPropertiesSlice = get().canvasPropertiesSlice;
+            const canvasMode =
+                get().canvasPropertiesSlice.properties.mode.value;
 
             if (text) {
                 if (isNew) {
@@ -49,10 +50,7 @@ export const createTextOverlaySlice = (set, get) => ({
                         text,
                         properties,
                     };
-                    if (
-                        canvasPropertiesSlice.properties.mode.value ===
-                        CANVAS_MODES.PAGED
-                    ) {
+                    if (canvasMode === CANVAS_MODES.PAGED) {
                         shape.frameId = get().frameSlice.activeFrameId;
                     }
                     shapeSlice.addShape(shape);

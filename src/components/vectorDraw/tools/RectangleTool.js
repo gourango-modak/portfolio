@@ -1,4 +1,4 @@
-import { CANVAS_MODES } from "../canvasUtils";
+import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/shapesUtils";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";

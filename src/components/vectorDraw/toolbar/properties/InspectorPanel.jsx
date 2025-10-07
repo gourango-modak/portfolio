@@ -1,11 +1,11 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useMemo } from "react";
-import { INSPECTOR_PANEL_TARGETS } from "./propertiesUtils";
+import { INSPECTOR_PANEL_TARGETS } from "./constants";
 import { CanvasProperties } from "./CanvasProperties";
 import { PageProperties } from "./PageProperties";
-import { PANELS } from "../../canvasUtils";
 import { panelSlice } from "../../store/utils";
 import { usePanelTarget } from "../../store/selectors/panelSelectors";
+import { PANELS } from "../../constants";
 
 const InspectorPanel = () => {
     const panelId = PANELS.INSPECTOR_PANEL;

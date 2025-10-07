@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { PANELS } from "../canvasUtils";
-import { PANEL_INIT_POSITION_FUNCTIONS } from "../toolbar/toolbarUtils";
 import { panelSlice } from "../store/utils";
 import {
     usePanelOrientation,
     usePanelVisible,
     usePanelZIndex,
 } from "../store/selectors/panelSelectors";
+import { PANEL_INIT_POSITION_FUNCTIONS } from "../toolbar/constants";
+import { PANELS } from "../constants";
 
 export const Panel = ({
     panelId,

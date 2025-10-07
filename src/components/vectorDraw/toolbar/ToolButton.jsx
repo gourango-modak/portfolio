@@ -1,5 +1,5 @@
 import { ORIENTATION } from "../../../utils/common";
-import { PANELS } from "../canvasUtils";
+import { PANELS } from "../constants";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
 import { useActiveFrameId } from "../store/selectors/frameSelectors";

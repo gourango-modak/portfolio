@@ -1,4 +1,4 @@
-import { CANVAS_MODES } from "../../canvasUtils";
+import { CANVAS_MODES } from "../../constants";
 
 export const createCanvasPropertiesSlice = (set, get) => ({
     canvasPropertiesSlice: {

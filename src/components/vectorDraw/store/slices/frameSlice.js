@@ -60,8 +60,6 @@ export const createFrameSlice = (set, get) => ({
                     y: { value: y, label: "Y" },
                 };
 
-                console.log(newFrame);
-
                 return {
                     frameSlice: {
                         ...state.frameSlice,

@@ -8,7 +8,7 @@ import {
     shapeSlice,
     toolbarSlice,
 } from "../store/utils";
-import { INSPECTOR_PANEL_TARGETS } from "./properties/propertiesUtils";
+import { INSPECTOR_PANEL_TARGETS } from "./properties/constants";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
 
 export const toolActionHandlers = {

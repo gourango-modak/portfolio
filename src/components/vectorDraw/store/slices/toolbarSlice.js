@@ -1,5 +1,5 @@
-import { TOOLS_PROPERTIES_PANEL_DISABLED } from "../../toolbar/toolbarUtils";
 import { TOOLS } from "../../tools/constants";
+import { TOOLS_PROPERTIES_PANEL_DISABLED } from "./../../toolbar/constants";
 
 export const createToolbarSlice = (set, get) => ({
     toolbarSlice: {
