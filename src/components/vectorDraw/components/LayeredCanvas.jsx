@@ -1,5 +1,5 @@
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { useToolShortcuts } from "../hooks/useToolShortcuts";
+import { useToolShortcuts } from "../shortcuts/useToolShortcuts";
 import ContentLayer from "./ContentLayer";
 import InteractionOverlay from "./InteractionOverlay";
 import { useZoomPan } from "./../hooks/useZoomPan";
