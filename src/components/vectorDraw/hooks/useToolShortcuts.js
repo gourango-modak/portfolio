@@ -3,6 +3,7 @@ import { toolRegistry } from "../tools/registry";
 import { commandHistorySlice, shapeSlice, toolbarSlice } from "../store/utils";
 import { TOOLS } from "../tools/constants";
 import { getCanvasLastPointerPosition } from "../utils/canvasUtils";
+import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 
 export const useToolShortcuts = () => {
     const lastActivatedToolRef = useRef(null);
@@ -58,6 +59,60 @@ export const useToolShortcuts = () => {
         return false;
     };
 
+    const handleDeleteShortcut = (e) => {
+        const key = e.key.toLowerCase();
+        if (key !== "delete") return false;
+
+        e.preventDefault();
+
+        const {
+            selectedShapeIds,
+            shapeOrder,
+            shapes,
+            setShapes,
+            setSelectedShapeIds,
+            setSelectedShapesBounds,
+        } = shapeSlice.getSlice();
+
+        if (!selectedShapeIds || selectedShapeIds.length === 0) return true;
+
+        // Prepare deletedShapes map
+        const deletedShapes = {};
+        selectedShapeIds.forEach((id) => {
+            if (shapes[id]) deletedShapes[id] = shapes[id];
+        });
+
+        if (Object.keys(deletedShapes).length === 0) return true;
+
+        // Start delete command for undo/redo
+        commandHistorySlice.getSlice().beginCommand(COMMANDS.DELETE_SHAPES, {
+            shapeOrderBeforeDelete: [...shapeOrder],
+            shapeIds: selectedShapeIds,
+            deletedShapes,
+        });
+
+        // Remove shapes from the store
+        const remainingShapes = { ...shapes };
+        selectedShapeIds.forEach((id) => delete remainingShapes[id]);
+
+        const remainingOrder = shapeOrder.filter(
+            (id) => !selectedShapeIds.has(id)
+        );
+
+        // Clear selection and bounds after delete
+        setSelectedShapeIds(new Set());
+        setSelectedShapesBounds(null); // or newBounds if you want to compute new bounds
+        setShapes(remainingShapes, remainingOrder);
+
+        // Finalize the delete command
+        commandHistorySlice.getSlice().finalizeCommand({
+            shapeIds: selectedShapeIds,
+            deletedShapes,
+        });
+
+        return true; // Shortcut handled
+    };
+
     // Helper: Check if a tool shortcut matches the key event
     const doesShortcutMatch = (shortcut, event) => {
         if (shortcut.ctrl && !event.ctrlKey) return false;
@@ -107,6 +162,7 @@ export const useToolShortcuts = () => {
             if (isTypingInInput(e)) return;
             if (handleUndoRedo(e)) return;
             if (handleCopyPaste(e)) return;
+            if (handleDeleteShortcut(e)) return;
             handleToolShortcut(e);
         };
 

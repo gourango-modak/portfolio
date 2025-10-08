@@ -12,6 +12,22 @@ export const createShapeSlice = (set, get) => ({
 
         copiedShapes: null, // store copied shapes temporarily
 
+        setSelectedShapeIds: (selectedShapeIds) =>
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice, // keep other state intact
+                    selectedShapeIds,
+                },
+            })),
+
+        setSelectedShapesBounds: (selectedShapesBounds) =>
+            set((state) => ({
+                shapeSlice: {
+                    ...state.shapeSlice, // keep other state intact
+                    selectedShapesBounds,
+                },
+            })),
+
         setShapes: (newShapes, newShapeOrder) =>
             set((state) => ({
                 shapeSlice: {

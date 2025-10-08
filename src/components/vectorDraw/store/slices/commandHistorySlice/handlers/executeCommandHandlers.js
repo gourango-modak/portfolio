@@ -43,9 +43,7 @@ export const executeCommandHandlers = {
         set((s) => {
             const { shapes, shapeOrder, selectedShapeIds } = s.shapeSlice;
             const newShapes = { ...shapes };
-            const newOrder = shapeOrder.filter(
-                (id) => !cmd.shapeIds.includes(id)
-            );
+            const newOrder = shapeOrder.filter((id) => !cmd.shapeIds.has(id));
 
             for (const id of cmd.shapeIds) delete newShapes[id];
 
