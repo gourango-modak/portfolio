@@ -1,6 +1,7 @@
 import { ArrowTool } from "./ArrowTool";
 import { TOOLS } from "./constants";
 import { EraserTool } from "./EraserTool";
+import { LaserPointerTool } from "./LaserPointerTool";
 import { PanTool } from "./PanTool";
 import { PenTool } from "./PenTool";
 import { RectangleTool } from "./RectangleTool";
@@ -15,4 +16,5 @@ export const toolRegistry = {
     [TOOLS.ARROW]: ArrowTool,
     [TOOLS.ERASER]: EraserTool,
     [TOOLS.TEXT]: TextTool,
+    [TOOLS.LASER_POINTER]: LaserPointerTool,
 };

@@ -8,6 +8,7 @@ import {
     FilePlus2,
     Frame,
     Hand,
+    Highlighter,
     Italic,
     Menu,
     MousePointer,
@@ -82,6 +83,11 @@ export const toolbarConfig = [
     {
         name: TOOLS.ERASER,
         Icon: Eraser,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
+    {
+        name: TOOLS.LASER_POINTER,
+        Icon: Highlighter,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {

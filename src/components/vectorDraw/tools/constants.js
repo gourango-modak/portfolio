@@ -6,6 +6,7 @@ export const TOOLS = {
     ARROW: "ARROW",
     ERASER: "ERASER",
     TEXT: "TEXT",
+    LASER_POINTER: "LASER_POINTER",
 };
 
 export const SELECTION_MODE = {
