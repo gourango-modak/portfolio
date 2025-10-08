@@ -64,7 +64,8 @@ export class RectangleTool extends BaseTool {
                 y,
                 width,
                 height,
-                this.properties.roughness.value
+                this.properties.roughness.value,
+                this.properties.strokeWidth.value
             )
         );
     }
@@ -86,7 +87,8 @@ export class RectangleTool extends BaseTool {
             0,
             width,
             height,
-            this.properties.roughness.value
+            this.properties.roughness.value,
+            this.properties.strokeWidth.value
         );
 
         const shape = {

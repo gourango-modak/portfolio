@@ -19,8 +19,16 @@ export const getRectToPathData = (rect) => {
     } Z`;
 };
 
-export const getRoughRectPath = (x, y, w, h, roughness = 0) => {
-    const jitter = (v) => v + (Math.random() - 0.5) * roughness;
+export const getRoughRectPath = (
+    x,
+    y,
+    w,
+    h,
+    roughness = 0,
+    strokeWidth = 1
+) => {
+    const jitter = (v) =>
+        v + (Math.random() - 0.5) * roughness + strokeWidth * 0.3;
 
     const makePath = () => {
         const x1 = jitter(x),
