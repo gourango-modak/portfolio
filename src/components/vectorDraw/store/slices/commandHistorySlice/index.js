@@ -8,12 +8,14 @@ export const createCommandHistorySlice = (set, get) => ({
         currentCommand: null,
 
         beginCommand: (type, data) =>
-            set((s) => ({
-                commandHistorySlice: {
-                    ...s.commandHistorySlice,
-                    currentCommand: { type, ...data },
-                },
-            })),
+            set((s) => {
+                return {
+                    commandHistorySlice: {
+                        ...s.commandHistorySlice,
+                        currentCommand: { type, ...data },
+                    },
+                };
+            }),
 
         finalizeCommand: (data) => {
             const { currentCommand } = get().commandHistorySlice;

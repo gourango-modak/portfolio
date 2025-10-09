@@ -1,8 +1,8 @@
 import { BaseTool } from "./BaseTool";
-import { hitTestTextShape } from "../shapes/hitTestRegistry";
 import { shapeSlice, textOverlaySlice } from "../store/utils";
 import { TOOLS } from "./constants";
 import { SHAPES } from "../shapes/constants";
+import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
@@ -43,9 +43,7 @@ export class TextTool extends BaseTool {
             .map((id) => shapes[id])
             .filter((s) => s && s.type === SHAPES.TEXT);
 
-        const hitShape = textShapes.find((s) =>
-            hitTestTextShape(s, clickX, clickY)
-        );
+        const hitShape = textShapes.find((s) => testTextHit(s, clickX, clickY));
 
         if (hitShape) {
             // Mark shape as editing

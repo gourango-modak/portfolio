@@ -53,6 +53,7 @@ export class ArrowTool extends BaseTool {
     constructor(liveLayerRef) {
         super(liveLayerRef);
         this.startPoint = null; // Store the starting point of the arrow while drawing
+        this.seed = null; // Store seed for consistent roughness
     }
 
     onPointerDown(e) {
@@ -61,6 +62,7 @@ export class ArrowTool extends BaseTool {
 
         // Initialize the live arrow path for visual feedback
         this._createLiveArrow();
+        this.seed = Math.floor(Math.random() * 1000000); // set seed
     }
 
     onPointerMove(e) {
@@ -99,6 +101,7 @@ export class ArrowTool extends BaseTool {
 
         // Reset for next drawing
         this.startPoint = null;
+        this.seed = null;
         this.cleanUp();
     }
 
@@ -115,7 +118,14 @@ export class ArrowTool extends BaseTool {
 
     _updateLiveArrowPath(x1, y1, x2, y2) {
         // Compute rough arrow path for live preview
-        const pathData = getRoughArrowPath(x1, y1, x2, y2, this.properties);
+        const pathData = getRoughArrowPath(
+            x1,
+            y1,
+            x2,
+            y2,
+            this.properties,
+            this.seed
+        );
         this.livePath.setAttribute("d", pathData);
     }
 
@@ -127,51 +137,32 @@ export class ArrowTool extends BaseTool {
     }
 
     _createArrowShape(x1, y1, x2, y2) {
-        const { headLength, headAngle } = this.properties;
+        const minX = Math.min(x1, x2);
+        const minY = Math.min(y1, y2);
 
-        // Angle of the main arrow line
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-
-        // Convert arrowhead angle to radians
-        const headRad = (headAngle.value * Math.PI) / 180;
-
-        // Compute the two points of the arrowhead
-        const hx1 = x2 - headLength.value * Math.cos(angle - headRad);
-        const hy1 = y2 - headLength.value * Math.sin(angle - headRad);
-        const hx2 = x2 - headLength.value * Math.cos(angle + headRad);
-        const hy2 = y2 - headLength.value * Math.sin(angle + headRad);
-
-        // All points of the arrow (line + head)
-        const points = [
-            { x: x1, y: y1 },
-            { x: x2, y: y2 },
-            { x: hx1, y: hy1 },
-            { x: hx2, y: hy2 },
-        ];
-
-        // Find top-left corner for normalization
-        const minX = Math.min(...points.map((p) => p.x));
-        const minY = Math.min(...points.map((p) => p.y));
-
-        // Normalize points relative to top-left corner
-        const normalizedPoints = points.map((p) => ({
-            x: p.x - minX,
-            y: p.y - minY,
-        }));
+        const normalizedX1 = x1 - minX;
+        const normalizedY1 = y1 - minY;
+        const normalizedX2 = x2 - minX;
+        const normalizedY2 = y2 - minY;
 
         return {
             type: SHAPES.ARROW,
-            points: normalizedPoints,
             properties: { ...this.properties },
             x: minX,
             y: minY,
+            x1: normalizedX1,
+            y1: normalizedY1,
+            x2: normalizedX2,
+            y2: normalizedY2,
             path: getRoughArrowPath(
-                normalizedPoints[0].x,
-                normalizedPoints[0].y,
-                normalizedPoints[1].x,
-                normalizedPoints[1].y,
-                this.properties
+                normalizedX1,
+                normalizedY1,
+                normalizedX2,
+                normalizedY2,
+                this.properties,
+                this.seed
             ),
+            seed: this.seed,
         };
     }
 

@@ -1,4 +1,4 @@
-import { shapeHitTestRegistry } from "../shapes/hitTestRegistry";
+import { shapeHitTestingHandlers } from "../shapes/shapeHitTesting/handlers";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
@@ -95,7 +95,7 @@ export class EraserTool extends BaseTool {
 
         for (const id of shapeOrder) {
             const shape = shapes[id];
-            const hitTestFn = shapeHitTestRegistry[shape.type];
+            const hitTestFn = shapeHitTestingHandlers[shape.type];
             const hit =
                 hitTestFn &&
                 hitTestFn(shape, x, y, {

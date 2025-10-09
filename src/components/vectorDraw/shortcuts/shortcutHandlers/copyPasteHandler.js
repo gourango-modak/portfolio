@@ -1,4 +1,5 @@
 import { shapeSlice } from "../../store/utils";
+import { getCanvasLastPointerPosition } from "../../utils/canvasUtils";
 
 export const copyPasteShortcutHandler = (e) => {
     const { copySelectedShapes, pasteShapesAt } = shapeSlice.getSlice();

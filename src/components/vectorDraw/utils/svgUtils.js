@@ -25,10 +25,19 @@ export const getRoughRectPath = (
     w,
     h,
     roughness = 0,
-    strokeWidth = 1
+    strokeWidth = 1,
+    seed = 0
 ) => {
-    const jitter = (v) =>
-        v + (Math.random() - 0.5) * roughness + strokeWidth * 0.3;
+    // Simple deterministic pseudo-random generator
+    const rand = (() => {
+        let s = seed;
+        return () => {
+            s = (s * 9301 + 49297) % 233280;
+            return s / 233280;
+        };
+    })();
+
+    const jitter = (v) => v + (rand() - 0.5) * roughness + strokeWidth * 0.3;
 
     const makePath = () => {
         const x1 = jitter(x),
@@ -47,44 +56,67 @@ export const getRoughRectPath = (
         : `M${x},${y} L${x + w},${y} L${x + w},${y + h} L${x},${y + h} Z`;
 };
 
-export const getRoughArrowPath = (x1, y1, x2, y2, properties) => {
-    const {
-        roughness,
-        headLength,
-        headAngle,
-        lineGap = 0,
-        strokeWidth,
-    } = properties;
+export function getArrowHeadPoints(shape) {
+    const { x1, y1, x2, y2, properties } = shape;
 
-    const jitter = (v) =>
-        v + (Math.random() - 0.5) * roughness.value * strokeWidth.value;
+    const { headLength, headAngle, strokeWidth } = properties;
+
+    // Adjust arrowhead length based on strokeWidth
     const adjustedHeadLength =
         headLength.value * Math.max(1, strokeWidth.value / 2);
 
-    // Arrowhead points
-    const getArrowHeadPoints = () => {
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        const rad = (headAngle.value * Math.PI) / 180;
+    // Compute main line angle
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const rad = (headAngle.value * Math.PI) / 180;
 
-        const hx1 = x2 - adjustedHeadLength * Math.cos(angle - rad);
-        const hy1 = y2 - adjustedHeadLength * Math.sin(angle - rad);
+    // Arrowhead points relative to tip (x2, y2)
+    const hx1 = x2 - adjustedHeadLength * Math.cos(angle - rad);
+    const hy1 = y2 - adjustedHeadLength * Math.sin(angle - rad);
 
-        const hx2 = x2 - adjustedHeadLength * Math.cos(angle + rad);
-        const hy2 = y2 - adjustedHeadLength * Math.sin(angle + rad);
+    const hx2 = x2 - adjustedHeadLength * Math.cos(angle + rad);
+    const hy2 = y2 - adjustedHeadLength * Math.sin(angle + rad);
 
-        return { hx1, hy1, hx2, hy2 };
-    };
+    return [
+        { x: x2, y: y2 }, // tip
+        { x: hx1, y: hy1 }, // left corner
+        { x: hx2, y: hy2 }, // right corner
+    ];
+}
 
-    const { hx1, hy1, hx2, hy2 } = getArrowHeadPoints();
+export const getRoughArrowPath = (x1, y1, x2, y2, properties, seed = 0) => {
+    const { roughness, lineGap = 0, strokeWidth } = properties;
 
-    // Calculate perpendicular offset for lineGap
+    // Deterministic pseudo-random generator
+    const rand = (() => {
+        let s = seed;
+        return () => {
+            s = (s * 9301 + 49297) % 233280;
+            return s / 233280;
+        };
+    })();
+
+    const jitter = (v) =>
+        v + (rand() - 0.5) * roughness.value * strokeWidth.value;
+
+    // 1️⃣ Compute arrowhead points using shared helper
+    const arrowHeadPoints = getArrowHeadPoints({
+        x1,
+        y1,
+        x2,
+        y2,
+        properties,
+        seed,
+    });
+    const [tip, left, right] = arrowHeadPoints;
+
+    // 2️⃣ Calculate perpendicular offset for lineGap
     const dx = x2 - x1;
     const dy = y2 - y1;
     const len = Math.sqrt(dx * dx + dy * dy);
     const offsetX = (dy / len) * lineGap;
     const offsetY = (-dx / len) * lineGap;
 
-    // Generate two rough lines for shaft
+    // 3️⃣ Generate rough shaft lines
     const roughLines =
         roughness.value > 0
             ? [
@@ -101,6 +133,6 @@ export const getRoughArrowPath = (x1, y1, x2, y2, properties) => {
                   y2 - offsetY
               }`;
 
-    // Combine shaft + single arrowhead
-    return `${roughLines} M${hx1},${hy1} L${x2},${y2} L${hx2},${hy2}`;
+    // 4️⃣ Combine shaft + arrowhead
+    return `${roughLines} M${left.x},${left.y} L${tip.x},${tip.y} L${right.x},${right.y}`;
 };

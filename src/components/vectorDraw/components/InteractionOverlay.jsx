@@ -1,9 +1,9 @@
 import TransformLayer from "./TransformLayer";
 import { useRenderLogger } from "../hooks/useRenderLogger";
-import { SelectionOutlineLayer } from "./SelectionOutlineLayer";
 import LiveDrawingLayer from "./LiveDrawingLayer";
 import { useEffect, useMemo, useRef } from "react";
 import { useCanvasCursor } from "../store/selectors/canvasPropertiesSelectors";
+import { SelectionOutlineLayer } from "./SelectionOutlineLayer";
 import {
     getTransformedEvent,
     updateCanvasLastPointerPosition,

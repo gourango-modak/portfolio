@@ -1,4 +1,4 @@
-import { computeSelectedShapesBounds } from "../../../../shapes/utils";
+import { computeShapesBoundingBox } from "../../../../shapes/utils";
 import { COMMANDS } from "../constants";
 
 export const executeCommandHandlers = {
@@ -27,7 +27,7 @@ export const executeCommandHandlers = {
             }
 
             const newBounds = selectedShapeIds.size
-                ? computeSelectedShapesBounds(selectedShapeIds, newShapes)
+                ? computeShapesBoundingBox(selectedShapeIds, newShapes)
                 : selectedShapesBounds;
 
             return {
@@ -52,7 +52,7 @@ export const executeCommandHandlers = {
 
             const newBounds =
                 newSelected.size > 0
-                    ? computeSelectedShapesBounds(newSelected, newShapes)
+                    ? computeShapesBoundingBox(newSelected, newShapes)
                     : null;
 
             return {

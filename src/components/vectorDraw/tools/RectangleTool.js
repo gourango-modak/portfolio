@@ -41,6 +41,7 @@ export class RectangleTool extends BaseTool {
     constructor(liveLayerRef) {
         super(liveLayerRef);
         this.startPoint = null;
+        this.seed = null; // Store seed for consistent roughness
     }
 
     onPointerDown(e) {
@@ -52,6 +53,7 @@ export class RectangleTool extends BaseTool {
             this.properties.strokeWidth.value
         );
         this.livePath.setAttribute("fill", "transparent");
+        this.seed = Math.floor(Math.random() * 1000000); // set seed
     }
 
     onPointerMove(e) {
@@ -65,7 +67,8 @@ export class RectangleTool extends BaseTool {
                 width,
                 height,
                 this.properties.roughness.value,
-                this.properties.strokeWidth.value
+                this.properties.strokeWidth.value,
+                this.seed
             )
         );
     }
@@ -78,6 +81,7 @@ export class RectangleTool extends BaseTool {
         if (width <= 20) {
             this.cleanUp();
             this.startPoint = null;
+            this.seed = null;
             return;
         }
 
@@ -88,7 +92,8 @@ export class RectangleTool extends BaseTool {
             width,
             height,
             this.properties.roughness.value,
-            this.properties.strokeWidth.value
+            this.properties.strokeWidth.value,
+            this.seed
         );
 
         const shape = {
@@ -98,6 +103,7 @@ export class RectangleTool extends BaseTool {
             width,
             height,
             path: pathData,
+            seed: this.seed,
             properties: { ...this.properties },
         };
 

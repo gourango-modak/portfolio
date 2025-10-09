@@ -1,4 +1,4 @@
-import { computeSelectedShapesBounds } from "../../../../shapes/utils";
+import { computeShapesBoundingBox } from "../../../../shapes/utils";
 import { COMMANDS } from "../constants";
 
 export const undoHandlers = {
@@ -8,9 +8,7 @@ export const undoHandlers = {
             const newSel = new Set(s.shapeSlice.selectedShapeIds);
             newSel.delete(cmd.shape.id);
             const newBounds =
-                newSel.size > 0
-                    ? computeSelectedShapesBounds(newSel, rest)
-                    : null;
+                newSel.size > 0 ? computeShapesBoundingBox(newSel, rest) : null;
 
             return {
                 shapeSlice: {
@@ -41,7 +39,7 @@ export const undoHandlers = {
             }
 
             const newBounds = selectedShapeIds.size
-                ? computeSelectedShapesBounds(selectedShapeIds, newShapes)
+                ? computeShapesBoundingBox(selectedShapeIds, newShapes)
                 : selectedShapesBounds;
 
             return {

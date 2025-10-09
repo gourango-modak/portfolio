@@ -1,5 +1,5 @@
 import { generateId } from "../../../../utils/common";
-import { computeSelectedShapesBounds } from "../../shapes/utils";
+import { computeShapesBoundingBox } from "../../shapes/utils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
 export const createShapeSlice = (set, get) => ({
@@ -64,7 +64,7 @@ export const createShapeSlice = (set, get) => ({
                 };
 
                 const newBounds = state.shapeSlice.selectedShapeIds.has(id)
-                    ? computeSelectedShapesBounds(
+                    ? computeShapesBoundingBox(
                           state.shapeSlice.selectedShapeIds,
                           newShapes
                       )
@@ -84,7 +84,7 @@ export const createShapeSlice = (set, get) => ({
             set((state) => {
                 const newSelected = new Set(state.shapeSlice.selectedShapeIds);
                 newSelected.add(id);
-                const newBounds = computeSelectedShapesBounds(
+                const newBounds = computeShapesBoundingBox(
                     newSelected,
                     state.shapeSlice.shapes
                 );
@@ -104,7 +104,7 @@ export const createShapeSlice = (set, get) => ({
                 newSelected.delete(id);
                 const newBounds =
                     newSelected.size > 0
-                        ? computeSelectedShapesBounds(
+                        ? computeShapesBoundingBox(
                               newSelected,
                               state.shapeSlice.shapes
                           )
@@ -188,7 +188,7 @@ export const createShapeSlice = (set, get) => ({
                 shapeSlice: {
                     ...state.shapeSlice,
                     selectedShapeIds: new Set(newShapes.map((s) => s.id)),
-                    selectedShapesBounds: computeSelectedShapesBounds(
+                    selectedShapesBounds: computeShapesBoundingBox(
                         new Set(newShapes.map((s) => s.id)),
                         {
                             ...state.shapeSlice.shapes,
