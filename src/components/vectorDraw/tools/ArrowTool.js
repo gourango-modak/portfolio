@@ -9,6 +9,7 @@ export class ArrowTool extends BaseTool {
     static name = TOOLS.ARROW;
     static label = "Arrow Tool";
     static shortcut = { code: "KeyA" };
+    static cursor = "crosshair";
 
     // Default properties for the arrow
     static defaultProperties = {

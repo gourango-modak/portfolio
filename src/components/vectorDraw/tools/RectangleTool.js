@@ -11,6 +11,7 @@ export class RectangleTool extends BaseTool {
     static shortcut = {
         code: "KeyR",
     };
+    static cursor = "crosshair";
 
     // Default tool properties
     static defaultProperties = {

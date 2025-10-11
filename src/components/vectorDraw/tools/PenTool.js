@@ -12,6 +12,7 @@ export class PenTool extends BaseTool {
     static shortcut = {
         code: "KeyP",
     };
+    static cursor = "crosshair";
 
     // Default tool properties
     static defaultProperties = {

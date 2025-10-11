@@ -12,7 +12,7 @@ const MIN_TEXT_WIDTH = 20;
 // Extra buffer space to prevent premature line wrapping. // Without this, the next character typed could wrap too early // because span.offsetWidth measures text tightly (no right padding). // This value depends on the font used — 40px is a safe average.
 const WIDTH_BUFFER = 40;
 
-// 20px padding from viewport right edge
+// Padding from viewport right edge
 const PADDING_RIGHT = 2;
 
 const LINE_HEIGHT = 1.3;
@@ -21,6 +21,7 @@ export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
     static label = "Text Tool";
     static shortcut = { code: "KeyI" };
+    static cursor = "text";
 
     static defaultProperties = {
         color: {
