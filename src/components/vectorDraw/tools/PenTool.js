@@ -5,16 +5,14 @@ import { TOOLS } from "./constants";
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { getSvgPathFromStroke } from "../utils/svgUtils";
+import { computePenBoundingBox } from "../shapes/boundingBox/penBoundingBox";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;
     static label = "Pen Tool";
-    static shortcut = {
-        code: "KeyP",
-    };
+    static shortcut = { code: "KeyP" };
     static cursor = "crosshair";
 
-    // Default tool properties
     static defaultProperties = {
         color: { value: "#000", label: "Color", type: "color", id: "penColor" },
         strokeWidth: { value: 16, label: "Stroke Width", type: "slider" },
@@ -46,54 +44,88 @@ export class PenTool extends BaseTool {
 
     constructor(liveLayerRef) {
         super(liveLayerRef);
-        this.points = [];
+        this.rawPoints = [];
     }
 
-    onPointerDown(e) {
-        this.points = [{ x: e.tx, y: e.ty, pressure: e.pressure }];
+    onPointerDown(event) {
+        this.rawPoints = [this.createPoint(event)];
         this.createLivePath();
         this.livePath.setAttribute("fill", this.properties.color.value);
     }
 
-    onPointerMove(e) {
+    onPointerMove(event) {
         if (!this.livePath) return;
-        this.points.push({ x: e.tx, y: e.ty, pressure: e.pressure });
-        this.livePath.setAttribute("d", this.getPathFromStrokePoints());
+        this.rawPoints.push(this.createPoint(event));
+        this.updateLivePath();
     }
 
     onPointerUp() {
-        if (!this.livePath) return;
+        if (!this.livePath || this.rawPoints.length === 0) return;
 
-        // Compute stroke points
-        const strokePoints = this.getStrokePoints();
+        const penShape = this.createPenShape(this.rawPoints);
 
-        // Compute the bounding box of the stroke
-        const xs = this.points.map((p) => p.x);
-        const ys = this.points.map((p) => p.y);
-        const minX = Math.min(...xs);
-        const minY = Math.min(...ys);
+        this.addShapeToCanvas(penShape);
 
-        // Normalize points to local space (so shape.x/y become the transform)
-        const normalizedPoints = this.points.map((p) => ({
-            x: p.x - minX,
-            y: p.y - minY,
-            pressure: p.pressure,
-        }));
+        this.rawPoints = [];
+        this.cleanUp();
+    }
 
-        const normalizedStrokePoints = strokePoints.map(([x, y]) => [
-            x - minX,
-            y - minY,
-        ]);
+    createPoint({ tx, ty, pressure }) {
+        return { x: tx, y: ty, pressure };
+    }
 
+    getStrokePoints() {
+        const { strokeWidth, thinning, smoothing, streamline } =
+            this.properties;
+        return getStroke(this.rawPoints, {
+            size: strokeWidth.value,
+            thinning: thinning.value,
+            smoothing: smoothing.value,
+            streamline: streamline.value,
+        });
+    }
+
+    getPathFromStrokePoints() {
+        return getSvgPathFromStroke(this.getStrokePoints());
+    }
+
+    updateLivePath() {
+        this.livePath.setAttribute("d", this.getPathFromStrokePoints());
+    }
+
+    createPenShape(points) {
+        const { normalizedPoints, minX, minY } = this.normalizePoints(points);
         const shape = {
             type: SHAPES.PEN,
             points: normalizedPoints,
-            strokePoints: normalizedStrokePoints,
             properties: { ...this.properties },
             x: minX,
             y: minY,
         };
 
+        const { width, height } = computePenBoundingBox(shape);
+        shape.width = width;
+        shape.height = height;
+
+        return shape;
+    }
+
+    normalizePoints(points) {
+        const xs = points.map((p) => p.x);
+        const ys = points.map((p) => p.y);
+        const minX = Math.min(...xs);
+        const minY = Math.min(...ys);
+
+        const normalizedPoints = points.map((p) => ({
+            x: p.x - minX,
+            y: p.y - minY,
+            pressure: p.pressure,
+        }));
+
+        return { normalizedPoints, minX, minY };
+    }
+
+    addShapeToCanvas(shape) {
         const { addShape } = shapeSlice.getSlice();
         const { activeFrameId } = frameSlice.getSlice();
         const canvasMode =
@@ -104,21 +136,5 @@ export class PenTool extends BaseTool {
         }
 
         addShape(shape);
-
-        this.points = [];
-        this.cleanUp();
-    }
-
-    getStrokePoints() {
-        return getStroke(this.points, {
-            size: this.properties.strokeWidth.value,
-            thinning: this.properties.thinning.value,
-            smoothing: this.properties.smoothing.value,
-            streamline: this.properties.streamline.value,
-        });
-    }
-
-    getPathFromStrokePoints() {
-        return getSvgPathFromStroke(this.getStrokePoints());
     }
 }

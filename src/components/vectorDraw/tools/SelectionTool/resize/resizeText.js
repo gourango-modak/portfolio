@@ -1,6 +1,6 @@
 export const resizeText = ({ shape, scaleX, scaleY, pivot }) => {
     // Compute a uniform scale (average or min to maintain proportionality)
-    const uniformScale = (scaleX + scaleY) / 2; // or use Math.min(scaleX, scaleY)
+    const uniformScale = (scaleX + scaleY) / 2;
 
     // Scale font size and dimensions proportionally
     const newFontSize = shape.properties.fontSize.value * uniformScale;
