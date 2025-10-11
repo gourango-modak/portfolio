@@ -13,7 +13,9 @@ const MIN_TEXT_WIDTH = 20;
 const WIDTH_BUFFER = 40;
 
 // 20px padding from viewport right edge
-const PADDING_RIGHT = 20;
+const PADDING_RIGHT = 2;
+
+const LINE_HEIGHT = 1.3;
 
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
@@ -119,30 +121,36 @@ export class TextTool extends BaseTool {
         this.createTextInput();
     }
 
-    commitTextShape(textValue, existingShape) {
+    commitTextShape(textContent, existingShape) {
         const { updateShape } = shapeSlice.getSlice();
 
-        const fontSize =
+        const appliedFontSize =
             existingShape?.properties?.fontSize?.value ||
-            this.properties.fontSize.value;
+            this.activeInputProperties.fontSize.value;
 
-        // span.offsetWidth measures only the exact visual width of the glyphs (no right-side margin),
-        // so the rendered text might visually "touch" the shape border.
-        // Adding (fontSize / 3) provides a small breathing space to avoid that tight look.
-        const finalWidth =
-            this.currentTextareaWidth ||
-            (this.span?.offsetWidth || MIN_TEXT_WIDTH) + fontSize / 3;
-        const finalHeight = this.textarea?.offsetHeight || fontSize * 1.3;
+        // Measure text width visually using span and add a small buffer for spacing
+        const measuredTextWidth =
+            (this.span?.offsetWidth || MIN_TEXT_WIDTH) + appliedFontSize / 3;
+
+        // Count the number of lines (newlines) entered by the user
+        const lineCount = textContent.split("\n").length;
+
+        // Compute final height based on number of lines and line height
+        const calculatedHeight = lineCount * appliedFontSize * LINE_HEIGHT;
 
         if (this.shapeId) {
             updateShape(this.shapeId, {
                 isEditing: false,
-                text: textValue,
-                width: finalWidth,
-                height: finalHeight,
+                text: textContent,
+                width: measuredTextWidth,
+                height: calculatedHeight,
             });
         } else {
-            this.addNewTextShape(textValue, finalWidth, finalHeight);
+            this.addNewTextShape(
+                textContent,
+                measuredTextWidth,
+                calculatedHeight
+            );
         }
     }
 
@@ -204,7 +212,7 @@ export class TextTool extends BaseTool {
             width = MIN_TEXT_WIDTH,
             properties = this.properties,
             fontSize = properties.fontSize.value,
-            minHeight = fontSize * 1.3,
+            minHeight = fontSize * LINE_HEIGHT,
             height = minHeight;
 
         if (existingShape) {
@@ -259,7 +267,7 @@ export class TextTool extends BaseTool {
             margin: 0;
             box-sizing: border-box;
             font-size: ${properties.fontSize.value}px;
-            line-height: 1.3;
+            line-height: ${LINE_HEIGHT};
             font-family: '${properties.fontFamily.value}';
             overflow: hidden;
             letter-spacing: 0.1px;
@@ -270,6 +278,14 @@ export class TextTool extends BaseTool {
 
     setupAutoGrow(point, minHeight, text, properties) {
         this.span = this.createHiddenSpan(text, properties);
+
+        if (text) {
+            // Defer size adjustment until textarea is rendered
+            setTimeout(
+                () => this.adjustTextareaSize(point, minHeight, properties),
+                0
+            );
+        }
 
         const adjustSize = () =>
             this.adjustTextareaSize(point, minHeight, properties);
