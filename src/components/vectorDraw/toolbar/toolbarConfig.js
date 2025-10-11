@@ -86,11 +86,6 @@ export const toolbarConfig = [
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
     },
     {
-        name: TOOLS.LASER_POINTER,
-        Icon: Highlighter,
-        action: TOOL_ACTION_TYPES.SELECT_TOOL,
-    },
-    {
         name: TOOLS.PAN,
         Icon: Hand,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
@@ -144,6 +139,11 @@ export const toolbarConfig = [
         Icon: Menu,
         useSelectedIcon: false,
         tools: [
+            {
+                name: TOOLS.LASER_POINTER,
+                Icon: Highlighter,
+                action: TOOL_ACTION_TYPES.SELECT_TOOL,
+            },
             {
                 name: "Settings",
                 Icon: Settings,

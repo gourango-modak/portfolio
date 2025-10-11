@@ -14,7 +14,8 @@ export const createToolbarSlice = (set, get) => ({
                 const { closeToolPropertiesPanel, openToolPropertiesPanel } =
                     get().panelSlice;
                 const { deselectAll, selectedShapeIds } = get().shapeSlice;
-                const { activeGroup, setActiveGroup } = get().toolbarSlice;
+                const { activeGroup, setActiveGroup, setGroupSelection } =
+                    get().toolbarSlice;
 
                 // Manage tool properties panel visibility
                 if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName)) {
@@ -30,6 +31,7 @@ export const createToolbarSlice = (set, get) => ({
 
                 // Close secondary toolbar if opened
                 if (activeGroup) {
+                    setGroupSelection(activeGroup, {});
                     setActiveGroup(null);
                 }
 

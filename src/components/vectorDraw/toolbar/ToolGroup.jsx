@@ -8,6 +8,7 @@ import {
     useIsActiveToolInGroup,
     useSelectedSubtoolForGroup,
 } from "../store/selectors/toolbarSelectors";
+import { isRegisteredTool } from "../tools/utils";
 
 export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     const [selectedSubtool, setSelectedSubtool] = useState(null);
@@ -41,8 +42,8 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     };
 
     const handleSubtoolClick = (subItem) => {
-        if (subItem.isTool) {
-            setSelectedSubtool(name);
+        if (isRegisteredTool(subItem.name)) {
+            setSelectedSubtool(subItem.name);
             setGroupSelection(group, subItem.name);
         }
 
