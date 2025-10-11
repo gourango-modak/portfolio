@@ -50,7 +50,7 @@ export class BaseTool {
     // Remove live path and cleanup
     cleanUp() {
         if (this.livePath) {
-            this.livePath.remove();
+            this.livePath?.remove?.();
             this.livePath = null;
         }
     }

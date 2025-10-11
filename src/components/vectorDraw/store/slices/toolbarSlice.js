@@ -13,7 +13,6 @@ export const createToolbarSlice = (set, get) => ({
             set(() => {
                 const { closeToolPropertiesPanel, openToolPropertiesPanel } =
                     get().panelSlice;
-                const { close } = get().textOverlaySlice;
                 const { deselectAll, selectedShapeIds } = get().shapeSlice;
                 const { activeGroup, setActiveGroup } = get().toolbarSlice;
 
@@ -27,11 +26,6 @@ export const createToolbarSlice = (set, get) => ({
                 // Deselect shapes if any are selected
                 if (selectedShapeIds.size > 0) {
                     deselectAll();
-                }
-
-                // Close text overlay if active tool is not TEXT
-                if (toolName !== TOOLS.TEXT) {
-                    close();
                 }
 
                 // Close secondary toolbar if opened

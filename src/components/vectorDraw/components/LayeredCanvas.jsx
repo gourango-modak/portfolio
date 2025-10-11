@@ -3,7 +3,6 @@ import { useToolShortcuts } from "../shortcuts/useToolShortcuts";
 import ContentLayer from "./ContentLayer";
 import InteractionOverlay from "./InteractionOverlay";
 import { useZoomPan } from "./../hooks/useZoomPan";
-import { TextInputOverlay } from "./TextInputOverlay";
 
 const LayeredCanvas = () => {
     useZoomPan();
@@ -15,7 +14,6 @@ const LayeredCanvas = () => {
         <>
             <ContentLayer />
             <InteractionOverlay />
-            <TextInputOverlay />
         </>
     );
 };

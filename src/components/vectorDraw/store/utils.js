@@ -10,7 +10,6 @@ const createSliceGetter = (sliceName) => ({
         useDrawingAppStore((state) => selectorFn(state[sliceName]), equalityFn),
 });
 
-export const textOverlaySlice = createSliceGetter("textOverlaySlice");
 export const shapeSlice = createSliceGetter("shapeSlice");
 export const panelSlice = createSliceGetter("panelSlice");
 export const colorPickerSlice = createSliceGetter("colorPickerSlice");

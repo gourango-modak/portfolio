@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { createTextOverlaySlice } from "./slices/textOverlaySlice";
 import { createShapeSlice } from "./slices/shapeSlice";
 import { createPanelSlice } from "./slices/panelSlice";
 import { createColorPickerSlice } from "./slices/colorPickerSlice";
@@ -9,7 +8,6 @@ import { createFrameSlice } from "./slices/frameSlice";
 import { createCommandHistorySlice } from "./slices/commandHistorySlice";
 
 export const useDrawingAppStore = create((set, get) => ({
-    ...createTextOverlaySlice(set, get),
     ...createShapeSlice(set, get),
     ...createPanelSlice(set, get),
     ...createColorPickerSlice(set, get),

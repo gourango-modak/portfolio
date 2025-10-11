@@ -1,12 +1,11 @@
 import { SHAPES } from "../constants";
 import { computeArrowBoundingBox } from "./arrowBoundingBox";
+import { computeBoundingBox } from "./defaultBoundingBox";
 import { computePenBoundingBox } from "./penBoundingBox";
-import { computeRectBoundingBox } from "./rectBoundingBox";
-import { computeTextBoundingBox } from "./textBoundingBox";
 
 export const shapeBoundingBoxHandlers = {
     [SHAPES.PEN]: computePenBoundingBox,
-    [SHAPES.RECTANGLE]: computeRectBoundingBox,
+    [SHAPES.RECTANGLE]: computeBoundingBox,
     [SHAPES.ARROW]: computeArrowBoundingBox,
-    [SHAPES.TEXT]: computeTextBoundingBox,
+    [SHAPES.TEXT]: computeBoundingBox,
 };

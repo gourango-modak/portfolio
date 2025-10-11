@@ -14,7 +14,7 @@ export function handleResizeSelection(
     const { x, y, width, height } = tool.originalBounds;
 
     // 1. Compute new bounding box + origin
-    const { newW, newH, origin } = computeResizedBoundingBox(
+    const { newX, newY, newW, newH, origin } = computeResizedBoundingBox(
         tool.activeHandle,
         { x, y, width, height },
         pointer
