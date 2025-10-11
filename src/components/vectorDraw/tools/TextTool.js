@@ -4,6 +4,7 @@ import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
+import { getScreenPoint } from "./utils";
 
 // Minimum width for an empty text field to ensure visibility.
 const MIN_TEXT_WIDTH = 20;
@@ -207,10 +208,15 @@ export class TextTool extends BaseTool {
             height = minHeight;
 
         if (existingShape) {
-            const startX = existingShape.x || 0;
+            const startX = existingShape.x;
+            const startY = existingShape.y;
 
             // Compute width based on existing shape and viewport
-            width = this.calculateTextareaWidth(0, startX, existingShape.width);
+            width = this.calculateTextareaWidth(
+                0,
+                { x: startX, y: startY },
+                existingShape.width
+            );
 
             // save the final applied width
             this.currentTextareaWidth = width;
@@ -307,7 +313,7 @@ export class TextTool extends BaseTool {
         // Compute final width using helper function
         const finalWidth = this.calculateTextareaWidth(
             measuredWidth,
-            point.x,
+            point,
             existingWidth
         );
         // save the final applied width
@@ -356,9 +362,17 @@ export class TextTool extends BaseTool {
     }
 
     // Helper function to calculate max allowed width for text input
-    calculateTextareaWidth(measuredTextWidth, startX, existingShapeWidth = 0) {
-        const viewportWidth = window.innerWidth;
-        const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
+    calculateTextareaWidth(measuredTextWidth, point, existingShapeWidth = 0) {
+        const canvasScale = canvasPropertiesSlice.getSlice().properties.scale;
+
+        // Convert canvas x to screen pixels
+        const screenPoint = getScreenPoint(point);
+
+        // Remaining viewport space in DOM pixels
+        const remainingSpace = Math.max(
+            (window.innerWidth - screenPoint.x - PADDING_RIGHT) / canvasScale,
+            MIN_TEXT_WIDTH
+        );
 
         // Adjust buffer dynamically so we don't exceed viewport
         const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
