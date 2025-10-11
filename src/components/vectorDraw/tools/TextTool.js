@@ -207,15 +207,10 @@ export class TextTool extends BaseTool {
             height = minHeight;
 
         if (existingShape) {
-            const viewportWidth = window.innerWidth;
             const startX = existingShape.x || 0;
-            const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
 
-            // Dynamically reduce buffer if near viewport edge
-            const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
-
-            // Compute initial width: never smaller than existing shape width
-            width = Math.min(existingShape.width + buffer, remainingSpace);
+            // Compute width based on existing shape and viewport
+            width = this.calculateTextareaWidth(0, startX, existingShape.width);
 
             // save the final applied width
             this.currentTextareaWidth = width;
@@ -304,24 +299,17 @@ export class TextTool extends BaseTool {
         this.span.textContent = this.textarea.value || " ";
         const measuredWidth = this.span.offsetWidth;
 
-        // Calculate remaining viewport space from current start X
-        const viewportWidth = window.innerWidth;
-        const startX = point.x;
-        const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
+        // Get existing shape width if editing
+        const existingWidth = this.shapeId
+            ? shapeSlice.getSlice().shapes[this.shapeId].width
+            : 0;
 
-        // Adjust buffer dynamically so we don't exceed viewport
-        const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
-
-        // Compute target width: max of existing shape width or measured text width + buffer
-        const baseWidth = Math.max(
-            this.shapeId
-                ? shapeSlice.getSlice().shapes[this.shapeId].width
-                : MIN_TEXT_WIDTH,
-            measuredWidth + buffer
+        // Compute final width using helper function
+        const finalWidth = this.calculateTextareaWidth(
+            measuredWidth,
+            point.x,
+            existingWidth
         );
-
-        // Clamp to max allowed width (cannot exceed viewport)
-        const finalWidth = Math.min(baseWidth, remainingSpace);
         // save the final applied width
         this.currentTextareaWidth = finalWidth;
 
@@ -365,5 +353,23 @@ export class TextTool extends BaseTool {
         const existing = shapes[hitId];
         this.createLivePath("foreignObject");
         this.createTextInput(existing);
+    }
+
+    // Helper function to calculate max allowed width for text input
+    calculateTextareaWidth(measuredTextWidth, startX, existingShapeWidth = 0) {
+        const viewportWidth = window.innerWidth;
+        const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
+
+        // Adjust buffer dynamically so we don't exceed viewport
+        const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
+
+        // Compute target width: max of existing shape width or measured text width + buffer
+        const baseWidth = Math.max(
+            existingShapeWidth || MIN_TEXT_WIDTH,
+            measuredTextWidth + buffer
+        );
+
+        // Clamp to max allowed width (cannot exceed viewport)
+        return Math.min(baseWidth, remainingSpace);
     }
 }
