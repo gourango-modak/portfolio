@@ -35,6 +35,14 @@ const InteractionOverlay = () => {
         () => (
             <>
                 <LiveDrawingLayer toolRef={toolRef} />
+            </>
+        ),
+        []
+    );
+
+    const children = useMemo(
+        () => (
+            <>
                 <SelectionOutlineLayer />
             </>
         ),
@@ -52,6 +60,7 @@ const InteractionOverlay = () => {
             onPointerUp={handlePointerUp}
         >
             <TransformLayer>{transformChildren}</TransformLayer>
+            {children}
         </svg>
     );
 };

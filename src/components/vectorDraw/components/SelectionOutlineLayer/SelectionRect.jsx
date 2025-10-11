@@ -1,20 +1,40 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
+import {
+    useCanvasPan,
+    useCanvasScale,
+} from "../../store/selectors/canvasPropertiesSelectors";
+import { toViewportPoint } from "../../utils/canvasUtils";
 import { HandleSquare } from "./HandleSquare.JSX";
 import { getBoundingBoxHandles } from "./utils";
 
 export const SelectionRect = ({ bounds, padding, showHandles, dashed }) => {
+    const scale = useCanvasScale();
+    const pan = useCanvasPan();
     const { x, y, width, height } = bounds;
-    const handles = showHandles ? getBoundingBoxHandles(bounds, padding) : null;
+    const handles = showHandles
+        ? getBoundingBoxHandles(bounds, padding, scale, pan)
+        : null;
+
+    const viewportPoint = toViewportPoint(
+        {
+            x: x - padding,
+            y: y - padding,
+        },
+        scale,
+        pan
+    );
+    const newWidth = (width + padding * 2) * scale;
+    const newHeight = (height + padding * 2) * scale;
 
     useRenderLogger("SelectionRect");
 
     return (
         <>
             <rect
-                x={x - padding}
-                y={y - padding}
-                width={width + padding * 2}
-                height={height + padding * 2}
+                x={viewportPoint.x}
+                y={viewportPoint.y}
+                width={newWidth}
+                height={newHeight}
                 fill="none"
                 stroke="#007AFF"
                 strokeWidth={1}

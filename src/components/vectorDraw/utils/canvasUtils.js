@@ -20,3 +20,17 @@ export const getTransformedEvent = (e) => {
         ty: (e.clientY - pan.y) / scale,
     };
 };
+
+export function toViewportPoint({ x, y }, scale, pan) {
+    if (!scale) {
+        scale = canvasPropertiesSlice.getSlice().properties.scale;
+    }
+    if (!pan) {
+        pan = canvasPropertiesSlice.getSlice().properties.pan;
+    }
+
+    return {
+        x: x * scale + pan.x,
+        y: y * scale + pan.y,
+    };
+}

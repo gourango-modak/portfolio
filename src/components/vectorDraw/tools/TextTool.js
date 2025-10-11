@@ -2,9 +2,9 @@ import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { toViewportPoint } from "../utils/canvasUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
-import { getScreenPoint } from "./utils";
 
 // Minimum width for an empty text field to ensure visibility.
 const MIN_TEXT_WIDTH = 20;
@@ -382,12 +382,12 @@ export class TextTool extends BaseTool {
     calculateTextareaWidth(measuredTextWidth, point, existingShapeWidth = 0) {
         const canvasScale = canvasPropertiesSlice.getSlice().properties.scale;
 
-        // Convert canvas x to screen pixels
-        const screenPoint = getScreenPoint(point);
+        // Convert canvas to viewport point
+        const viewportPoint = toViewportPoint(point);
 
         // Remaining viewport space in DOM pixels
         const remainingSpace = Math.max(
-            (window.innerWidth - screenPoint.x - PADDING_RIGHT) / canvasScale,
+            (window.innerWidth - viewportPoint.x - PADDING_RIGHT) / canvasScale,
             MIN_TEXT_WIDTH
         );
 

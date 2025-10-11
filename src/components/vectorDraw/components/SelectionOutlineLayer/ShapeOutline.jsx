@@ -1,18 +1,24 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { SHAPES } from "../../shapes/constants";
 import { computeShapeBoundingBox } from "../../shapes/utils";
+import {
+    useCanvasPan,
+    useCanvasScale,
+} from "../../store/selectors/canvasPropertiesSelectors";
 import { SELECTION_RECT_PADDING } from "./constants";
 import { HandleCircle } from "./HandleCircle";
 import { SelectionRect } from "./SelectionRect";
 import { getLineSegmentHandles } from "./utils";
 
 export const ShapeOutline = ({ shape, multipleSelected }) => {
+    const scale = useCanvasScale();
+    const pan = useCanvasPan();
     const { type } = shape;
 
     useRenderLogger("ShapeOutline");
 
     if (type === SHAPES.ARROW && !multipleSelected) {
-        const handles = getLineSegmentHandles(shape);
+        const handles = getLineSegmentHandles(shape, scale, pan);
         return (
             <>
                 {Object.entries(handles).map(([key, h]) => (
