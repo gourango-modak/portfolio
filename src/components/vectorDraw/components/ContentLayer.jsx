@@ -1,7 +1,7 @@
 import TransformLayer from "./TransformLayer";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { FrameLayer } from "./FrameLayer";
-import ShapeLayer from "./ShapeLayer";
+import { ShapeLayer } from "./ShapeLayer";
 import { useMemo } from "react";
 import { useCanvasBgColor } from "../store/selectors/canvasPropertiesSelectors";
 
@@ -9,10 +9,10 @@ const ContentLayer = () => {
     const canvasBgColor = useCanvasBgColor();
     const transformChildren = useMemo(
         () => (
-            <>
+            <g id="frame-content">
                 <FrameLayer />
                 <ShapeLayer />
-            </>
+            </g>
         ),
         []
     );
@@ -25,6 +25,7 @@ const ContentLayer = () => {
                 background: canvasBgColor,
             }}
             className="canvas"
+            id="svg-canvas"
         >
             <TransformLayer>{transformChildren}</TransformLayer>
         </svg>

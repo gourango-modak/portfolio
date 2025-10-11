@@ -144,6 +144,12 @@ export const createFrameSlice = (set, get) => ({
         hasPrevFrame: (frameId) =>
             get().frameSlice.frameOrder.indexOf(frameId) > 0,
 
+        getActiveFrame: () => {
+            const state = get().frameSlice;
+            if (!state.activeFrameId) return null; // no active frame
+            return state.frames[state.activeFrameId] || null;
+        },
+
         serialize: () => {
             const { frames, frameOrder, activeFrameId, frameTemplate } =
                 get().frameSlice;

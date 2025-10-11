@@ -9,6 +9,7 @@ import {
     useSelectedSubtoolForGroup,
 } from "../store/selectors/toolbarSelectors";
 import { isRegisteredTool } from "../tools/utils";
+import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
 
 export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     const [selectedSubtool, setSelectedSubtool] = useState(null);
@@ -16,6 +17,7 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
 
     const { group, tools, Icon, useSelectedIcon } = item;
 
+    const canvasMode = useCanvasMode();
     const activeGroup = useActiveGroup();
     const rememberedSubtool = useSelectedSubtoolForGroup(group);
     const isGroupActive = useIsActiveToolInGroup(tools);
@@ -58,8 +60,13 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
 
     useRenderLogger("ToolGroup");
 
+    const shouldShow = item?.visible?.({ canvasMode }) ?? true;
+
     return (
-        <div className="relative" ref={groupRef}>
+        <div
+            ref={groupRef}
+            className={`relative ${shouldShow ? "" : "hidden"}`}
+        >
             <ToolButton
                 item={groupItem}
                 isSelected={isGroupActive}

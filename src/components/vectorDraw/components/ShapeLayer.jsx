@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
+import { memo, useMemo } from "react";
 import Shape from "./Shape";
 import { useRenderLogger } from "../hooks/useRenderLogger";
 import { shapeSlice } from "../store/utils";
 import { useActiveFrameId } from "../store/selectors/frameSelectors";
 import { useShapeOrder } from "../store/selectors/shapeSelectors";
 
-const ShapeLayer = () => {
+export const ShapeLayer = memo(() => {
     const shapeOrder = useShapeOrder();
     const activeFrameId = useActiveFrameId();
 
@@ -25,6 +25,4 @@ const ShapeLayer = () => {
             ))}
         </g>
     );
-};
-
-export default React.memo(ShapeLayer);
+});

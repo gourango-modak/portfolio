@@ -12,6 +12,7 @@ import {
     shapeSlice,
     toolbarSlice,
 } from "../store/utils";
+import { exportFrameToImage, exportCanvasToImage } from "../utils/canvasUtils";
 import { INSPECTOR_PANEL_TARGETS } from "./properties/constants";
 import { TOOL_ACTION_TYPES } from "./toolbarConfig";
 
@@ -44,5 +45,14 @@ export const toolActionHandlers = {
     },
     [TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN]: () => {
         canvasPropertiesSlice.getSlice().resetViewport();
+    },
+    [TOOL_ACTION_TYPES.EXPORT_CURRENT_PAGE_TO_IMAGE]: () => {
+        const content = document.getElementById("frame-content");
+        const frame = frameSlice.getSlice().getActiveFrame();
+        exportFrameToImage({ content, frame, dpiScale: 1 });
+    },
+    [TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE]: () => {
+        const svgElement = document.getElementById("svg-canvas");
+        exportCanvasToImage({ svgElement, dpiScale: 2 });
     },
 };

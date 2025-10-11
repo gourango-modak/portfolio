@@ -15,3 +15,6 @@ export const PANELS = {
     TOOL_PROPERTIES_PANEL: "toolPropertiesPanel",
     TOOLBAR_PANEL: "toolbarPanel",
 };
+
+// 300% scale for high resolution export image
+export const DPI_SCALE = 3;

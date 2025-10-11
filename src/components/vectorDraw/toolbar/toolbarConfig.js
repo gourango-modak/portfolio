@@ -14,6 +14,7 @@ import {
     MousePointer,
     PenIcon,
     RotateCcw,
+    Save,
     Settings,
     Square,
     StickyNote,
@@ -37,6 +38,8 @@ export const TOOL_ACTION_TYPES = {
     EXPORT_DRAWING_STATE: "EXPORT_DRAWING_STATE",
     CLEAR_CANVAS: "CLEAR_CANVAS",
     RESET_ZOOM_AND_PAN: "RESET_ZOOM_AND_PAN",
+    EXPORT_CURRENT_PAGE_TO_IMAGE: "EXPORT_CURRENT_PAGE_TO_IMAGE",
+    EXPORT_CANVAS_TO_IMAGE: "EXPORT_CANVAS_TO_IMAGE",
 };
 
 // -------------------- HELPER FUNCTIONS --------------------
@@ -117,6 +120,12 @@ export const toolbarConfig = [
                 panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
             },
             {
+                name: "Export Current Page",
+                Icon: Save,
+                action: TOOL_ACTION_TYPES.EXPORT_CURRENT_PAGE_TO_IMAGE,
+                visible: hasFrameAndPaged,
+            },
+            {
                 name: "Go To Previous Page",
                 Icon: ChevronLeft,
                 action: TOOL_ACTION_TYPES.PREV_PAGE,
@@ -131,6 +140,7 @@ export const toolbarConfig = [
                 disable: (props) => !canGoNext(props),
             },
         ],
+        visible: isPagedCanvas,
     },
 
     // Other Tools
@@ -169,6 +179,12 @@ export const toolbarConfig = [
                 name: "Reset Viewport",
                 Icon: RotateCcw,
                 action: TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN,
+            },
+            {
+                name: "Export Image",
+                Icon: Save,
+                action: TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE,
+                visible: isInfiniteCanvas,
             },
         ],
     },
