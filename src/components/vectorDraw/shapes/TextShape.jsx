@@ -32,6 +32,7 @@ export const TextShape = ({ shape }) => {
                     userSelect: "none",
                     whiteSpace: "pre-wrap",
                     letterSpacing: "0.1px",
+                    wordBreak: "break-word",
                 }}
             >
                 {text}

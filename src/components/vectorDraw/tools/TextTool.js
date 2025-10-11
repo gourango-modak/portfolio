@@ -11,6 +11,9 @@ const MIN_TEXT_WIDTH = 20;
 // Extra buffer space to prevent premature line wrapping. // Without this, the next character typed could wrap too early // because span.offsetWidth measures text tightly (no right padding). // This value depends on the font used — 40px is a safe average.
 const WIDTH_BUFFER = 40;
 
+// 20px padding from viewport right edge
+const PADDING_RIGHT = 20;
+
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
     static label = "Text Tool";
@@ -47,6 +50,9 @@ export class TextTool extends BaseTool {
 
         // snapshot of props used for current text input
         this.activeInputProperties = null;
+
+        // store the actual width used
+        this.currentTextareaWidth = null;
     }
 
     onPointerDown(e) {
@@ -122,19 +128,20 @@ export class TextTool extends BaseTool {
         // span.offsetWidth measures only the exact visual width of the glyphs (no right-side margin),
         // so the rendered text might visually "touch" the shape border.
         // Adding (fontSize / 3) provides a small breathing space to avoid that tight look.
-        const newWidth =
+        const finalWidth =
+            this.currentTextareaWidth ||
             (this.span?.offsetWidth || MIN_TEXT_WIDTH) + fontSize / 3;
-        const newHeight = this.textarea?.offsetHeight || fontSize * 1.3;
+        const finalHeight = this.textarea?.offsetHeight || fontSize * 1.3;
 
         if (this.shapeId) {
             updateShape(this.shapeId, {
                 isEditing: false,
                 text: textValue,
-                width: newWidth,
-                height: newHeight,
+                width: finalWidth,
+                height: finalHeight,
             });
         } else {
-            this.addNewTextShape(textValue, newWidth, newHeight);
+            this.addNewTextShape(textValue, finalWidth, finalHeight);
         }
     }
 
@@ -162,6 +169,8 @@ export class TextTool extends BaseTool {
     }
 
     cleanUpTextInput() {
+        this.currentTextareaWidth = null;
+        this.activeInputProperties = null;
         // remove DOM elements and reset local state (but NOT pendingPointer — it's handled separately)
         this.span?.remove?.();
         this.span = null;
@@ -181,7 +190,7 @@ export class TextTool extends BaseTool {
         this.setLivePathAttributes(point, width, height);
 
         this.textarea = this.createTextarea(width, height, text, properties);
-        this.setupAutoGrow(minHeight, text, properties);
+        this.setupAutoGrow(point, minHeight, text, properties);
 
         this.livePath.appendChild(this.textarea);
         setTimeout(() => this.textarea.focus(), 0);
@@ -198,9 +207,21 @@ export class TextTool extends BaseTool {
             height = minHeight;
 
         if (existingShape) {
+            const viewportWidth = window.innerWidth;
+            const startX = existingShape.x || 0;
+            const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
+
+            // Dynamically reduce buffer if near viewport edge
+            const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
+
+            // Compute initial width: never smaller than existing shape width
+            width = Math.min(existingShape.width + buffer, remainingSpace);
+
+            // save the final applied width
+            this.currentTextareaWidth = width;
+
             text = existingShape.text;
             point = { x: existingShape.x, y: existingShape.y };
-            width = existingShape.width + WIDTH_BUFFER;
             height = existingShape.height;
             properties = existingShape.properties;
         }
@@ -241,14 +262,16 @@ export class TextTool extends BaseTool {
             font-family: '${properties.fontFamily.value}';
             overflow: hidden;
             letter-spacing: 0.1px;
+            word-break: break-word;
         `;
         return textarea;
     }
 
-    setupAutoGrow(minHeight, text, properties) {
+    setupAutoGrow(point, minHeight, text, properties) {
         this.span = this.createHiddenSpan(text, properties);
 
-        const adjustSize = () => this.adjustTextareaSize(minHeight, properties);
+        const adjustSize = () =>
+            this.adjustTextareaSize(point, minHeight, properties);
         const commitOnBlur = () => this.handleBlurCommit();
 
         this.textarea.addEventListener("input", adjustSize);
@@ -259,7 +282,7 @@ export class TextTool extends BaseTool {
         const span = document.createElement("span");
         Object.assign(span.style, {
             visibility: "hidden",
-            position: "absolute",
+            position: "fixed",
             whiteSpace: "pre",
             fontFamily: properties.fontFamily.value,
             fontSize: `${properties.fontSize.value}px`,
@@ -269,18 +292,42 @@ export class TextTool extends BaseTool {
         return span;
     }
 
-    adjustTextareaSize(minHeight, properties) {
+    adjustTextareaSize(point, minHeight, properties) {
         if (!this.textarea) return;
         this.textarea.style.height = "auto";
         const newHeight = Math.max(this.textarea.scrollHeight, minHeight);
         this.textarea.style.height = `${newHeight}px`;
         this.livePath.setAttribute("height", newHeight);
 
+        // Update span to measure text width
         this.span.style.fontSize = `${properties.fontSize.value}px`;
         this.span.textContent = this.textarea.value || " ";
-        const newWidth = this.span.offsetWidth + WIDTH_BUFFER;
-        this.textarea.style.width = `${newWidth}px`;
-        this.livePath.setAttribute("width", newWidth);
+        const measuredWidth = this.span.offsetWidth;
+
+        // Calculate remaining viewport space from current start X
+        const viewportWidth = window.innerWidth;
+        const startX = point.x;
+        const remainingSpace = viewportWidth - startX - PADDING_RIGHT;
+
+        // Adjust buffer dynamically so we don't exceed viewport
+        const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
+
+        // Compute target width: max of existing shape width or measured text width + buffer
+        const baseWidth = Math.max(
+            this.shapeId
+                ? shapeSlice.getSlice().shapes[this.shapeId].width
+                : MIN_TEXT_WIDTH,
+            measuredWidth + buffer
+        );
+
+        // Clamp to max allowed width (cannot exceed viewport)
+        const finalWidth = Math.min(baseWidth, remainingSpace);
+        // save the final applied width
+        this.currentTextareaWidth = finalWidth;
+
+        // Apply
+        this.textarea.style.width = `${finalWidth}px`;
+        this.livePath.setAttribute("width", finalWidth);
     }
 
     handleBlurCommit() {
