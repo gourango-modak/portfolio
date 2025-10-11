@@ -44,6 +44,9 @@ export class TextTool extends BaseTool {
         // When user clicks while a textarea is active, we store that click here
         // so blur can consume it and create the next input at that location.
         this.pendingPointer = null;
+
+        // snapshot of props used for current text input
+        this.activeInputProperties = null;
     }
 
     onPointerDown(e) {
@@ -148,7 +151,7 @@ export class TextTool extends BaseTool {
             text: textValue,
             width,
             height,
-            properties: { ...this.properties },
+            properties: { ...this.activeInputProperties },
         };
 
         if (canvasMode === CANVAS_MODES.PAGED) {
@@ -172,6 +175,8 @@ export class TextTool extends BaseTool {
     createTextInput(existingShape) {
         const { text, point, width, height, properties, minHeight } =
             this.getTextInputInitialState(existingShape);
+
+        this.activeInputProperties = properties;
 
         this.setLivePathAttributes(point, width, height);
 
