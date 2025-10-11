@@ -1,14 +1,26 @@
 import { generateId } from "../../../../utils/common";
 
+// Margin from the viewport edges to determine initial frame size
+const viewportMarginX = 100;
+const viewportMarginY = 100;
+
 const initialFrameState = {
     frames: {},
     frameOrder: [],
     activeFrameId: null,
     frameTemplate: {
-        width: { value: window.innerWidth, label: "Width", type: "numeric" },
-        height: { value: window.innerHeight, label: "Height", type: "numeric" },
+        width: {
+            value: window.innerWidth - viewportMarginX,
+            label: "Width",
+            type: "numeric",
+        },
+        height: {
+            value: window.innerHeight - viewportMarginY,
+            label: "Height",
+            type: "numeric",
+        },
         bgColor: {
-            value: "#ffffff",
+            value: "#f07971",
             label: "Frame Background",
             type: "color",
             id: "frameColor",
@@ -66,6 +78,11 @@ export const createFrameSlice = (set, get) => ({
                         frames: { ...state.frameSlice.frames, [id]: newFrame },
                         frameOrder: [...state.frameSlice.frameOrder, id],
                         activeFrameId: id,
+                    },
+                    shapeSlice: {
+                        ...get().shapeSlice,
+                        selectedShapeIds: new Set(),
+                        selectedShapesBounds: null,
                     },
                 };
             }),

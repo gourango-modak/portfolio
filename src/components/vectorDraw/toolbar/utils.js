@@ -11,7 +11,7 @@ export const getToolbarPanelInitialPosition = ({ orientation }) => {
 
     if (orientation === ORIENTATION.HORIZONTAL) {
         x = (window.innerWidth - rect.width) / 2;
-        y = window.innerHeight - rect.height - 64;
+        y = window.innerHeight - rect.height - 40;
     } else {
         x = 40;
         y = (window.innerHeight - rect.height) / 2;
