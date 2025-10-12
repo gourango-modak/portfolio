@@ -3,9 +3,22 @@ import { BREADCRUMB_MAX_LENGTH } from "../config";
 export const generateId = () => Date.now() + Math.floor(Math.random() * 1000);
 
 export const downloadJson = (data, fileName) => {
-    const jsonString = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+    });
+    downloadFile(blob, fileName);
+};
+
+export const downloadFile = (data, fileName) => {
+    let url;
+
+    if (data instanceof Blob) {
+        url = URL.createObjectURL(data);
+    } else if (typeof data === "string") {
+        url = data; // assume already a URL (data URL or external URL)
+    } else {
+        throw new Error("Invalid data type for download");
+    }
 
     const a = document.createElement("a");
     a.href = url;
@@ -13,7 +26,9 @@ export const downloadJson = (data, fileName) => {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+    // Revoke only if we created the object URL
+    if (data instanceof Blob) URL.revokeObjectURL(url);
 };
 
 export const importJsonFile = (onJsonLoaded) => {

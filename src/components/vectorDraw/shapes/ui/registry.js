@@ -1,5 +1,5 @@
 import { ArrowShape } from "./ArrowShape";
-import { SHAPES } from "./constants";
+import { SHAPES } from "../constants";
 import { PenShape } from "./PenShape";
 import { RectShape } from "./RectShape";
 import { TextShape } from "./TextShape";

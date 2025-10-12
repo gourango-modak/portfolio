@@ -1,5 +1,17 @@
-import { canvasPropertiesSlice } from "../store/utils";
-import { CAVEAT_FONT_CSS } from "./../fonts/caveatFont";
+import { canvasPropertiesSlice } from "../../store/utils";
+import { CAVEAT_FONT_CSS } from "./../../fonts/caveatFont";
+
+export const exportSvgToImage = async (
+    element,
+    { x = 0, y = 0, width, height }
+) => {
+    const { canvas, ctx } = createExportCanvas(width, height);
+    const svg = await prepareSvgForExport(element, { x, y, width, height });
+    const svgDataUrl = svgToDataUrl(svg);
+
+    await drawSvgOnCanvas(ctx, svgDataUrl, width, height);
+    return canvas.toDataURL("image/png");
+};
 
 const parseInlineStyles = (styleString) => {
     const styleMap = {};
@@ -99,7 +111,7 @@ const createExportCanvas = (width, height) => {
     return { canvas, ctx };
 };
 
-export const prepareSvgForExport = async (
+const prepareSvgForExport = async (
     element,
     { x = 0, y = 0, width, height }
 ) => {
@@ -133,108 +145,5 @@ const drawSvgOnCanvas = (ctx, svgDataUrl, canvasWidth, canvasHeight) => {
         };
         img.onerror = reject;
         img.src = svgDataUrl;
-    });
-};
-
-const downloadCanvasAsPng = (canvas, fileName = "export.png") => {
-    const pngUrl = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.download = fileName;
-    link.href = pngUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-};
-
-const exportSvgToImage = async (
-    element,
-    { x = 0, y = 0, width, height, fileName = "export.png" }
-) => {
-    const { canvas, ctx } = createExportCanvas(width, height);
-    const svg = await prepareSvgForExport(element, { x, y, width, height });
-    const svgDataUrl = svgToDataUrl(svg);
-
-    await drawSvgOnCanvas(ctx, svgDataUrl, width, height);
-    downloadCanvasAsPng(canvas, fileName);
-};
-
-const getScaledBox = (bbox, scale = 1, padding = 0) => {
-    const scaledX = bbox.x * scale;
-    const scaledY = bbox.y * scale;
-    const scaledWidth = bbox.width * scale;
-    const scaledHeight = bbox.height * scale;
-
-    return {
-        x: scaledX - padding,
-        y: scaledY - padding,
-        width: scaledWidth + padding * 2,
-        height: scaledHeight + padding * 2,
-    };
-};
-
-const wrapElementWithScale = (element, scale = 1) => {
-    if (scale === 1) return element.cloneNode(true); // no need to wrap
-
-    const wrapper = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    wrapper.setAttribute("transform", `scale(${scale})`);
-    wrapper.appendChild(element.cloneNode(true));
-    return wrapper;
-};
-
-const exportElementToImage = async ({
-    element,
-    bbox,
-    fileName,
-    padding = 0,
-    scale = 1,
-}) => {
-    const elementToExport = wrapElementWithScale(element, scale);
-    const box = getScaledBox(bbox, scale, padding);
-
-    await exportSvgToImage(elementToExport, {
-        x: box.x,
-        y: box.y,
-        width: box.width,
-        height: box.height,
-        fileName,
-    });
-};
-
-export const exportFrameToImage = async ({ element, frame, scale = 1 }) => {
-    const {
-        x,
-        y,
-        width: { value: frameWidth },
-        height: { value: frameHeight },
-    } = frame;
-    const bbox = {
-        x: x.value,
-        y: y.value,
-        width: frameWidth,
-        height: frameHeight,
-    };
-
-    await exportElementToImage({
-        element,
-        bbox,
-        fileName: `${frame.id || "frame"}.png`,
-        scale,
-    });
-};
-
-export const exportCanvasToImage = async ({
-    element,
-    fileName = "canvas.png",
-    padding = 50,
-    scale = 1,
-}) => {
-    const bbox = element.getBBox();
-
-    await exportElementToImage({
-        element,
-        bbox,
-        fileName,
-        padding,
-        scale,
     });
 };

@@ -1,5 +1,5 @@
 import getStroke from "perfect-freehand";
-import { getSvgPathFromStroke } from "../utils/svgUtils";
+import { getSvgPathFromStroke } from "../../utils/svgUtils";
 
 export const PenShape = ({ shape }) => {
     const {
