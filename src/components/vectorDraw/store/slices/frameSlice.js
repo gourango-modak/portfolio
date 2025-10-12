@@ -20,7 +20,7 @@ const initialFrameState = {
             type: "numeric",
         },
         bgColor: {
-            value: "#f07971",
+            value: "#fff",
             label: "Frame Background",
             type: "color",
             id: "frameColor",

@@ -31,7 +31,7 @@ export class TextTool extends BaseTool {
             id: "textColor",
         },
         fontSize: {
-            value: 32,
+            value: 48,
             label: "Font Size",
             type: "slider",
             min: 12,
@@ -271,7 +271,7 @@ export class TextTool extends BaseTool {
             line-height: ${LINE_HEIGHT};
             font-family: '${properties.fontFamily.value}';
             overflow: hidden;
-            letter-spacing: 0.1px;
+            letter-spacing: 0.00000001px;
             word-break: break-word;
         `;
         return textarea;
