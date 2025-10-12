@@ -1,4 +1,5 @@
 import { DPI_SCALE } from "../constants";
+import { canvasPropertiesSlice } from "../store/utils";
 import { CAVEAT_FONT_CSS } from "./../fonts/caveatFont";
 
 const parseInlineStyles = (styleString) => {
@@ -119,7 +120,7 @@ export const prepareSvgForExport = async (
     }
 
     convertForeignObjectsToText(svg);
-    // document.body.appendChild(svg);
+    document.body.appendChild(svg);
 
     return svg;
 };
@@ -184,16 +185,19 @@ export const exportFrameToImage = async ({
     dpiScale = DPI_SCALE,
 }) => {
     const {
-        x: { value: left },
-        y: { value: top },
         width: { value: frameWidth },
         height: { value: frameHeight },
     } = frame;
+
+    const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
+    const scaledFrameWidth = frameWidth * scale;
+    const scaledFrameHeight = frameHeight * scale;
+
     await exportSvgToImage(content, {
-        x: left,
-        y: top,
-        width: frameWidth,
-        height: frameHeight,
+        x: pan.x,
+        y: pan.y,
+        width: scaledFrameWidth,
+        height: scaledFrameHeight,
         dpiScale,
         fileName: `${frame.id || "frame"}.png`,
     });

@@ -20,7 +20,11 @@ const TransformLayer = memo(({ children }) => {
 
     useRenderLogger("TransformLayer");
 
-    return <g ref={transformRef}>{children}</g>;
+    return (
+        <g ref={transformRef} id="frame-content">
+            {children}
+        </g>
+    );
 });
 
 export default TransformLayer;

@@ -9,10 +9,10 @@ const ContentLayer = () => {
     const canvasBgColor = useCanvasBgColor();
     const transformChildren = useMemo(
         () => (
-            <g id="frame-content">
+            <>
                 <FrameLayer />
                 <ShapeLayer />
-            </g>
+            </>
         ),
         []
     );
