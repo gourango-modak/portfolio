@@ -1,4 +1,5 @@
 import { computeShapesBoundingBox } from "../../../../shapes/utils";
+import { computeFramesBoundingBox } from "../../../../tools/utils";
 import { COMMANDS } from "../constants";
 
 export const undoHandlers = {
@@ -83,6 +84,60 @@ export const undoHandlers = {
                     ...s.shapeSlice,
                     shapes: newShapes,
                     shapeOrder: newOrder,
+                },
+            };
+        }),
+
+    [COMMANDS.UPDATE_FRAMES]: (set, cmd) =>
+        set((s) => {
+            const { frames, selectedFrameIds, selectedFramesBounds } =
+                s.frameSlice;
+            const newFrames = { ...frames };
+            for (const id in cmd.prevProps) {
+                const frame = newFrames[id];
+                if (!frame) continue;
+                newFrames[id] = {
+                    ...frame,
+                    ...cmd.prevProps[id],
+                    version: (frame.version || 0) + 1,
+                };
+            }
+
+            const newBounds = selectedFrameIds.size
+                ? computeFramesBoundingBox(selectedFrameIds, newFrames)
+                : selectedFramesBounds;
+
+            return {
+                frameSlice: {
+                    ...s.frameSlice,
+                    frames: newFrames,
+                    selectedFramesBounds: newBounds,
+                },
+            };
+        }),
+
+    [COMMANDS.ADD_FRAME]: (set, cmd) =>
+        set((s) => {
+            // Remove the added frame
+            const { [cmd.frame.id]: _, ...rest } = s.frameSlice.frames;
+
+            // Remove from selected frames if it was selected
+            const newSel = new Set(s.frameSlice.selectedFrameIds);
+            newSel.delete(cmd.frame.id);
+
+            // Recompute selected frames bounding box
+            const newBounds =
+                newSel.size > 0 ? computeFramesBoundingBox(newSel, rest) : null;
+
+            return {
+                frameSlice: {
+                    ...s.frameSlice,
+                    frames: rest,
+                    frameOrder: s.frameSlice.frameOrder.filter(
+                        (id) => id !== cmd.frame.id
+                    ),
+                    selectedFrameIds: newSel,
+                    selectedFramesBounds: newBounds,
                 },
             };
         }),

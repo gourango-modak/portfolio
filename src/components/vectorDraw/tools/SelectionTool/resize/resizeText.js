@@ -1,4 +1,4 @@
-export const resizeText = ({ shape, scaleX, scaleY, pivot }) => {
+export const resizeText = ({ object: shape, scaleX, scaleY, pivot }) => {
     // Compute a uniform scale (average or min to maintain proportionality)
     const uniformScale = (scaleX + scaleY) / 2;
 

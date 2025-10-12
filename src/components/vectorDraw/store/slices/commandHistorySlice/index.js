@@ -5,34 +5,41 @@ export const createCommandHistorySlice = (set, get) => ({
     commandHistorySlice: {
         undoStack: [],
         redoStack: [],
-        currentCommand: null,
+        currentCommands: {}, // key = commandType, value = command data
 
+        // Begin a command of a specific type
         beginCommand: (type, data) =>
-            set((s) => {
-                return {
-                    commandHistorySlice: {
-                        ...s.commandHistorySlice,
-                        currentCommand: { type, ...data },
-                    },
-                };
-            }),
-
-        finalizeCommand: (data) => {
-            const { currentCommand } = get().commandHistorySlice;
-            if (!currentCommand) return;
-
-            const finalCommand = { ...currentCommand, ...data };
             set((s) => ({
                 commandHistorySlice: {
                     ...s.commandHistorySlice,
-                    currentCommand: null,
-                    undoStack: [
-                        ...s.commandHistorySlice.undoStack,
-                        finalCommand,
-                    ],
-                    redoStack: [],
+                    currentCommands: {
+                        ...s.commandHistorySlice.currentCommands,
+                        [type]: { type, ...data },
+                    },
                 },
-            }));
+            })),
+
+        // Finalize a command of a specific type
+        finalizeCommand: (type, data) => {
+            const current = get().commandHistorySlice.currentCommands[type];
+            if (!current) return;
+
+            const finalCommand = { ...current, ...data };
+
+            set((s) => {
+                const { currentCommands, undoStack } = s.commandHistorySlice;
+                const newCurrentCommands = { ...currentCommands };
+                delete newCurrentCommands[type];
+
+                return {
+                    commandHistorySlice: {
+                        ...s.commandHistorySlice,
+                        currentCommands: newCurrentCommands,
+                        undoStack: [...undoStack, finalCommand],
+                        redoStack: [],
+                    },
+                };
+            });
         },
 
         executeCommand: (command) => {

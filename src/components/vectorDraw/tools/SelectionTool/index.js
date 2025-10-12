@@ -1,4 +1,4 @@
-import { shapeSlice } from "../../store/utils";
+import { frameSlice, shapeSlice } from "../../store/utils";
 import { BaseTool } from "../BaseTool";
 import { SELECTION_MODE, TOOLS } from "../constants";
 import { clearSelection } from "./interactions/clearSelection";
@@ -12,6 +12,8 @@ import { handleDragSelection } from "./interactions/handleDragSelection";
 import { finalizeResizeSelection } from "./interactions/finalizeResizeSelection";
 import { finalizeMoveSelection } from "./interactions/finalizeMoveSelection";
 import { finalizeDragSelection } from "./interactions/finalizeDragSelection";
+import { trySelectFrame } from "./interactions/trySelectFrame";
+import { COMMANDS } from "../../store/slices/commandHistorySlice/constants";
 
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
@@ -52,8 +54,12 @@ export class SelectionTool extends BaseTool {
 
         this.resizing = false;
         this.activeHandle = null;
-        this.originalBounds = null;
+
+        this.originalShapeBounds = null;
         this.originalShapes = null;
+
+        this.originalFrameBounds = null;
+        this.originalFrames = null;
     }
 
     onPointerDown(e) {
@@ -63,10 +69,27 @@ export class SelectionTool extends BaseTool {
 
         const { selectedShapesBounds, selectedShapeIds, getShapes } =
             shapeSlice.getSlice();
-
         const shapes = getShapes();
+        const { frames, selectedFrameIds, selectedFramesBounds } =
+            frameSlice.getSlice();
 
-        tryStartResize(this, e, selectedShapesBounds, selectedShapeIds, shapes);
+        tryStartResize(
+            this,
+            e,
+            selectedShapesBounds,
+            selectedShapeIds,
+            shapes,
+            "SHAPES"
+        );
+        tryStartResize(
+            this,
+            e,
+            selectedFramesBounds,
+            selectedFrameIds,
+            frames,
+            "FRAMES"
+        );
+        trySelectFrame(this, pointer, selectedFrameIds, frames);
         trySelectShape(this, pointer, selectedShapeIds, shapes);
         tryStartMove(
             this,
@@ -86,13 +109,16 @@ export class SelectionTool extends BaseTool {
             selectedShapesBounds,
             updateShape,
         } = shapeSlice.getSlice();
-
         const shapes = getShapes();
+
+        const { frames, selectedFrameIds, updateFrame, selectedFramesBounds } =
+            frameSlice.getSlice();
 
         updateSelectionCursor(
             this,
             pointer,
             shapes,
+            frames,
             selectedShapeIds,
             selectedShapesBounds
         );
@@ -103,15 +129,29 @@ export class SelectionTool extends BaseTool {
             this,
             pointer,
             selectedShapeIds,
+            this.originalShapes,
+            this.originalShapeBounds,
             selectedShapesBounds,
             updateShape
+        );
+        handleResizeSelection(
+            this,
+            pointer,
+            selectedFrameIds,
+            this.originalFrames,
+            this.originalFrameBounds,
+            selectedFramesBounds,
+            updateFrame
         );
         handleMoveSelection(
             this,
             pointer,
             shapes,
             selectedShapeIds,
-            updateShape
+            updateShape,
+            frames,
+            selectedFrameIds,
+            updateFrame
         );
         handleDragSelection(this, pointer);
         this.lastPointer = pointer;
@@ -120,11 +160,34 @@ export class SelectionTool extends BaseTool {
     onPointerUp(e) {
         const { getShapes, selectedShapeIds, deselectAll, selectShape } =
             shapeSlice.getSlice();
-
         const shapes = getShapes();
 
-        finalizeResizeSelection(this, selectedShapeIds, shapes);
-        finalizeMoveSelection(this, selectedShapeIds, shapes);
+        const { frames, selectedFrameIds } = frameSlice.getSlice();
+
+        finalizeResizeSelection(
+            this,
+            selectedShapeIds,
+            shapes,
+            COMMANDS.UPDATE_SHAPES
+        );
+        finalizeResizeSelection(
+            this,
+            selectedFrameIds,
+            frames,
+            COMMANDS.UPDATE_FRAMES
+        );
+        finalizeMoveSelection(
+            this,
+            selectedShapeIds,
+            shapes,
+            COMMANDS.UPDATE_SHAPES
+        );
+        finalizeMoveSelection(
+            this,
+            selectedFrameIds,
+            frames,
+            COMMANDS.UPDATE_FRAMES
+        );
         finalizeDragSelection(
             this,
             this.startPoint,

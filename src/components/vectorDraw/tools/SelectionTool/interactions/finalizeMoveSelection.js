@@ -1,7 +1,12 @@
 import { finalizeMoveCommand } from "../commands/finalizeMoveCommand";
 
-export const finalizeMoveSelection = (tool, selectedShapeIds, shapes) => {
+export const finalizeMoveSelection = (
+    tool,
+    selectedIds,
+    objects,
+    commandType
+) => {
     if (!tool.moving) return;
 
-    finalizeMoveCommand(selectedShapeIds, shapes);
+    finalizeMoveCommand(selectedIds, objects, commandType);
 };

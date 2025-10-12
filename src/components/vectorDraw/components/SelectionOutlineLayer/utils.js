@@ -64,3 +64,37 @@ export const getSelectionLines = ({ x, y, width, height, dashed }) => {
         strokeDasharray: dash,
     }));
 };
+
+export const getBoundingBoxHandleAtPoint = (pointer, bounds, tolerance = 6) => {
+    const { x, y, width, height } = bounds;
+
+    const left = x;
+    const right = x + width;
+    const top = y;
+    const bottom = y + height;
+
+    const px = pointer.x;
+    const py = pointer.y;
+
+    // Check corners first
+    if (Math.abs(px - left) <= tolerance && Math.abs(py - top) <= tolerance)
+        return "top-left";
+    if (Math.abs(px - right) <= tolerance && Math.abs(py - top) <= tolerance)
+        return "top-right";
+    if (Math.abs(px - right) <= tolerance && Math.abs(py - bottom) <= tolerance)
+        return "bottom-right";
+    if (Math.abs(px - left) <= tolerance && Math.abs(py - bottom) <= tolerance)
+        return "bottom-left";
+
+    // Check edges
+    if (px > left + tolerance && px < right - tolerance) {
+        if (Math.abs(py - top) <= tolerance) return "top";
+        if (Math.abs(py - bottom) <= tolerance) return "bottom";
+    }
+    if (py > top + tolerance && py < bottom - tolerance) {
+        if (Math.abs(px - left) <= tolerance) return "left";
+        if (Math.abs(px - right) <= tolerance) return "right";
+    }
+
+    return null; // pointer not on any border
+};

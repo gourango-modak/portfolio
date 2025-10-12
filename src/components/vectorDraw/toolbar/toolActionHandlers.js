@@ -31,7 +31,7 @@ export const toolActionHandlers = {
             .openInspectorPanel(INSPECTOR_PANEL_TARGETS.CANVAS);
     },
     [TOOL_ACTION_TYPES.ADD_PAGE]: () => {
-        frameSlice.getSlice().addFrame();
+        frameSlice.getSlice().addFrameFromTemplate();
     },
     [TOOL_ACTION_TYPES.PREV_PAGE]: () => {
         frameSlice.getSlice().prevFrame();

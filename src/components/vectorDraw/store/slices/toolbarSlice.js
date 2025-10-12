@@ -3,7 +3,7 @@ import { TOOLS_PROPERTIES_PANEL_DISABLED } from "./../../toolbar/constants";
 
 export const createToolbarSlice = (set, get) => ({
     toolbarSlice: {
-        activeTool: TOOLS.SELECTION,
+        activeTool: TOOLS.FRAME,
         activeToolInstance: null,
         activeGroup: null,
         groupSelections: {}, // { [groupName]: subtoolName }

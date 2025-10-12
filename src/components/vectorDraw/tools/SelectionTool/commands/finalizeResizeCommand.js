@@ -1,8 +1,8 @@
 import { commandHistorySlice } from "../../../store/utils";
 
-export function finalizeResizeCommand(selectedShapeIds, shapes) {
+export function finalizeResizeCommand(selectedIds, objects, type) {
     const newProps = {};
-    selectedShapeIds.forEach((id) => (newProps[id] = { ...shapes[id] }));
+    selectedIds.forEach((id) => (newProps[id] = { ...objects[id] }));
 
-    commandHistorySlice.getSlice().finalizeCommand({ newProps });
+    commandHistorySlice.getSlice().finalizeCommand(type, { newProps });
 }

@@ -99,7 +99,7 @@ export const toolbarConfig = [
         visible: () => false,
     },
     {
-        name: "frameTool",
+        name: TOOLS.FRAME,
         Icon: Frame,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
         visible: isInfiniteCanvas,

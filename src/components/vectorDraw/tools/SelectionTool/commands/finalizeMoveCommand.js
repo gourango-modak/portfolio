@@ -1,11 +1,11 @@
 import { commandHistorySlice } from "../../../store/utils";
 
-export function finalizeMoveCommand(selectedShapeIds, shapes) {
+export function finalizeMoveCommand(selectedIds, objects, commandType) {
     const newProps = {};
-    selectedShapeIds.forEach((id) => {
-        const s = shapes[id];
+    selectedIds.forEach((id) => {
+        const s = objects[id];
         newProps[id] = { x: s.x, y: s.y };
     });
 
-    commandHistorySlice.getSlice().finalizeCommand({ newProps });
+    commandHistorySlice.getSlice().finalizeCommand(commandType, { newProps });
 }

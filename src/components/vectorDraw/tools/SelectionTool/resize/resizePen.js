@@ -1,4 +1,4 @@
-export function resizePen({ shape, scaleX, scaleY, pivot }) {
+export function resizePen({ object: shape, scaleX, scaleY, pivot }) {
     const originalWidth = shape.width || 0;
     const originalHeight = shape.height || 0;
 

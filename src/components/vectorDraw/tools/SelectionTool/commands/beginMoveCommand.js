@@ -1,14 +1,11 @@
-import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice } from "../../../store/utils";
 
-export function beginMoveCommand(selectedShapeIds, shapes) {
+export function beginMoveCommand(selectedIds, objects, commandType) {
     const prevProps = {};
-    selectedShapeIds.forEach((id) => {
-        const s = shapes[id];
+    selectedIds.forEach((id) => {
+        const s = objects[id];
         prevProps[id] = { x: s.x, y: s.y };
     });
 
-    commandHistorySlice
-        .getSlice()
-        .beginCommand(COMMANDS.UPDATE_SHAPES, { prevProps });
+    commandHistorySlice.getSlice().beginCommand(commandType, { prevProps });
 }

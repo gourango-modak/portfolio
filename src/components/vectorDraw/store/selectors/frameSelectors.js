@@ -9,6 +9,12 @@ export const useFrameOrder = () =>
 export const useActiveFrameId = () =>
     frameSlice.useSliceProperty((s) => s.activeFrameId);
 
+export const useSelectedFrameIds = () =>
+    frameSlice.useSliceProperty((s) => s.selectedFrameIds);
+
+export const useSelectedFramesBounds = () =>
+    frameSlice.useSliceProperty((s) => s.selectedFramesBounds);
+
 export const useActiveFrameBgColor = () =>
     frameSlice.useSliceProperty((s) => {
         const activeId = s.activeFrameId;

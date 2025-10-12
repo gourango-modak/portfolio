@@ -1,5 +1,5 @@
 export const resizeEndpoint = ({
-    shape,
+    object: shape,
     handle,
     pointer,
     scaleX,

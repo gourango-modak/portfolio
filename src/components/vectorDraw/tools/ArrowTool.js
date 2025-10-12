@@ -67,7 +67,7 @@ export class ArrowTool extends BaseTool {
     }
 
     onPointerMove(e) {
-        if (!this.startPoint || !this.livePath) return;
+        if (!this.startPoint || !this.liveElement) return;
 
         const { x: x1, y: y1 } = this.startPoint;
         const x2 = e.tx;
@@ -81,7 +81,7 @@ export class ArrowTool extends BaseTool {
     }
 
     onPointerUp(e) {
-        if (!this.startPoint || !this.livePath) return;
+        if (!this.startPoint || !this.liveElement) return;
 
         const { x: x1, y: y1 } = this.startPoint;
         const x2 = e.tx;
@@ -108,13 +108,13 @@ export class ArrowTool extends BaseTool {
 
     _createLiveArrow() {
         // Create an SVG path element for live drawing
-        this.createLivePath();
-        this.livePath.setAttribute("stroke", this.properties.color.value);
-        this.livePath.setAttribute(
+        this.createLiveElement();
+        this.liveElement.setAttribute("stroke", this.properties.color.value);
+        this.liveElement.setAttribute(
             "stroke-width",
             this.properties.strokeWidth.value
         );
-        this.livePath.setAttribute("fill", "transparent");
+        this.liveElement.setAttribute("fill", "transparent");
     }
 
     _updateLiveArrowPath(x1, y1, x2, y2) {
@@ -127,7 +127,7 @@ export class ArrowTool extends BaseTool {
             this.properties,
             this.seed
         );
-        this.livePath.setAttribute("d", pathData);
+        this.liveElement.setAttribute("d", pathData);
     }
 
     _isArrowLongEnough(x1, y1, x2, y2, minLength = 25) {

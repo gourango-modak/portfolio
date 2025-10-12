@@ -1,20 +1,21 @@
 import { computeResizedBoundingBox } from "../resize/computeResizedBoundingBox";
-import { shapeResizeHandlers } from "./../resize/shapeResizeHandlers";
+import { resizeHandlers } from "../resize/resizeHandlers";
 
 export function handleResizeSelection(
     tool,
     pointer,
-    selectedShapeIds,
-    selectedShapesBounds,
-    updateShape
+    selectedIds,
+    originalObjects,
+    originalBounds,
+    selectedBounds,
+    update
 ) {
     // Return if resize cannot happen
-    if (!tool.resizing || !tool.activeHandle || !selectedShapesBounds) return;
-
-    const { x, y, width, height } = tool.originalBounds;
+    if (!tool.resizing || !tool.activeHandle || !selectedBounds) return;
+    const { x, y, width, height } = originalBounds;
 
     // 1. Compute new bounding box + origin
-    const { newX, newY, newW, newH, origin } = computeResizedBoundingBox(
+    const { newW, newH, origin } = computeResizedBoundingBox(
         tool.activeHandle,
         { x, y, width, height },
         pointer
@@ -24,12 +25,12 @@ export function handleResizeSelection(
     const { scaleX, scaleY } = computeScaleFactors(width, height, newW, newH);
 
     // 3. Delegate to shape-specific resize
-    selectedShapeIds.forEach((id) => {
-        const original = tool.originalShapes[id];
-        const resizeShapeFn = shapeResizeHandlers[original.type];
+    selectedIds.forEach((id) => {
+        const original = originalObjects[id];
+        const resizeShapeFn = resizeHandlers[original.type];
 
         const updated = resizeShapeFn({
-            shape: original,
+            object: original,
             handle: tool.activeHandle,
             pointer,
             scaleX,
@@ -37,7 +38,7 @@ export function handleResizeSelection(
             pivot: origin,
         });
 
-        updateShape(id, updated);
+        update(id, updated);
     });
 }
 

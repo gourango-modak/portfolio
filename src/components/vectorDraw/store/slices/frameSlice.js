@@ -1,4 +1,6 @@
 import { generateId } from "../../../../utils/common";
+import { computeFramesBoundingBox } from "../../tools/utils";
+import { COMMANDS } from "./commandHistorySlice/constants";
 
 // Margin from the viewport edges to determine initial frame size
 const viewportMarginX = 100;
@@ -7,6 +9,8 @@ const viewportMarginY = 100;
 const initialFrameState = {
     frames: {},
     frameOrder: [],
+    selectedFrameIds: new Set(),
+    selectedFramesBounds: null,
     activeFrameId: null,
     frameTemplate: {
         width: {
@@ -25,14 +29,65 @@ const initialFrameState = {
             type: "color",
             id: "frameColor",
         },
-        x: { value: 0, label: "X" },
-        y: { value: 0, label: "Y" },
     },
 };
 
 export const createFrameSlice = (set, get) => ({
     frameSlice: {
         ...initialFrameState,
+
+        deselectAll: () =>
+            set((state) => ({
+                frameSlice: {
+                    ...state.frameSlice,
+                    selectedFrameIds: new Set(),
+                    activeFrameId: null,
+                },
+            })),
+
+        selectFrame: (frameId) =>
+            set((state) => {
+                const selected = new Set(state.frameSlice.selectedFrameIds);
+                selected.add(frameId);
+                return {
+                    frameSlice: {
+                        ...state.frameSlice,
+                        selectedFrameIds: selected,
+                        activeFrameId: frameId,
+                    },
+                };
+            }),
+
+        updateFrame: (id, updatedProps) => {
+            const frame = get().frameSlice.frames[id];
+            if (!frame) return;
+
+            set((state) => {
+                const newFrames = {
+                    ...state.frameSlice.frames,
+                    [id]: {
+                        ...frame,
+                        ...updatedProps,
+                        version: (frame.version || 0) + 1, // increment version
+                    },
+                };
+
+                const newBounds = state.frameSlice.selectedFrameIds.has(id)
+                    ? computeFramesBoundingBox(
+                          state.frameSlice.selectedFrameIds,
+                          newFrames
+                      )
+                    : state.frameSlice.selectedFramesBounds;
+
+                return {
+                    frameSlice: {
+                        ...state.frameSlice,
+                        frames: newFrames,
+                        selectedFramesBounds: newBounds,
+                    },
+                };
+            });
+        },
 
         updateFrameTemplate: (updates) =>
             set((state) => {
@@ -51,7 +106,7 @@ export const createFrameSlice = (set, get) => ({
                 };
             }),
 
-        addFrame: () =>
+        addFrameFromTemplate: () =>
             set((state) => {
                 const id = generateId();
 
@@ -68,8 +123,8 @@ export const createFrameSlice = (set, get) => ({
                 const newFrame = {
                     id,
                     ...state.frameSlice.frameTemplate,
-                    x: { value: x, label: "X" },
-                    y: { value: y, label: "Y" },
+                    x,
+                    y,
                 };
 
                 return {
@@ -86,6 +141,22 @@ export const createFrameSlice = (set, get) => ({
                     },
                 };
             }),
+        addFrame: (frame) => {
+            const id = generateId();
+            const newFrame = {
+                id,
+                version: 1,
+                ...frame,
+            };
+
+            // Execute ADD_FRAME command for history tracking
+            get().commandHistorySlice.executeCommand({
+                type: COMMANDS.ADD_FRAME,
+                frame: newFrame,
+            });
+
+            return id;
+        },
 
         setFrameBg: (frameId, color) =>
             set((state) => ({

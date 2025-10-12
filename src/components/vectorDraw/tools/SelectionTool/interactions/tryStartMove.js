@@ -1,3 +1,4 @@
+import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { isPointInRect } from "../../../utils/geometryUtils";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 
@@ -6,5 +7,5 @@ export function tryStartMove(tool, pointer, bounds, selectedShapeIds, shapes) {
     if (!isPointInRect(pointer, bounds)) return;
 
     tool.clickedInsideSelection = true;
-    beginMoveCommand(selectedShapeIds, shapes);
+    beginMoveCommand(selectedShapeIds, shapes, COMMANDS.UPDATE_SHAPES);
 }

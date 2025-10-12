@@ -7,6 +7,7 @@ export const TOOLS = {
     ERASER: "ERASER",
     TEXT: "TEXT",
     LASER_POINTER: "LASER POINTER",
+    FRAME: "FRAME",
 };
 
 export const SELECTION_MODE = {

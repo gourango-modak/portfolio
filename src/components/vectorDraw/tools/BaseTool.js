@@ -10,7 +10,7 @@ export class BaseTool {
 
     constructor(liveLayerRef) {
         this.liveLayerRef = liveLayerRef;
-        this.livePath = null;
+        this.liveElement = null;
         this.properties = this.getMergedProperties();
     }
 
@@ -37,21 +37,21 @@ export class BaseTool {
     }
 
     // Create live SVG element
-    createLivePath(tag = "path") {
-        this.livePath = document.createElementNS(
+    createLiveElement(tag = "path") {
+        this.liveElement = document.createElementNS(
             "http://www.w3.org/2000/svg",
             tag
         );
         if (this.liveLayerRef?.current) {
-            this.liveLayerRef.current.appendChild(this.livePath);
+            this.liveLayerRef.current.appendChild(this.liveElement);
         }
     }
 
     // Remove live path and cleanup
     cleanUp() {
-        if (this.livePath) {
-            this.livePath?.remove?.();
-            this.livePath = null;
+        if (this.liveElement) {
+            this.liveElement?.remove?.();
+            this.liveElement = null;
         }
     }
 

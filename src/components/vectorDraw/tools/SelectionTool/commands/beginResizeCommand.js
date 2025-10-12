@@ -1,11 +1,8 @@
-import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice } from "../../../store/utils";
 
-export function beginResizeCommand(selectedShapeIds, shapes) {
+export function beginResizeCommand(selectedIds, objects, type) {
     const prevProps = {};
-    selectedShapeIds.forEach((id) => (prevProps[id] = { ...shapes[id] }));
+    selectedIds.forEach((id) => (prevProps[id] = { ...objects[id] }));
 
-    commandHistorySlice
-        .getSlice()
-        .beginCommand(COMMANDS.UPDATE_SHAPES, { prevProps });
+    commandHistorySlice.getSlice().beginCommand(type, { prevProps });
 }

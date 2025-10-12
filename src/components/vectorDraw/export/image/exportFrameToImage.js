@@ -6,8 +6,8 @@ export const exportFrameToImage = async ({ frame, scale = 1, shapes }) => {
     return await exportElementToImage({
         element: exportG,
         bbox: {
-            x: frame.x.value,
-            y: frame.y.value,
+            x: frame.x,
+            y: frame.y,
             width: frame.width.value,
             height: frame.height.value,
         },

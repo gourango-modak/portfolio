@@ -49,18 +49,18 @@ export class PenTool extends BaseTool {
 
     onPointerDown(event) {
         this.rawPoints = [this.createPoint(event)];
-        this.createLivePath();
-        this.livePath.setAttribute("fill", this.properties.color.value);
+        this.createLiveElement();
+        this.liveElement.setAttribute("fill", this.properties.color.value);
     }
 
     onPointerMove(event) {
-        if (!this.livePath) return;
+        if (!this.liveElement) return;
         this.rawPoints.push(this.createPoint(event));
         this.updateLivePath();
     }
 
     onPointerUp() {
-        if (!this.livePath || this.rawPoints.length === 0) return;
+        if (!this.liveElement || this.rawPoints.length === 0) return;
 
         const penShape = this.createPenShape(this.rawPoints);
 
@@ -90,7 +90,7 @@ export class PenTool extends BaseTool {
     }
 
     updateLivePath() {
-        this.livePath.setAttribute("d", this.getPathFromStrokePoints());
+        this.liveElement.setAttribute("d", this.getPathFromStrokePoints());
     }
 
     createPenShape(points) {

@@ -112,13 +112,13 @@ export class TextTool extends BaseTool {
     startEditingExistingShape(hitShape, updateShape) {
         updateShape(hitShape.id, { isEditing: true });
         this.shapeId = hitShape.id;
-        this.createLivePath("foreignObject");
+        this.createLiveElement("foreignObject");
         this.createTextInput(hitShape);
     }
 
     startNewTextInput() {
         this.shapeId = null;
-        this.createLivePath("foreignObject");
+        this.createLiveElement("foreignObject");
         this.createTextInput();
     }
 
@@ -202,7 +202,7 @@ export class TextTool extends BaseTool {
         this.textarea = this.createTextarea(width, height, text, properties);
         this.setupAutoGrow(point, minHeight, text, properties);
 
-        this.livePath.appendChild(this.textarea);
+        this.liveElement.appendChild(this.textarea);
         setTimeout(() => this.textarea.focus(), 0);
         if (existingShape) setTimeout(() => this.textarea.select(), 0);
     }
@@ -240,10 +240,10 @@ export class TextTool extends BaseTool {
     }
 
     setLivePathAttributes(point, width, height) {
-        this.livePath.setAttribute("x", point.x);
-        this.livePath.setAttribute("y", point.y);
-        this.livePath.setAttribute("width", width);
-        this.livePath.setAttribute("height", height);
+        this.liveElement.setAttribute("x", point.x);
+        this.liveElement.setAttribute("y", point.y);
+        this.liveElement.setAttribute("width", width);
+        this.liveElement.setAttribute("height", height);
     }
 
     createTextarea(width, height, value = "", properties) {
@@ -315,7 +315,7 @@ export class TextTool extends BaseTool {
         this.textarea.style.height = "auto";
         const newHeight = Math.max(this.textarea.scrollHeight, minHeight);
         this.textarea.style.height = `${newHeight}px`;
-        this.livePath.setAttribute("height", newHeight);
+        this.liveElement.setAttribute("height", newHeight);
 
         // Update span to measure text width
         this.span.style.fontSize = `${properties.fontSize.value}px`;
@@ -338,7 +338,7 @@ export class TextTool extends BaseTool {
 
         // Apply
         this.textarea.style.width = `${finalWidth}px`;
-        this.livePath.setAttribute("width", finalWidth);
+        this.liveElement.setAttribute("width", finalWidth);
     }
 
     handleBlurCommit() {
@@ -374,7 +374,7 @@ export class TextTool extends BaseTool {
         updateShape(hitId, { isEditing: true });
         this.shapeId = hitId;
         const existing = shapes[hitId];
-        this.createLivePath("foreignObject");
+        this.createLiveElement("foreignObject");
         this.createTextInput(existing);
     }
 

@@ -11,8 +11,8 @@ export const Frame = memo(({ frameId }) => {
 
     return (
         <rect
-            x={frame.x.value}
-            y={frame.y.value}
+            x={frame.x}
+            y={frame.y}
             width={frame.width.value}
             height={frame.height.value}
             fill={frame.bgColor.value}

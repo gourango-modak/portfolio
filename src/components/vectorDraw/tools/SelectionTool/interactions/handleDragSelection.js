@@ -6,17 +6,20 @@ export const handleDragSelection = (tool, pointer) => {
 
     if (!tool.dragging) {
         tool.dragging = true;
-        tool.createLivePath();
+        tool.createLiveElement();
 
         // Apply live rectangle styles
-        tool.livePath.setAttribute("stroke", tool.properties.borderColor.value);
-        tool.livePath.setAttribute(
+        tool.liveElement.setAttribute(
+            "stroke",
+            tool.properties.borderColor.value
+        );
+        tool.liveElement.setAttribute(
             "stroke-width",
             tool.properties.borderWidth.value
         );
-        tool.livePath.setAttribute("fill", tool.properties.fillColor.value);
+        tool.liveElement.setAttribute("fill", tool.properties.fillColor.value);
     }
 
     const rect = getRectFromPoints(tool.startPoint, pointer);
-    tool.livePath.setAttribute("d", getRectToPathData(rect));
+    tool.liveElement.setAttribute("d", getRectToPathData(rect));
 };

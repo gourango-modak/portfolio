@@ -1,4 +1,5 @@
 import { computeShapesBoundingBox } from "../../../../shapes/utils";
+import { computeFramesBoundingBox } from "../../../../tools/utils";
 import { COMMANDS } from "../constants";
 
 export const executeCommandHandlers = {
@@ -84,4 +85,44 @@ export const executeCommandHandlers = {
                 },
             };
         }),
+
+    [COMMANDS.UPDATE_FRAMES]: (set, cmd) =>
+        set((s) => {
+            const { frames, selectedFrameIds, selectedFramesBounds } =
+                s.frameSlice;
+            const newFrames = { ...frames };
+            for (const id in cmd.newProps) {
+                const frame = newFrames[id];
+                if (!frame) continue;
+                newFrames[id] = {
+                    ...frame,
+                    ...cmd.newProps[id],
+                    version: (frame.version || 0) + 1,
+                };
+            }
+
+            const newBounds = selectedFrameIds.size
+                ? computeFramesBoundingBox(selectedFrameIds, newFrames)
+                : selectedFramesBounds;
+
+            return {
+                frameSlice: {
+                    ...s.frameSlice,
+                    frames: newFrames,
+                    selectedFramesBounds: newBounds,
+                },
+            };
+        }),
+
+    [COMMANDS.ADD_FRAME]: (set, cmd) =>
+        set((s) => ({
+            frameSlice: {
+                ...s.frameSlice,
+                frames: {
+                    ...s.frameSlice.frames,
+                    [cmd.frame.id]: cmd.frame,
+                },
+                frameOrder: [...s.frameSlice.frameOrder, cmd.frame.id],
+            },
+        })),
 };

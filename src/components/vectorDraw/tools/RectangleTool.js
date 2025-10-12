@@ -47,20 +47,20 @@ export class RectangleTool extends BaseTool {
 
     onPointerDown(e) {
         this.startPoint = { x: e.tx, y: e.ty };
-        this.createLivePath();
-        this.livePath.setAttribute("stroke", this.properties.color.value);
-        this.livePath.setAttribute(
+        this.createLiveElement();
+        this.liveElement.setAttribute("stroke", this.properties.color.value);
+        this.liveElement.setAttribute(
             "stroke-width",
             this.properties.strokeWidth.value
         );
-        this.livePath.setAttribute("fill", "transparent");
+        this.liveElement.setAttribute("fill", "transparent");
         this.seed = Math.floor(Math.random() * 1000000); // set seed
     }
 
     onPointerMove(e) {
-        if (!this.startPoint || !this.livePath) return;
+        if (!this.startPoint || !this.liveElement) return;
         const { x, y, width, height } = this.getRectDimensions(e);
-        this.livePath.setAttribute(
+        this.liveElement.setAttribute(
             "d",
             getRoughRectPath(
                 x,
@@ -75,7 +75,7 @@ export class RectangleTool extends BaseTool {
     }
 
     onPointerUp(e) {
-        if (!this.startPoint || !this.livePath) return;
+        if (!this.startPoint || !this.liveElement) return;
         const { x, y, width, height } = this.getRectDimensions(e);
 
         // Skip small rectangles

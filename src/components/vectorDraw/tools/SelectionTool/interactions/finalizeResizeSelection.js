@@ -1,7 +1,12 @@
 import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
 
-export const finalizeResizeSelection = (tool, selectedShapeIds, shapes) => {
+export const finalizeResizeSelection = (
+    tool,
+    selectedIds,
+    objects,
+    commandTye
+) => {
     if (!tool.resizing) return;
 
-    finalizeResizeCommand(selectedShapeIds, shapes);
+    finalizeResizeCommand(selectedIds, objects, commandTye);
 };
