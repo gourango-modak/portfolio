@@ -14,12 +14,18 @@ export const computeShapeBoundingBox = (shape) => {
 };
 
 // Returns the first shape under a point or null
-export const getShapeAtPoint = (point) => {
-    const { shapes, shapeOrder } = shapeSlice.getSlice();
-    const shapeId = shapeOrder.find((id) =>
+export const getShapeAtPoint = (point, shapes) => {
+    const { shapeOrder } = shapeSlice.getSlice();
+
+    // Only consider shape IDs that exist in the provided shapes object
+    const validShapeIds = shapeOrder.filter((id) => shapes[id]);
+
+    // Find the topmost shape containing the point
+    const shapeId = validShapeIds.find((id) =>
         findShapeAtPoint(shapes[id], point)
     );
-    return shapeId >= 0 ? shapes[shapeId] : null;
+
+    return shapeId ? shapes[shapeId] : null;
 };
 
 export const computeShapesBoundingBox = (shapeIds, shapes) => {

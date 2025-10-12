@@ -61,11 +61,13 @@ export class SelectionTool extends BaseTool {
         this.startPoint = pointer;
         this.lastPointer = pointer;
 
-        const { selectedShapesBounds, selectedShapeIds, shapes } =
+        const { selectedShapesBounds, selectedShapeIds, getShapes } =
             shapeSlice.getSlice();
 
+        const shapes = getShapes();
+
         tryStartResize(this, e, selectedShapesBounds, selectedShapeIds, shapes);
-        trySelectShape(this, pointer);
+        trySelectShape(this, pointer, selectedShapeIds, shapes);
         tryStartMove(
             this,
             pointer,
@@ -78,8 +80,14 @@ export class SelectionTool extends BaseTool {
 
     onPointerMove(e) {
         const pointer = { x: e.tx, y: e.ty };
-        const { shapes, selectedShapeIds, selectedShapesBounds, updateShape } =
-            shapeSlice.getSlice();
+        const {
+            getShapes,
+            selectedShapeIds,
+            selectedShapesBounds,
+            updateShape,
+        } = shapeSlice.getSlice();
+
+        const shapes = getShapes();
 
         updateSelectionCursor(
             this,
@@ -98,14 +106,22 @@ export class SelectionTool extends BaseTool {
             selectedShapesBounds,
             updateShape
         );
-        handleMoveSelection(this, pointer);
+        handleMoveSelection(
+            this,
+            pointer,
+            shapes,
+            selectedShapeIds,
+            updateShape
+        );
         handleDragSelection(this, pointer);
         this.lastPointer = pointer;
     }
 
     onPointerUp(e) {
-        const { shapes, selectedShapeIds, deselectAll, selectShape } =
+        const { getShapes, selectedShapeIds, deselectAll, selectShape } =
             shapeSlice.getSlice();
+
+        const shapes = getShapes();
 
         finalizeResizeSelection(this, selectedShapeIds, shapes);
         finalizeMoveSelection(this, selectedShapeIds, shapes);

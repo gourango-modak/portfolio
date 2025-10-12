@@ -21,7 +21,14 @@ function applyMove(selectedShapeIds, shapes, dx, dy, updateShape) {
 }
 
 // Move selected shapes based on pointer movement.
-export function handleMoveSelection(tool, pointer, moveThreshold = 3) {
+export function handleMoveSelection(
+    tool,
+    pointer,
+    shapes,
+    selectedShapeIds,
+    updateShape,
+    moveThreshold = 3
+) {
     if (tool.resizing) return;
 
     const { dx, dy, dist } = computePointerDelta(tool, pointer);
@@ -33,7 +40,6 @@ export function handleMoveSelection(tool, pointer, moveThreshold = 3) {
         tool.moving = true; // Start move mode
     }
 
-    const { shapes, selectedShapeIds, updateShape } = shapeSlice.getSlice();
     applyMove(selectedShapeIds, shapes, dx, dy, updateShape);
 
     return true;

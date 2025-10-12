@@ -1,4 +1,5 @@
 import { generateId } from "../../../../utils/common";
+import { CANVAS_MODES } from "../../constants";
 import { computeShapesBoundingBox } from "../../shapes/utils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
@@ -11,6 +12,31 @@ export const createShapeSlice = (set, get) => ({
         selectedShapesBounds: null, // store combined bounds for quick access
 
         copiedShapes: null, // store copied shapes temporarily
+
+        getShapes: () => {
+            const { shapes } = get().shapeSlice;
+            const { frameSlice, canvasPropertiesSlice } = get();
+
+            const isPagedMode =
+                canvasPropertiesSlice.properties.mode.value ===
+                CANVAS_MODES.PAGED;
+            const activeFrameId = frameSlice?.activeFrameId;
+
+            // Return all shapes if not in paged mode
+            if (!isPagedMode) return shapes;
+
+            // Return only shapes belonging to the active frame
+            if (activeFrameId) {
+                return Object.fromEntries(
+                    Object.entries(shapes).filter(
+                        ([, shape]) => shape.frameId === activeFrameId
+                    )
+                );
+            }
+
+            // No active frame selected
+            return {};
+        },
 
         setSelectedShapeIds: (selectedShapeIds) =>
             set((state) => ({

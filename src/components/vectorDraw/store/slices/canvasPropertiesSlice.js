@@ -3,7 +3,7 @@ import { CANVAS_MODES } from "../../constants";
 export const createCanvasPropertiesSlice = (set, get) => ({
     canvasPropertiesSlice: {
         properties: {
-            mode: { value: CANVAS_MODES.INFINITE, label: "Canvas Mode" },
+            mode: { value: CANVAS_MODES.PAGED, label: "Canvas Mode" },
             canvasBgColor: {
                 value: "#F9F9F9",
                 label: "Canvas Background",
