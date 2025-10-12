@@ -25,7 +25,6 @@ const ContentLayer = () => {
                 background: canvasBgColor,
             }}
             className="canvas"
-            id="svg-canvas"
         >
             <TransformLayer>{transformChildren}</TransformLayer>
         </svg>

@@ -84,6 +84,10 @@ const createBaseSvg = ({ x, y, width, height }) => {
     svg.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+
+    const { canvasBgColor } = canvasPropertiesSlice.getSlice().properties;
+    svg.style.background = canvasBgColor.value;
+
     return svg;
 };
 
@@ -101,26 +105,15 @@ export const prepareSvgForExport = async (
     content,
     { x = 0, y = 0, width, height }
 ) => {
-    const svg =
-        content instanceof SVGSVGElement
-            ? content.cloneNode(true)
-            : createBaseSvg({ x, y, width, height });
-
-    svg.setAttribute("width", width);
-    svg.setAttribute("height", height);
-    svg.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
+    const svg = createBaseSvg({ x, y, width, height });
 
     addFontDefinition(svg, CAVEAT_FONT_CSS);
 
-    if (!(content instanceof SVGSVGElement)) {
-        const clone = content.cloneNode(true);
-        clone.setAttribute("width", width);
-        clone.setAttribute("height", height);
-        svg.appendChild(clone);
-    }
+    const clone = content.cloneNode(true);
+    svg.appendChild(clone);
 
     convertForeignObjectsToText(svg);
-    document.body.appendChild(svg);
+    // document.body.appendChild(svg);
 
     return svg;
 };
@@ -160,7 +153,7 @@ const downloadCanvasAsPng = (canvas, fileName = "export.png") => {
     document.body.removeChild(link);
 };
 
-export const exportSvgToImage = async (
+const exportSvgToImage = async (
     content,
     {
         x = 0,
@@ -179,8 +172,42 @@ export const exportSvgToImage = async (
     downloadCanvasAsPng(canvas, fileName);
 };
 
+const getScaledBox = (bbox, scale, pan, padding = 0) => {
+    const scaledX = bbox.x * scale;
+    const scaledY = bbox.y * scale;
+    const scaledWidth = bbox.width * scale;
+    const scaledHeight = bbox.height * scale;
+
+    return {
+        x: pan.x + scaledX - padding,
+        y: pan.y + scaledY - padding,
+        width: scaledWidth + padding * 2,
+        height: scaledHeight + padding * 2,
+    };
+};
+
+const exportElementToImage = async ({
+    element,
+    bbox,
+    fileName,
+    dpiScale = DPI_SCALE,
+    padding = 0,
+}) => {
+    const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
+    const box = getScaledBox(bbox, scale, pan, padding);
+
+    await exportSvgToImage(element, {
+        x: box.x,
+        y: box.y,
+        width: box.width,
+        height: box.height,
+        dpiScale,
+        fileName,
+    });
+};
+
 export const exportFrameToImage = async ({
-    content,
+    element,
     frame,
     dpiScale = DPI_SCALE,
 }) => {
@@ -189,41 +216,31 @@ export const exportFrameToImage = async ({
         height: { value: frameHeight },
     } = frame;
 
-    const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
-    const scaledFrameWidth = frameWidth * scale;
-    const scaledFrameHeight = frameHeight * scale;
+    // We only care about x/y from the element and dimensions from frame
+    const { x, y } = element.getBBox();
+    const bbox = { x, y, width: frameWidth, height: frameHeight };
 
-    await exportSvgToImage(content, {
-        x: pan.x,
-        y: pan.y,
-        width: scaledFrameWidth,
-        height: scaledFrameHeight,
-        dpiScale,
+    await exportElementToImage({
+        element,
+        bbox,
         fileName: `${frame.id || "frame"}.png`,
+        dpiScale,
     });
 };
 
 export const exportCanvasToImage = async ({
-    svgElement,
+    element,
     dpiScale = DPI_SCALE,
     fileName = "canvas.png",
-    padding = 50, // padding in SVG units
+    padding = 50,
 }) => {
-    const bbox = svgElement.getBBox();
+    const bbox = element.getBBox();
 
-    const paddedBox = {
-        x: bbox.x - padding,
-        y: bbox.y - padding,
-        width: bbox.width + padding * 2,
-        height: bbox.height + padding * 2,
-    };
-
-    await exportSvgToImage(svgElement, {
-        x: paddedBox.x,
-        y: paddedBox.y,
-        width: paddedBox.width,
-        height: paddedBox.height,
-        dpiScale,
+    await exportElementToImage({
+        element,
+        bbox,
         fileName,
+        dpiScale,
+        padding,
     });
 };

@@ -21,7 +21,7 @@ const TransformLayer = memo(({ children }) => {
     useRenderLogger("TransformLayer");
 
     return (
-        <g ref={transformRef} id="frame-content">
+        <g ref={transformRef} id="canvas-content">
             {children}
         </g>
     );

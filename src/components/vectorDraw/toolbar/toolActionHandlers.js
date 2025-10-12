@@ -47,12 +47,12 @@ export const toolActionHandlers = {
         canvasPropertiesSlice.getSlice().resetViewport();
     },
     [TOOL_ACTION_TYPES.EXPORT_CURRENT_PAGE_TO_IMAGE]: () => {
-        const content = document.getElementById("frame-content");
+        const element = document.getElementById("canvas-content");
         const frame = frameSlice.getSlice().getActiveFrame();
-        exportFrameToImage({ content, frame, dpiScale: 1 });
+        exportFrameToImage({ element, frame, dpiScale: 1 });
     },
     [TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE]: () => {
-        const svgElement = document.getElementById("svg-canvas");
-        exportCanvasToImage({ svgElement, dpiScale: 1 });
+        const element = document.getElementById("canvas-content");
+        exportCanvasToImage({ element, dpiScale: 1 });
     },
 };
