@@ -16,15 +16,20 @@ export const createCanvasPropertiesSlice = (set, get) => ({
         },
 
         setCursor: (cursor) =>
-            set((state) => ({
-                canvasPropertiesSlice: {
-                    ...state.canvasPropertiesSlice,
-                    properties: {
-                        ...state.canvasPropertiesSlice.properties,
-                        cursor,
+            set((state) => {
+                const currentCursor =
+                    state.canvasPropertiesSlice.properties.cursor;
+                if (currentCursor === cursor) return state; // no change needed
+                return {
+                    canvasPropertiesSlice: {
+                        ...state.canvasPropertiesSlice,
+                        properties: {
+                            ...state.canvasPropertiesSlice.properties,
+                            cursor,
+                        },
                     },
-                },
-            })),
+                };
+            }),
 
         setScale: (scale) =>
             set((state) => ({

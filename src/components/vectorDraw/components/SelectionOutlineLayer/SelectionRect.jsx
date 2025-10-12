@@ -5,41 +5,51 @@ import {
 } from "../../store/selectors/canvasPropertiesSelectors";
 import { toViewportPoint } from "../../utils/canvasUtils";
 import { HandleSquare } from "./HandleSquare.JSX";
-import { getBoundingBoxHandles } from "./utils";
+import { getBoundingBoxHandles, getSelectionLines } from "./utils";
 
 export const SelectionRect = ({ bounds, padding, showHandles, dashed }) => {
     const scale = useCanvasScale();
     const pan = useCanvasPan();
     const { x, y, width, height } = bounds;
-    const handles = showHandles
-        ? getBoundingBoxHandles(bounds, padding, scale, pan)
-        : null;
 
     const viewportPoint = toViewportPoint(
-        {
-            x: x - padding,
-            y: y - padding,
-        },
+        { x: x - padding, y: y - padding },
         scale,
         pan
     );
-    const newWidth = (width + padding * 2) * scale;
-    const newHeight = (height + padding * 2) * scale;
+
+    const scaledWidth = (width + padding * 2) * scale;
+    const scaledHeight = (height + padding * 2) * scale;
+
+    const handles = showHandles
+        ? getBoundingBoxHandles(bounds, padding, scale, pan)
+        : null;
+    const lines = getSelectionLines({
+        x: viewportPoint.x,
+        y: viewportPoint.y,
+        width: scaledWidth,
+        height: scaledHeight,
+        dashed,
+    });
 
     useRenderLogger("SelectionRect");
 
     return (
         <>
-            <rect
-                x={viewportPoint.x}
-                y={viewportPoint.y}
-                width={newWidth}
-                height={newHeight}
-                fill="none"
-                stroke="#007AFF"
-                strokeWidth={1}
-                strokeDasharray={dashed ? "4 2" : "none"}
-            />
+            {showHandles ? (
+                lines.map((line, index) => <line key={index} {...line} />)
+            ) : (
+                <rect
+                    x={viewportPoint.x}
+                    y={viewportPoint.y}
+                    width={scaledWidth}
+                    height={scaledHeight}
+                    fill="none"
+                    stroke="#007AFF"
+                    strokeWidth={1}
+                    strokeDasharray={dashed ? "4 2" : "none"}
+                />
+            )}
             {handles &&
                 Object.entries(handles).map(([key, h]) => (
                     <HandleSquare
