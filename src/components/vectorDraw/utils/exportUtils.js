@@ -1,4 +1,3 @@
-import { DPI_SCALE } from "../constants";
 import { canvasPropertiesSlice } from "../store/utils";
 import { CAVEAT_FONT_CSS } from "./../fonts/caveatFont";
 
@@ -91,30 +90,24 @@ const createBaseSvg = ({ x, y, width, height }) => {
     return svg;
 };
 
-const createExportCanvas = (width, height, dpiScale = 3) => {
+const createExportCanvas = (width, height) => {
     const canvas = document.createElement("canvas");
-    canvas.width = width * dpiScale;
-    canvas.height = height * dpiScale;
+    canvas.width = width;
+    canvas.height = height;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.scale(dpiScale, dpiScale);
     return { canvas, ctx };
 };
 
 export const prepareSvgForExport = async (
-    content,
+    element,
     { x = 0, y = 0, width, height }
 ) => {
     const svg = createBaseSvg({ x, y, width, height });
-
     addFontDefinition(svg, CAVEAT_FONT_CSS);
-
-    const clone = content.cloneNode(true);
-    svg.appendChild(clone);
-
+    svg.appendChild(element);
     convertForeignObjectsToText(svg);
     // document.body.appendChild(svg);
-
     return svg;
 };
 
@@ -154,85 +147,86 @@ const downloadCanvasAsPng = (canvas, fileName = "export.png") => {
 };
 
 const exportSvgToImage = async (
-    content,
-    {
-        x = 0,
-        y = 0,
-        width,
-        height,
-        dpiScale = DPI_SCALE,
-        fileName = "export.png",
-    }
+    element,
+    { x = 0, y = 0, width, height, fileName = "export.png" }
 ) => {
-    const { canvas, ctx } = createExportCanvas(width, height, dpiScale);
-    const svg = await prepareSvgForExport(content, { x, y, width, height });
+    const { canvas, ctx } = createExportCanvas(width, height);
+    const svg = await prepareSvgForExport(element, { x, y, width, height });
     const svgDataUrl = svgToDataUrl(svg);
 
     await drawSvgOnCanvas(ctx, svgDataUrl, width, height);
     downloadCanvasAsPng(canvas, fileName);
 };
 
-const getScaledBox = (bbox, scale, pan, padding = 0) => {
+const getScaledBox = (bbox, scale = 1, padding = 0) => {
     const scaledX = bbox.x * scale;
     const scaledY = bbox.y * scale;
     const scaledWidth = bbox.width * scale;
     const scaledHeight = bbox.height * scale;
 
     return {
-        x: pan.x + scaledX - padding,
-        y: pan.y + scaledY - padding,
+        x: scaledX - padding,
+        y: scaledY - padding,
         width: scaledWidth + padding * 2,
         height: scaledHeight + padding * 2,
     };
+};
+
+const wrapElementWithScale = (element, scale = 1) => {
+    if (scale === 1) return element.cloneNode(true); // no need to wrap
+
+    const wrapper = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    wrapper.setAttribute("transform", `scale(${scale})`);
+    wrapper.appendChild(element.cloneNode(true));
+    return wrapper;
 };
 
 const exportElementToImage = async ({
     element,
     bbox,
     fileName,
-    dpiScale = DPI_SCALE,
     padding = 0,
+    scale = 1,
 }) => {
-    const { scale, pan } = canvasPropertiesSlice.getSlice().properties;
-    const box = getScaledBox(bbox, scale, pan, padding);
+    const elementToExport = wrapElementWithScale(element, scale);
+    const box = getScaledBox(bbox, scale, padding);
 
-    await exportSvgToImage(element, {
+    await exportSvgToImage(elementToExport, {
         x: box.x,
         y: box.y,
         width: box.width,
         height: box.height,
-        dpiScale,
         fileName,
     });
 };
 
-export const exportFrameToImage = async ({
-    element,
-    frame,
-    dpiScale = DPI_SCALE,
-}) => {
+export const exportFrameToImage = async ({ element, frame, scale = 1 }) => {
     const {
+        x,
+        y,
         width: { value: frameWidth },
         height: { value: frameHeight },
     } = frame;
-
-    // We only care about x/y from the element and dimensions from frame
-    const { x, y } = element.getBBox();
-    const bbox = { x, y, width: frameWidth, height: frameHeight };
+    const bbox = {
+        x: x.value,
+        y: y.value,
+        width: frameWidth,
+        height: frameHeight,
+    };
 
     await exportElementToImage({
         element,
         bbox,
         fileName: `${frame.id || "frame"}.png`,
-        dpiScale,
+        scale,
     });
 };
 
 export const exportCanvasToImage = async ({
     element,
-    dpiScale = DPI_SCALE,
     fileName = "canvas.png",
     padding = 50,
+    scale = 1,
 }) => {
     const bbox = element.getBBox();
 
@@ -240,7 +234,7 @@ export const exportCanvasToImage = async ({
         element,
         bbox,
         fileName,
-        dpiScale,
         padding,
+        scale,
     });
 };

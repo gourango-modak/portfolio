@@ -49,10 +49,10 @@ export const toolActionHandlers = {
     [TOOL_ACTION_TYPES.EXPORT_CURRENT_PAGE_TO_IMAGE]: () => {
         const element = document.getElementById("canvas-content");
         const frame = frameSlice.getSlice().getActiveFrame();
-        exportFrameToImage({ element, frame, dpiScale: 1 });
+        exportFrameToImage({ element, frame, scale: 1 });
     },
     [TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE]: () => {
         const element = document.getElementById("canvas-content");
-        exportCanvasToImage({ element, dpiScale: 1 });
+        exportCanvasToImage({ element, scale: 1 });
     },
 };
