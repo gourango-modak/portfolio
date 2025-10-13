@@ -1,9 +1,9 @@
-import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
-import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 import { getRoughRectPath } from "../utils/svgUtils";
+import { resolveShapeFrameId } from "../utils/frameUtils";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;
@@ -108,19 +108,8 @@ export class RectangleTool extends BaseTool {
             properties: { ...this.properties },
         };
 
-        const { addShape } = shapeSlice.getSlice();
-        const { activeFrameId } = frameSlice.getSlice();
-        const canvasMode =
-            canvasPropertiesSlice.getSlice().properties.mode.value;
-
-        if (canvasMode === CANVAS_MODES.PAGED) {
-            shape.frameId = activeFrameId;
-        }
-
-        addShape(shape);
-
-        this.startPoint = null;
-        this.seed = null;
+        shape.frameId = resolveShapeFrameId(shape);
+        shapeSlice.getSlice().addShape(shape);
         this.cleanUp();
     }
 
@@ -130,5 +119,11 @@ export class RectangleTool extends BaseTool {
         const width = Math.abs(e.tx - this.startPoint.x);
         const height = Math.abs(e.ty - this.startPoint.y);
         return { x, y, width, height };
+    }
+
+    cleanUp() {
+        this.startPoint = null;
+        this.seed = null;
+        super.cleanUp();
     }
 }

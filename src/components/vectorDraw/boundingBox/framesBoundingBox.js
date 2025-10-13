@@ -1,3 +1,5 @@
+import { computeFrameBoundingBox } from "./computeFrameBoundingBox";
+
 export const computeFramesBoundingBox = (frameIds, frames) => {
     if (!frameIds || frameIds.size <= 0) return null;
 
@@ -7,13 +9,7 @@ export const computeFramesBoundingBox = (frameIds, frames) => {
     let maxY = Number.NEGATIVE_INFINITY;
 
     frameIds.forEach((id) => {
-        const frame = frames[id];
-        if (!frame) return;
-
-        const x = frame.x;
-        const y = frame.y;
-        const width = frame.width.value;
-        const height = frame.height.value;
+        const { x, y, width, height } = computeFrameBoundingBox(frames[id]);
 
         minX = Math.min(minX, x);
         minY = Math.min(minY, y);

@@ -1,11 +1,11 @@
 import getStroke from "perfect-freehand";
 import { BaseTool } from "./BaseTool";
-import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { shapeSlice } from "../store/utils";
 import { TOOLS } from "./constants";
-import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { getSvgPathFromStroke } from "../utils/svgUtils";
 import { computePenBoundingBox } from "../boundingBox/penBoundingBox";
+import { resolveShapeFrameId } from "../utils/frameUtils";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;
@@ -126,15 +126,7 @@ export class PenTool extends BaseTool {
     }
 
     addShapeToCanvas(shape) {
-        const { addShape } = shapeSlice.getSlice();
-        const { activeFrameId } = frameSlice.getSlice();
-        const canvasMode =
-            canvasPropertiesSlice.getSlice().properties.mode.value;
-
-        if (canvasMode === CANVAS_MODES.PAGED) {
-            shape.frameId = activeFrameId;
-        }
-
-        addShape(shape);
+        shape.frameId = resolveShapeFrameId(shape);
+        shapeSlice.getSlice().addShape(shape);
     }
 }

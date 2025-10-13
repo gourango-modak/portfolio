@@ -3,6 +3,7 @@ import { SHAPES } from "../shapes/constants";
 import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { toViewportPoint } from "../utils/canvasUtils";
+import { resolveShapeFrameId } from "../utils/frameUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 
@@ -175,6 +176,7 @@ export class TextTool extends BaseTool {
             shape.frameId = activeFrameId;
         }
 
+        shape.frameId = resolveShapeFrameId(shape);
         addShape(shape);
     }
 

@@ -1,6 +1,7 @@
 import { generateId } from "../../../../utils/common";
 import { computeShapesBoundingBox } from "../../boundingBox/shapesBoundingBox";
 import { CANVAS_MODES } from "../../constants";
+import { resolveShapeFrameId } from "../../utils/frameUtils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
 export const createShapeSlice = (set, get) => ({
@@ -79,12 +80,15 @@ export const createShapeSlice = (set, get) => ({
             const shape = get().shapeSlice.shapes[id];
             if (!shape) return;
 
+            const frameId = resolveShapeFrameId(shape);
+
             set((state) => {
                 const newShapes = {
                     ...state.shapeSlice.shapes,
                     [id]: {
                         ...shape,
                         ...updatedProps,
+                        frameId,
                         version: shape.version + 1,
                     },
                 };

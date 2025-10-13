@@ -2,7 +2,7 @@ import { findShapeAtPoint, getShapeAtPoint } from "../../../shapes/utils";
 import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 import { BaseObjectHandler } from "./BaseObjectHandler";
-import { canvasPropertiesSlice } from "./../../../store/utils";
+import { canvasPropertiesSlice, frameSlice } from "./../../../store/utils";
 import { shapeResizeHandlers } from "../resize/shapeResizeHandlers";
 import { beginResizeCommand } from "../commands/beginResizeCommand";
 import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
@@ -81,15 +81,7 @@ export class ShapeHandler extends BaseObjectHandler {
 
     trySelect(tool, pointer, bounds) {
         const shapes = this.getObjects();
-
-        // 1. First, check if pointer is inside current selection bounds
-        if (bounds && isPointInRect(pointer, bounds)) {
-            tool.clickedInsideSelection = true;
-            this.beginMove(this.getSelectedIds(), shapes);
-            return true;
-        }
-
-        // 2. If not, check if pointer is over a new shape
+        // Check if pointer is over a new shape
         const clickedShape = getShapeAtPoint(pointer, shapes);
 
         if (clickedShape) {
@@ -98,10 +90,18 @@ export class ShapeHandler extends BaseObjectHandler {
             // If not already selected, deselect others and select this one
             if (!selectedIds.has(clickedShape.id)) {
                 this.deselectAll();
+                frameSlice.getSlice().deselectAll();
                 this.select(clickedShape.id);
             }
 
             // Start moving immediately
+            tool.clickedInsideSelection = true;
+            this.beginMove(this.getSelectedIds(), shapes);
+            return true;
+        }
+
+        // Check if pointer is inside current selection bounds
+        if (bounds && isPointInRect(pointer, bounds)) {
             tool.clickedInsideSelection = true;
             this.beginMove(this.getSelectedIds(), shapes);
             return true;
@@ -112,7 +112,6 @@ export class ShapeHandler extends BaseObjectHandler {
 
     applyResize(pointer, scaleX, scaleY, origin) {
         const selectedIds = this.getSelectedIds();
-        console.log("resize rect", selectedIds);
 
         selectedIds.forEach((id) => {
             const shape = this.resizeStartObjects[id];

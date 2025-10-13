@@ -1,6 +1,6 @@
-import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
-import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { shapeSlice } from "../store/utils";
+import { resolveShapeFrameId } from "../utils/frameUtils";
 import { getRoughArrowPath } from "../utils/svgUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
@@ -168,17 +168,7 @@ export class ArrowTool extends BaseTool {
     }
 
     _addShapeToCanvas(shape) {
-        const { addShape } = shapeSlice.getSlice();
-        const { activeFrameId } = frameSlice.getSlice();
-        const canvasMode =
-            canvasPropertiesSlice.getSlice().properties.mode.value;
-
-        // Assign frameId if canvas is in paged mode
-        if (canvasMode === CANVAS_MODES.PAGED) {
-            shape.frameId = activeFrameId;
-        }
-
-        // Add the final arrow shape to the canvas state
-        addShape(shape);
+        shape.frameId = resolveShapeFrameId(shape);
+        shapeSlice.getSlice().addShape(shape);
     }
 }
