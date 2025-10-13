@@ -1,14 +1,23 @@
+import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
+import { computeFramesBoundingBox } from "../../boundingBox/framesBoundingBox";
+import { computeShapesBoundingBox } from "../../boundingBox/shapesBoundingBox";
+import { frameSlice, shapeSlice } from "../../store/utils";
+import { createFrameSvg } from "../frames/frameSvg";
 import { shapeToSvgElement } from "../shapes";
 import { exportElementToImage } from "./exportElementToImage";
 
-export const exportCanvasToImage = async ({
-    shapes,
-    padding = 50,
-    scale = 1,
-}) => {
-    const exportGroup = createExportGroup(shapes);
-    const bbox = calculateBoundingBox(shapes);
+export const exportCanvasToImage = async ({ padding = 50, scale = 1 }) => {
+    const { shapes, shapeOrder } = shapeSlice.getSlice();
+    const { frames, frameOrder } = frameSlice.getSlice();
 
+    // 1. Create combined export group
+    const exportGroup = createExportGroup(frames, shapes);
+
+    const shapesBBox = computeShapesBoundingBox(shapeOrder, shapes);
+    const framesBBox = computeFramesBoundingBox(frameOrder, frames);
+    const bbox = combineBoundingBoxes([shapesBBox, framesBBox]);
+
+    // 3. Export to image
     return await exportElementToImage({
         element: exportGroup,
         bbox,
@@ -17,36 +26,21 @@ export const exportCanvasToImage = async ({
     });
 };
 
-function createExportGroup(shapes) {
+// Create an SVG <g> containing both frames and shapes
+function createExportGroup(frames, shapes) {
     const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    // Append frames first (so shapes appear on top)
+    Object.values(frames).forEach((frame) => {
+        const svgEl = createFrameSvg(frame);
+        if (svgEl) g.appendChild(svgEl);
+    });
+
+    // Append shapes
     Object.values(shapes).forEach((shape) => {
         const svgEl = shapeToSvgElement(shape);
         if (svgEl) g.appendChild(svgEl);
     });
+
     return g;
-}
-
-function calculateBoundingBox(shapesObj) {
-    const shapes = Object.values(shapesObj || {});
-    if (shapes.length === 0) return { x: 0, y: 0, width: 0, height: 0 };
-
-    let minX = Infinity,
-        minY = Infinity,
-        maxX = -Infinity,
-        maxY = -Infinity;
-
-    for (const shape of shapes) {
-        const { x = 0, y = 0, width = 0, height = 0 } = shape;
-        minX = Math.min(minX, x);
-        minY = Math.min(minY, y);
-        maxX = Math.max(maxX, x + width);
-        maxY = Math.max(maxY, y + height);
-    }
-
-    return {
-        x: minX,
-        y: minY,
-        width: maxX - minX,
-        height: maxY - minY,
-    };
 }

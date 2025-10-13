@@ -99,12 +99,10 @@ export const toolActionHandlers = {
         });
     },
     [TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE]: async () => {
-        const { shapes } = shapeSlice.getSlice();
-        const imgDataUrl = await exportCanvasToImage({ shapes, scale: 1 });
+        const imgDataUrl = await exportCanvasToImage({ scale: 1 });
         downloadFile(imgDataUrl, `Canvas.png`);
     },
     [TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_PDF]: async () => {
-        const { shapes } = shapeSlice.getSlice();
-        exportCanvasToPdf({ shapes, scale: 1, fileName: "Canvas.pdf" });
+        exportCanvasToPdf({ scale: 1, fileName: "Canvas.pdf" });
     },
 };
