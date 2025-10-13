@@ -1,6 +1,7 @@
 import { shapeHitTestingHandlers } from "../shapes/shapeHitTesting/handlers";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice, shapeSlice } from "../store/utils";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 
@@ -13,7 +14,7 @@ export class EraserTool extends BaseTool {
         size: {
             value: 20,
             label: "Eraser Size",
-            type: "slider",
+            type: PROPERTY_TYPES.NUMERIC,
             min: 5,
             max: 100,
             step: 1,

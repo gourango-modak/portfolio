@@ -4,6 +4,7 @@ import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 import { getRoughRectPath } from "../utils/svgUtils";
 import { resolveShapeFrameId } from "../utils/frameUtils";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;
@@ -18,13 +19,13 @@ export class RectangleTool extends BaseTool {
         color: {
             value: "#000",
             label: "Color",
-            type: "color",
+            type: PROPERTY_TYPES.COLOR,
             id: "rectColor",
         },
         strokeWidth: {
             value: 2,
             label: "Stroke Width",
-            type: "slider",
+            type: PROPERTY_TYPES.NUMERIC,
             min: 0,
             max: 15,
             step: 1,
@@ -32,11 +33,10 @@ export class RectangleTool extends BaseTool {
         roughness: {
             value: 3,
             label: "Roughness",
-            type: "slider",
             min: 0,
             max: 15,
             step: 1,
-        }, // 0 = clean
+        },
     };
 
     constructor(liveLayerRef) {

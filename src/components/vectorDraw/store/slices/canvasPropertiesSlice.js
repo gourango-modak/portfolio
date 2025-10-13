@@ -58,6 +58,11 @@ export const createCanvasPropertiesSlice = (set, get) => ({
             set((state) => {
                 if (state.canvasPropertiesSlice.properties.mode.value === mode)
                     return {};
+
+                if (mode === CANVAS_MODES.PAGED) {
+                    get().frameSlice.reset();
+                }
+
                 const updatedProperties = {
                     ...state.canvasPropertiesSlice.properties,
                     mode: {
@@ -103,6 +108,24 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                     },
                 },
             })),
+
+        getCanvasMode: () => {
+            return get().canvasPropertiesSlice.properties.mode.value;
+        },
+
+        isPagedCanvasMode: () => {
+            return (
+                get().canvasPropertiesSlice.getCanvasMode() ===
+                CANVAS_MODES.PAGED
+            );
+        },
+
+        isInfiniteCanvasMode: () => {
+            return (
+                get().canvasPropertiesSlice.getCanvasMode() ===
+                CANVAS_MODES.INFINITE
+            );
+        },
 
         serialize: () => {
             const { properties } = get().canvasPropertiesSlice;

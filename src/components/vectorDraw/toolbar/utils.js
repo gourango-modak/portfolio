@@ -1,5 +1,6 @@
 import { ORIENTATION } from "../../../utils/common";
 import { CANVAS_MODES, PANELS } from "../constants";
+import { frameSlice } from "../store/utils";
 
 export const getToolbarPanelInitialPosition = ({ orientation }) => {
     const panel = document.getElementById(PANELS.TOOLBAR_PANEL);

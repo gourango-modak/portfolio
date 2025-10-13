@@ -1,6 +1,5 @@
 import { generateId } from "../../../../utils/common";
 import { computeShapesBoundingBox } from "../../boundingBox/shapesBoundingBox";
-import { CANVAS_MODES } from "../../constants";
 import { resolveShapeFrameId } from "../../utils/frameUtils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
@@ -18,10 +17,8 @@ export const createShapeSlice = (set, get) => ({
             const { shapes } = get().shapeSlice;
             const { frameSlice, canvasPropertiesSlice } = get();
 
-            const isPagedMode =
-                canvasPropertiesSlice.properties.mode.value ===
-                CANVAS_MODES.PAGED;
-            const activeFrameId = frameSlice?.activeFrameId;
+            const isPagedMode = canvasPropertiesSlice.isPagedCanvasMode();
+            const activeFrameId = frameSlice.activeFrameId;
 
             // Return all shapes if not in paged mode
             if (!isPagedMode) return shapes;

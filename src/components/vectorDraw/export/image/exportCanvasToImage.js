@@ -1,3 +1,4 @@
+import { debugLog } from "../../../../utils/common";
 import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
 import { computeFramesBoundingBox } from "../../boundingBox/framesBoundingBox";
 import { computeShapesBoundingBox } from "../../boundingBox/shapesBoundingBox";
@@ -10,7 +11,16 @@ export const exportCanvasToImage = async ({ padding = 50, scale = 1 }) => {
     const { shapes, shapeOrder } = shapeSlice.getSlice();
     const { frames, frameOrder } = frameSlice.getSlice();
 
-    // 1. Create combined export group
+    // 1. Check if there’s anything to export
+    const hasShapes = shapeOrder.length > 0;
+    const hasFrames = frameOrder.length > 0;
+
+    if (!hasShapes && !hasFrames) {
+        debugLog("No shapes or frames found — nothing to export.");
+        return null;
+    }
+
+    // 2. Create combined export group
     const exportGroup = createExportGroup(frames, shapes);
 
     const shapesBBox = computeShapesBoundingBox(shapeOrder, shapes);

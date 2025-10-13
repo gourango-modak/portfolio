@@ -1,16 +1,17 @@
-import { SELECTION_RECT_PADDING } from "../components/SelectionOutlineLayer/constants";
-import { SHAPES } from "../shapes/constants";
 import { frameSlice, shapeSlice } from "../store/utils";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
+import {
+    createFrameTitleShape,
+    DEFAULT_FRAME_TITLE,
+    FRAME_TITLE_FONT_FAMILY,
+    FRAME_TITLE_FONT_SIZE,
+    FRAME_TITLE_OFFSET_Y,
+    FRAME_TITLE_WIDTH,
+} from "../utils/frameUtils";
 import { BaseTool } from "./BaseTool";
 import { TEXT_LINE_HEIGHT, TOOLS } from "./constants";
 
-const DEFAULT_TITLE = "Frame";
-const TITLE_FONT_SIZE = 12;
-const TITLE_FONT_FAMILY = "Arial";
-const TITLE_WIDTH = TITLE_FONT_SIZE * 4;
-const TITLE_TOP_FROM_FRAME = 3.5 * SELECTION_RECT_PADDING;
 const MIN_FRAME_SIZE = 50;
-
 export class FrameTool extends BaseTool {
     static name = TOOLS.FRAME;
     static label = "Frame Tool";
@@ -19,23 +20,23 @@ export class FrameTool extends BaseTool {
 
     static defaultProperties = {
         borderColor: {
-            value: "rgba(0,0,0,0.2)",
+            value: "#00000033",
             label: "Border Color",
-            type: "color",
+            type: PROPERTY_TYPES.COLOR,
             id: "frameBorderColor",
         },
         strokeWidth: {
             value: 1.5,
             label: "Border Width",
-            type: "slider",
+            type: PROPERTY_TYPES.NUMERIC,
             min: 0,
             max: 15,
             step: 1,
         },
         bgColor: {
             value: "transparent",
-            label: "Fill Color",
-            type: "color",
+            label: "Frame Background",
+            type: PROPERTY_TYPES.COLOR,
             id: "frameFillColor",
         },
     };
@@ -47,22 +48,25 @@ export class FrameTool extends BaseTool {
     }
 
     // Helper to create live preview title
-    createLiveTitleElement({ x, y }, text = DEFAULT_TITLE) {
+    createLiveTitleElement({ x, y }, text = DEFAULT_FRAME_TITLE) {
         const foreignObj = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "foreignObject"
         );
 
         foreignObj.setAttribute("x", x);
-        foreignObj.setAttribute("y", y - TITLE_TOP_FROM_FRAME);
-        foreignObj.setAttribute("width", TITLE_WIDTH);
-        foreignObj.setAttribute("height", TITLE_FONT_SIZE * TEXT_LINE_HEIGHT);
+        foreignObj.setAttribute("y", y - FRAME_TITLE_OFFSET_Y);
+        foreignObj.setAttribute("width", FRAME_TITLE_WIDTH);
+        foreignObj.setAttribute(
+            "height",
+            FRAME_TITLE_FONT_SIZE * TEXT_LINE_HEIGHT
+        );
         foreignObj.setAttribute("pointer-events", "none");
 
         const div = document.createElement("div");
         div.style.color = this.properties.borderColor.value;
-        div.style.fontSize = `${TITLE_FONT_SIZE}px`;
-        div.style.fontFamily = TITLE_FONT_FAMILY;
+        div.style.fontSize = `${FRAME_TITLE_FONT_SIZE}px`;
+        div.style.fontFamily = FRAME_TITLE_FONT_FAMILY;
         div.style.userSelect = "none";
         div.style.pointerEvents = "none";
         div.style.whiteSpace = "nowrap";
@@ -71,24 +75,6 @@ export class FrameTool extends BaseTool {
 
         foreignObj.appendChild(div);
         return foreignObj;
-    }
-
-    createTitleShape(x, y, text = DEFAULT_TITLE) {
-        return {
-            type: SHAPES.TEXT,
-            x,
-            y: y - TITLE_TOP_FROM_FRAME,
-            width: TITLE_WIDTH,
-            height: TITLE_FONT_SIZE * TEXT_LINE_HEIGHT,
-            text,
-            properties: {
-                color: { value: this.properties.borderColor.value },
-                fontSize: { value: TITLE_FONT_SIZE },
-                fontFamily: { value: TITLE_FONT_FAMILY },
-            },
-            isEditing: false,
-            locked: true,
-        };
     }
 
     onPointerDown(e) {
@@ -137,10 +123,10 @@ export class FrameTool extends BaseTool {
 
         const frameId = frameSlice.getSlice().addFrame(frame);
 
-        const titleShape = this.createTitleShape(
-            this.startPoint.x,
-            this.startPoint.y
-        );
+        const titleShape = createFrameTitleShape({
+            ...this.startPoint,
+            color: this.properties.borderColor.value,
+        });
         titleShape.frameId = frameId;
         const titleShapeId = shapeSlice.getSlice().addShape(titleShape);
         frameSlice.getSlice().updateFrame(frameId, { titleShapeId });

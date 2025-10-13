@@ -17,7 +17,8 @@ export const downloadFile = (data, fileName) => {
     } else if (typeof data === "string") {
         url = data; // assume already a URL (data URL or external URL)
     } else {
-        throw new Error("Invalid data type for download");
+        console.error("Invalid data type for download");
+        return;
     }
 
     const a = document.createElement("a");

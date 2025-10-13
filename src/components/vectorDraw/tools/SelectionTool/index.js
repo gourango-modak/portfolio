@@ -9,6 +9,7 @@ import {
     shapeSlice,
 } from "../../store/utils";
 import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
+import { CANVAS_MODES } from "../../constants";
 
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
@@ -37,6 +38,11 @@ export class SelectionTool extends BaseTool {
         super(liveLayerRef);
         this.resetPointerState();
         this.handlers = Object.values(canvasObjectRegistry);
+
+        const { getCanvasMode } = canvasPropertiesSlice.getSlice();
+        if (getCanvasMode() === CANVAS_MODES.PAGED) {
+            this.handlers = [canvasObjectRegistry.SHAPE];
+        }
 
         // Set the corresponding slice for each handler
         this.handlers.forEach((handler) => {

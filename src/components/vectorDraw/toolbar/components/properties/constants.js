@@ -1,11 +1,14 @@
 import { ColorProperty } from "./ColorProperty";
-import { NumberProperty } from "./NumberProperty";
-import { SliderProperty } from "./SliderProperty";
+import { InputProperty } from "./InputProperty";
+
+export const PROPERTY_TYPES = {
+    COLOR: "COLOR",
+    NUMERIC: "NUMERIC",
+};
 
 export const TOOL_PROPERTIES_COMPONENTS = {
-    color: ColorProperty,
-    numeric: NumberProperty,
-    slider: SliderProperty,
+    [PROPERTY_TYPES.COLOR]: ColorProperty,
+    [PROPERTY_TYPES.NUMERIC]: InputProperty,
 };
 
 export const INSPECTOR_PANEL_TARGETS = {

@@ -1,6 +1,8 @@
 import { generateId } from "../../../../utils/common";
 import { COMMANDS } from "./commandHistorySlice/constants";
 import { computeFramesBoundingBox } from "./../../boundingBox/framesBoundingBox";
+import { PROPERTY_TYPES } from "../../toolbar/components/properties/constants";
+import { SHAPES } from "../../shapes/constants";
 
 // Margin from the viewport edges to determine initial frame size
 const viewportMarginX = 100;
@@ -16,18 +18,32 @@ const initialFrameState = {
         width: {
             value: window.innerWidth - viewportMarginX,
             label: "Width",
-            type: "numeric",
+            type: PROPERTY_TYPES.NUMERIC,
         },
         height: {
             value: window.innerHeight - viewportMarginY,
             label: "Height",
-            type: "numeric",
+            type: PROPERTY_TYPES.NUMERIC,
         },
         bgColor: {
             value: "#fff",
             label: "Frame Background",
-            type: "color",
+            type: PROPERTY_TYPES.COLOR,
             id: "frameColor",
+        },
+        borderColor: {
+            value: "#00000033",
+            label: "Border Color",
+            type: PROPERTY_TYPES.COLOR,
+            id: "frameBorderColor",
+        },
+        strokeWidth: {
+            value: 1,
+            label: "Border Width",
+            type: PROPERTY_TYPES.NUMERIC,
+            min: 0,
+            max: 15,
+            step: 1,
         },
     },
 };
@@ -42,7 +58,6 @@ export const createFrameSlice = (set, get) => ({
                     ...state.frameSlice,
                     selectedFrameIds: new Set(),
                     selectedFramesBounds: null,
-                    activeFrameId: null,
                 },
             })),
 
@@ -114,10 +129,10 @@ export const createFrameSlice = (set, get) => ({
                 };
             }),
 
-        addFrameFromTemplate: () =>
-            set((state) => {
-                const id = generateId();
+        addFrameFromTemplate: () => {
+            const id = generateId();
 
+            set((state) => {
                 const viewportWidth = window.innerWidth;
                 const viewportHeight = window.innerHeight;
 
@@ -148,7 +163,10 @@ export const createFrameSlice = (set, get) => ({
                         selectedShapesBounds: null,
                     },
                 };
-            }),
+            });
+
+            return id;
+        },
         addFrame: (frame) => {
             const id = generateId();
             const newFrame = {
@@ -229,11 +247,36 @@ export const createFrameSlice = (set, get) => ({
             return state.frames[state.activeFrameId] || null;
         },
         reset: () =>
-            set(() => ({
-                frameSlice: {
-                    ...initialFrameState,
-                },
-            })),
+            set((state) => {
+                const frames = state.frameSlice.frames;
+                const titleShapeIds = Object.values(frames).map(
+                    (f) => f.titleShapeId
+                );
+                const { shapes, shapeOrder } = state.shapeSlice;
+
+                // Remove all shapes that are frame titles
+                const filteredShapeOrder = shapeOrder.filter(
+                    (id) => !titleShapeIds.includes(id)
+                );
+
+                // Rebuild shapes object
+                const filteredShapes = {};
+                filteredShapeOrder.forEach((id) => {
+                    filteredShapes[id] = shapes[id];
+                });
+
+                return {
+                    frameSlice: {
+                        ...state.frameSlice,
+                        ...initialFrameState,
+                    },
+                    shapeSlice: {
+                        ...state.shapeSlice,
+                        shapes: filteredShapes,
+                        shapeOrder: filteredShapeOrder,
+                    },
+                };
+            }),
 
         serialize: () => {
             const { frames, frameOrder, activeFrameId, frameTemplate } =

@@ -1,5 +1,6 @@
 import { SHAPES } from "../shapes/constants";
 import { shapeSlice } from "../store/utils";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 import { resolveShapeFrameId } from "../utils/frameUtils";
 import { getRoughArrowPath } from "../utils/svgUtils";
 import { BaseTool } from "./BaseTool";
@@ -16,13 +17,13 @@ export class ArrowTool extends BaseTool {
         color: {
             value: "#000",
             label: "Color",
-            type: "color",
+            type: PROPERTY_TYPES.COLOR,
             id: "arrowColor",
         },
         strokeWidth: {
             value: 2,
             label: "Stroke Width",
-            type: "slider",
+            type: PROPERTY_TYPES.NUMERIC,
             min: 1,
             max: 10,
             step: 1,
@@ -30,7 +31,6 @@ export class ArrowTool extends BaseTool {
         roughness: {
             value: 1.75,
             label: "Roughness",
-            type: "slider",
             min: 0,
             max: 4,
             step: 0.25,

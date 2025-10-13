@@ -119,10 +119,12 @@ export class BaseObjectHandler {
             tool.moving = true;
         }
 
-        selectedIds.forEach((id) => {
-            const obj = objects[id];
-            this.updateObject(id, { x: obj.x + dx, y: obj.y + dy });
-        });
+        if (selectedIds.size > 0) {
+            selectedIds.forEach((id) => {
+                const obj = objects[id];
+                this.updateObject(id, { x: obj.x + dx, y: obj.y + dy });
+            });
+        }
     }
 
     computePointerDelta(tool, pointer) {

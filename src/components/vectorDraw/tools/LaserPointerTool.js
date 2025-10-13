@@ -2,6 +2,7 @@ import { getStroke } from "perfect-freehand";
 import { getSvgPathFromStroke } from "../utils/svgUtils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 
 export class LaserPointerTool extends BaseTool {
     static name = TOOLS.LASER_POINTER;
@@ -9,11 +10,15 @@ export class LaserPointerTool extends BaseTool {
     static shortcut = { code: "KeyL" };
 
     static defaultProperties = {
-        color: { value: "#FF0000", label: "Color", type: "color" },
+        color: {
+            value: "#FF0000",
+            label: "Color",
+            type: PROPERTY_TYPES.COLOR,
+        },
         strokeWidth: {
             value: 8,
             label: "Width",
-            type: "slider",
+            type: PROPERTY_TYPES.NUMERIC,
             min: 1,
             max: 30,
             step: 1,
@@ -21,7 +26,6 @@ export class LaserPointerTool extends BaseTool {
         duration: {
             value: 800,
             label: "Fade Duration (ms)",
-            type: "slider",
             min: 100,
             max: 3000,
             step: 100,
@@ -29,7 +33,6 @@ export class LaserPointerTool extends BaseTool {
         smoothing: {
             value: 0.6,
             label: "Smoothing",
-            type: "slider",
             min: 0,
             max: 1,
             step: 0.1,

@@ -6,6 +6,7 @@ import { SHAPES } from "../shapes/constants";
 import { getSvgPathFromStroke } from "../utils/svgUtils";
 import { computePenBoundingBox } from "../boundingBox/penBoundingBox";
 import { resolveShapeFrameId } from "../utils/frameUtils";
+import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;
@@ -14,12 +15,20 @@ export class PenTool extends BaseTool {
     static cursor = "crosshair";
 
     static defaultProperties = {
-        color: { value: "#000", label: "Color", type: "color", id: "penColor" },
-        strokeWidth: { value: 16, label: "Stroke Width", type: "slider" },
+        color: {
+            value: "#000",
+            label: "Color",
+            type: PROPERTY_TYPES.COLOR,
+            id: "penColor",
+        },
+        strokeWidth: {
+            value: 16,
+            label: "Stroke Width",
+            type: PROPERTY_TYPES.NUMERIC,
+        },
         streamline: {
             value: 0.5,
             label: "Streamline",
-            type: "slider",
             min: 0,
             max: 1,
             step: 0.1,
@@ -27,7 +36,6 @@ export class PenTool extends BaseTool {
         thinning: {
             value: 0,
             label: "Thinning",
-            type: "slider",
             min: -1,
             max: 1,
             step: 0.1,
@@ -35,7 +43,6 @@ export class PenTool extends BaseTool {
         smoothing: {
             value: 0.5,
             label: "Smoothing",
-            type: "slider",
             min: 0,
             max: 1,
             step: 0.1,
