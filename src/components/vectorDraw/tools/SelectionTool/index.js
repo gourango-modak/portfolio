@@ -1,19 +1,14 @@
-import { frameSlice, shapeSlice } from "../../store/utils";
 import { BaseTool } from "../BaseTool";
 import { SELECTION_MODE, TOOLS } from "../constants";
-import { clearSelection } from "./interactions/clearSelection";
-import { tryStartResize } from "./interactions/tryStartResize";
-import { tryStartMove } from "./interactions/tryStartMove";
-import { trySelectShape } from "./interactions/trySelectShape";
-import { updateSelectionCursor } from "./helpers/updateSelectionCursor";
-import { handleResizeSelection } from "./interactions/handleResizeSelection";
-import { handleMoveSelection } from "./interactions/handleMoveSelection";
-import { handleDragSelection } from "./interactions/handleDragSelection";
-import { finalizeResizeSelection } from "./interactions/finalizeResizeSelection";
-import { finalizeMoveSelection } from "./interactions/finalizeMoveSelection";
-import { finalizeDragSelection } from "./interactions/finalizeDragSelection";
-import { trySelectFrame } from "./interactions/trySelectFrame";
-import { COMMANDS } from "../../store/slices/commandHistorySlice/constants";
+import { canvasObjectRegistry } from "./handlers/canvasObjectRegistry";
+import { getRectFromPoints } from "../../utils/geometryUtils";
+import { getRectToPathData } from "../../utils/svgUtils";
+import {
+    canvasPropertiesSlice,
+    frameSlice,
+    shapeSlice,
+} from "../../store/utils";
+import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
 
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
@@ -41,6 +36,15 @@ export class SelectionTool extends BaseTool {
     constructor(liveLayerRef) {
         super(liveLayerRef);
         this.resetPointerState();
+        this.handlers = Object.values(canvasObjectRegistry);
+
+        // Set the corresponding slice for each handler
+        this.handlers.forEach((handler) => {
+            if (handler.type === "SHAPE")
+                handler.setSlice(() => shapeSlice.getSlice());
+            else if (handler.type === "FRAME")
+                handler.setSlice(() => frameSlice.getSlice());
+        });
     }
 
     resetPointerState() {
@@ -53,13 +57,6 @@ export class SelectionTool extends BaseTool {
         this.clickedInsideSelection = false; // Whether pointer was inside current selection
 
         this.resizing = false;
-        this.activeHandle = null;
-
-        this.originalShapeBounds = null;
-        this.originalShapes = null;
-
-        this.originalFrameBounds = null;
-        this.originalFrames = null;
     }
 
     onPointerDown(e) {
@@ -67,137 +64,90 @@ export class SelectionTool extends BaseTool {
         this.startPoint = pointer;
         this.lastPointer = pointer;
 
-        const { selectedShapesBounds, selectedShapeIds, getShapes } =
-            shapeSlice.getSlice();
-        const shapes = getShapes();
-        const { frames, selectedFrameIds, selectedFramesBounds } =
-            frameSlice.getSlice();
+        // Step 0: compute combined bounds of all selected objects across handlers
+        const boundsArray = this.handlers
+            .map((h) => h.getSelectedBounds())
+            .filter(Boolean); // remove nulls
+        const combinedBounds = combineBoundingBoxes(boundsArray);
 
-        tryStartResize(
-            this,
-            e,
-            selectedShapesBounds,
-            selectedShapeIds,
-            shapes,
-            "SHAPES"
-        );
-        tryStartResize(
-            this,
-            e,
-            selectedFramesBounds,
-            selectedFrameIds,
-            frames,
-            "FRAMES"
-        );
-        trySelectFrame(this, pointer, selectedFrameIds, frames);
-        trySelectShape(this, pointer, selectedShapeIds, shapes);
-        tryStartMove(
-            this,
-            pointer,
-            selectedShapesBounds,
-            selectedShapeIds,
-            shapes
-        );
-        clearSelection(this);
+        // Step 1: Try selecting in all handlers
+        for (const handler of this.handlers) {
+            if (!handler.trySelect(this, pointer, combinedBounds)) {
+                handler.clearSelection(this);
+            }
+        }
+
+        this.handlers.forEach((handler) => {
+            handler.tryStartResize(this, e, combinedBounds);
+        });
     }
 
     onPointerMove(e) {
         const pointer = { x: e.tx, y: e.ty };
-        const {
-            getShapes,
-            selectedShapeIds,
-            selectedShapesBounds,
-            updateShape,
-        } = shapeSlice.getSlice();
-        const shapes = getShapes();
-
-        const { frames, selectedFrameIds, updateFrame, selectedFramesBounds } =
-            frameSlice.getSlice();
-
-        updateSelectionCursor(
-            this,
-            pointer,
-            shapes,
-            frames,
-            selectedShapeIds,
-            selectedShapesBounds
-        );
+        this.updateCursorWithFallback(pointer);
 
         if (!this.startPoint) return;
 
-        handleResizeSelection(
-            this,
-            pointer,
-            selectedShapeIds,
-            this.originalShapes,
-            this.originalShapeBounds,
-            selectedShapesBounds,
-            updateShape
+        this.handlers.forEach((handler) => {
+            handler.handleResize(this, pointer);
+            handler.handleMove(this, pointer);
+        });
+
+        // Update selection marquee rectangle visually
+        this.updateSelectionMarquee(pointer);
+        this.handlers.forEach((handler) =>
+            handler.applyMarqueeSelection(this, pointer)
         );
-        handleResizeSelection(
-            this,
-            pointer,
-            selectedFrameIds,
-            this.originalFrames,
-            this.originalFrameBounds,
-            selectedFramesBounds,
-            updateFrame
-        );
-        handleMoveSelection(
-            this,
-            pointer,
-            shapes,
-            selectedShapeIds,
-            updateShape,
-            frames,
-            selectedFrameIds,
-            updateFrame
-        );
-        handleDragSelection(this, pointer);
+
         this.lastPointer = pointer;
     }
 
-    onPointerUp(e) {
-        const { getShapes, selectedShapeIds, deselectAll, selectShape } =
-            shapeSlice.getSlice();
-        const shapes = getShapes();
-
-        const { frames, selectedFrameIds } = frameSlice.getSlice();
-
-        finalizeResizeSelection(
-            this,
-            selectedShapeIds,
-            shapes,
-            COMMANDS.UPDATE_SHAPES
+    onPointerUp() {
+        this.handlers.forEach((handler) =>
+            handler.commitActiveOperations(this)
         );
-        finalizeResizeSelection(
-            this,
-            selectedFrameIds,
-            frames,
-            COMMANDS.UPDATE_FRAMES
-        );
-        finalizeMoveSelection(
-            this,
-            selectedShapeIds,
-            shapes,
-            COMMANDS.UPDATE_SHAPES
-        );
-        finalizeMoveSelection(
-            this,
-            selectedFrameIds,
-            frames,
-            COMMANDS.UPDATE_FRAMES
-        );
-        finalizeDragSelection(
-            this,
-            this.startPoint,
-            { x: e.tx, y: e.ty },
-            shapes,
-            deselectAll,
-            selectShape
-        );
-
         this.cleanUp();
         this.resetPointerState();
+    }
+
+    updateCursorWithFallback(pointer) {
+        const boundsArray = this.handlers
+            .map((h) => h.getSelectedBounds())
+            .filter(Boolean); // remove nulls
+        const combinedBounds = combineBoundingBoxes(boundsArray);
+
+        const anyUpdated = this.handlers.some((handler) =>
+            handler.updateCursor(this, pointer, combinedBounds)
+        );
+
+        if (!anyUpdated) {
+            canvasPropertiesSlice.getSlice().setCursor("default");
+        }
+    }
+
+    updateSelectionMarquee(pointer) {
+        if (this.clickedInsideSelection || this.resizing || this.moving) return;
+
+        if (!this.dragging) {
+            this.dragging = true;
+            this.createLiveElement();
+
+            // Apply live rectangle styles
+            this.liveElement.setAttribute(
+                "stroke",
+                this.properties.borderColor.value
+            );
+            this.liveElement.setAttribute(
+                "stroke-width",
+                this.properties.borderWidth.value
+            );
+            this.liveElement.setAttribute(
+                "fill",
+                this.properties.fillColor.value
+            );
+        }
+
+        const rect = getRectFromPoints(this.startPoint, pointer);
+        this.liveElement.setAttribute("d", getRectToPathData(rect));
     }
 }

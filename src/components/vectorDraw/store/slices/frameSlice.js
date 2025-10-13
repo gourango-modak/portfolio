@@ -1,6 +1,6 @@
 import { generateId } from "../../../../utils/common";
-import { computeFramesBoundingBox } from "../../tools/utils";
 import { COMMANDS } from "./commandHistorySlice/constants";
+import { computeFramesBoundingBox } from "./../../boundingBox/framesBoundingBox";
 
 // Margin from the viewport edges to determine initial frame size
 const viewportMarginX = 100;
@@ -41,18 +41,26 @@ export const createFrameSlice = (set, get) => ({
                 frameSlice: {
                     ...state.frameSlice,
                     selectedFrameIds: new Set(),
+                    selectedFramesBounds: null,
                     activeFrameId: null,
                 },
             })),
 
         selectFrame: (frameId) =>
             set((state) => {
-                const selected = new Set(state.frameSlice.selectedFrameIds);
-                selected.add(frameId);
+                const newSelected = new Set(state.frameSlice.selectedFrameIds);
+                newSelected.add(frameId);
+
+                const newBounds = computeFramesBoundingBox(
+                    newSelected,
+                    state.frameSlice.frames
+                );
+
                 return {
                     frameSlice: {
                         ...state.frameSlice,
-                        selectedFrameIds: selected,
+                        selectedFrameIds: newSelected,
+                        selectedFramesBounds: newBounds,
                         activeFrameId: frameId,
                     },
                 };

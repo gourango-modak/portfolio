@@ -1,15 +1,15 @@
 import { getRoughRectPath } from "../../../utils/svgUtils";
 
-export const resizeRectangle = ({ object: shape, scaleX, scaleY, pivot }) => {
-    const dx = shape.x - pivot.x;
-    const dy = shape.y - pivot.y;
+export const resizeRectShape = ({ shape, scaleX, scaleY, origin }) => {
+    const dx = shape.x - origin.x;
+    const dy = shape.y - origin.y;
     const scaledWidth = shape.width * scaleX;
     const scaledHeight = shape.height * scaleY;
 
     return {
         ...shape,
-        x: pivot.x + dx * scaleX,
-        y: pivot.y + dy * scaleY,
+        x: origin.x + dx * scaleX,
+        y: origin.y + dy * scaleY,
         width: scaledWidth,
         height: scaledHeight,
         path: getRoughRectPath(

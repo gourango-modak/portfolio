@@ -5,7 +5,7 @@ import { TOOLS } from "./constants";
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { getSvgPathFromStroke } from "../utils/svgUtils";
-import { computePenBoundingBox } from "../shapes/boundingBox/penBoundingBox";
+import { computePenBoundingBox } from "../boundingBox/penBoundingBox";
 
 export class PenTool extends BaseTool {
     static name = TOOLS.PEN;

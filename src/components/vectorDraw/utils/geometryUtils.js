@@ -44,12 +44,12 @@ export const distancePointToSegment = (pt, p1, p2) => {
     return Math.sqrt(dx * dx + dy * dy);
 };
 
-export const isPointInRect = ({ x, y }, rect) => {
+export const isPointInRect = ({ x, y }, rect, tolerance = 10) => {
     return (
-        x >= rect.x &&
-        x <= rect.x + rect.width &&
-        y >= rect.y &&
-        y <= rect.y + rect.height
+        x >= rect.x - tolerance * 2 &&
+        x <= rect.x + rect.width + tolerance * 2 &&
+        y >= rect.y - tolerance * 2 &&
+        y <= rect.y + rect.height + tolerance * 2
     );
 };
 

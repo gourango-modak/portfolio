@@ -1,4 +1,4 @@
-import { SHAPES } from "../constants";
+import { SHAPES } from "../shapes/constants";
 import { computeArrowBoundingBox } from "./arrowBoundingBox";
 import { computeBoundingBox } from "./defaultBoundingBox";
 

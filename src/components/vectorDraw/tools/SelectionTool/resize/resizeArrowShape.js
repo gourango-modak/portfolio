@@ -1,13 +1,13 @@
 import { getRoughArrowPath } from "../../../utils/svgUtils";
 import { resizeEndpoint } from "./resizeEndpoint";
 
-export const resizeArrow = ({
-    object: shape,
+export const resizeArrowShape = ({
+    shape,
     handle,
     pointer,
     scaleX,
     scaleY,
-    pivot,
+    origin,
 }) => {
     const resizeShape = resizeEndpoint({
         shape,
@@ -15,7 +15,7 @@ export const resizeArrow = ({
         pointer,
         scaleX,
         scaleY,
-        pivot,
+        origin,
         endpointHandles: ["line-start", "line-end"],
         getEndpoints: (arrow) => [
             { x: arrow.x1, y: arrow.y1 },

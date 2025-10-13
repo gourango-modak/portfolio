@@ -1,6 +1,6 @@
+import { computeShapeBoundingBox } from "../../boundingBox/shapeBoundingBox";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { SHAPES } from "../../shapes/constants";
-import { computeShapeBoundingBox } from "../../shapes/utils";
 import {
     useCanvasPan,
     useCanvasScale,

@@ -1,6 +1,6 @@
-import { computeShapesBoundingBox } from "../../../../shapes/utils";
-import { computeFramesBoundingBox } from "../../../../tools/utils";
 import { COMMANDS } from "../constants";
+import { computeShapesBoundingBox } from "./../../../../boundingBox/shapesBoundingBox";
+import { computeFramesBoundingBox } from "./../../../../boundingBox/framesBoundingBox";
 
 export const executeCommandHandlers = {
     [COMMANDS.ADD_SHAPE]: (set, cmd) =>

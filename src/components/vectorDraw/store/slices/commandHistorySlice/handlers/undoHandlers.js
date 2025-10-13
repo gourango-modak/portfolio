@@ -1,6 +1,6 @@
-import { computeShapesBoundingBox } from "../../../../shapes/utils";
-import { computeFramesBoundingBox } from "../../../../tools/utils";
+import { computeShapesBoundingBox } from "../../../../boundingBox/shapesBoundingBox";
 import { COMMANDS } from "../constants";
+import { computeFramesBoundingBox } from "./../../../../boundingBox/framesBoundingBox";
 
 export const undoHandlers = {
     [COMMANDS.ADD_SHAPE]: (set, cmd) =>

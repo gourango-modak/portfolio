@@ -1,10 +1,10 @@
 export const resizeEndpoint = ({
-    object: shape,
+    shape,
     handle,
     pointer,
     scaleX,
     scaleY,
-    pivot,
+    origin,
     endpointHandles,
     getEndpoints,
     setEndpoints,
@@ -30,10 +30,10 @@ export const resizeEndpoint = ({
         y: shape.y + p.y,
     }));
 
-    // Scale endpoints around pivot (absolute)
+    // Scale endpoints around origin (absolute)
     const scaledAbs = absEndpoints.map((p) => ({
-        x: pivot.x + (p.x - pivot.x) * scaleX,
-        y: pivot.y + (p.y - pivot.y) * scaleY,
+        x: origin.x + (p.x - origin.x) * scaleX,
+        y: origin.y + (p.y - origin.y) * scaleY,
     }));
 
     // Compute new bounding box to update shape.x/y

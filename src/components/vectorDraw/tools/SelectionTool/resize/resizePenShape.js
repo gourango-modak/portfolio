@@ -1,4 +1,4 @@
-export function resizePen({ object: shape, scaleX, scaleY, pivot }) {
+export function resizePenShape({ shape, scaleX, scaleY, origin }) {
     const originalWidth = shape.width || 0;
     const originalHeight = shape.height || 0;
 
@@ -6,12 +6,12 @@ export function resizePen({ object: shape, scaleX, scaleY, pivot }) {
     const newWidth = originalWidth * scaleX;
     const newHeight = originalHeight * scaleY;
 
-    const dx = shape.x - pivot.x;
-    const dy = shape.y - pivot.y;
+    const dx = shape.x - origin.x;
+    const dy = shape.y - origin.y;
 
-    // Compute new x/y based on pivot
-    const newX = pivot.x + dx * scaleX;
-    const newY = pivot.y + dy * scaleY;
+    // Compute new x/y based on origin
+    const newX = origin.x + dx * scaleX;
+    const newY = origin.y + dy * scaleY;
 
     const scaledPoints = shape.points.map(({ x, y, pressure }) => ({
         x: x * scaleX,

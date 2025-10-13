@@ -12,6 +12,7 @@ import { GROUP_SELECTION_RECT_PADDING } from "./constants";
 import { SelectionRect } from "./SelectionRect";
 import { ShapeOutline } from "./ShapeOutline";
 import { FrameOutline } from "./FrameOutline";
+import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
 
 export const SelectionOutlineLayer = () => {
     // Shapes
@@ -26,10 +27,8 @@ export const SelectionOutlineLayer = () => {
 
     useRenderLogger("SelectionOutlineLayer");
 
-    const multipleSelectedShapes = selectedShapeIds.size > 1;
-    const multipleSelectedFrames = selectedFrameIds.size > 1;
-
-    const renderShapeOutlines = () =>
+    // Render individual outlines
+    const renderShapeOutlines = (multipleSelected) =>
         Array.from(selectedShapeIds).map((id) => {
             const shape = shapes[id];
             if (!shape) return null;
@@ -37,13 +36,13 @@ export const SelectionOutlineLayer = () => {
                 <g key={id}>
                     <ShapeOutline
                         shape={shape}
-                        multipleSelected={multipleSelectedShapes}
+                        multipleSelected={multipleSelected}
                     />
                 </g>
             );
         });
 
-    const renderFrameOutlines = () =>
+    const renderFrameOutlines = (multipleSelected) =>
         Array.from(selectedFrameIds).map((id) => {
             const frame = frames[id];
             if (!frame) return null;
@@ -51,48 +50,32 @@ export const SelectionOutlineLayer = () => {
                 <g key={id}>
                     <FrameOutline
                         frame={frame}
-                        multipleSelected={multipleSelectedFrames}
+                        multipleSelected={multipleSelected}
                     />
                 </g>
             );
         });
 
-    const renderGroupOutline = () => {
-        // For shapes
-        const shapeGroup =
-            multipleSelectedShapes && selectedShapesBounds ? (
-                <SelectionRect
-                    bounds={selectedShapesBounds}
-                    padding={GROUP_SELECTION_RECT_PADDING}
-                    dashed
-                    showHandles
-                />
-            ) : null;
-
-        // For frames
-        const frameGroup =
-            multipleSelectedFrames && selectedFramesBounds ? (
-                <SelectionRect
-                    bounds={selectedFramesBounds}
-                    padding={GROUP_SELECTION_RECT_PADDING}
-                    dashed
-                    showHandles
-                />
-            ) : null;
-
-        return (
-            <>
-                {shapeGroup}
-                {frameGroup}
-            </>
-        );
-    };
+    const totalSelectedCount = selectedShapeIds.size + selectedFrameIds.size;
+    const multipleSelected = totalSelectedCount > 1;
+    const combinedBounds = multipleSelected
+        ? combineBoundingBoxes([selectedShapesBounds, selectedFramesBounds])
+        : null;
 
     return (
         <>
-            {renderShapeOutlines()}
-            {renderFrameOutlines()}
-            {renderGroupOutline()}
+            {renderShapeOutlines(multipleSelected)}
+            {renderFrameOutlines(multipleSelected)}
+
+            {/* Render single group selection rectangle */}
+            {combinedBounds && (
+                <SelectionRect
+                    bounds={combinedBounds}
+                    padding={GROUP_SELECTION_RECT_PADDING}
+                    dashed
+                    showHandles
+                />
+            )}
         </>
     );
 };

@@ -1,4 +1,4 @@
-import { computeBoundingBox } from "../boundingBox/defaultBoundingBox";
+import { computeBoundingBox } from "../../boundingBox/defaultBoundingBox";
 
 export const testTextHit = (shape, x, y, options = { type: "point" }) => {
     const bounds = computeBoundingBox(shape);

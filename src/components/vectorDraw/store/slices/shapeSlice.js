@@ -1,6 +1,6 @@
 import { generateId } from "../../../../utils/common";
+import { computeShapesBoundingBox } from "../../boundingBox/shapesBoundingBox";
 import { CANVAS_MODES } from "../../constants";
-import { computeShapesBoundingBox } from "../../shapes/utils";
 import { COMMANDS } from "./commandHistorySlice/constants";
 
 export const createShapeSlice = (set, get) => ({

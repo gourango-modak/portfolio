@@ -1,0 +1,170 @@
+import { BaseObjectHandler } from "./BaseObjectHandler";
+import { beginMoveCommand } from "../commands/beginMoveCommand";
+import { getBoundingBoxHandleAtPoint } from "../../../components/SelectionOutlineLayer/utils";
+import { canvasPropertiesSlice } from "../../../store/utils";
+import { resizeFrame } from "../resize/resizeFrame";
+import { beginResizeCommand } from "../commands/beginResizeCommand";
+import { finalizeMoveCommand } from "../commands/finalizeMoveCommand";
+import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
+import { getRectFromPoints, isPointInRect } from "../../../utils/geometryUtils";
+import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
+
+export class FrameHandler extends BaseObjectHandler {
+    getSelectedIds() {
+        return this.getSlice().selectedFrameIds;
+    }
+
+    getSelectedBounds() {
+        return this.getSlice().selectedFramesBounds;
+    }
+
+    getObjects() {
+        return this.getSlice().frames;
+    }
+
+    deselectAll() {
+        this.getSlice().deselectAll();
+    }
+
+    select(id) {
+        this.getSlice().selectFrame(id);
+    }
+
+    updateObject(id, props) {
+        const { updateFrame } = this.getSlice();
+        updateFrame(id, props);
+    }
+
+    beginMove(selectedIds, objects) {
+        beginMoveCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+    }
+
+    finalizeMove(tool, selectedIds, objects) {
+        if (!tool.moving) return;
+        finalizeMoveCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+    }
+
+    beginResize(selectedIds, objects) {
+        beginResizeCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+    }
+
+    finalizeResize(tool, selectedIds, objects) {
+        if (!tool.resizing) return;
+        finalizeResizeCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+    }
+
+    updateCursor(tool, pointer, bounds) {
+        const { setCursor } = canvasPropertiesSlice.getSlice();
+        if (super.updateCursor(tool)) return true;
+
+        // Pointer inside selected frames bounding box
+        if (bounds && isPointInRect(pointer, bounds)) {
+            setCursor("move");
+            return true;
+        }
+
+        const frames = this.getObjects();
+        const { frameOrder } = this.getSlice();
+
+        for (const id of frameOrder) {
+            const frame = frames[id];
+            const { x, y, width, height } = frame;
+            if (
+                getBoundingBoxHandleAtPoint(pointer, {
+                    x,
+                    y,
+                    width: width.value,
+                    height: height.value,
+                })
+            ) {
+                setCursor("move");
+                return true;
+            }
+        }
+    }
+
+    trySelect(tool, pointer, bounds) {
+        const frames = this.getObjects();
+
+        // 1. First, check if pointer is inside current selection bounds
+        if (bounds && isPointInRect(pointer, bounds)) {
+            tool.clickedInsideSelection = true;
+            this.beginMove(this.getSelectedIds(), frames);
+            return true;
+        }
+
+        const { frameOrder } = this.getSlice();
+
+        // 2. If not, check if pointer is over a new frame
+        const clickedFrame = frameOrder
+            .map((id) => frames[id]) // get frame objects
+            .find((frame) => {
+                const { x, y, width, height } = frame;
+                return getBoundingBoxHandleAtPoint(pointer, {
+                    x,
+                    y,
+                    width: width.value,
+                    height: height.value,
+                });
+            });
+
+        if (clickedFrame) {
+            const selectedIds = this.getSelectedIds();
+            // If clicked frame isn't already selected, select it (single-select)
+            if (!selectedIds.has(clickedFrame.id)) {
+                this.deselectAll();
+                this.select(clickedFrame.id);
+            }
+
+            // Mark that the pointer started inside the selection (affects move vs drag)
+            tool.clickedInsideSelection = true;
+            this.beginMove(this.getSelectedIds(), frames);
+            return true;
+        }
+
+        return false; // nothing selected or clicked inside
+    }
+
+    applyResize(pointer, scaleX, scaleY, origin) {
+        const selectedIds = this.getSelectedIds();
+
+        selectedIds.forEach((id) => {
+            const frame = this.resizeStartObjects[id];
+            const updated = resizeFrame({
+                frame,
+                handle: this.activeHandle,
+                pointer,
+                scaleX,
+                scaleY,
+                origin,
+            });
+
+            this.updateObject(id, updated);
+        });
+    }
+
+    applyMarqueeSelection(tool, pointer) {
+        if (!tool.dragging) return;
+
+        const rect = getRectFromPoints(tool.startPoint, pointer);
+        const frames = this.getObjects();
+
+        const selected = Object.values(frames)
+            .filter((f) => this.isSelectedByRect(f, rect))
+            .map((f) => f.id);
+
+        this.deselectAll();
+        selected.forEach((id) => this.select(id));
+    }
+
+    isSelectedByRect(frame, rect) {
+        // Full selection mode
+        const { x, y, width, height } = frame;
+        return (
+            x < rect.x + rect.width &&
+            x + width.value > rect.x &&
+            y < rect.y + rect.height &&
+            y + height.value > rect.y
+        );
+    }
+}
