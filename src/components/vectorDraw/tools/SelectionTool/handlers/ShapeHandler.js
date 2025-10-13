@@ -21,7 +21,11 @@ export class ShapeHandler extends BaseObjectHandler {
     }
 
     getObjects() {
-        return this.getSlice().getShapes();
+        const shapes = this.getSlice().getShapes();
+
+        return Object.fromEntries(
+            Object.entries(shapes).filter(([_, shape]) => shape.locked !== true)
+        );
     }
 
     deselectAll() {
@@ -72,6 +76,8 @@ export class ShapeHandler extends BaseObjectHandler {
         // Pointer over individual shapes
         for (const id of shapeOrder) {
             if (selectedIds.has(id)) continue;
+            if (!shapes[id]) continue;
+
             if (findShapeAtPoint(shapes[id], pointer)) {
                 setCursor("move");
                 return true;

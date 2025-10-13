@@ -16,8 +16,8 @@ export const Frame = memo(({ frameId }) => {
             width={frame.width.value}
             height={frame.height.value}
             fill={frame.bgColor.value}
-            stroke="rgba(0,0,0,0.2)"
-            strokeWidth="1"
+            stroke={frame.borderColor.value}
+            strokeWidth={frame.strokeWidth.value}
         />
     );
 });

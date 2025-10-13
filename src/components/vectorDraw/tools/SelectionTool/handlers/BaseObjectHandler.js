@@ -55,12 +55,10 @@ export class BaseObjectHandler {
     }
 
     tryStartResize(tool, event, bounds) {
-        console.log("Resize");
         if (!bounds) return;
 
         const handleId = event.target.getAttribute("data-handle-id");
         if (!handleId) return;
-        console.log(handleId);
 
         this.activeHandle = handleId;
         this.startResize(tool, bounds);
@@ -78,9 +76,6 @@ export class BaseObjectHandler {
 
         this.beginResize(selectedIds, objects);
     }
-
-    // Default selection (override if needed)
-    trySelect(tool, pointer) {}
 
     computeScaleFactors(oldW, oldH, newW, newH) {
         return {
@@ -109,11 +104,6 @@ export class BaseObjectHandler {
             newH
         );
         this.applyResize(pointer, scaleX, scaleY, origin);
-    }
-
-    // Default — subclasses override this
-    applyResize(pointer, scaleX, scaleY, origin) {
-        throw new Error("applyResize() must be implemented by subclass");
     }
 
     handleMove(tool, pointer, moveThreshold = 3) {

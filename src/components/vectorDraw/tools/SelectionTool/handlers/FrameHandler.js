@@ -187,7 +187,7 @@ export class FrameHandler extends BaseObjectHandler {
             this.updateObject(id, { x: obj.x + dx, y: obj.y + dy });
 
             // Move all shapes inside this frame
-            const containedShapes = this.getShapesToBeMoved(id);
+            const containedShapes = this.getShapesToBeMoved(obj);
             containedShapes.forEach((shape) => {
                 shapeSlice.getSlice().updateShape(shape.id, {
                     x: shape.x + dx,
@@ -197,15 +197,17 @@ export class FrameHandler extends BaseObjectHandler {
         });
     }
 
-    getShapesByFrameId(frameId, shapes) {
-        return Object.values(shapes).filter((s) => s.frameId === frameId);
+    getShapesByFrame(frame, shapes) {
+        return Object.values(shapes).filter(
+            (s) => s.frameId === frame.id || s.id === frame.titleShapeId
+        );
     }
 
-    getShapesToBeMoved(frameId) {
+    getShapesToBeMoved(frame) {
         const { shapes, selectedShapeIds } = shapeSlice.getSlice();
         const shapesToBeMoved = Object.values(shapes).filter(
             (s) => !selectedShapeIds.has(s.id)
         );
-        return this.getShapesByFrameId(frameId, shapesToBeMoved);
+        return this.getShapesByFrame(frame, shapesToBeMoved);
     }
 }

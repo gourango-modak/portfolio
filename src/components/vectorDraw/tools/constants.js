@@ -14,3 +14,5 @@ export const SELECTION_MODE = {
     FULL: "FULL",
     TOUCH: "TOUCH",
 };
+
+export const TEXT_LINE_HEIGHT = 1.3;

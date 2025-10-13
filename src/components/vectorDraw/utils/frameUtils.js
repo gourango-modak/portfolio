@@ -23,6 +23,8 @@ export const findContainingFrame = (bbox, frames) => {
 };
 
 export const resolveShapeFrameId = (shape) => {
+    if (shape.locked === true) return null;
+
     const bbox = computeShapeBoundingBox(shape);
     const canvasMode = canvasPropertiesSlice.getSlice().properties.mode.value;
 

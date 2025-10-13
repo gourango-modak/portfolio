@@ -17,6 +17,8 @@ export const ShapeOutline = ({ shape, multipleSelected }) => {
 
     useRenderLogger("ShapeOutline");
 
+    if (shape.locked) return;
+
     if (type === SHAPES.ARROW && !multipleSelected) {
         const handles = getLineSegmentHandles(shape, scale, pan);
         return (

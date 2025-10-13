@@ -5,7 +5,7 @@ import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { toViewportPoint } from "../utils/canvasUtils";
 import { resolveShapeFrameId } from "../utils/frameUtils";
 import { BaseTool } from "./BaseTool";
-import { TOOLS } from "./constants";
+import { TEXT_LINE_HEIGHT, TOOLS } from "./constants";
 
 // Minimum width for an empty text field to ensure visibility.
 const MIN_TEXT_WIDTH = 20;
@@ -15,8 +15,6 @@ const WIDTH_BUFFER = 40;
 
 // Padding from viewport right edge
 const PADDING_RIGHT = 2;
-
-const LINE_HEIGHT = 1.3;
 
 export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
@@ -138,7 +136,7 @@ export class TextTool extends BaseTool {
         const lineCount = textContent.split("\n").length;
 
         // Compute final height based on number of lines and line height
-        const calculatedHeight = lineCount * appliedFontSize * LINE_HEIGHT;
+        const calculatedHeight = lineCount * appliedFontSize * TEXT_LINE_HEIGHT;
 
         if (this.shapeId) {
             updateShape(this.shapeId, {
@@ -215,7 +213,7 @@ export class TextTool extends BaseTool {
             width = MIN_TEXT_WIDTH,
             properties = this.properties,
             fontSize = properties.fontSize.value,
-            minHeight = fontSize * LINE_HEIGHT,
+            minHeight = fontSize * TEXT_LINE_HEIGHT,
             height = minHeight;
 
         if (existingShape) {
@@ -270,7 +268,7 @@ export class TextTool extends BaseTool {
             margin: 0;
             box-sizing: border-box;
             font-size: ${properties.fontSize.value}px;
-            line-height: ${LINE_HEIGHT};
+            line-height: ${TEXT_LINE_HEIGHT};
             font-family: '${properties.fontFamily.value}';
             overflow: hidden;
             letter-spacing: 0.00000001px;
