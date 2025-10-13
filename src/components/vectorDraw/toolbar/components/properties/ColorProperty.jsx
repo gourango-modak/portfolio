@@ -1,8 +1,8 @@
 import { useRef, useEffect } from "react";
-import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { ColorPicker } from "../../components/ColorPicker";
-import { colorPickerSlice } from "../../store/utils";
-import { useColorPickerColor } from "../../store/selectors/colorPickerSelectors";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
+import { ColorPicker } from "../../../components/ColorPicker";
+import { colorPickerSlice } from "../../../store/utils";
+import { useColorPickerColor } from "../../../store/selectors/colorPickerSelectors";
 
 export const ColorProperty = ({ propertyName, property, onChange }) => {
     const { id, value: initialColor } = property;

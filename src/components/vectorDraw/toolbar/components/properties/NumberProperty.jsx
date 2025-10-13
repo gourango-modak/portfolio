@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 
 export const NumberProperty = ({ propertyName, property, onChange }) => {
     const [number, setNumber] = useState(property.value);

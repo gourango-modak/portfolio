@@ -1,15 +1,15 @@
 import { useRef, useState, useMemo } from "react";
 import { ToolButton } from "./ToolButton";
-import { useRenderLogger } from "../hooks/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { SecondaryToolbar } from "./SecondaryToolbar";
-import { toolbarSlice } from "../store/utils";
+import { toolbarSlice } from "../../store/utils";
 import {
     useActiveGroup,
     useIsActiveToolInGroup,
     useSelectedSubtoolForGroup,
-} from "../store/selectors/toolbarSelectors";
-import { isRegisteredTool } from "../tools/utils";
-import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
+} from "../../store/selectors/toolbarSelectors";
+import { isRegisteredTool } from "./../../tools/utils";
+import { useCanvasMode } from "../../store/selectors/canvasPropertiesSelectors";
 
 export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
     const [selectedSubtool, setSelectedSubtool] = useState(null);

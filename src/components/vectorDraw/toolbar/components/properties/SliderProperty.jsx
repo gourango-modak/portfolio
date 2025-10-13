@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 
 export const SliderProperty = ({ propertyName, property, onChange }) => {
     const [value, setValue] = useState(property.value);

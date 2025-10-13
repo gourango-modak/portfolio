@@ -1,9 +1,9 @@
-import Toolbar from "./toolbar/Toolbar";
 import { Panel } from "./components/Panel";
-import InspectorPanel from "./toolbar/properties/InspectorPanel";
-import ToolPropertiesPanel from "./toolbar/properties/ToolPropertiesPanel";
 import LayeredCanvas from "./components/LayeredCanvas";
 import { PANELS } from "./constants";
+import Toolbar from "./toolbar/components/Toolbar";
+import { InspectorPanel } from "./toolbar/components/properties/InspectorPanel";
+import { ToolPropertiesPanel } from "./toolbar/components/properties/ToolPropertiesPanel";
 
 export const DrawingEnvironment = () => {
     return (

@@ -1,12 +1,12 @@
-import { ORIENTATION } from "../../../utils/common";
-import { PANELS } from "../constants";
-import { useRenderLogger } from "../hooks/useRenderLogger";
-import { useCanvasMode } from "../store/selectors/canvasPropertiesSelectors";
-import { useActiveFrameId } from "../store/selectors/frameSelectors";
-import { usePanelOrientation } from "../store/selectors/panelSelectors";
-import { useIsActiveTool } from "../store/selectors/toolbarSelectors";
-import { panelSlice } from "../store/utils";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useCanvasMode } from "../../store/selectors/canvasPropertiesSelectors";
+import { useActiveFrameId } from "../../store/selectors/frameSelectors";
+import { usePanelOrientation } from "../../store/selectors/panelSelectors";
+import { panelSlice } from "../../store/utils";
 import { Tooltip } from "./Tooltip";
+import { useIsActiveTool } from "../../store/selectors/toolbarSelectors";
+import { ORIENTATION } from "../../../../utils/common";
+import { PANELS } from "../../constants";
 
 export const ToolButton = ({
     item,

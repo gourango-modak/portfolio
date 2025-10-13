@@ -1,9 +1,9 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import {
     useActiveFrameBgColor,
     useActiveFrameId,
-} from "../../store/selectors/frameSelectors";
-import { frameSlice } from "../../store/utils";
+} from "../../../store/selectors/frameSelectors";
+import { frameSlice } from "../../../store/utils";
 import { ColorProperty } from "./ColorProperty";
 
 export const FrameBgProperty = () => {

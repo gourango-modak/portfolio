@@ -1,4 +1,5 @@
 import { CANVAS_MODES } from "../../constants";
+import { TOOLS } from "../../tools/constants";
 
 export const createCanvasPropertiesSlice = (set, get) => ({
     canvasPropertiesSlice: {
@@ -68,6 +69,10 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                     canvasPropertiesSlice: {
                         ...state.canvasPropertiesSlice,
                         properties: updatedProperties,
+                    },
+                    toolbarSlice: {
+                        ...state.toolbarSlice,
+                        activeTool: TOOLS.SELECTION,
                     },
                 };
             }),

@@ -1,13 +1,13 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { useMemo } from "react";
 import { INSPECTOR_PANEL_TARGETS } from "./constants";
 import { CanvasProperties } from "./CanvasProperties";
 import { PageProperties } from "./PageProperties";
-import { panelSlice } from "../../store/utils";
-import { usePanelTarget } from "../../store/selectors/panelSelectors";
-import { PANELS } from "../../constants";
+import { panelSlice } from "../../../store/utils";
+import { usePanelTarget } from "../../../store/selectors/panelSelectors";
+import { PANELS } from "../../../constants";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 
-const InspectorPanel = () => {
+export const InspectorPanel = () => {
     const panelId = PANELS.INSPECTOR_PANEL;
     const target = usePanelTarget(panelId);
 
@@ -50,5 +50,3 @@ const InspectorPanel = () => {
         </div>
     );
 };
-
-export default InspectorPanel;

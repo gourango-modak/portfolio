@@ -1,8 +1,8 @@
 import { ToolButton } from "./ToolButton";
 import { ToolGroup } from "./ToolGroup";
-import { toolbarConfig } from "./toolbarConfig";
-import { useRenderLogger } from "../hooks/useRenderLogger";
-import { toolActionHandlers } from "./toolActionHandlers";
+import { toolbarConfig } from "../config";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { toolActionHandlers } from "./../actions/index";
 
 export const ToolbarItems = ({ orientation }) => {
     const handleToolBtnClick = (tool) => {

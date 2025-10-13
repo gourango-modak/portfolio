@@ -1,4 +1,4 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { TOOL_PROPERTIES_COMPONENTS } from "./constants";
 
 export const ToolPropertyField = ({ propertyName, property, onChange }) => {

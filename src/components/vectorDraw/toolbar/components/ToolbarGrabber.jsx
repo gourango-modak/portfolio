@@ -1,6 +1,6 @@
 import { GripHorizontal, GripVertical } from "lucide-react";
-import { useRenderLogger } from "../hooks/useRenderLogger";
-import { ORIENTATION } from "../../../utils/common";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { ORIENTATION } from "../../../../utils/common";
 
 export const ToolbarGrabber = ({ orientation }) => {
     useRenderLogger("ToolbarGrabber");

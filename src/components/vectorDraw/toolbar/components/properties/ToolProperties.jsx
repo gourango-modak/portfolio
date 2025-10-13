@@ -1,5 +1,5 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { toolRegistry } from "../../tools/registry";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
+import { toolRegistry } from "../../../tools/registry";
 import { ToolPropertyItem } from "./ToolPropertyItem";
 
 export const ToolProperties = ({ activeTool }) => {

@@ -1,5 +1,5 @@
 import { ORIENTATION } from "../../../utils/common";
-import { PANELS } from "../constants";
+import { CANVAS_MODES, PANELS } from "../constants";
 
 export const getToolbarPanelInitialPosition = ({ orientation }) => {
     const panel = document.getElementById(PANELS.TOOLBAR_PANEL);
@@ -27,3 +27,17 @@ export const getInspectorPanelInitialPosition = () => {
 export const getToolPropertiesPanelInitialPosition = () => {
     return { x: 20, y: 300 };
 };
+
+export const isPagedCanvas = ({ canvasMode }) =>
+    canvasMode === CANVAS_MODES.PAGED;
+
+export const isInfiniteCanvas = ({ canvasMode }) =>
+    canvasMode === CANVAS_MODES.INFINITE;
+
+export const canGoPrevFrame = ({ activeFrameId }) =>
+    frameSlice.getSlice().hasPrevFrame(activeFrameId);
+
+export const canGoNextFrame = ({ activeFrameId }) =>
+    frameSlice.getSlice().hasNextFrame(activeFrameId);
+
+export const hasFrame = () => frameSlice.getSlice().hasFrame();

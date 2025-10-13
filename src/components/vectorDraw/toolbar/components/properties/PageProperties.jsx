@@ -1,6 +1,6 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { ToolPropertyField } from "./ToolPropertyField";
-import { frameSlice } from "../../store/utils";
+import { frameSlice } from "../../../store/utils";
 
 export const PageProperties = () => {
     const { frameTemplate, updateFrameTemplate } = frameSlice.getSlice();

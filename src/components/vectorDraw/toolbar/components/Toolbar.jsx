@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useRenderLogger } from "../hooks/useRenderLogger";
+import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { ToolbarItems } from "./ToolbarItems";
 import { ToolbarGrabber } from "./ToolbarGrabber";
-import { ORIENTATION } from "../../../utils/common";
-import { panelSlice } from "../store/utils";
-import { usePanelOrientation } from "../store/selectors/panelSelectors";
-import { PANELS } from "../constants";
+import { ORIENTATION } from "../../../../utils/common";
+import { panelSlice } from "../../store/utils";
+import { usePanelOrientation } from "../../store/selectors/panelSelectors";
+import { PANELS } from "../../constants";
 
 const Toolbar = () => {
     const panelId = PANELS.TOOLBAR_PANEL;

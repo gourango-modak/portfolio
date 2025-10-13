@@ -1,10 +1,10 @@
-import { useRenderLogger } from "../../hooks/useRenderLogger";
-import { toolRegistry } from "../../tools/registry";
+import { useRenderLogger } from "../../../hooks/useRenderLogger";
+import { useActiveTool } from "../../../store/selectors/toolbarSelectors";
+import { panelSlice } from "../../../store/utils";
+import { toolRegistry } from "../../../tools/registry";
 import { ToolProperties } from "./ToolProperties";
-import { panelSlice } from "../../store/utils";
-import { useActiveTool } from "../../store/selectors/toolbarSelectors";
 
-const ToolPropertiesPanel = () => {
+export const ToolPropertiesPanel = () => {
     const activeTool = useActiveTool();
     const tool = toolRegistry[activeTool];
 
@@ -30,5 +30,3 @@ const ToolPropertiesPanel = () => {
         </div>
     );
 };
-
-export default ToolPropertiesPanel;
