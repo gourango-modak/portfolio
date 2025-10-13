@@ -65,40 +65,28 @@ export class FrameHandler extends BaseObjectHandler {
 
         const frames = this.getObjects();
         const { frameOrder } = this.getSlice();
+        const { shapes } = shapeSlice.getSlice();
 
-        for (const id of frameOrder) {
-            const frame = frames[id];
-            const { x, y, width, height } = frame;
-            if (
-                getBoundingBoxHandleAtPoint(pointer, {
-                    x,
-                    y,
-                    width: width.value,
-                    height: height.value,
-                })
-            ) {
-                setCursor("move");
-                return true;
-            }
+        if (this.getClickedFrame(pointer, frameOrder, frames, shapes)) {
+            setCursor("move");
+            return true;
         }
+
+        return false;
     }
 
     trySelect(tool, pointer, bounds) {
         const frames = this.getObjects();
         const { frameOrder } = this.getSlice();
+        const { shapes } = shapeSlice.getSlice();
 
-        // 1. If not, check if pointer is over a new frame
-        const clickedFrame = frameOrder
-            .map((id) => frames[id]) // get frame objects
-            .find((frame) => {
-                const { x, y, width, height } = frame;
-                return getBoundingBoxHandleAtPoint(pointer, {
-                    x,
-                    y,
-                    width: width.value,
-                    height: height.value,
-                });
-            });
+        // 1. If not, check if pointer is over frame or title
+        const clickedFrame = this.getClickedFrame(
+            pointer,
+            frameOrder,
+            frames,
+            shapes
+        );
 
         if (clickedFrame) {
             const selectedIds = this.getSelectedIds();
@@ -122,6 +110,40 @@ export class FrameHandler extends BaseObjectHandler {
         }
 
         return false; // nothing selected or clicked inside
+    }
+
+    getClickedFrame(pointer, frameOrder, frames, shapes) {
+        return frameOrder
+            .map((id) => frames[id])
+            .find((frame) => this.isPointerOverFrame(pointer, frame, shapes));
+    }
+
+    isPointerOverFrame(pointer, frame, shapes) {
+        const { x, y, width, height } = frame;
+        const isOverFrameHandle = getBoundingBoxHandleAtPoint(pointer, {
+            x,
+            y,
+            width: width.value,
+            height: height.value,
+        });
+
+        // Check frame title shape if exists
+        let inTitle = false;
+        if (frame.titleShapeId && shapes[frame.titleShapeId]) {
+            const title = shapes[frame.titleShapeId];
+            inTitle = isPointInRect(
+                pointer,
+                {
+                    x: title.x,
+                    y: title.y,
+                    width: title.width,
+                    height: title.height,
+                },
+                0
+            );
+        }
+
+        return isOverFrameHandle || inTitle;
     }
 
     applyResize(pointer, scaleX, scaleY, origin) {

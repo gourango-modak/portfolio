@@ -1,5 +1,5 @@
 import { toViewportPoint } from "../../utils/canvasUtils";
-import { HANDLE_CURSORS, HANDLE_SQUARE_SIZE } from "./constants";
+import { HANDLE_CURSORS, HANDLE_SQUARE_SIZE, OUTLINE_COLOR } from "./constants";
 
 export const getBoundingBoxHandles = (bounds, padding, scale, pan) => {
     const { x, y, width, height } = bounds;
@@ -59,7 +59,7 @@ export const getSelectionLines = ({ x, y, width, height, dashed }) => {
         { x1: x, y1: y + s / 2, x2: x, y2: y + height - s / 2 },
     ].map((lineProps) => ({
         ...lineProps,
-        stroke: "#007AFF",
+        stroke: OUTLINE_COLOR,
         strokeWidth: 1,
         strokeDasharray: dash,
     }));

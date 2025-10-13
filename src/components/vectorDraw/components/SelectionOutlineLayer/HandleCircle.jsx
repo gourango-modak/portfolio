@@ -1,4 +1,4 @@
-import { HANDLE_CIRCLE_SIZE } from "./constants";
+import { HANDLE_CIRCLE_SIZE, OUTLINE_COLOR } from "./constants";
 
 export const HandleCircle = ({ x, y, cursor, handleId }) => (
     <circle
@@ -6,7 +6,7 @@ export const HandleCircle = ({ x, y, cursor, handleId }) => (
         cy={y}
         r={HANDLE_CIRCLE_SIZE}
         fill="white"
-        stroke="#007AFF"
+        stroke={OUTLINE_COLOR}
         strokeWidth={1}
         cursor={cursor}
         data-handle-id={handleId}

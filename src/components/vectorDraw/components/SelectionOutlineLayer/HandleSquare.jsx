@@ -1,4 +1,4 @@
-import { HANDLE_SQUARE_SIZE } from "./constants";
+import { HANDLE_SQUARE_SIZE, OUTLINE_COLOR } from "./constants";
 
 export const HandleSquare = ({ x, y, cursor, handleId }) => {
     const size = HANDLE_SQUARE_SIZE;
@@ -11,7 +11,7 @@ export const HandleSquare = ({ x, y, cursor, handleId }) => {
             width={size}
             height={size}
             fill="transparent"
-            stroke="#007AFF"
+            stroke={OUTLINE_COLOR}
             strokeWidth={1}
             cursor={cursor}
             data-handle-id={handleId}

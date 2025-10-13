@@ -1,8 +1,4 @@
 import { useRenderLogger } from "../../hooks/useRenderLogger";
-import {
-    useCanvasPan,
-    useCanvasScale,
-} from "../../store/selectors/canvasPropertiesSelectors";
 import { SELECTION_RECT_PADDING } from "./constants";
 import { SelectionRect } from "./SelectionRect";
 

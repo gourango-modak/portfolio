@@ -19,3 +19,5 @@ export const HANDLE_CURSORS = {
 
     // Optional: add more shapes/handles here in future
 };
+
+export const OUTLINE_COLOR = "rgba(108, 99, 255, 0.9)";

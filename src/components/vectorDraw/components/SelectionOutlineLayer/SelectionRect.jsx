@@ -4,6 +4,7 @@ import {
     useCanvasScale,
 } from "../../store/selectors/canvasPropertiesSelectors";
 import { toViewportPoint } from "../../utils/canvasUtils";
+import { OUTLINE_COLOR } from "./constants";
 import { HandleSquare } from "./HandleSquare.JSX";
 import { getBoundingBoxHandles, getSelectionLines } from "./utils";
 
@@ -45,7 +46,7 @@ export const SelectionRect = ({ bounds, padding, showHandles, dashed }) => {
                     width={scaledWidth}
                     height={scaledHeight}
                     fill="none"
-                    stroke="#007AFF"
+                    stroke={OUTLINE_COLOR}
                     strokeWidth={1}
                     strokeDasharray={dashed ? "4 2" : "none"}
                 />

@@ -9,7 +9,7 @@ const TITLE_FONT_SIZE = 12;
 const TITLE_FONT_FAMILY = "Arial";
 const TITLE_WIDTH = TITLE_FONT_SIZE * 4;
 const TITLE_TOP_FROM_FRAME = 3.5 * SELECTION_RECT_PADDING;
-const MIN_FRAME_SIZE = 5;
+const MIN_FRAME_SIZE = 50;
 
 export class FrameTool extends BaseTool {
     static name = TOOLS.FRAME;
@@ -25,7 +25,7 @@ export class FrameTool extends BaseTool {
             id: "frameBorderColor",
         },
         strokeWidth: {
-            value: 2,
+            value: 1.5,
             label: "Border Width",
             type: "slider",
             min: 0,
@@ -141,6 +141,7 @@ export class FrameTool extends BaseTool {
             this.startPoint.x,
             this.startPoint.y
         );
+        titleShape.frameId = frameId;
         const titleShapeId = shapeSlice.getSlice().addShape(titleShape);
         frameSlice.getSlice().updateFrame(frameId, { titleShapeId });
 

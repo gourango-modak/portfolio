@@ -83,6 +83,8 @@ export class ShapeHandler extends BaseObjectHandler {
                 return true;
             }
         }
+
+        return false;
     }
 
     trySelect(tool, pointer, bounds) {
