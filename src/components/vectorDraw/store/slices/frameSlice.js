@@ -228,6 +228,12 @@ export const createFrameSlice = (set, get) => ({
             if (!state.activeFrameId) return null; // no active frame
             return state.frames[state.activeFrameId] || null;
         },
+        reset: () =>
+            set(() => ({
+                frameSlice: {
+                    ...initialFrameState,
+                },
+            })),
 
         serialize: () => {
             const { frames, frameOrder, activeFrameId, frameTemplate } =
