@@ -34,13 +34,11 @@ const initialFrameState = {
         borderColor: {
             value: "#00000033",
             label: "Border Color",
-            type: PROPERTY_TYPES.COLOR,
             id: "frameBorderColor",
         },
         strokeWidth: {
             value: 1,
             label: "Border Width",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 0,
             max: 15,
             step: 1,

@@ -63,6 +63,8 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                     get().frameSlice.reset();
                 }
 
+                get().panelSlice.closeToolPropertiesPanel();
+
                 const updatedProperties = {
                     ...state.canvasPropertiesSlice.properties,
                     mode: {
