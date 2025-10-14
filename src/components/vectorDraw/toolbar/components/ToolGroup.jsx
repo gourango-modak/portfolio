@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { ToolButton } from "./ToolButton";
 import { useRenderLogger } from "../../hooks/useRenderLogger";
 import { SecondaryToolbar } from "./SecondaryToolbar";
@@ -45,7 +45,7 @@ export const ToolGroup = ({ item, orientation, onToolBtnClick }) => {
 
     const handleSubtoolClick = (subItem) => {
         if (isRegisteredTool(subItem.name)) {
-            setSelectedSubtool(subItem.name);
+            setSelectedSubtool(subItem);
             setGroupSelection(group, subItem.name);
         }
 

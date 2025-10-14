@@ -38,7 +38,6 @@ export const createToolbarSlice = (set, get) => ({
 
                 // Close secondary toolbar if opened
                 if (activeGroup) {
-                    setGroupSelection(activeGroup, {});
                     setActiveGroup(null);
                 }
 

@@ -45,20 +45,22 @@ export const ColorProperty = ({ id, propertyName, property, onChange }) => {
         });
     };
 
+    const inputColorVal = inputColor !== "transparent" ? inputColor : "";
+
     return (
         <>
             <div className="flex flex-col items-start gap-2 w-full">
                 <div className="flex items-center gap-2 w-full">
                     <input
                         type="text"
-                        value={inputColor}
+                        value={inputColorVal}
                         onChange={handleInputChange}
                         className="flex-1 min-w-0 p-1 border border-gray-300 rounded text-sm text-center"
                     />
                     <div
                         ref={previewRef}
                         className="w-8 h-8 rounded border border-gray-300 cursor-pointer flex-shrink-0"
-                        style={{ backgroundColor: inputColor }}
+                        style={{ backgroundColor: inputColorVal }}
                         onClick={handleColorPicker}
                     ></div>
                 </div>

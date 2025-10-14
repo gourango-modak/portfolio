@@ -1,7 +1,6 @@
-import { MousePointer, Italic, Eraser } from "lucide-react";
+import { MousePointer, Italic, Eraser, Square, MoveRight } from "lucide-react";
 import { TOOLS } from "../../tools/constants";
 import { TOOL_ACTION_TYPES } from "../config/toolActionTypes";
-import { shapeTools } from "./shapeTools";
 import { markupTools } from "./markupTools";
 
 export const primaryTools = [
@@ -12,7 +11,16 @@ export const primaryTools = [
         tooltipText: "Select",
     },
     markupTools,
-    shapeTools,
+    {
+        name: TOOLS.RECTANGLE,
+        Icon: Square,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
+    {
+        name: TOOLS.ARROW,
+        Icon: MoveRight,
+        action: TOOL_ACTION_TYPES.SELECT_TOOL,
+    },
     {
         name: TOOLS.TEXT,
         Icon: Italic,

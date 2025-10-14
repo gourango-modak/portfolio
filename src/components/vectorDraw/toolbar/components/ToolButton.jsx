@@ -24,7 +24,7 @@ export const ToolButton = ({
     const isSelected = isSelectedProp ?? isActiveTool;
 
     const handleToolBtnClick = () => {
-        onClick(item);
+        onClick({ ...item });
 
         if (item.panelTarget) {
             openInspectorPanel(item.panelTarget);
