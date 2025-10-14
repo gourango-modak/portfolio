@@ -1,5 +1,5 @@
 import { frameSlice, shapeSlice } from "../store/utils";
-import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
+import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 import {
     createFrameTitleShape,
     DEFAULT_FRAME_TITLE,
@@ -19,24 +19,21 @@ export class FrameTool extends BaseTool {
     static cursor = "crosshair";
 
     static defaultProperties = {
-        borderColor: {
+        [TOOL_PROPERTIES.BORDER_COLOR]: {
             value: "#00000033",
             label: "Border Color",
-            type: PROPERTY_TYPES.COLOR,
             id: "frameBorderColor",
         },
-        strokeWidth: {
+        [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 1.5,
             label: "Border Width",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 0,
             max: 15,
             step: 1,
         },
-        bgColor: {
+        [TOOL_PROPERTIES.BG_COLOR]: {
             value: "transparent",
             label: "Frame Background",
-            type: PROPERTY_TYPES.COLOR,
             id: "frameFillColor",
         },
     };
@@ -116,9 +113,13 @@ export class FrameTool extends BaseTool {
             type: "FRAME",
             x,
             y,
-            width: { value: width, label: "Width", type: "numeric" },
-            height: { value: height, label: "Height", type: "numeric" },
-            ...this.properties,
+            width,
+            height,
+            properties: {
+                ...this.properties,
+                width: { value: width, label: "Width", type: "numeric" },
+                height: { value: height, label: "Height", type: "numeric" },
+            },
         };
 
         const frameId = frameSlice.getSlice().addFrame(frame);

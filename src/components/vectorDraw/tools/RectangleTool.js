@@ -4,7 +4,7 @@ import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 import { getRoughRectPath } from "../utils/svgUtils";
 import { resolveShapeFrameId } from "../utils/frameUtils";
-import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
+import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 
 export class RectangleTool extends BaseTool {
     static name = TOOLS.RECTANGLE;
@@ -16,23 +16,20 @@ export class RectangleTool extends BaseTool {
 
     // Default tool properties
     static defaultProperties = {
-        color: {
+        [TOOL_PROPERTIES.COLOR]: {
             value: "#000",
             label: "Color",
-            type: PROPERTY_TYPES.COLOR,
             id: "rectColor",
         },
-        strokeWidth: {
+        [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 2,
             label: "Stroke Width",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 0,
             max: 15,
             step: 1,
         },
-        roughness: {
+        [TOOL_PROPERTIES.ROUGHNESS]: {
             value: 3,
-            label: "Roughness",
             min: 0,
             max: 15,
             step: 1,

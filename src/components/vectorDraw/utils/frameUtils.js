@@ -1,4 +1,3 @@
-import { computeFrameBoundingBox } from "../boundingBox/computeFrameBoundingBox";
 import { computeShapeBoundingBox } from "../boundingBox/shapeBoundingBox";
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
@@ -39,13 +38,12 @@ export const findContainingFrame = (bbox, frames) => {
     if (!bbox || !frames) return null;
 
     for (const frame of Object.values(frames)) {
-        const frameBBox = computeFrameBoundingBox(frame);
+        const { x, y, width, height } = frame;
         if (
-            frameBBox &&
-            bbox.x >= frameBBox.x &&
-            bbox.y >= frameBBox.y &&
-            bbox.x + bbox.width <= frameBBox.x + frameBBox.width &&
-            bbox.y + bbox.height <= frameBBox.y + frameBBox.height
+            bbox.x >= x &&
+            bbox.y >= y &&
+            bbox.x + bbox.width <= x + width &&
+            bbox.y + bbox.height <= y + height
         ) {
             return frame.id;
         }

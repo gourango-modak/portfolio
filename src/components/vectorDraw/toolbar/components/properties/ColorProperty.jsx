@@ -1,30 +1,35 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { ColorPicker } from "../../../components/ColorPicker";
-import { colorPickerSlice } from "../../../store/utils";
+import { colorPickerSlice } from "./../../../store/utils";
 import { useColorPickerColor } from "../../../store/selectors/colorPickerSelectors";
 
 export const ColorProperty = ({ propertyName, property, onChange }) => {
     const { id, value: initialColor } = property;
     const previewRef = useRef(null);
+    const [inputColor, setInputColor] = useState(initialColor);
 
     const color = useColorPickerColor(id);
-    const inputColor = color || initialColor;
-
     const { setColor, open: openColorPicker } = colorPickerSlice.getSlice();
 
     useEffect(() => {
-        if (color && color !== initialColor) {
+        if (color && color !== inputColor) {
             onChange(propertyName, { ...property, value: color });
+            setInputColor(color);
         }
     }, [color]);
+
+    useEffect(() => {
+        setInputColor(property.value);
+    }, [property]);
 
     useRenderLogger("ColorProperty");
 
     const handleInputChange = (e) => {
         const newColor = e.target.value;
+        setInputColor(newColor);
 
-        // Regex to support: #RGB, #RGBA, #RRGGBB, #RRGGBBAA
+        // Validate hex formats: #RGB, #RGBA, #RRGGBB, #RRGGBBAA
         if (
             /^#([0-9A-Fa-f]{3,4}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/.test(newColor)
         ) {
@@ -41,15 +46,13 @@ export const ColorProperty = ({ propertyName, property, onChange }) => {
         });
     };
 
-    const inputColorVal = inputColor === "transparent" ? "" : inputColor;
-
     return (
         <>
             <div className="flex flex-col items-start gap-2 w-full">
                 <div className="flex items-center gap-2 w-full">
                     <input
                         type="text"
-                        value={inputColorVal}
+                        value={inputColor}
                         onChange={handleInputChange}
                         className="flex-1 min-w-0 p-1 border border-gray-300 rounded text-sm text-center"
                     />

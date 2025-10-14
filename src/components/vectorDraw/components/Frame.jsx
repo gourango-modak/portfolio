@@ -13,11 +13,11 @@ export const Frame = memo(({ frameId }) => {
         <rect
             x={frame.x}
             y={frame.y}
-            width={frame.width.value}
-            height={frame.height.value}
-            fill={frame.bgColor.value}
-            stroke={frame.borderColor.value}
-            strokeWidth={frame.strokeWidth.value}
+            width={frame.width}
+            height={frame.height}
+            fill={frame.properties.bgColor.value}
+            stroke={frame.properties.borderColor.value}
+            strokeWidth={frame.properties.strokeWidth.value}
         />
     );
 });

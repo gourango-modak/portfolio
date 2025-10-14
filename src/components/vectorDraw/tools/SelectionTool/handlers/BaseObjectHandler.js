@@ -87,8 +87,6 @@ export class BaseObjectHandler {
     handleResize(tool, pointer) {
         if (!tool.resizing || !this.resizeStartBounds) return;
 
-        console.log("Resizing", this.resizeStartBounds);
-
         const { x, y, width, height } = this.resizeStartBounds;
 
         const { newW, newH, origin } = computeResizedBoundingBox(

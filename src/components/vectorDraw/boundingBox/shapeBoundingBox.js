@@ -1,6 +1,6 @@
-import { shapeBoundingBoxHandlers } from "./shapeBoundingBoxHandlers";
+import { boundingBoxHandlers } from "./boundingBoxHandlers";
 
 export const computeShapeBoundingBox = (shape) => {
-    const computeBoundingBoxFn = shapeBoundingBoxHandlers[shape.type];
+    const computeBoundingBoxFn = boundingBoxHandlers[shape.type];
     return computeBoundingBoxFn(shape);
 };

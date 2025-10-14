@@ -12,7 +12,7 @@ export const pageActions = {
             x: newFrame.x,
             y: newFrame.y,
             text: `Page_${frameOrder.length}`,
-            color: newFrame.borderColor.value,
+            color: newFrame.properties.borderColor.value,
         });
         titleShape.frameId = frameId;
 

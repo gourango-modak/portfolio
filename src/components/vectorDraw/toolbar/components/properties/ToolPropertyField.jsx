@@ -2,9 +2,7 @@ import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { TOOL_PROPERTIES_COMPONENTS } from "./constants";
 
 export const ToolPropertyField = ({ propertyName, property, onChange }) => {
-    if (!property?.type) return null;
-
-    const Component = TOOL_PROPERTIES_COMPONENTS[property.type];
+    const Component = TOOL_PROPERTIES_COMPONENTS[propertyName];
     if (!Component) return null;
 
     const commonProps = {

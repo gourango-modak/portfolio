@@ -1,6 +1,6 @@
 import { SHAPES } from "../shapes/constants";
 import { shapeSlice } from "../store/utils";
-import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
+import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 import { resolveShapeFrameId } from "../utils/frameUtils";
 import { getRoughArrowPath } from "../utils/svgUtils";
 import { BaseTool } from "./BaseTool";
@@ -14,35 +14,33 @@ export class ArrowTool extends BaseTool {
 
     // Default properties for the arrow
     static defaultProperties = {
-        color: {
+        [TOOL_PROPERTIES.COLOR]: {
             value: "#000",
             label: "Color",
-            type: PROPERTY_TYPES.COLOR,
             id: "arrowColor",
         },
-        strokeWidth: {
+        [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 2,
             label: "Stroke Width",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 1,
             max: 10,
             step: 1,
         },
-        roughness: {
+        [TOOL_PROPERTIES.ROUGHNESS]: {
             value: 1.75,
             label: "Roughness",
             min: 0,
             max: 4,
             step: 0.25,
         },
-        headLength: {
+        [TOOL_PROPERTIES.HEAD_LENGTH]: {
             value: 25,
             label: "Arrow Head Length",
             min: 5,
             max: 50,
             step: 1,
         },
-        headAngle: {
+        [TOOL_PROPERTIES.HEAD_ANGLE]: {
             value: 30,
             label: "Arrow Head Angle",
             min: 10,

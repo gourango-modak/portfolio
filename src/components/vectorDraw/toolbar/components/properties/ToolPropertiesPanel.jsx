@@ -1,10 +1,12 @@
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
+import { useCanvasLastSelectedObjectId } from "../../../store/selectors/canvasObjectSelectors";
 import { useActiveTool } from "../../../store/selectors/toolbarSelectors";
 import { panelSlice } from "../../../store/utils";
 import { ToolProperties } from "./ToolProperties";
 
 export const ToolPropertiesPanel = () => {
     const activeTool = useActiveTool();
+    const lastSelectedObjectId = useCanvasLastSelectedObjectId();
     const { closeToolPropertiesPanel } = panelSlice.getSlice();
 
     useRenderLogger("ToolPropertiesPanel");
@@ -23,7 +25,10 @@ export const ToolPropertiesPanel = () => {
                     ✕
                 </button>
             </div>
-            <ToolProperties activeTool={activeTool} />
+            <ToolProperties
+                activeTool={activeTool}
+                canvasObjectId={lastSelectedObjectId}
+            />
         </div>
     );
 };

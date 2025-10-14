@@ -2,19 +2,31 @@ import { ToolPropertyField } from "./ToolPropertyField";
 import { toolRegistry } from "../../../tools/registry";
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { toolbarSlice } from "../../../store/utils";
+import { updateCanvasObjectProperties } from "./../../../utils/canvasUtils";
 
-export const ToolPropertyItem = ({ propertyName }) => {
+export const ToolPropertyItem = ({
+    propertyName,
+    property,
+    canvasObjectId,
+}) => {
     const { activeTool, toolProperties, updateToolProperties } =
         toolbarSlice.getSlice();
-    const property =
-        toolProperties[activeTool]?.[propertyName] ??
-        toolRegistry[activeTool]?.defaultProperties?.[propertyName];
+    const prop = canvasObjectId
+        ? property
+        : toolProperties[activeTool]?.[propertyName] ??
+          toolRegistry[activeTool]?.defaultProperties?.[propertyName];
 
     const handlePropertyChange = (propertyName, property) => {
-        updateToolProperties(activeTool, propertyName, property);
+        if (canvasObjectId) {
+            updateCanvasObjectProperties(canvasObjectId, {
+                [propertyName]: property,
+            });
+        } else {
+            updateToolProperties(activeTool, propertyName, property);
 
-        const toolInstance = toolbarSlice.getSlice().activeToolInstance;
-        toolInstance?.updateProperties?.();
+            const toolInstance = toolbarSlice.getSlice().activeToolInstance;
+            toolInstance?.updateProperties?.();
+        }
     };
 
     useRenderLogger("ToolPropertyItem");
@@ -22,7 +34,7 @@ export const ToolPropertyItem = ({ propertyName }) => {
     return (
         <ToolPropertyField
             propertyName={propertyName}
-            property={property}
+            property={prop}
             onChange={handlePropertyChange}
         />
     );

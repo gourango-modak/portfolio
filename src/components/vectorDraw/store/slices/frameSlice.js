@@ -1,7 +1,7 @@
 import { generateId } from "../../../../utils/common";
 import { COMMANDS } from "./commandHistorySlice/constants";
 import { computeFramesBoundingBox } from "./../../boundingBox/framesBoundingBox";
-import { PROPERTY_TYPES } from "../../toolbar/components/properties/constants";
+import { TOOL_PROPERTIES } from "../../toolbar/components/properties/constants";
 
 // Margin from the viewport edges to determine initial frame size
 const viewportMarginX = 100;
@@ -14,28 +14,25 @@ const initialFrameState = {
     selectedFramesBounds: null,
     activeFrameId: null,
     frameTemplate: {
-        width: {
+        [TOOL_PROPERTIES.WIDTH]: {
             value: window.innerWidth - viewportMarginX,
             label: "Width",
-            type: PROPERTY_TYPES.NUMERIC,
         },
-        height: {
+        [TOOL_PROPERTIES.HEIGHT]: {
             value: window.innerHeight - viewportMarginY,
             label: "Height",
-            type: PROPERTY_TYPES.NUMERIC,
         },
-        bgColor: {
+        [TOOL_PROPERTIES.BG_COLOR]: {
             value: "#fff",
             label: "Frame Background",
-            type: PROPERTY_TYPES.COLOR,
             id: "frameColor",
         },
-        borderColor: {
+        [TOOL_PROPERTIES.BORDER_COLOR]: {
             value: "#00000033",
             label: "Border Color",
             id: "frameBorderColor",
         },
-        strokeWidth: {
+        [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 1,
             label: "Border Width",
             min: 0,
@@ -142,9 +139,11 @@ export const createFrameSlice = (set, get) => ({
 
                 const newFrame = {
                     id,
-                    ...state.frameSlice.frameTemplate,
+                    properties: { ...state.frameSlice.frameTemplate },
                     x,
                     y,
+                    width: frameWidth,
+                    height: frameHeight,
                 };
 
                 return {

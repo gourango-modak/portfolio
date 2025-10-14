@@ -1,4 +1,4 @@
-import { canvasPropertiesSlice } from "../store/utils";
+import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 
 let canvasLastPointerPosition = { x: 0, y: 0 };
 
@@ -57,4 +57,30 @@ export function getSafeViewportPosition(bbox, margin = 10) {
     }
 
     return { x: safeX, y: safeY };
+}
+
+export const getCanvasObjectProperties = (id) => {
+    const { shapes } = shapeSlice.getSlice();
+    const { frames } = frameSlice.getSlice();
+
+    if (shapes[id]) return shapes[id].properties || null;
+    if (frames[id]) return frames[id].properties || null;
+
+    return null;
+};
+
+export function updateCanvasObjectProperties(id, updatedProps) {
+    const { shapes, updateShape } = shapeSlice.getSlice();
+    const { frames, updateFrame } = frameSlice.getSlice();
+
+    if (shapes[id]) {
+        updateShape(id, {
+            properties: { ...shapes[id].properties, ...updatedProps },
+        });
+        return;
+    }
+
+    if (frames[id]) {
+        updateFrame(id, { properties: updatedProps });
+    }
 }

@@ -28,9 +28,13 @@ export const ColorPicker = memo(({ id }) => {
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("pointerdown", handleClickOutside, true);
         return () =>
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener(
+                "pointerdown",
+                handleClickOutside,
+                true
+            );
     }, [isOpen, id]);
 
     // Update position of the picker
@@ -57,7 +61,7 @@ export const ColorPicker = memo(({ id }) => {
         setColor(id, color);
     }
 
-    if (!isOpen) return null;
+    if (!isOpen || !id) return null;
 
     return createPortal(
         <div ref={pickerRef} className="absolute z-100">

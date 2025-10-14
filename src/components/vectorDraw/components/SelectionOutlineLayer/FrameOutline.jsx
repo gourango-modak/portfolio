@@ -9,8 +9,8 @@ export const FrameOutline = ({ frame, multipleSelected }) => {
     const bounds = {
         x: frame.x,
         y: frame.y,
-        width: frame.width.value,
-        height: frame.height.value,
+        width: frame.width,
+        height: frame.height,
     };
 
     return (

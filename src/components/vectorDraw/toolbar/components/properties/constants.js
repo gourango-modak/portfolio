@@ -1,14 +1,28 @@
 import { ColorProperty } from "./ColorProperty";
 import { InputProperty } from "./InputProperty";
 
-export const PROPERTY_TYPES = {
-    COLOR: "COLOR",
-    NUMERIC: "NUMERIC",
+export const TOOL_PROPERTIES = {
+    COLOR: "color",
+    STROKE_WIDTH: "strokeWidth",
+    ROUGHNESS: "roughness",
+    FONT_SIZE: "fontSize",
+    FONT_FAMILY: "fontFamily",
+    STREAMLINE: "streamline",
+    THINNING: "thinning",
+    SMOOTHING: "smoothing",
+    DURATION: "duration",
+    BORDER_COLOR: "borderColor",
+    BG_COLOR: "bgColor",
+    SIZE: "size",
+    HEAD_LENGTH: "headLength",
+    HEAD_ANGLE: "headAngle",
+    WIDTH: "width",
+    HEIGHT: "height",
 };
 
 export const TOOL_PROPERTIES_COMPONENTS = {
-    [PROPERTY_TYPES.COLOR]: ColorProperty,
-    [PROPERTY_TYPES.NUMERIC]: InputProperty,
+    [TOOL_PROPERTIES.COLOR]: ColorProperty,
+    [TOOL_PROPERTIES.STROKE_WIDTH]: InputProperty,
 };
 
 export const INSPECTOR_PANEL_TARGETS = {

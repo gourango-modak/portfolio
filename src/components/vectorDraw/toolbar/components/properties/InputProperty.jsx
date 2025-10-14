@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 
 export const InputProperty = ({ propertyName, property, onChange }) => {
@@ -6,6 +6,10 @@ export const InputProperty = ({ propertyName, property, onChange }) => {
     const { min = 0, max = 100 } = property;
 
     useRenderLogger("NumberProperty");
+
+    useEffect(() => {
+        setNumber(property.value);
+    }, [property]);
 
     const handleChange = (e) => {
         setNumber(Number(e.target.value));

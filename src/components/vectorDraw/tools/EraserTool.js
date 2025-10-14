@@ -1,9 +1,10 @@
 import { shapeHitTestingHandlers } from "../shapes/shapeHitTesting/handlers";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
 import { commandHistorySlice, shapeSlice } from "../store/utils";
-import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
+import { OUTLINE_COLOR } from "./../components/SelectionOutlineLayer/constants";
+import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 
 export class EraserTool extends BaseTool {
     static name = TOOLS.ERASER;
@@ -11,10 +12,9 @@ export class EraserTool extends BaseTool {
     static shortcut = { code: "KeyE" };
 
     static defaultProperties = {
-        size: {
+        [TOOL_PROPERTIES.SIZE]: {
             value: 20,
             label: "Eraser Size",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 5,
             max: 100,
             step: 1,
@@ -30,9 +30,9 @@ export class EraserTool extends BaseTool {
             "http://www.w3.org/2000/svg",
             "circle"
         );
-        this.previewCircle.setAttribute("fill", "rgba(0,0,0,0.1)");
-        this.previewCircle.setAttribute("stroke", "#000");
-        this.previewCircle.setAttribute("stroke-width", "1");
+        this.previewCircle.setAttribute("fill", "rgba(108, 99, 255, 0.1)");
+        this.previewCircle.setAttribute("stroke", OUTLINE_COLOR);
+        this.previewCircle.setAttribute("stroke-width", "1.5");
         this.previewCircle.style.pointerEvents = "none"; // ignore pointer
         this.liveLayerRef.current.appendChild(this.previewCircle);
         this.hidePreview();

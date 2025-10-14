@@ -6,6 +6,7 @@ import { createToolbarSlice } from "./slices/toolbarSlice";
 import { createCanvasPropertiesSlice } from "./slices/canvasPropertiesSlice";
 import { createFrameSlice } from "./slices/frameSlice";
 import { createCommandHistorySlice } from "./slices/commandHistorySlice";
+import { createCanvasObjectSlice } from "./slices/canvasObjectSlice";
 
 export const useDrawingAppStore = create((set, get) => ({
     ...createShapeSlice(set, get),
@@ -15,4 +16,5 @@ export const useDrawingAppStore = create((set, get) => ({
     ...createCanvasPropertiesSlice(set, get),
     ...createFrameSlice(set, get),
     ...createCommandHistorySlice(set, get),
+    ...createCanvasObjectSlice(set, get),
 }));

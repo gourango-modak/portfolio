@@ -8,8 +8,8 @@ export const exportFrameToImage = async ({ frame, scale = 1, shapes }) => {
         bbox: {
             x: frame.x,
             y: frame.y,
-            width: frame.width.value,
-            height: frame.height.value,
+            width: frame.width,
+            height: frame.height,
         },
         scale,
     });

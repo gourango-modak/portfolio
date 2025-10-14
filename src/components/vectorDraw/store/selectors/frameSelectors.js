@@ -18,5 +18,5 @@ export const useSelectedFramesBounds = () =>
 export const useActiveFrameBgColor = () =>
     frameSlice.useSliceProperty((s) => {
         const activeId = s.activeFrameId;
-        return s.frames[activeId]?.bgColor;
+        return s.frames[activeId]?.properties.bgColor;
     });

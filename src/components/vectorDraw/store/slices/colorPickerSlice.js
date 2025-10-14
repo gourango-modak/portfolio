@@ -14,18 +14,21 @@ export const createColorPickerSlice = (set, get) => ({
             })),
 
         close: (id) =>
-            set((state) => ({
-                colorPickerSlice: {
-                    ...state.colorPickerSlice,
-                    colorPickers: {
-                        ...state.colorPickerSlice.colorPickers,
-                        [id]: {
-                            ...state.colorPickerSlice.colorPickers[id],
-                            isOpen: false,
+            set((state) => {
+                return {
+                    colorPickerSlice: {
+                        ...state.colorPickerSlice,
+                        colorPickers: {
+                            ...state.colorPickerSlice.colorPickers,
+                            [id]: {
+                                ...state.colorPickerSlice.colorPickers[id],
+                                isOpen: false,
+                                color: null,
+                            },
                         },
                     },
-                },
-            })),
+                };
+            }),
 
         setColor: (id, color) =>
             set((state) => ({

@@ -2,7 +2,7 @@ import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
-import { PROPERTY_TYPES } from "../toolbar/components/properties/constants";
+import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 import { toViewportPoint } from "../utils/canvasUtils";
 import { resolveShapeFrameId } from "../utils/frameUtils";
 import { BaseTool } from "./BaseTool";
@@ -24,21 +24,23 @@ export class TextTool extends BaseTool {
     static cursor = "text";
 
     static defaultProperties = {
-        color: {
+        [TOOL_PROPERTIES.COLOR]: {
             value: "#3b82f6",
             label: "Color",
-            type: PROPERTY_TYPES.COLOR,
             id: "textColor",
         },
-        fontSize: {
+        [TOOL_PROPERTIES.FONT_SIZE]: {
             value: 48,
             label: "Font Size",
-            type: PROPERTY_TYPES.NUMERIC,
             min: 12,
             max: 72,
             step: 1,
         },
-        fontFamily: { value: "Caveat", label: "Font Family", type: "text" },
+        [TOOL_PROPERTIES.FONT_FAMILY]: {
+            value: "Caveat",
+            label: "Font Family",
+            type: "text",
+        },
     };
 
     constructor(liveLayerRef) {

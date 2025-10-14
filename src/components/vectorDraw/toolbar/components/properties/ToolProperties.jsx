@@ -1,8 +1,9 @@
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { toolRegistry } from "../../../tools/registry";
+import { getCanvasObjectProperties } from "../../../utils/canvasUtils";
 import { ToolPropertyItem } from "./ToolPropertyItem";
 
-export const ToolProperties = ({ activeTool }) => {
+export const ToolProperties = ({ activeTool, canvasObjectId }) => {
     const tool = toolRegistry[activeTool];
 
     useRenderLogger("ToolProperties");
@@ -23,8 +24,9 @@ export const ToolProperties = ({ activeTool }) => {
         );
     }
 
-    const defaultProps = tool.defaultProperties;
-    const hasProperties = defaultProps && Object.keys(defaultProps).length > 0;
+    const props =
+        getCanvasObjectProperties(canvasObjectId) || tool.defaultProperties;
+    const hasProperties = props && Object.keys(props).length > 0;
 
     return (
         <div className="flex-1 px-5 py-4 flex flex-col gap-4 overflow-auto">
@@ -35,8 +37,13 @@ export const ToolProperties = ({ activeTool }) => {
                 </div>
             ) : (
                 <div className="flex flex-col gap-4">
-                    {Object.keys(defaultProps).map((key) => (
-                        <ToolPropertyItem key={key} propertyName={key} />
+                    {Object.entries(props).map(([key, value]) => (
+                        <ToolPropertyItem
+                            key={key}
+                            propertyName={key}
+                            property={{ ...value, id: "tool_color" }}
+                            canvasObjectId={canvasObjectId}
+                        />
                     ))}
                 </div>
             )}

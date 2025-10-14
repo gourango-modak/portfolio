@@ -2,7 +2,11 @@ import { findShapeAtPoint, getShapeAtPoint } from "../../../shapes/utils";
 import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 import { BaseObjectHandler } from "./BaseObjectHandler";
-import { canvasPropertiesSlice, frameSlice } from "./../../../store/utils";
+import {
+    canvasPropertiesSlice,
+    frameSlice,
+    panelSlice,
+} from "./../../../store/utils";
 import { shapeResizeHandlers } from "../resize/shapeResizeHandlers";
 import { beginResizeCommand } from "../commands/beginResizeCommand";
 import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
@@ -101,6 +105,9 @@ export class ShapeHandler extends BaseObjectHandler {
                 frameSlice.getSlice().deselectAll();
                 this.select(clickedShape.id);
             }
+
+            if (this.getSelectedIds().size === 1)
+                panelSlice.getSlice().openToolPropertiesPanel();
 
             // Start moving immediately
             tool.clickedInsideSelection = true;

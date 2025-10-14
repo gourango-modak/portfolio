@@ -122,6 +122,9 @@ export const createShapeSlice = (set, get) => ({
                         selectedShapeIds: newSelected,
                         selectedShapesBounds: newBounds,
                     },
+                    canvasObjectSlice: {
+                        lastSelectedId: id,
+                    },
                 };
             }),
 
@@ -147,13 +150,19 @@ export const createShapeSlice = (set, get) => ({
             }),
 
         deselectAll: () =>
-            set((state) => ({
-                shapeSlice: {
-                    ...state.shapeSlice,
-                    selectedShapeIds: new Set(),
-                    selectedShapesBounds: null,
-                },
-            })),
+            set((state) => {
+                get().panelSlice.closeToolPropertiesPanel();
+                return {
+                    shapeSlice: {
+                        ...state.shapeSlice,
+                        selectedShapeIds: new Set(),
+                        selectedShapesBounds: null,
+                    },
+                    canvasObjectSlice: {
+                        lastSelectedId: null,
+                    },
+                };
+            }),
 
         reset: () =>
             set((state) => ({
