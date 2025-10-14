@@ -1,3 +1,4 @@
+import { generateId } from "../../../../../utils/common";
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { TOOL_PROPERTIES_COMPONENTS } from "./constants";
 
@@ -7,8 +8,9 @@ export const ToolPropertyField = ({ propertyName, property, onChange }) => {
 
     const commonProps = {
         propertyName,
-        property,
+        property: { ...property },
         onChange,
+        id: `${propertyName}_${generateId()}`,
     };
 
     useRenderLogger("ToolPropertyField");

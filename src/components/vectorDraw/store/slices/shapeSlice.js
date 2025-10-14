@@ -77,7 +77,11 @@ export const createShapeSlice = (set, get) => ({
             const shape = get().shapeSlice.shapes[id];
             if (!shape) return;
 
-            const frameId = resolveShapeFrameId(shape);
+            // Don't resolve shape frame Id when frame is selected;
+            const frameId =
+                get().frameSlice.selectedFrameIds.size > 0
+                    ? shape.frameId
+                    : resolveShapeFrameId(shape);
 
             set((state) => {
                 const newShapes = {
@@ -123,6 +127,7 @@ export const createShapeSlice = (set, get) => ({
                         selectedShapesBounds: newBounds,
                     },
                     canvasObjectSlice: {
+                        ...state.canvasObjectSlice,
                         lastSelectedId: id,
                     },
                 };
@@ -157,9 +162,6 @@ export const createShapeSlice = (set, get) => ({
                         ...state.shapeSlice,
                         selectedShapeIds: new Set(),
                         selectedShapesBounds: null,
-                    },
-                    canvasObjectSlice: {
-                        lastSelectedId: null,
                     },
                 };
             }),

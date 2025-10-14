@@ -1,7 +1,11 @@
 import { BaseObjectHandler } from "./BaseObjectHandler";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 import { getBoundingBoxHandleAtPoint } from "../../../components/SelectionOutlineLayer/utils";
-import { canvasPropertiesSlice, shapeSlice } from "../../../store/utils";
+import {
+    canvasPropertiesSlice,
+    panelSlice,
+    shapeSlice,
+} from "../../../store/utils";
 import { resizeFrame } from "../resize/resizeFrame";
 import { beginResizeCommand } from "../commands/beginResizeCommand";
 import { finalizeMoveCommand } from "../commands/finalizeMoveCommand";
@@ -96,6 +100,9 @@ export class FrameHandler extends BaseObjectHandler {
                 this.select(clickedFrame.id);
             }
 
+            if (this.getSelectedIds().size === 1)
+                panelSlice.getSlice().openToolPropertiesPanel();
+
             // Mark that the pointer started inside the selection (affects move vs drag)
             tool.clickedInsideSelection = true;
             this.beginMove(this.getSelectedIds(), frames);
@@ -123,8 +130,8 @@ export class FrameHandler extends BaseObjectHandler {
         const isOverFrameHandle = getBoundingBoxHandleAtPoint(pointer, {
             x,
             y,
-            width: width.value,
-            height: height.value,
+            width,
+            height,
         });
 
         // Check frame title shape if exists

@@ -4,6 +4,7 @@ import { canvasObjectRegistry } from "./handlers/canvasObjectRegistry";
 import { getRectFromPoints } from "../../utils/geometryUtils";
 import { getRectToPathData } from "../../utils/svgUtils";
 import {
+    canvasObjectSlice,
     canvasPropertiesSlice,
     frameSlice,
     shapeSlice,
@@ -76,9 +77,12 @@ export class SelectionTool extends BaseTool {
             .filter(Boolean); // remove nulls
         const combinedBounds = combineBoundingBoxes(boundsArray);
 
+        let isAnyObjectSelected = false;
         // Step 1: Try selecting in all handlers
         for (const handler of this.handlers) {
-            if (!handler.trySelect(this, pointer, combinedBounds)) {
+            if (handler.trySelect(this, pointer, combinedBounds)) {
+                isAnyObjectSelected = true;
+            } else {
                 handler.clearSelection(this);
             }
         }
@@ -86,6 +90,11 @@ export class SelectionTool extends BaseTool {
         this.handlers.forEach((handler) => {
             handler.tryStartResize(this, e, combinedBounds);
         });
+
+        // As no object is selected, clear the last selected object id
+        if (!isAnyObjectSelected) {
+            canvasObjectSlice.getSlice().deselectAll();
+        }
     }
 
     onPointerMove(e) {

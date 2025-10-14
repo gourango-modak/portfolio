@@ -73,14 +73,22 @@ export function updateCanvasObjectProperties(id, updatedProps) {
     const { shapes, updateShape } = shapeSlice.getSlice();
     const { frames, updateFrame } = frameSlice.getSlice();
 
-    if (shapes[id]) {
+    const shape = shapes[id];
+    if (shape) {
         updateShape(id, {
-            properties: { ...shapes[id].properties, ...updatedProps },
+            properties: { ...shape.properties, ...updatedProps },
         });
         return;
     }
 
-    if (frames[id]) {
-        updateFrame(id, { properties: updatedProps });
+    const frame = frames[id];
+    if (frame) {
+        const width = updatedProps?.width?.value || frame.width;
+        const height = updatedProps?.height?.value || frame.height;
+        updateFrame(id, {
+            width,
+            height,
+            properties: { ...frame.properties, ...updatedProps },
+        });
     }
 }

@@ -13,7 +13,6 @@ export const createToolbarSlice = (set, get) => ({
             set(() => {
                 const { closeToolPropertiesPanel, openToolPropertiesPanel } =
                     get().panelSlice;
-                const { deselectAll, selectedShapeIds } = get().shapeSlice;
                 const { activeGroup, setActiveGroup, setGroupSelection } =
                     get().toolbarSlice;
 
@@ -25,9 +24,17 @@ export const createToolbarSlice = (set, get) => ({
                 }
 
                 // Deselect shapes if any are selected
-                if (selectedShapeIds.size > 0) {
-                    deselectAll();
+                if (get().shapeSlice.selectedShapeIds.size > 0) {
+                    get().shapeSlice.deselectAll();
                 }
+
+                // Deselect frames if any are selected
+                if (get().frameSlice.selectedFrameIds.size > 0) {
+                    get().frameSlice.deselectAll();
+                }
+
+                // Deselect the last selected object
+                get().canvasObjectSlice.deselectAll();
 
                 // Close secondary toolbar if opened
                 if (activeGroup) {

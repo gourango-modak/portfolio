@@ -24,7 +24,7 @@ const initialFrameState = {
         },
         [TOOL_PROPERTIES.BG_COLOR]: {
             value: "#fff",
-            label: "Frame Background",
+            label: "Background",
             id: "frameColor",
         },
         [TOOL_PROPERTIES.BORDER_COLOR]: {
@@ -71,6 +71,10 @@ export const createFrameSlice = (set, get) => ({
                         selectedFrameIds: newSelected,
                         selectedFramesBounds: newBounds,
                         activeFrameId: frameId,
+                    },
+                    canvasObjectSlice: {
+                        ...state.canvasObjectSlice,
+                        lastSelectedId: frameId,
                     },
                 };
             }),

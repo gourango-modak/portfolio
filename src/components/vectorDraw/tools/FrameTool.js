@@ -33,7 +33,7 @@ export class FrameTool extends BaseTool {
         },
         [TOOL_PROPERTIES.BG_COLOR]: {
             value: "transparent",
-            label: "Frame Background",
+            label: "Background",
             id: "frameFillColor",
         },
     };

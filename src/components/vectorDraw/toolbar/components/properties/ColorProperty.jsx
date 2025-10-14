@@ -4,10 +4,9 @@ import { ColorPicker } from "../../../components/ColorPicker";
 import { colorPickerSlice } from "./../../../store/utils";
 import { useColorPickerColor } from "../../../store/selectors/colorPickerSelectors";
 
-export const ColorProperty = ({ propertyName, property, onChange }) => {
-    const { id, value: initialColor } = property;
+export const ColorProperty = ({ id, propertyName, property, onChange }) => {
     const previewRef = useRef(null);
-    const [inputColor, setInputColor] = useState(initialColor);
+    const [inputColor, setInputColor] = useState(property.value);
 
     const color = useColorPickerColor(id);
     const { setColor, open: openColorPicker } = colorPickerSlice.getSlice();

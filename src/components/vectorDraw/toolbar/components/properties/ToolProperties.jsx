@@ -41,7 +41,7 @@ export const ToolProperties = ({ activeTool, canvasObjectId }) => {
                         <ToolPropertyItem
                             key={key}
                             propertyName={key}
-                            property={{ ...value, id: "tool_color" }}
+                            property={value}
                             canvasObjectId={canvasObjectId}
                         />
                     ))}

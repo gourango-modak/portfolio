@@ -30,6 +30,7 @@ export class RectangleTool extends BaseTool {
         },
         [TOOL_PROPERTIES.ROUGHNESS]: {
             value: 3,
+            label: "Roughness",
             min: 0,
             max: 15,
             step: 1,
