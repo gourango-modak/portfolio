@@ -2,7 +2,6 @@ import { generateId } from "../../../../utils/common";
 import { COMMANDS } from "./commandHistorySlice/constants";
 import { computeFramesBoundingBox } from "./../../boundingBox/framesBoundingBox";
 import { PROPERTY_TYPES } from "../../toolbar/components/properties/constants";
-import { SHAPES } from "../../shapes/constants";
 
 // Margin from the viewport edges to determine initial frame size
 const viewportMarginX = 100;
@@ -244,6 +243,13 @@ export const createFrameSlice = (set, get) => ({
             if (!state.activeFrameId) return null; // no active frame
             return state.frames[state.activeFrameId] || null;
         },
+        resetActiveFrame: () =>
+            set((state) => ({
+                frameSlice: {
+                    ...state.frameSlice,
+                    activeFrameId: null,
+                },
+            })),
         reset: () =>
             set((state) => {
                 const frames = state.frameSlice.frames;

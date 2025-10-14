@@ -18,11 +18,11 @@ export const createShapeSlice = (set, get) => ({
             const { frameSlice, canvasPropertiesSlice } = get();
 
             const isPagedMode = canvasPropertiesSlice.isPagedCanvasMode();
-            const activeFrameId = frameSlice.activeFrameId;
 
             // Return all shapes if not in paged mode
             if (!isPagedMode) return shapes;
 
+            const activeFrameId = frameSlice.activeFrameId;
             // Return only shapes belonging to the active frame
             if (activeFrameId) {
                 return Object.fromEntries(

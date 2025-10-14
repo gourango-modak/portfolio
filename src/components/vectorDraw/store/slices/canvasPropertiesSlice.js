@@ -61,8 +61,11 @@ export const createCanvasPropertiesSlice = (set, get) => ({
 
                 if (mode === CANVAS_MODES.PAGED) {
                     get().frameSlice.reset();
+                } else {
+                    get().frameSlice.resetActiveFrame();
                 }
 
+                get().toolbarSlice.setActiveTool(TOOLS.SELECTION);
                 get().panelSlice.closeToolPropertiesPanel();
 
                 const updatedProperties = {
@@ -72,14 +75,11 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                         value: mode,
                     },
                 };
+
                 return {
                     canvasPropertiesSlice: {
                         ...state.canvasPropertiesSlice,
                         properties: updatedProperties,
-                    },
-                    toolbarSlice: {
-                        ...state.toolbarSlice,
-                        activeTool: TOOLS.SELECTION,
                     },
                 };
             }),
