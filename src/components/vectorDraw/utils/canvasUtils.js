@@ -34,3 +34,27 @@ export function toViewportPoint({ x, y }, scale, pan) {
         y: y * scale + pan.y,
     };
 }
+
+export function getSafeViewportPosition(bbox, margin = 10) {
+    const { x, y, width, height } = bbox;
+    const { innerWidth, innerHeight } = window;
+
+    let safeX = x;
+    let safeY = y;
+
+    // Prevent horizontal overflow
+    if (safeX + width > innerWidth - margin) {
+        safeX = Math.max(innerWidth - width - margin, margin);
+    } else if (safeX < margin) {
+        safeX = margin;
+    }
+
+    // Prevent vertical overflow
+    if (safeY + height > innerHeight - margin) {
+        safeY = Math.max(innerHeight - height - margin, margin);
+    } else if (safeY < margin) {
+        safeY = margin;
+    }
+
+    return { x: safeX, y: safeY };
+}

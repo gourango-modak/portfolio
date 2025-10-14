@@ -8,6 +8,7 @@ import {
     useColorPickerOpen,
     useColorPickerPosition,
 } from "../store/selectors/colorPickerSelectors";
+import { getSafeViewportPosition } from "../utils/canvasUtils";
 
 export const ColorPicker = memo(({ id }) => {
     const pickerRef = useRef(null);
@@ -35,8 +36,18 @@ export const ColorPicker = memo(({ id }) => {
     // Update position of the picker
     useEffect(() => {
         if (isOpen && position && pickerRef.current) {
-            pickerRef.current.style.left = `${position.x}px`;
-            pickerRef.current.style.top = `${position.y}px`;
+            const picker = pickerRef.current;
+            const rect = picker.getBoundingClientRect();
+
+            const safePos = getSafeViewportPosition({
+                x: position.x,
+                y: position.y,
+                width: rect.width,
+                height: rect.height,
+            });
+
+            picker.style.left = `${safePos.x}px`;
+            picker.style.top = `${safePos.y}px`;
         }
     }, [isOpen, position]);
 
