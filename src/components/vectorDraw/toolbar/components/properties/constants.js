@@ -27,6 +27,7 @@ export const TOOL_PROPERTIES_COMPONENTS = {
     [TOOL_PROPERTIES.WIDTH]: InputProperty,
     [TOOL_PROPERTIES.HEIGHT]: InputProperty,
     [TOOL_PROPERTIES.SIZE]: InputProperty,
+    [TOOL_PROPERTIES.FONT_SIZE]: InputProperty,
 };
 
 export const INSPECTOR_PANEL_TARGETS = {

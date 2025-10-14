@@ -11,7 +11,10 @@ import { TEXT_LINE_HEIGHT, TOOLS } from "./constants";
 // Minimum width for an empty text field to ensure visibility.
 const MIN_TEXT_WIDTH = 20;
 
-// Extra buffer space to prevent premature line wrapping. // Without this, the next character typed could wrap too early // because span.offsetWidth measures text tightly (no right padding). // This value depends on the font used — 40px is a safe average.
+// Extra buffer space to prevent premature line wrapping.
+// Without this, the next character typed could wrap too early
+// because span.offsetWidth measures text tightly (no right padding).
+// This value depends on the font used — 40px is a safe average.
 const WIDTH_BUFFER = 40;
 
 // Padding from viewport right edge
@@ -25,7 +28,7 @@ export class TextTool extends BaseTool {
 
     static defaultProperties = {
         [TOOL_PROPERTIES.COLOR]: {
-            value: "#3b82f6",
+            value: "#000",
             label: "Color",
             id: "textColor",
         },
@@ -396,6 +399,10 @@ export class TextTool extends BaseTool {
 
         // Adjust buffer dynamically so we don't exceed viewport
         const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
+
+        console.log("Measured: ", measuredTextWidth);
+        console.log("Buff: ", buffer);
+        console.log("Remain: ", remainingSpace);
 
         // Compute target width: max of existing shape width or measured text width + buffer
         const baseWidth = Math.max(

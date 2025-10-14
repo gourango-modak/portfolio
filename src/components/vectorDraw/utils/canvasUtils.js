@@ -1,4 +1,5 @@
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { TEXT_LINE_HEIGHT } from "../tools/constants";
 
 let canvasLastPointerPosition = { x: 0, y: 0 };
 
@@ -69,15 +70,29 @@ export const getCanvasObjectProperties = (id) => {
     return null;
 };
 
-export function updateCanvasObjectProperties(id, updatedProps) {
+export function updateCanvasObjectProperties(id, updatedProperties) {
     const { shapes, updateShape } = shapeSlice.getSlice();
     const { frames, updateFrame } = frameSlice.getSlice();
 
     const shape = shapes[id];
     if (shape) {
-        updateShape(id, {
-            properties: { ...shape.properties, ...updatedProps },
-        });
+        const updatedProps = {};
+        if (
+            updatedProperties.fontSize.value !== shape.properties.fontSize.value
+        ) {
+            const { width, height } = measureTextSize(shape.text, {
+                ...shape.properties,
+                ...updatedProperties,
+            });
+            updatedProps.width = width;
+            updatedProps.height = height;
+        }
+
+        updatedProps.properties = {
+            ...shape.properties,
+            ...updatedProperties,
+        };
+        updateShape(id, updatedProps);
         return;
     }
 
@@ -91,4 +106,34 @@ export function updateCanvasObjectProperties(id, updatedProps) {
             properties: { ...frame.properties, ...updatedProps },
         });
     }
+}
+
+export function measureTextSize(text, properties) {
+    // Create a temporary hidden span to measure
+    const span = document.createElement("span");
+    Object.assign(span.style, {
+        position: "absolute",
+        visibility: "hidden",
+        whiteSpace: "pre",
+        fontFamily: properties.fontFamily.value,
+        fontSize: `${properties.fontSize.value}px`,
+        lineHeight: TEXT_LINE_HEIGHT,
+    });
+
+    span.textContent = text || " ";
+    document.body.appendChild(span);
+
+    // Measure text width visually using span and
+    // add a small buffer for spacing (same as text tool)
+    const measuredWidth = span.offsetWidth + properties.fontSize.value / 3;
+    const lineCount = text.split("\n").length;
+    const measuredHeight =
+        lineCount * properties.fontSize.value * TEXT_LINE_HEIGHT;
+
+    span.remove();
+
+    return {
+        width: measuredWidth,
+        height: measuredHeight,
+    };
 }
