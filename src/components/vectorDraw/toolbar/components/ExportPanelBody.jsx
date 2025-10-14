@@ -41,10 +41,10 @@ export const ExportPanelBody = ({ onExport }) => {
     );
 
     return (
-        <div className="p-4 space-y-4 w-72 text-sm">
+        <div className="p-4 space-y-4 w-72 text-[12px] text-gray-500 tracking-wide">
             {/* Step 1: Scope */}
             <fieldset className="border border-gray-300 rounded-lg p-4">
-                <legend className="text-gray-500 font-medium">
+                <legend className="text-gray-500 font-medium uppercase">
                     Select Scope
                 </legend>
                 <div className="flex flex-col gap-2 mt-2">
@@ -70,7 +70,7 @@ export const ExportPanelBody = ({ onExport }) => {
 
             {/* Step 2: Format */}
             <fieldset className="border border-gray-300 rounded-lg p-4">
-                <legend className="text-gray-500 font-medium">
+                <legend className="text-gray-500 font-medium uppercase">
                     Select Format
                 </legend>
                 <div className="flex flex-col mt-2 gap-2">
@@ -111,7 +111,7 @@ export const ExportPanelBody = ({ onExport }) => {
             {/* Step 3: Scale */}
             {format !== EXPORT_FORMAT.JSON && (
                 <fieldset className="border border-gray-300 rounded-lg p-4">
-                    <legend className="text-gray-500 font-medium">
+                    <legend className="text-gray-500 font-medium uppercase">
                         Select Scale
                     </legend>
                     <div className="flex flex-wrap gap-4 mt-2">
@@ -139,19 +139,19 @@ export const ExportPanelBody = ({ onExport }) => {
             {/* Step 4: Background Toggle */}
             {canvasMode === CANVAS_MODES.INFINITE &&
                 format !== EXPORT_FORMAT.JSON && (
-                    <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center justify-between mt-2 uppercase">
                         <span>Background</span>
                         <button
                             type="button"
                             onClick={() => setBackground(!background)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors ${
+                            className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
                                 background ? "bg-indigo-600" : "bg-gray-300"
                             }`}
                         >
                             <div
-                                className={`bg-white w-4 h-4 rounded-full shadow transform transition-transform ${
+                                className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
                                     background
-                                        ? "translate-x-6"
+                                        ? "translate-x-5"
                                         : "translate-x-0"
                                 }`}
                             />
@@ -162,7 +162,7 @@ export const ExportPanelBody = ({ onExport }) => {
             {/* Step 5: Export Button */}
             <button
                 onClick={handleExport}
-                className="w-full px-4 py-2 mt-6 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full text-[14px] px-4 py-2 mt-6 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2 cursor-pointer uppercase"
             >
                 Export
             </button>

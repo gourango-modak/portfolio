@@ -21,7 +21,7 @@ export const FrameBgProperty = () => {
     return (
         activeFrameId && (
             <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700">
+                <label className="font-medium">
                     {activeFrameBgColor.label}
                 </label>
                 <ColorProperty

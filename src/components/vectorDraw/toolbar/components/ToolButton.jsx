@@ -44,7 +44,7 @@ export const ToolButton = ({
         >
             <button
                 onClick={handleToolBtnClick}
-                className={`p-2 w-12 h-12 flex items-center justify-center rounded-lg transition-all cursor-pointer border-2 ${
+                className={`p-2 w-11 h-11 flex items-center justify-center rounded-lg transition-all cursor-pointer border-2 ${
                     isSelected
                         ? "border-indigo-600 bg-indigo-50"
                         : "border-transparent hover:bg-gray-100"

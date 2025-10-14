@@ -16,10 +16,12 @@ export const CanvasBgProperty = () => {
 
     return (
         <div className="flex flex-col gap-2">
-            <label className="font-medium text-gray-700">
-                {canvasBgColor.label}
-            </label>
-            <ColorProperty property={canvasBgColor} onChange={handleChange} />
+            <label>{canvasBgColor.label}</label>
+            <ColorProperty
+                property={canvasBgColor}
+                onChange={handleChange}
+                id={canvasBgColor.id}
+            />
         </div>
     );
 };

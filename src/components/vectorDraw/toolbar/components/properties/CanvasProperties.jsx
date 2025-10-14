@@ -16,10 +16,10 @@ export const CanvasProperties = () => {
     useRenderLogger("CanvasProperties");
 
     return (
-        <div className="flex flex-col gap-4 p-4 text-sm text-gray-800">
+        <div className="flex flex-col gap-4 p-4 text-[12px] text-gray-500 font-medium uppercase tracking-wide">
             {/* Canvas Mode */}
             <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700">
+                <label className="font-medium">
                     {canvasModeProperty.label}
                 </label>
                 <div className="flex gap-2">
@@ -28,7 +28,7 @@ export const CanvasProperties = () => {
                             key={mode}
                             className={`p-2 rounded border cursor-pointer ${
                                 canvasModeProperty.value === mode
-                                    ? "border-indigo-500 bg-indigo-50"
+                                    ? "border-2 border-indigo-600"
                                     : "border-gray-300"
                             }`}
                             onClick={() => handleChange(mode)}

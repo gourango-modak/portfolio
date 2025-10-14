@@ -17,7 +17,7 @@ export const ToolPropertyField = ({ propertyName, property, onChange }) => {
 
     return (
         <div className="flex flex-col gap-1">
-            <label className="text-gray-600 text-sm font-medium">
+            <label className="text-[12px] text-gray-500 font-medium uppercase tracking-wide">
                 {property.label}
             </label>
             <Component {...commonProps} />

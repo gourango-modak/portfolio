@@ -26,7 +26,8 @@ export const InputProperty = ({ propertyName, property, onChange }) => {
             onChange={handleChange}
             min={min}
             max={max}
-            className="w-full px-2 py-1 border border-gray-300 rounded"
+            className="w-full px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-md 
+               text-sm text-gray-800 focus:outline-none"
         />
     );
 };

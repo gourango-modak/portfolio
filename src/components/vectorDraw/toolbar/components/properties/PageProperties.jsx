@@ -12,7 +12,7 @@ export const PageProperties = () => {
     useRenderLogger("PageSettingsPanel");
 
     return (
-        <div className="flex-1 px-5 py-4 flex flex-col gap-4 overflow-auto">
+        <div className="flex-1 px-4 py-4 flex flex-col gap-4 overflow-auto noselect">
             <div className="flex flex-col gap-4">
                 {Object.entries(frameTemplate).map(([key, prop]) => (
                     <ToolPropertyField

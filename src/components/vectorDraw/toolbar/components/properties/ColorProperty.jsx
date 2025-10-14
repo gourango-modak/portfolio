@@ -49,21 +49,22 @@ export const ColorProperty = ({ id, propertyName, property, onChange }) => {
 
     return (
         <>
-            <div className="flex flex-col items-start gap-2 w-full">
-                <div className="flex items-center gap-2 w-full">
-                    <input
-                        type="text"
-                        value={inputColorVal}
-                        onChange={handleInputChange}
-                        className="flex-1 min-w-0 p-1 border border-gray-300 rounded text-sm text-center"
-                    />
-                    <div
-                        ref={previewRef}
-                        className="w-8 h-8 rounded border border-gray-300 cursor-pointer flex-shrink-0"
-                        style={{ backgroundColor: inputColorVal }}
-                        onClick={handleColorPicker}
-                    ></div>
-                </div>
+            <div className="flex items-center w-full gap-2 border border-gray-200 rounded-sm bg-gray-50 px-2 py-1.5">
+                {/* Color preview (left) */}
+                <div
+                    ref={previewRef}
+                    onClick={handleColorPicker}
+                    className="w-5 h-5 rounded-sm cursor-pointer flex-shrink-0 border border-gray-300"
+                    style={{ backgroundColor: inputColorVal }}
+                ></div>
+
+                {/* Color input (right) */}
+                <input
+                    type="text"
+                    value={inputColorVal}
+                    onChange={handleInputChange}
+                    className="flex-1 min-w-0 px-2 text-center outline-none text-sm text-gray-800 bg-transparent"
+                />
             </div>
 
             <ColorPicker id={id} />

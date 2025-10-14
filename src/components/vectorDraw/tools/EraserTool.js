@@ -77,13 +77,15 @@ export class EraserTool extends BaseTool {
         this.isErasing = false;
         this.hidePreview();
 
-        // Finalize command if anything was deleted
-        const deletedIds = Object.keys(this.deletedShapes);
-        if (deletedIds.length > 0) {
-            commandHistorySlice.getSlice().finalizeCommand({
-                shapeIds: deletedIds,
-                deletedShapes: { ...this.deletedShapes },
-            });
+        if (this.deletedShapes) {
+            // Finalize command if anything was deleted
+            const deletedIds = Object.keys(this.deletedShapes);
+            if (deletedIds.length > 0) {
+                commandHistorySlice.getSlice().finalizeCommand({
+                    shapeIds: deletedIds,
+                    deletedShapes: { ...this.deletedShapes },
+                });
+            }
         }
     }
 
