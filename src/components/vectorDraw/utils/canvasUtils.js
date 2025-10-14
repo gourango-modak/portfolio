@@ -1,3 +1,4 @@
+import { SHAPES } from "../shapes/constants";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { TEXT_LINE_HEIGHT } from "../tools/constants";
 
@@ -78,6 +79,7 @@ export function updateCanvasObjectProperties(id, updatedProperties) {
     if (shape) {
         const updatedProps = {};
         if (
+            shape.type === SHAPES.TEXT &&
             updatedProperties.fontSize.value !== shape.properties.fontSize.value
         ) {
             const { width, height } = measureTextSize(shape.text, {

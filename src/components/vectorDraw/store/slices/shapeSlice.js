@@ -32,8 +32,7 @@ export const createShapeSlice = (set, get) => ({
                 );
             }
 
-            // No active frame selected
-            return {};
+            return shapes;
         },
 
         setSelectedShapeIds: (selectedShapeIds) =>

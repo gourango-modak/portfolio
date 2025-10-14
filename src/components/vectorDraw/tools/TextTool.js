@@ -400,10 +400,6 @@ export class TextTool extends BaseTool {
         // Adjust buffer dynamically so we don't exceed viewport
         const buffer = Math.min(WIDTH_BUFFER, remainingSpace);
 
-        console.log("Measured: ", measuredTextWidth);
-        console.log("Buff: ", buffer);
-        console.log("Remain: ", remainingSpace);
-
         // Compute target width: max of existing shape width or measured text width + buffer
         const baseWidth = Math.max(
             existingShapeWidth || MIN_TEXT_WIDTH,

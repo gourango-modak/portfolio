@@ -12,7 +12,7 @@ export const ToolPropertiesPanel = () => {
     useRenderLogger("ToolPropertiesPanel");
 
     return (
-        <div className="w-45 shadow-md bg-white rounded-md border border-gray-300 flex-col flex">
+        <div className="w-45 shadow-md bg-white rounded-md border border-gray-300 flex-col flex noselect">
             <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100 cursor-grab active:cursor-grabbing select-none drag-handle">
                 <h2 className="text-sm font-medium text-gray-800 truncate">
                     Properties
