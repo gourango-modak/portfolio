@@ -1,6 +1,7 @@
 import { PANELS } from "../constants";
 import { TOOLS } from "../tools/constants";
 import {
+    getExportPanelInitialPosition,
     getInspectorPanelInitialPosition,
     getToolbarPanelInitialPosition,
     getToolPropertiesPanelInitialPosition,
@@ -10,6 +11,7 @@ export const PANEL_INIT_POSITION_FUNCTIONS = {
     [PANELS.TOOLBAR_PANEL]: getToolbarPanelInitialPosition,
     [PANELS.INSPECTOR_PANEL]: getInspectorPanelInitialPosition,
     [PANELS.TOOL_PROPERTIES_PANEL]: getToolPropertiesPanelInitialPosition,
+    [PANELS.EXPORT_PANEL]: getExportPanelInitialPosition,
 };
 
 export const TOOLS_PROPERTIES_PANEL_DISABLED = [TOOLS.SELECTION, TOOLS.PAN];

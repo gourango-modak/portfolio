@@ -13,7 +13,7 @@ export const ToolButton = ({
     isSelected: isSelectedProp = null,
     onClick,
 }) => {
-    const { name, Icon } = item;
+    const { name, Icon, tooltipText } = item;
     const isActiveTool = useIsActiveTool(name);
     const canvasMode = useCanvasMode();
     const activeFrameId = useActiveFrameId();
@@ -57,12 +57,14 @@ export const ToolButton = ({
                 <Icon className="w-5 h-5" />
             </button>
 
-            <Tooltip
-                text={name}
-                orientation={
-                    orientation === ORIENTATION.VERTICAL ? "right" : "top"
-                }
-            />
+            {tooltipText && (
+                <Tooltip
+                    text={tooltipText}
+                    orientation={
+                        orientation === ORIENTATION.VERTICAL ? "right" : "top"
+                    }
+                />
+            )}
         </div>
     );
 };

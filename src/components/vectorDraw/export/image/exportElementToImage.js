@@ -5,16 +5,21 @@ export const exportElementToImage = async ({
     bbox,
     padding = 0,
     scale = 1,
+    background = false,
 }) => {
     const elementToExport = wrapElementWithScale(element, scale);
     const box = getScaledBox(bbox, scale, padding);
 
-    return await exportSvgToImage(elementToExport, {
-        x: box.x,
-        y: box.y,
-        width: box.width,
-        height: box.height,
-    });
+    return await exportSvgToImage(
+        elementToExport,
+        {
+            x: box.x,
+            y: box.y,
+            width: box.width,
+            height: box.height,
+        },
+        background
+    );
 };
 
 const getScaledBox = (bbox, scale = 1, padding = 0) => {

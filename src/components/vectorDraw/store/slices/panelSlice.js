@@ -18,16 +18,23 @@ export const createPanelSlice = (set, get) => ({
                 position: { x: 10, y: 100 },
                 orientation: ORIENTATION.HORIZONTAL,
             },
+            [PANELS.EXPORT_PANEL]: {
+                isVisible: false,
+                position: { x: 90, y: 100 },
+                orientation: ORIENTATION.HORIZONTAL,
+            },
         },
         stack: [
             PANELS.INSPECTOR_PANEL,
             PANELS.TOOL_PROPERTIES_PANEL,
             PANELS.TOOLBAR_PANEL,
+            PANELS.EXPORT_PANEL,
         ],
         zIndexMap: {
             [PANELS.INSPECTOR_PANEL]: 10,
             [PANELS.TOOL_PROPERTIES_PANEL]: 11,
             [PANELS.TOOLBAR_PANEL]: 12,
+            [PANELS.EXPORT_PANEL]: 13,
         },
 
         openToolbarPanel: () =>
@@ -99,6 +106,34 @@ export const createPanelSlice = (set, get) => ({
                             ...state.panelSlice.panels[
                                 PANELS.TOOL_PROPERTIES_PANEL
                             ],
+                            isVisible: false,
+                        },
+                    },
+                },
+            })),
+
+        openExportPanel: () =>
+            set((state) => ({
+                panelSlice: {
+                    ...state.panelSlice,
+                    panels: {
+                        ...state.panelSlice.panels,
+                        [PANELS.EXPORT_PANEL]: {
+                            ...state.panelSlice.panels[PANELS.EXPORT_PANEL],
+                            isVisible: true,
+                        },
+                    },
+                },
+            })),
+
+        closeExportPanel: () =>
+            set((state) => ({
+                panelSlice: {
+                    ...state.panelSlice,
+                    panels: {
+                        ...state.panelSlice.panels,
+                        [PANELS.EXPORT_PANEL]: {
+                            ...state.panelSlice.panels[PANELS.EXPORT_PANEL],
                             isVisible: false,
                         },
                     },

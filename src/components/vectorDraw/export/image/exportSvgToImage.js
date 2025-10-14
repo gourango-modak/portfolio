@@ -3,10 +3,15 @@ import { CAVEAT_FONT_CSS } from "./../../fonts/caveatFont";
 
 export const exportSvgToImage = async (
     element,
-    { x = 0, y = 0, width, height }
+    { x = 0, y = 0, width, height },
+    background = false
 ) => {
     const { canvas, ctx } = createExportCanvas(width, height);
-    const svg = await prepareSvgForExport(element, { x, y, width, height });
+    const svg = await prepareSvgForExport(
+        element,
+        { x, y, width, height },
+        background
+    );
     const svgDataUrl = svgToDataUrl(svg);
 
     await drawSvgOnCanvas(ctx, svgDataUrl, width, height);
@@ -88,7 +93,7 @@ const convertForeignObjectsToText = (svg) => {
     });
 };
 
-const createBaseSvg = ({ x, y, width, height }) => {
+const createBaseSvg = ({ x, y, width, height }, background = false) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", width);
     svg.setAttribute("height", height);
@@ -96,8 +101,10 @@ const createBaseSvg = ({ x, y, width, height }) => {
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 
-    const { canvasBgColor } = canvasPropertiesSlice.getSlice().properties;
-    svg.style.background = canvasBgColor.value;
+    if (background) {
+        const { canvasBgColor } = canvasPropertiesSlice.getSlice().properties;
+        svg.style.background = canvasBgColor.value;
+    }
 
     return svg;
 };
@@ -113,13 +120,14 @@ const createExportCanvas = (width, height) => {
 
 const prepareSvgForExport = async (
     element,
-    { x = 0, y = 0, width, height }
+    { x = 0, y = 0, width, height },
+    background = false
 ) => {
-    const svg = createBaseSvg({ x, y, width, height });
+    const svg = createBaseSvg({ x, y, width, height }, background);
     addFontDefinition(svg, CAVEAT_FONT_CSS);
     svg.appendChild(element);
     convertForeignObjectsToText(svg);
-    // document.body.appendChild(svg);
+    document.body.appendChild(svg);
     return svg;
 };
 

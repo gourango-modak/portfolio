@@ -4,6 +4,7 @@ import { PANELS } from "./constants";
 import Toolbar from "./toolbar/components/Toolbar";
 import { InspectorPanel } from "./toolbar/components/properties/InspectorPanel";
 import { ToolPropertiesPanel } from "./toolbar/components/properties/ToolPropertiesPanel";
+import { ExportPanel } from "./toolbar/components/ExportPanel";
 
 export const DrawingEnvironment = () => {
     return (
@@ -16,6 +17,9 @@ export const DrawingEnvironment = () => {
             </Panel>
             <Panel panelId={PANELS.TOOL_PROPERTIES_PANEL}>
                 <ToolPropertiesPanel />
+            </Panel>
+            <Panel panelId={PANELS.EXPORT_PANEL}>
+                <ExportPanel />
             </Panel>
             <LayeredCanvas />
         </>

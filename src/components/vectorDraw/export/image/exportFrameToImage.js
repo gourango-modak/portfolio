@@ -1,7 +1,12 @@
 import { createFrameGroup } from "./createFrameGroup";
 import { exportElementToImage } from "./exportElementToImage";
 
-export const exportFrameToImage = async ({ frame, scale = 1, shapes }) => {
+export const exportFrameToImage = async ({
+    frame,
+    scale = 1,
+    shapes,
+    background = false,
+}) => {
     const exportG = createFrameGroup(frame, shapes);
     return await exportElementToImage({
         element: exportG,
@@ -12,5 +17,6 @@ export const exportFrameToImage = async ({ frame, scale = 1, shapes }) => {
             height: frame.height,
         },
         scale,
+        background,
     });
 };

@@ -14,6 +14,7 @@ export const PANELS = {
     INSPECTOR_PANEL: "inspectorPanel",
     TOOL_PROPERTIES_PANEL: "toolPropertiesPanel",
     TOOLBAR_PANEL: "toolbarPanel",
+    EXPORT_PANEL: "exportPanel",
 };
 
 // 300% scale for high resolution export image

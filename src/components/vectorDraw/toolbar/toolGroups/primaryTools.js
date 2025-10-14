@@ -1,46 +1,28 @@
-import {
-    MousePointer,
-    PenIcon,
-    Square,
-    ArrowRight,
-    Italic,
-    Eraser,
-    Hand,
-    Frame,
-} from "lucide-react";
+import { MousePointer, Italic, Eraser } from "lucide-react";
 import { TOOLS } from "../../tools/constants";
-import { isInfiniteCanvas } from "../utils";
 import { TOOL_ACTION_TYPES } from "../config/toolActionTypes";
+import { shapeTools } from "./shapeTools";
+import { markupTools } from "./markupTools";
 
 export const primaryTools = [
     {
         name: TOOLS.SELECTION,
         Icon: MousePointer,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
+        tooltipText: "Select",
     },
-    { name: TOOLS.PEN, Icon: PenIcon, action: TOOL_ACTION_TYPES.SELECT_TOOL },
+    markupTools,
+    shapeTools,
     {
-        name: TOOLS.RECTANGLE,
-        Icon: Square,
+        name: TOOLS.TEXT,
+        Icon: Italic,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
-    },
-    {
-        name: TOOLS.ARROW,
-        Icon: ArrowRight,
-        action: TOOL_ACTION_TYPES.SELECT_TOOL,
-    },
-    { name: TOOLS.TEXT, Icon: Italic, action: TOOL_ACTION_TYPES.SELECT_TOOL },
-    { name: TOOLS.ERASER, Icon: Eraser, action: TOOL_ACTION_TYPES.SELECT_TOOL },
-    {
-        name: TOOLS.PAN,
-        Icon: Hand,
-        action: TOOL_ACTION_TYPES.SELECT_TOOL,
-        visible: () => false,
+        tooltipText: "Text",
     },
     {
-        name: TOOLS.FRAME,
-        Icon: Frame,
+        name: TOOLS.ERASER,
+        Icon: Eraser,
         action: TOOL_ACTION_TYPES.SELECT_TOOL,
-        visible: isInfiniteCanvas,
+        tooltipText: "Eraser",
     },
 ];

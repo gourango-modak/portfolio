@@ -29,6 +29,10 @@ export const getToolPropertiesPanelInitialPosition = () => {
     return { x: 20, y: 300 };
 };
 
+export const getExportPanelInitialPosition = () => {
+    return { x: 90, y: 50 };
+};
+
 export const isPagedCanvas = ({ canvasMode }) =>
     canvasMode === CANVAS_MODES.PAGED;
 

@@ -7,7 +7,11 @@ import { createFrameSvg } from "../frames/frameSvg";
 import { shapeToSvgElement } from "../shapes";
 import { exportElementToImage } from "./exportElementToImage";
 
-export const exportCanvasToImage = async ({ padding = 50, scale = 1 }) => {
+export const exportCanvasToImage = async ({
+    padding = 50,
+    scale = 1,
+    background = false,
+}) => {
     const { shapes, shapeOrder } = shapeSlice.getSlice();
     const { frames, frameOrder } = frameSlice.getSlice();
 
@@ -33,6 +37,7 @@ export const exportCanvasToImage = async ({ padding = 50, scale = 1 }) => {
         bbox,
         padding,
         scale,
+        background,
     });
 };
 

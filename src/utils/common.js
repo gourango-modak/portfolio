@@ -126,7 +126,7 @@ export const debugLog = (message, data) => {
 };
 
 export const errorLog = (message, data) => {
-    console.log(`[Error] ${message}:`, data);
+    console.error(`[Error] ${message}:`, data);
 };
 
 export const formatToReadable = (text) => {

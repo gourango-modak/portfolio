@@ -3,10 +3,9 @@ import {
     ChevronRight,
     FileCog,
     FilePlus2,
-    Save,
     StickyNote,
 } from "lucide-react";
-import { TOOL_ACTION_TYPES } from "./../config/toolActionTypes";
+import { TOOL_ACTION_TYPES } from "../config/toolActionTypes";
 import {
     canGoNextFrame,
     canGoPrevFrame,
@@ -31,12 +30,6 @@ export const pageTools = {
             Icon: FileCog,
             visible: isPagedCanvas,
             panelTarget: INSPECTOR_PANEL_TARGETS.PAGE,
-        },
-        {
-            name: "Export Current Page",
-            Icon: Save,
-            action: TOOL_ACTION_TYPES.EXPORT_CURRENT_PAGE_TO_IMAGE,
-            visible: (props) => hasFrame && isPagedCanvas(props),
         },
         {
             name: "Go To Previous Page",

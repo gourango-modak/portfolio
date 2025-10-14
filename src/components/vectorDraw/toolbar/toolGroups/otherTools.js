@@ -1,59 +1,51 @@
 import {
-    Menu,
-    Highlighter,
     Settings,
-    Download,
-    Upload,
+    Frame,
+    Hand,
+    Component,
     Trash2,
     RotateCcw,
-    Save,
 } from "lucide-react";
-import { TOOLS } from "../../tools/constants";
 import { TOOL_ACTION_TYPES } from "./../config/toolActionTypes";
 import { INSPECTOR_PANEL_TARGETS } from "../components/properties/constants";
 import { isInfiniteCanvas } from "../utils";
+import { TOOLS } from "./../../tools/constants";
 
 export const otherTools = {
-    group: "Others",
-    Icon: Menu,
-    useSelectedIcon: false,
+    group: "Other Tools",
+    Icon: Component,
+    useSelectedIcon: true,
     tools: [
         {
-            name: TOOLS.LASER_POINTER,
-            Icon: Highlighter,
+            name: TOOLS.PAN,
+            Icon: Hand,
             action: TOOL_ACTION_TYPES.SELECT_TOOL,
+            tooltipText: "Pan",
+        },
+        {
+            name: TOOLS.FRAME,
+            Icon: Frame,
+            action: TOOL_ACTION_TYPES.SELECT_TOOL,
+            tooltipText: "Frame",
+            visible: isInfiniteCanvas,
+        },
+        {
+            name: "Clear All",
+            Icon: Trash2,
+            action: TOOL_ACTION_TYPES.CLEAR_CANVAS,
+            tooltipText: "Clear All",
+        },
+        {
+            name: "Fit to Screen",
+            Icon: RotateCcw,
+            action: TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN,
+            tooltipText: "Fit to Screen",
         },
         {
             name: "Settings",
             Icon: Settings,
             action: TOOL_ACTION_TYPES.OPEN_CANVAS_PROPERTIES_PANEL,
             panelTarget: INSPECTOR_PANEL_TARGETS.CANVAS,
-        },
-        {
-            name: "Export Drawing",
-            Icon: Download,
-            action: TOOL_ACTION_TYPES.EXPORT_DRAWING_STATE,
-        },
-        {
-            name: "Import Drawing",
-            Icon: Upload,
-            action: TOOL_ACTION_TYPES.IMPORT_DRAWING_STATE,
-        },
-        {
-            name: "Clear Canvas",
-            Icon: Trash2,
-            action: TOOL_ACTION_TYPES.CLEAR_CANVAS,
-        },
-        {
-            name: "Reset Viewport",
-            Icon: RotateCcw,
-            action: TOOL_ACTION_TYPES.RESET_ZOOM_AND_PAN,
-        },
-        {
-            name: "Export Image",
-            Icon: Save,
-            action: TOOL_ACTION_TYPES.EXPORT_CANVAS_TO_IMAGE,
-            visible: isInfiniteCanvas,
         },
     ],
 };
