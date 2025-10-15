@@ -1,9 +1,8 @@
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 import { CanvasBgProperty } from "./CavasBgProperty";
-import { FrameBgProperty } from "./FrameBgProperty";
 import { canvasPropertiesSlice } from "../../../store/utils";
 import { useCanvasModeProperty } from "../../../store/selectors/canvasPropertiesSelectors";
-import { CANVAS_MODE_ICONS, CANVAS_MODES } from "../../../constants";
+import { CANVAS_MODE_ICONS } from "../../../constants";
 
 export const CanvasProperties = () => {
     const canvasModeProperty = useCanvasModeProperty();
@@ -16,9 +15,9 @@ export const CanvasProperties = () => {
     useRenderLogger("CanvasProperties");
 
     return (
-        <div className="flex flex-col gap-4 p-4 text-[12px] text-gray-500 font-medium uppercase tracking-wide">
+        <div className="flex flex-col gap-4 p-4">
             {/* Canvas Mode */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-[12px] text-gray-500 font-medium uppercase tracking-wide">
                 <label className="font-medium">
                     {canvasModeProperty.label}
                 </label>
@@ -40,11 +39,6 @@ export const CanvasProperties = () => {
             </div>
 
             <CanvasBgProperty />
-
-            {/* Frame Background */}
-            {canvasModeProperty.value !== CANVAS_MODES.INFINITE && (
-                <FrameBgProperty />
-            )}
         </div>
     );
 };

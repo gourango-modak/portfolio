@@ -10,7 +10,7 @@ import {
     shapeSlice,
 } from "../../store/utils";
 import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
-import { CANVAS_MODES } from "../../constants";
+import { isPagedCanvasMode } from "../../utils/canvasUtils";
 
 export class SelectionTool extends BaseTool {
     static name = TOOLS.SELECTION;
@@ -40,11 +40,6 @@ export class SelectionTool extends BaseTool {
         this.resetPointerState();
         this.handlers = Object.values(canvasObjectRegistry);
 
-        const { getCanvasMode } = canvasPropertiesSlice.getSlice();
-        if (getCanvasMode() === CANVAS_MODES.PAGED) {
-            this.handlers = [canvasObjectRegistry.SHAPE];
-        }
-
         // Set the corresponding slice for each handler
         this.handlers.forEach((handler) => {
             if (handler.type === "SHAPE")
@@ -72,10 +67,7 @@ export class SelectionTool extends BaseTool {
         this.lastPointer = pointer;
 
         // Step 0: compute combined bounds of all selected objects across handlers
-        const boundsArray = this.handlers
-            .map((h) => h.getSelectedBounds())
-            .filter(Boolean); // remove nulls
-        const combinedBounds = combineBoundingBoxes(boundsArray);
+        const combinedBounds = combineBoundingBoxes(this.getHandlersBounds());
 
         let isAnyObjectSelected = false;
         // Step 1: Try selecting in all handlers
@@ -125,11 +117,24 @@ export class SelectionTool extends BaseTool {
         this.resetPointerState();
     }
 
-    updateCursorWithFallback(pointer) {
-        const boundsArray = this.handlers
+    getHandlersBounds() {
+        // Collect bounds from handlers to compute combined bounds
+        let boundsArray = this.handlers
+            .filter((h) => {
+                // In paged mode, skip frame bounds
+                if (isPagedCanvasMode()) {
+                    return h.type !== "FRAME";
+                }
+                return true;
+            })
             .map((h) => h.getSelectedBounds())
-            .filter(Boolean); // remove nulls
-        const combinedBounds = combineBoundingBoxes(boundsArray);
+            .filter(Boolean);
+
+        return boundsArray;
+    }
+
+    updateCursorWithFallback(pointer) {
+        const combinedBounds = combineBoundingBoxes(this.getHandlersBounds());
 
         const anyUpdated = this.handlers.some((handler) =>
             handler.updateCursor(this, pointer, combinedBounds)

@@ -12,6 +12,7 @@ import { finalizeMoveCommand } from "../commands/finalizeMoveCommand";
 import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
 import { getRectFromPoints, isPointInRect } from "../../../utils/geometryUtils";
 import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
+import { isPagedCanvasMode } from "../../../utils/canvasUtils";
 
 export class FrameHandler extends BaseObjectHandler {
     getSelectedIds() {
@@ -71,8 +72,21 @@ export class FrameHandler extends BaseObjectHandler {
         const { frameOrder } = this.getSlice();
         const { shapes } = shapeSlice.getSlice();
 
-        if (this.getClickedFrame(pointer, frameOrder, frames, shapes)) {
-            setCursor("move");
+        const { hitType } = this.getClickedFrame(
+            pointer,
+            frameOrder,
+            frames,
+            shapes,
+            isPagedCanvasMode() ? { checkHandles: false } : {}
+        );
+
+        if (hitType) {
+            if (isPagedCanvasMode() && hitType === "title") {
+                setCursor("pointer");
+            } else {
+                setCursor("move");
+            }
+
             return true;
         }
 
@@ -85,11 +99,12 @@ export class FrameHandler extends BaseObjectHandler {
         const { shapes } = shapeSlice.getSlice();
 
         // 1. If not, check if pointer is over frame or title
-        const clickedFrame = this.getClickedFrame(
+        const { frame: clickedFrame } = this.getClickedFrame(
             pointer,
             frameOrder,
             frames,
-            shapes
+            shapes,
+            isPagedCanvasMode() ? { checkHandles: false } : {}
         );
 
         if (clickedFrame) {
@@ -105,7 +120,12 @@ export class FrameHandler extends BaseObjectHandler {
 
             // Mark that the pointer started inside the selection (affects move vs drag)
             tool.clickedInsideSelection = true;
-            this.beginMove(this.getSelectedIds(), frames);
+
+            // Don't apply begin move as we don't want move functionality in paged canvas mode
+            if (!isPagedCanvasMode()) {
+                this.beginMove(this.getSelectedIds(), frames);
+            }
+
             return true;
         }
 
@@ -119,38 +139,68 @@ export class FrameHandler extends BaseObjectHandler {
         return false; // nothing selected or clicked inside
     }
 
-    getClickedFrame(pointer, frameOrder, frames, shapes) {
-        return frameOrder
-            .map((id) => frames[id])
-            .find((frame) => this.isPointerOverFrame(pointer, frame, shapes));
-    }
-
-    isPointerOverFrame(pointer, frame, shapes) {
-        const { x, y, width, height } = frame;
-        const isOverFrameHandle = getBoundingBoxHandleAtPoint(pointer, {
-            x,
-            y,
-            width,
-            height,
-        });
-
-        // Check frame title shape if exists
-        let inTitle = false;
-        if (frame.titleShapeId && shapes[frame.titleShapeId]) {
-            const title = shapes[frame.titleShapeId];
-            inTitle = isPointInRect(
+    getClickedFrame(pointer, frameOrder, frames, shapes, options = {}) {
+        for (const id of frameOrder) {
+            const frame = frames[id];
+            const hitType = this.isPointerOverFrame(
                 pointer,
-                {
-                    x: title.x,
-                    y: title.y,
-                    width: title.width,
-                    height: title.height,
-                },
-                0
+                frame,
+                shapes,
+                options
             );
+
+            if (hitType) {
+                return { frame, hitType };
+            }
         }
 
-        return isOverFrameHandle || inTitle;
+        return {};
+    }
+
+    isPointerOverFrame(pointer, frame, shapes, options = {}) {
+        const { checkHandles = true, checkTitle = true } = options;
+        const { x, y, width, height } = frame;
+
+        let hitType = null;
+
+        if (checkHandles) {
+            const handleHit = getBoundingBoxHandleAtPoint(pointer, {
+                x,
+                y,
+                width,
+                height,
+            });
+            if (handleHit) {
+                hitType = "handle";
+            }
+        }
+
+        if (!hitType && checkTitle) {
+            const titleHit = this.isPointerOverTitle(pointer, frame, shapes);
+            if (titleHit) {
+                hitType = "title";
+            }
+        }
+
+        return hitType; // returns "handle", "title", or null
+    }
+
+    isPointerOverTitle(pointer, frame, shapes) {
+        if (!frame?.titleShapeId) return false;
+
+        const title = shapes?.[frame.titleShapeId];
+        if (!title) return false;
+
+        return isPointInRect(
+            pointer,
+            {
+                x: title.x,
+                y: title.y,
+                width: title.width,
+                height: title.height,
+            },
+            0
+        );
     }
 
     applyResize(pointer, scaleX, scaleY, origin) {
@@ -198,6 +248,9 @@ export class FrameHandler extends BaseObjectHandler {
 
     handleMove(tool, pointer, moveThreshold = 3) {
         if (tool.resizing) return;
+
+        // We don't want move functionality in paged canvas mode for frame
+        if (isPagedCanvasMode()) return;
 
         const { dx, dy, dist } = this.computePointerDelta(tool, pointer);
         const selectedIds = this.getSelectedIds();

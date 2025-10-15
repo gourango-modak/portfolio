@@ -13,6 +13,7 @@ import { SelectionRect } from "./SelectionRect";
 import { ShapeOutline } from "./ShapeOutline";
 import { FrameOutline } from "./FrameOutline";
 import { combineBoundingBoxes } from "../../boundingBox/combineBoundingBoxes";
+import { isPagedCanvasMode } from "./../../utils/canvasUtils";
 
 export const SelectionOutlineLayer = () => {
     // Shapes
@@ -56,16 +57,24 @@ export const SelectionOutlineLayer = () => {
             );
         });
 
+    let boundsArray = [selectedShapesBounds];
+
+    // Don't include frame bounds in paged canvas mode
+    // as we don't want the selection rect for frames
+    if (!isPagedCanvasMode()) {
+        boundsArray.push(selectedFramesBounds);
+    }
+
     const totalSelectedCount = selectedShapeIds.size + selectedFrameIds.size;
     const multipleSelected = totalSelectedCount > 1;
     const combinedBounds = multipleSelected
-        ? combineBoundingBoxes([selectedShapesBounds, selectedFramesBounds])
+        ? combineBoundingBoxes(boundsArray)
         : null;
 
     return (
         <>
             {renderShapeOutlines(multipleSelected)}
-            {renderFrameOutlines(multipleSelected)}
+            {!isPagedCanvasMode() && renderFrameOutlines(multipleSelected)}
 
             {/* Render single group selection rectangle */}
             {combinedBounds && (

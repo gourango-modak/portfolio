@@ -16,7 +16,9 @@ export const CanvasBgProperty = () => {
 
     return (
         <div className="flex flex-col gap-2">
-            <label>{canvasBgColor.label}</label>
+            <label className="text-[12px] text-gray-500 font-medium uppercase tracking-wide">
+                {canvasBgColor.label}
+            </label>
             <ColorProperty
                 property={canvasBgColor}
                 onChange={handleChange}

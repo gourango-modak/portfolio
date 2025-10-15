@@ -1,3 +1,4 @@
+import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { TEXT_LINE_HEIGHT } from "../tools/constants";
@@ -100,12 +101,12 @@ export function updateCanvasObjectProperties(id, updatedProperties) {
 
     const frame = frames[id];
     if (frame) {
-        const width = updatedProps?.width?.value || frame.width;
-        const height = updatedProps?.height?.value || frame.height;
+        const width = updatedProperties?.width?.value || frame.width;
+        const height = updatedProperties?.height?.value || frame.height;
         updateFrame(id, {
             width,
             height,
-            properties: { ...frame.properties, ...updatedProps },
+            properties: { ...frame.properties, ...updatedProperties },
         });
     }
 }
@@ -139,3 +140,12 @@ export function measureTextSize(text, properties) {
         height: measuredHeight,
     };
 }
+
+export const isPagedCanvasMode = () => {
+    const canvasMode = canvasPropertiesSlice.getSlice().properties.mode.value;
+    if (canvasMode === CANVAS_MODES.PAGED) {
+        return true;
+    }
+
+    return false;
+};
