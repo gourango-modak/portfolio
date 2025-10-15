@@ -72,9 +72,16 @@ export const Panel = ({
         let newX = e.clientX - offsetRef.current.x;
         let newY = e.clientY - offsetRef.current.y;
 
+        const BUFFER = 10; // pixels from edges
         // Constrain within viewport
-        newX = Math.max(0, Math.min(newX, window.innerWidth - elementWidth));
-        newY = Math.max(0, Math.min(newY, window.innerHeight - elementHeight));
+        newX = Math.max(
+            BUFFER,
+            Math.min(newX, window.innerWidth - elementWidth - BUFFER)
+        );
+        newY = Math.max(
+            BUFFER,
+            Math.min(newY, window.innerHeight - elementHeight - BUFFER)
+        );
 
         // Use requestAnimationFrame to throttle state updates
         if (frameRef.current) cancelAnimationFrame(frameRef.current);
