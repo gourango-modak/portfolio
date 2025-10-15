@@ -1,6 +1,12 @@
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
-import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
+import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
+import {
+    canvasPropertiesSlice,
+    commandHistorySlice,
+    frameSlice,
+    shapeSlice,
+} from "../store/utils";
 import { TEXT_LINE_HEIGHT } from "../tools/constants";
 
 let canvasLastPointerPosition = { x: 0, y: 0 };
@@ -72,42 +78,70 @@ export const getCanvasObjectProperties = (id) => {
     return null;
 };
 
+export const getChangedProps = (oldObj, newObj) => {
+    const diff = {};
+    for (const key in newObj) {
+        if (typeof newObj[key] === "object" && oldObj[key]) {
+            const nestedDiff = getChangedProps(oldObj[key], newObj[key]);
+            if (Object.keys(nestedDiff).length) diff[key] = nestedDiff;
+        } else if (newObj[key] !== oldObj[key]) {
+            diff[key] = newObj[key];
+        }
+    }
+    return diff;
+};
+
 export function updateCanvasObjectProperties(id, updatedProperties) {
-    const { shapes, updateShape } = shapeSlice.getSlice();
-    const { frames, updateFrame } = frameSlice.getSlice();
+    const { shapes } = shapeSlice.getSlice();
+    const { frames } = frameSlice.getSlice();
 
     const shape = shapes[id];
     if (shape) {
-        const updatedProps = {};
+        const updatedProps = { ...shape.properties, ...updatedProperties };
+        const extraProps = {};
+
+        // Handle text auto-resize
         if (
             shape.type === SHAPES.TEXT &&
-            updatedProperties.fontSize.value !== shape.properties.fontSize.value
+            updatedProperties.fontSize?.value !==
+                shape.properties.fontSize?.value
         ) {
-            const { width, height } = measureTextSize(shape.text, {
-                ...shape.properties,
-                ...updatedProperties,
-            });
-            updatedProps.width = width;
-            updatedProps.height = height;
+            const { width, height } = measureTextSize(shape.text, updatedProps);
+            extraProps.width = width;
+            extraProps.height = height;
         }
 
-        updatedProps.properties = {
-            ...shape.properties,
-            ...updatedProperties,
-        };
-        updateShape(id, updatedProps);
+        const newShape = { ...shape, properties: updatedProps, ...extraProps };
+        const diff = getChangedProps(shape, newShape);
+
+        if (Object.keys(diff).length) {
+            commandHistorySlice.getSlice().executeCommand({
+                type: COMMANDS.UPDATE_SHAPES,
+                newProps: { [id]: diff },
+                prevProps: { [id]: getChangedProps(newShape, shape) },
+            });
+        }
         return;
     }
 
     const frame = frames[id];
     if (frame) {
-        const width = updatedProperties?.width?.value || frame.width;
-        const height = updatedProperties?.height?.value || frame.height;
-        updateFrame(id, {
-            width,
-            height,
+        const newFrame = {
+            ...frame,
+            width: updatedProperties?.width?.value ?? frame.width,
+            height: updatedProperties?.height?.value ?? frame.height,
             properties: { ...frame.properties, ...updatedProperties },
-        });
+        };
+
+        const diff = getChangedProps(frame, newFrame);
+
+        if (Object.keys(diff).length) {
+            commandHistorySlice.getSlice().executeCommand({
+                type: COMMANDS.UPDATE_FRAMES,
+                newProps: { [id]: diff },
+                prevProps: { [id]: getChangedProps(newFrame, frame) },
+            });
+        }
     }
 }
 

@@ -35,6 +35,10 @@ export const undoHandlers = {
                 newShapes[id] = {
                     ...shape,
                     ...cmd.prevProps[id],
+                    properties: {
+                        ...shape.properties,
+                        ...cmd.prevProps[id].properties,
+                    },
                     version: shape.version + 1,
                 };
             }

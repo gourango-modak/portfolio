@@ -23,6 +23,10 @@ export const executeCommandHandlers = {
                 newShapes[id] = {
                     ...shape,
                     ...cmd.newProps[id],
+                    properties: {
+                        ...shape.properties,
+                        ...cmd.newProps[id].properties,
+                    },
                     version: shape.version + 1,
                 };
             }
