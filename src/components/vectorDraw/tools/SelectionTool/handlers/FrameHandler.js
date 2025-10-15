@@ -132,7 +132,12 @@ export class FrameHandler extends BaseObjectHandler {
         // 2. Check if pointer is inside current selection bounds
         if (bounds && isPointInRect(pointer, bounds)) {
             tool.clickedInsideSelection = true;
-            this.beginMove(this.getSelectedIds(), frames);
+
+            // Begin move if there is frame selected
+            if (this.getSelectedIds().size > 0) {
+                this.beginMove(this.getSelectedIds(), frames);
+            }
+
             return true;
         }
 

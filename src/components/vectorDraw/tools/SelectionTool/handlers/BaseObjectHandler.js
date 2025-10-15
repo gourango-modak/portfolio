@@ -75,7 +75,9 @@ export class BaseObjectHandler {
             Array.from(selectedIds).map((id) => [id, { ...objects[id] }])
         );
 
-        this.beginResize(selectedIds, objects);
+        if (selectedIds.size > 0) {
+            this.beginResize(selectedIds, objects);
+        }
     }
 
     computeScaleFactors(oldW, oldH, newW, newH) {
@@ -153,8 +155,11 @@ export class BaseObjectHandler {
     commitActiveOperations(tool) {
         const selectedIds = this.getSelectedIds();
         const objects = this.getObjects();
-        this.finalizeResize(tool, selectedIds, objects);
-        this.finalizeMove(tool, selectedIds, objects);
+        // Finalize if there is selected objects
+        if (selectedIds.size > 0) {
+            this.finalizeResize(tool, selectedIds, objects);
+            this.finalizeMove(tool, selectedIds, objects);
+        }
     }
 
     clearSelection() {

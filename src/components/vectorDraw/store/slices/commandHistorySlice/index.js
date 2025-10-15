@@ -9,15 +9,17 @@ export const createCommandHistorySlice = (set, get) => ({
 
         // Begin a command of a specific type
         beginCommand: (type, data) =>
-            set((s) => ({
-                commandHistorySlice: {
-                    ...s.commandHistorySlice,
-                    currentCommands: {
-                        ...s.commandHistorySlice.currentCommands,
-                        [type]: { type, ...data },
+            set((s) => {
+                return {
+                    commandHistorySlice: {
+                        ...s.commandHistorySlice,
+                        currentCommands: {
+                            ...s.commandHistorySlice.currentCommands,
+                            [type]: { type, ...data },
+                        },
                     },
-                },
-            })),
+                };
+            }),
 
         // Finalize a command of a specific type
         finalizeCommand: (type, data) => {
