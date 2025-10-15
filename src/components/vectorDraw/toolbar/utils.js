@@ -22,15 +22,31 @@ export const getToolbarPanelInitialPosition = ({ orientation }) => {
 };
 
 export const getInspectorPanelInitialPosition = () => {
-    return { x: 20, y: 50 };
+    const panel = document.getElementById(PANELS.INSPECTOR_PANEL);
+    if (!panel) return { x: 0, y: 0 };
+
+    const rect = panel.getBoundingClientRect();
+    const x = window.innerWidth - rect.width - window.innerWidth / 4;
+    const y = 150;
+
+    return { x, y };
 };
 
 export const getToolPropertiesPanelInitialPosition = () => {
-    return { x: 20, y: 300 };
+    const x = 40;
+    const y = 150;
+    return { x, y };
 };
 
 export const getExportPanelInitialPosition = () => {
-    return { x: 90, y: 50 };
+    const panel = document.getElementById(PANELS.EXPORT_PANEL);
+    if (!panel) return { x: 0, y: 0 };
+
+    const rect = panel.getBoundingClientRect();
+    const x = (window.innerWidth - rect.width) / 2;
+    const y = 150;
+
+    return { x, y };
 };
 
 export const isPagedCanvas = ({ canvasMode }) =>

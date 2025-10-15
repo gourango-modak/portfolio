@@ -37,6 +37,14 @@ export const Panel = ({
     }, [zIndex]);
 
     useEffect(() => {
+        setTimeout(() => {
+            setPosition(
+                PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
+            );
+        }, 0);
+    }, []);
+
+    useEffect(() => {
         if (panelId === PANELS.TOOLBAR_PANEL) {
             setPosition(
                 PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })

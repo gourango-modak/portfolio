@@ -162,7 +162,7 @@ export const ExportPanelBody = ({ onExport }) => {
             {/* Step 5: Export Button */}
             <button
                 onClick={handleExport}
-                className="w-full text-[14px] px-4 py-2 mt-6 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2 cursor-pointer uppercase"
+                className="w-full text-[14px] px-4 py-2 mt-6 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 cursor-pointer uppercase"
             >
                 Export
             </button>
