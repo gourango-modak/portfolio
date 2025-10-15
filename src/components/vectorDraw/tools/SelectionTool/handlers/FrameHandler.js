@@ -240,9 +240,9 @@ export class FrameHandler extends BaseObjectHandler {
         const { x, y, width, height } = frame;
         return (
             x < rect.x + rect.width &&
-            x + width.value > rect.x &&
+            x + width > rect.x &&
             y < rect.y + rect.height &&
-            y + height.value > rect.y
+            y + height > rect.y
         );
     }
 

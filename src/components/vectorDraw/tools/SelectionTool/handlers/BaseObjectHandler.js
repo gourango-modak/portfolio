@@ -1,4 +1,5 @@
 import { HANDLE_CURSORS } from "../../../components/SelectionOutlineLayer/constants";
+import { SHAPES } from "../../../shapes/constants";
 import { canvasPropertiesSlice } from "../../../store/utils";
 import { computeResizedBoundingBox } from "../resize/computeResizedBoundingBox";
 
@@ -95,12 +96,25 @@ export class BaseObjectHandler {
             pointer
         );
 
-        const { scaleX, scaleY } = this.computeScaleFactors(
+        let { scaleX, scaleY } = this.computeScaleFactors(
             width,
             height,
             newW,
             newH
         );
+
+        // Check if any selected shape is a text shape
+        const hasTextShape = Array.from(this.getSelectedIds()).some(
+            (id) => this.resizeStartObjects[id]?.type === SHAPES.TEXT
+        );
+
+        // If text shape exists, use proportional scale (uniform scaling)
+        if (hasTextShape) {
+            const uniformScale = (scaleX + scaleY) / 2;
+            scaleX = uniformScale;
+            scaleY = uniformScale;
+        }
+
         this.applyResize(pointer, scaleX, scaleY, origin);
     }
 
