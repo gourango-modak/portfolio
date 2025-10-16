@@ -13,6 +13,7 @@ import { finalizeResizeCommand } from "../commands/finalizeResizeCommand";
 import { getRectFromPoints, isPointInRect } from "../../../utils/geometryUtils";
 import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { isPagedCanvasMode } from "../../../utils/canvasUtils";
+import { FRAME_TITLE_OFFSET_Y } from "../../../utils/frameUtils";
 
 export class FrameHandler extends BaseObjectHandler {
     getSelectedIds() {
@@ -246,7 +247,7 @@ export class FrameHandler extends BaseObjectHandler {
             pointer,
             {
                 x: title.x,
-                y: title.y,
+                y: title.y - FRAME_TITLE_OFFSET_Y,
                 width: title.width,
                 height: title.height,
             },

@@ -2,47 +2,41 @@ import { useEffect, useState, useRef } from "react";
 import { useRenderLogger } from "../../../hooks/useRenderLogger";
 
 export const InputProperty = ({ propertyName, property, onChange }) => {
-    const [number, setNumber] = useState(property.value);
+    const [inputValue, setInputValue] = useState(property.value.toString());
     const { min = 0, max = Infinity } = property;
     const debounceRef = useRef(null);
 
     useRenderLogger("NumberProperty");
 
     useEffect(() => {
-        setNumber(property.value);
+        setInputValue(property.value.toString());
     }, [property]);
 
     const applyChange = (value) => {
-        // Clamp value between min and max
-        value = Math.min(Math.max(value, min), max);
+        // Clamp and round
+        let newValue = Math.min(Math.max(value, min), max);
+        newValue = Math.round(newValue * 10000) / 10000;
 
-        // Round to 4 decimal places
-        value = Math.round(value * 10000) / 10000;
-
-        setNumber(value);
-        onChange(propertyName, {
-            ...property,
-            value,
-        });
+        setInputValue(newValue.toString());
+        onChange(propertyName, { ...property, value: newValue });
     };
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setNumber(value);
+        setInputValue(value);
 
-        // Clear previous debounce
+        // Debounce
         if (debounceRef.current) clearTimeout(debounceRef.current);
-
-        // Set new debounce
         debounceRef.current = setTimeout(() => {
-            applyChange(Number(value));
-        }, 300); // 300ms delay
+            const numValue = parseFloat(value);
+            if (!isNaN(numValue)) applyChange(numValue);
+        }, 300);
     };
 
     return (
         <input
             type="number"
-            value={number}
+            value={inputValue}
             onChange={handleChange}
             className="w-full px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-md 
                text-sm text-gray-800 focus:outline-none"
