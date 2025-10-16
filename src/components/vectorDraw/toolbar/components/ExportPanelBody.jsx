@@ -26,6 +26,7 @@ export const ExportPanelBody = ({ onExport }) => {
     const [background, setBackground] = useState(true);
     const [onlySelected, setOnlySelected] = useState(true);
     const [scope, setScope] = useState(null);
+    const [padding, setPadding] = useState(20);
 
     useEffect(() => {
         setScope(
@@ -36,7 +37,7 @@ export const ExportPanelBody = ({ onExport }) => {
     }, [canvasMode, activeFrameId]);
 
     const handleExport = () => {
-        onExport({ scope, format, scale, background, onlySelected });
+        onExport({ scope, format, scale, background, onlySelected, padding });
     };
 
     // filter only current mode options and
@@ -117,36 +118,42 @@ export const ExportPanelBody = ({ onExport }) => {
 
             {/* Step 3: Scale */}
             {format !== EXPORT_FORMAT.JSON && (
-                <fieldset className="border border-gray-300 rounded-lg p-4">
-                    <legend className="text-gray-500 font-medium uppercase">
-                        Select Scale
-                    </legend>
-                    <div className="flex flex-wrap gap-4 mt-2">
+                <div className="flex items-center justify-between text-gray-500 font-medium uppercase mb-4">
+                    <span>Select Scale</span>
+                    <div className="flex items-center gap-2">
                         {Object.values(EXPORT_SELECT_SCALE_OPTIONS).map(
-                            (option) => (
-                                <label
-                                    key={option.value}
-                                    className="flex items-center gap-1"
-                                >
-                                    <input
-                                        type="radio"
-                                        name="scale"
-                                        value={option.value}
-                                        checked={scale === option.value}
-                                        onChange={() => setScale(option.value)}
-                                    />
-                                    {option.label}
-                                </label>
-                            )
+                            (option) => {
+                                const isSelected = scale === option.value;
+                                const size = 20 + option.value * 2; // example: 1x -> 30px, 2x -> 40px, 3x -> 50px
+
+                                return (
+                                    <button
+                                        key={option.value}
+                                        type="button"
+                                        onClick={() => setScale(option.value)}
+                                        style={{
+                                            width: size,
+                                            height: size,
+                                        }}
+                                        className={`flex items-center justify-center text-xs rounded-md cursor-pointer font-medium transition-colors ${
+                                            isSelected
+                                                ? "bg-indigo-600 text-white"
+                                                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                                        }`}
+                                    >
+                                        {option.label}
+                                    </button>
+                                );
+                            }
                         )}
                     </div>
-                </fieldset>
+                </div>
             )}
 
             {/* Step 4: Background Toggle */}
             {selectedFrameIds.size > 0 ||
                 (selectedShapeIds.size > 0 && (
-                    <div className="flex items-center justify-between mt-2 uppercase">
+                    <div className="flex items-center justify-between uppercase font-medium mb-4">
                         <span>Only Selected</span>
                         <button
                             type="button"
@@ -169,7 +176,7 @@ export const ExportPanelBody = ({ onExport }) => {
             {/* Step 5: Only Selected Toggle */}
             {canvasMode === CANVAS_MODES.INFINITE &&
                 format !== EXPORT_FORMAT.JSON && (
-                    <div className="flex items-center justify-between mt-2 uppercase">
+                    <div className="flex items-center justify-between font-medium uppercase mb-4">
                         <span>Background</span>
                         <button
                             type="button"
@@ -189,7 +196,23 @@ export const ExportPanelBody = ({ onExport }) => {
                     </div>
                 )}
 
-            {/* Step 5: Export Button */}
+            {/* Step 6: Only Selected Toggle */}
+            {canvasMode === CANVAS_MODES.INFINITE && (
+                <div className="">
+                    <label className="flex items-center justify-between text-gray-500 font-medium uppercase mb-2">
+                        <span>Padding</span>
+                        <input
+                            type="number"
+                            min={0}
+                            value={padding}
+                            onChange={(e) => setPadding(Number(e.target.value))}
+                            className="w-20 px-2 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        />
+                    </label>
+                </div>
+            )}
+
+            {/* Step 7: Export Button */}
             <button
                 onClick={handleExport}
                 className="w-full text-[14px] px-4 py-2 mt-6 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 cursor-pointer uppercase"
