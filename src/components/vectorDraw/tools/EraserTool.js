@@ -1,10 +1,11 @@
 import { shapeHitTestingHandlers } from "../shapes/shapeHitTesting/handlers";
 import { COMMANDS } from "../store/slices/commandHistorySlice/constants";
-import { commandHistorySlice, shapeSlice } from "../store/utils";
+import { commandHistorySlice, frameSlice, shapeSlice } from "../store/utils";
 import { BaseTool } from "./BaseTool";
 import { TOOLS } from "./constants";
 import { OUTLINE_COLOR } from "./../components/SelectionOutlineLayer/constants";
 import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
+import { computeBoundingBox } from "./../boundingBox/defaultBoundingBox";
 
 export class EraserTool extends BaseTool {
     static name = TOOLS.ERASER;
@@ -51,14 +52,23 @@ export class EraserTool extends BaseTool {
         this.isErasing = true;
 
         this.deletedShapes = {};
-        const { shapeOrder } = shapeSlice.getSlice();
+        this.deletedFrames = {};
+        this.deletedFrameTitles = {};
 
-        // Start command
-        commandHistorySlice.getSlice().beginCommand(COMMANDS.DELETE_SHAPES, {
-            shapeOrderBeforeDelete: [...shapeOrder],
-            shapeIds: [],
-            deletedShapes: {},
-        });
+        const { shapeOrder } = shapeSlice.getSlice();
+        const { frameOrder } = frameSlice.getSlice();
+
+        // Begin command with compact context
+        commandHistorySlice
+            .getSlice()
+            .beginCommand(COMMANDS.DELETE_CANVAS_OBJECTS, {
+                prevProps: {
+                    shapeOrderBeforeDelete: [...shapeOrder],
+                    frameOrderBeforeDelete: [...frameOrder],
+                    deletedShapes: {},
+                    deletedFrames: {},
+                },
+            });
 
         this.showPreview(e.tx, e.ty);
         this.eraseAt(e.tx, e.ty);
@@ -74,27 +84,39 @@ export class EraserTool extends BaseTool {
         this.isErasing = false;
         this.hidePreview();
 
-        if (this.deletedShapes) {
-            // Finalize command if anything was deleted
-            const deletedIds = Object.keys(this.deletedShapes);
-            if (deletedIds.length > 0) {
-                commandHistorySlice
-                    .getSlice()
-                    .finalizeCommand(COMMANDS.DELETE_SHAPES, {
-                        shapeIds: deletedIds,
-                        deletedShapes: { ...this.deletedShapes },
-                    });
-            }
-        }
+        const deletedShapeIds = Object.keys(this.deletedShapes);
+        const deletedFrameIds = Object.keys(this.deletedFrames);
+
+        const anyDeleted = deletedShapeIds.length || deletedFrameIds.length;
+        if (!anyDeleted) return;
+
+        // Finalize command with minimal data
+        commandHistorySlice
+            .getSlice()
+            .finalizeCommand(COMMANDS.DELETE_CANVAS_OBJECTS, {
+                newProps: {
+                    deletedShapes: this.deletedShapes,
+                    deletedFrames: this.deletedFrames,
+                },
+            });
     }
 
     eraseAt(x, y) {
         const eraserRadius = this.properties.size.value / 2;
         const { shapes, shapeOrder, setShapes } = shapeSlice.getSlice();
+        const { frames, frameOrder, setFrames } = frameSlice.getSlice();
+
         const remainingShapes = {};
         const remainingOrder = [];
+        const remainingFrames = {};
+        const remainingFrameOrder = [];
+
         let anyRemoved = false;
 
+        const deletedShapes = {};
+        const deletedFrames = {};
+
+        // ---- Erase shapes ----
         for (const id of shapeOrder) {
             const shape = shapes[id];
             const hitTestFn = shapeHitTestingHandlers[shape.type];
@@ -109,13 +131,55 @@ export class EraserTool extends BaseTool {
                 remainingShapes[id] = shape;
                 remainingOrder.push(id);
             } else {
-                this.deletedShapes[id] = shape;
+                deletedShapes[id] = shape;
                 anyRemoved = true;
             }
         }
 
+        // ---- Erase frames & frame titles ----
+        for (const frameId of frameOrder) {
+            const frame = frames[frameId];
+            const frameBBox = computeBoundingBox(frame);
+
+            const dx = Math.max(
+                Math.abs(x - (frameBBox.x + frameBBox.width / 2)) -
+                    frameBBox.width / 2,
+                0
+            );
+            const dy = Math.max(
+                Math.abs(y - (frameBBox.y + frameBBox.height / 2)) -
+                    frameBBox.height / 2,
+                0
+            );
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            const hit = dist < eraserRadius;
+
+            if (!hit) {
+                remainingFrames[frameId] = frame;
+                remainingFrameOrder.push(frameId);
+            } else {
+                deletedFrames[frameId] = frame;
+                anyRemoved = true;
+
+                // ---- Remove associated title shape if exists ----
+                if (frame.titleShapeId && shapes[frame.titleShapeId]) {
+                    delete remainingShapes[frame.titleShapeId];
+                    const idx = remainingOrder.indexOf(frame.titleShapeId);
+                    if (idx !== -1) remainingOrder.splice(idx, 1);
+                    deletedShapes[frame.titleShapeId] =
+                        shapes[frame.titleShapeId];
+                }
+            }
+        }
+
+        // ---- Apply updates ----
         if (anyRemoved) {
+            this.deletedShapes = { ...this.deletedShapes, ...deletedShapes };
+            this.deletedFrames = { ...this.deletedFrames, ...deletedFrames };
+
             setShapes(remainingShapes, remainingOrder);
+            setFrames(remainingFrames, remainingFrameOrder);
         }
     }
 }

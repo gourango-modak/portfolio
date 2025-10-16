@@ -1,4 +1,5 @@
 import { computeShapesBoundingBox } from "../../../../boundingBox/shapesBoundingBox";
+import { frameSlice, shapeSlice } from "../../../utils";
 import { COMMANDS } from "../constants";
 import { computeFramesBoundingBox } from "./../../../../boundingBox/framesBoundingBox";
 
@@ -72,6 +73,28 @@ export const undoHandlers = {
                 },
             };
         }),
+
+    [COMMANDS.DELETE_CANVAS_OBJECTS]: (set, cmd) => {
+        const { prevProps, newProps } = cmd;
+
+        const { shapeOrderBeforeDelete, frameOrderBeforeDelete } = prevProps;
+        const { deletedShapes = {}, deletedFrames = {} } = newProps;
+
+        const { setShapes, shapes } = shapeSlice.getSlice();
+        const { setFrames, frames } = frameSlice.getSlice();
+
+        // --- Restore deleted shapes (includes frame title shapes) ---
+        if (Object.keys(deletedShapes).length > 0) {
+            const restoredShapes = { ...shapes, ...deletedShapes };
+            setShapes(restoredShapes, shapeOrderBeforeDelete);
+        }
+
+        // --- Restore deleted frames ---
+        if (Object.keys(deletedFrames).length > 0) {
+            const restoredFrames = { ...frames, ...deletedFrames };
+            setFrames(restoredFrames, frameOrderBeforeDelete);
+        }
+    },
 
     [COMMANDS.ADD_SHAPES]: (set, cmd) =>
         set((s) => {

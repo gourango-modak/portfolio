@@ -167,6 +167,7 @@ export const createFrameSlice = (set, get) => ({
 
             return id;
         },
+
         addFrame: (frame) => {
             const id = generateId();
             const newFrame = {
@@ -183,6 +184,17 @@ export const createFrameSlice = (set, get) => ({
 
             return id;
         },
+
+        setFrames: (newFrames, newFrameOrder) =>
+            set((state) => {
+                return {
+                    frameSlice: {
+                        ...state.frameSlice,
+                        frames: newFrames,
+                        frameOrder: newFrameOrder,
+                    },
+                };
+            }),
 
         setFrameBg: (frameId, color) =>
             set((state) => ({
