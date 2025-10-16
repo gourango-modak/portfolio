@@ -102,6 +102,10 @@ export const executeCommandHandlers = {
                 newFrames[id] = {
                     ...frame,
                     ...cmd.newProps[id],
+                    properties: {
+                        ...frame.properties,
+                        ...cmd.newProps[id].properties,
+                    },
                     version: (frame.version || 0) + 1,
                 };
             }
