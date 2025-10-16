@@ -56,6 +56,7 @@ export const performExport = ({
     format,
     scale = 1,
     background = true,
+    onlySelected = false,
 }) => {
     if (isExportCurrentPageImage(scope, format)) {
         downloadCurrentPageImage({ scale, background });
@@ -78,12 +79,12 @@ export const performExport = ({
     }
 
     if (isExportCanvasImage(scope, format)) {
-        downloadCanvasImage({ scale, background });
+        downloadCanvasImage({ scale, background, onlySelected });
         return;
     }
 
     if (isExportCanvasPDF(scope, format)) {
-        downloadCanvasPDF({ scale, background });
+        downloadCanvasPDF({ scale, background, onlySelected });
         return;
     }
 
@@ -166,13 +167,22 @@ const downloadAllPagesPDF = async ({ scale, background }) => {
     });
 };
 
-const downloadCanvasImage = async ({ scale, background }) => {
-    const imgDataUrl = await exportCanvasToImage({ scale, background });
+const downloadCanvasImage = async ({ scale, background, onlySelected }) => {
+    const imgDataUrl = await exportCanvasToImage({
+        scale,
+        background,
+        onlySelected,
+    });
     downloadFile(imgDataUrl, "Canvas.png");
 };
 
-const downloadCanvasPDF = async ({ scale, background }) => {
-    await exportCanvasToPdf({ scale, fileName: "Canvas.pdf", background });
+const downloadCanvasPDF = async ({ scale, background, onlySelected }) => {
+    await exportCanvasToPdf({
+        scale,
+        fileName: "Canvas.pdf",
+        background,
+        onlySelected,
+    });
 };
 
 const downloadCanvasJSON = () => {

@@ -10,14 +10,21 @@ import {
 } from "../../export/constants";
 import { useCanvasMode } from "../../store/selectors/canvasPropertiesSelectors";
 import { CANVAS_MODES } from "../../constants";
-import { useActiveFrameId } from "./../../store/selectors/frameSelectors";
+import {
+    useActiveFrameId,
+    useSelectedFrameIds,
+} from "./../../store/selectors/frameSelectors";
+import { useSelectedShapeIds } from "../../store/selectors/shapeSelectors";
 
 export const ExportPanelBody = ({ onExport }) => {
     const canvasMode = useCanvasMode();
     const activeFrameId = useActiveFrameId();
+    const selectedShapeIds = useSelectedShapeIds();
+    const selectedFrameIds = useSelectedFrameIds();
     const [format, setFormat] = useState(EXPORT_FORMAT.PNG);
     const [scale, setScale] = useState(EXPORT_SCALE.ONE_X);
     const [background, setBackground] = useState(true);
+    const [onlySelected, setOnlySelected] = useState(true);
     const [scope, setScope] = useState(null);
 
     useEffect(() => {
@@ -29,7 +36,7 @@ export const ExportPanelBody = ({ onExport }) => {
     }, [canvasMode, activeFrameId]);
 
     const handleExport = () => {
-        onExport({ scope, format, scale, background });
+        onExport({ scope, format, scale, background, onlySelected });
     };
 
     // filter only current mode options and
@@ -137,6 +144,29 @@ export const ExportPanelBody = ({ onExport }) => {
             )}
 
             {/* Step 4: Background Toggle */}
+            {selectedFrameIds.size > 0 ||
+                (selectedShapeIds.size > 0 && (
+                    <div className="flex items-center justify-between mt-2 uppercase">
+                        <span>Only Selected</span>
+                        <button
+                            type="button"
+                            onClick={() => setOnlySelected(!onlySelected)}
+                            className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
+                                onlySelected ? "bg-indigo-600" : "bg-gray-300"
+                            }`}
+                        >
+                            <div
+                                className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
+                                    onlySelected
+                                        ? "translate-x-5"
+                                        : "translate-x-0"
+                                }`}
+                            />
+                        </button>
+                    </div>
+                ))}
+
+            {/* Step 5: Only Selected Toggle */}
             {canvasMode === CANVAS_MODES.INFINITE &&
                 format !== EXPORT_FORMAT.JSON && (
                     <div className="flex items-center justify-between mt-2 uppercase">
