@@ -153,14 +153,6 @@ export class ArrowTool extends BaseTool {
             y1: normalizedY1,
             x2: normalizedX2,
             y2: normalizedY2,
-            path: getRoughArrowPath(
-                normalizedX1,
-                normalizedY1,
-                normalizedX2,
-                normalizedY2,
-                this.properties,
-                this.seed
-            ),
             seed: this.seed,
         };
     }

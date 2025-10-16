@@ -84,24 +84,12 @@ export class RectangleTool extends BaseTool {
             return;
         }
 
-        // Create a local (normalized) path starting from (0, 0)
-        const pathData = getRoughRectPath(
-            0,
-            0,
-            width,
-            height,
-            this.properties.roughness.value,
-            this.properties.strokeWidth.value,
-            this.seed
-        );
-
         const shape = {
             type: SHAPES.RECTANGLE,
             x,
             y,
             width,
             height,
-            path: pathData,
             seed: this.seed,
             properties: { ...this.properties },
         };
