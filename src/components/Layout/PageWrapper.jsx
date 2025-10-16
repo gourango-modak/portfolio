@@ -1,6 +1,6 @@
 import Layout from "./Layout";
 
-const PageWrapper = ({ component: Component, layout = true }) => {
+const PageWrapper = ({ component: Component, layout = false }) => {
     return layout ? (
         <Layout>
             <Component />

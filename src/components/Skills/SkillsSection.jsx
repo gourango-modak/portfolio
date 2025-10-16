@@ -25,7 +25,7 @@ const SkillsSection = ({ bgClass = "bg-gray-50" }) => {
     return (
         <Section bgClass={bgClass}>
             <SectionHeader title="Technical Skills" />
-            <div className="hidden md:block mt-8">
+            <div className="hidden md:block mt-8 mb-30">
                 <TabList
                     items={tabItems}
                     activeTab={activeTab}

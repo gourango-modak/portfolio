@@ -6,7 +6,7 @@ import PostsList from "./../../components/post/PostsList";
 
 const BlogSection = () => {
     return (
-        <Section bgClass="bg-white/50">
+        <Section bgClass="bg-white/50 mb-30">
             <SectionHeader
                 title="From My Blog"
                 text="I write about technology, development, and everything in

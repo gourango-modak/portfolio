@@ -9,7 +9,6 @@ const ProtectedRoute = () => {
         return <Navigate to="/login" replace />;
     }
 
-    // render child routes
     return <Outlet />;
 };
 

@@ -48,7 +48,7 @@ const LoginPage = () => {
                 {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                 <button
                     type="submit"
-                    className="w-full bg-indigo-600 text-white rounded px-3 py-2 hover:bg-indigo-700"
+                    className="w-full bg-indigo-600 text-white rounded px-3 py-2 hover:bg-indigo-700 cursor-pointer"
                 >
                     Login
                 </button>

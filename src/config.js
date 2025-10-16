@@ -7,8 +7,9 @@ import ProjectDetailPage from "./pages/ProjectDetailPage/ProjectDetailPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
-import DrawingToolPage from "./pages/AdminPage/DrawingToolPage";
+import DrawingToolPage from "./pages/DrawingToolPage";
 import RichTextEditorPage from "./pages/AdminPage/RichTextEditorPage";
+import ToolsPage from "./pages/ToolsPage";
 
 // Limits
 export const BREADCRUMB_MAX_LENGTH = 18;
@@ -102,24 +103,19 @@ export const ROUTES = [
     { path: "/projects", component: ProjectsPage, layout: true },
     { path: "/projects/:slug", component: ProjectDetailPage, layout: true },
     { path: "/contact", component: ContactPage, layout: true },
-    { path: "/login", component: LoginPage, layout: false },
-    { path: "/admin", component: AdminPage, layout: false, protected: false },
+    { path: "/tools", component: ToolsPage, layout: true },
+    {
+        path: "/tools/drawing",
+        component: DrawingToolPage,
+    },
+    { path: "/login", component: LoginPage },
+    { path: "/admin", component: AdminPage },
     {
         path: "/admin/:page",
         component: AdminPage,
-        layout: false,
-        protected: false,
-    },
-    {
-        path: "/admin/tools/drawing",
-        component: DrawingToolPage,
-        layout: false,
-        protected: false,
     },
     {
         path: "/admin/tools/richtexteditor",
         component: RichTextEditorPage,
-        layout: false,
-        protected: false,
     },
 ];

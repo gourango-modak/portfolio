@@ -3,15 +3,28 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import CenteredLoader from "./components/common/CenteredLoader";
 import { ROUTES } from "./config";
 import RenderRoute from "./components/layout/RenderRoute";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AppProviders from "./context/AppProviders";
 
 const App = () => {
+    const adminRoutes = ROUTES.filter((r) => r.path.startsWith("/admin"));
+    const publicRoutes = ROUTES.filter((r) => !r.path.startsWith("/admin"));
+
     return (
         <AppProviders>
             <HashRouter>
                 <ScrollToTop />
-                <Routes>{ROUTES.map((route) => RenderRoute(route))}</Routes>
+                <Routes>
+                    {/* Public routes */}
+                    {publicRoutes.map((route) => RenderRoute(route))}
+
+                    {/* Protected admin routes */}
+                    <Route element={<ProtectedRoute />}>
+                        {adminRoutes.map((route) => RenderRoute(route))}
+                    </Route>
+                </Routes>
             </HashRouter>
+
             <CenteredLoader />
         </AppProviders>
     );

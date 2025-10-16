@@ -1,12 +1,4 @@
-import React from "react";
-import {
-    FileText,
-    Layers,
-    User,
-    Activity,
-    MessageCircle,
-    PieChart,
-} from "lucide-react";
+import { FileText, Layers, Activity, PieChart } from "lucide-react";
 
 // Modern Big Tile Component
 const Tile = ({ title, count, icon, color = "indigo" }) => {

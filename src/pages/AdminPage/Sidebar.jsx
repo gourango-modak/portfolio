@@ -1,4 +1,3 @@
-import React from "react";
 import {
     LayoutDashboard,
     FileText,
@@ -9,8 +8,11 @@ import {
     X,
     LogOut,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
+    const { logout } = useAuth();
+
     const navItems = [
         {
             page: "dashboard",
@@ -38,12 +40,6 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
             icon: <Settings className="w-5 h-5" />,
         },
     ];
-
-    const handleLogout = () => {
-        // Replace this with your logout logic
-        console.log("User logged out");
-        alert("Logged out!");
-    };
 
     return (
         <>
@@ -102,8 +98,8 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
                 {/* Logout Button */}
                 <div className="px-4 py-6 border-t border-gray-200">
                     <button
-                        onClick={handleLogout}
-                        className="flex items-center w-full gap-2 p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        onClick={logout}
+                        className="flex items-center w-full gap-2 p-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer"
                     >
                         <LogOut className="w-5 h-5" />
                         <span>Logout</span>

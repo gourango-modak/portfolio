@@ -4,13 +4,13 @@ import CryptoJS from "crypto-js";
 const AuthContext = createContext();
 
 const PASSWORD_HASH =
-    "82ade1d7b45c25324cfd3f29df4e10aab1bc43b2004b4dbde92fcf0f1b351d52"; // only you know real password
+    "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"; // only you know real password
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // configurable session timeout (in hours)
-    const SESSION_TIMEOUT = 2 * 60 * 60 * 1000;
+    const SESSION_TIMEOUT = 1 * 60 * 60 * 1000;
 
     useEffect(() => {
         const session = JSON.parse(localStorage.getItem("session"));
@@ -32,8 +32,13 @@ export const AuthProvider = ({ children }) => {
         return false;
     };
 
+    const logout = () => {
+        localStorage.removeItem("session");
+        setIsAuthenticated(false);
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
