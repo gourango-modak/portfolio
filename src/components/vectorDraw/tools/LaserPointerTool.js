@@ -17,23 +17,14 @@ export class LaserPointerTool extends BaseTool {
         [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 8,
             label: "Width",
-            min: 1,
-            max: 30,
-            step: 1,
         },
         [TOOL_PROPERTIES.DURATION]: {
             value: 800,
             label: "Fade Duration (ms)",
-            min: 100,
-            max: 3000,
-            step: 100,
         },
         [TOOL_PROPERTIES.SMOOTHING]: {
             value: 0.6,
             label: "Smoothing",
-            min: 0,
-            max: 1,
-            step: 0.1,
         },
     };
 

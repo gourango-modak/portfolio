@@ -24,15 +24,11 @@ export class RectangleTool extends BaseTool {
         [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 2,
             label: "Stroke Width",
-            min: 0,
-            max: 15,
             step: 1,
         },
         [TOOL_PROPERTIES.ROUGHNESS]: {
             value: 3,
             label: "Roughness",
-            min: 0,
-            max: 15,
             step: 1,
         },
     };

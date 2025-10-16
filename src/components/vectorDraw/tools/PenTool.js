@@ -27,22 +27,16 @@ export class PenTool extends BaseTool {
         [TOOL_PROPERTIES.STREAMLINE]: {
             value: 0.5,
             label: "Streamline",
-            min: 0,
-            max: 1,
             step: 0.1,
         },
         [TOOL_PROPERTIES.THINNING]: {
             value: 0,
             label: "Thinning",
-            min: -1,
-            max: 1,
             step: 0.1,
         },
         [TOOL_PROPERTIES.SMOOTHING]: {
             value: 0.5,
             label: "Smoothing",
-            min: 0,
-            max: 1,
             step: 0.1,
         },
     };

@@ -35,8 +35,6 @@ export class TextTool extends BaseTool {
         [TOOL_PROPERTIES.FONT_SIZE]: {
             value: 48,
             label: "Font Size",
-            min: 12,
-            max: 72,
             step: 1,
         },
         [TOOL_PROPERTIES.FONT_FAMILY]: {

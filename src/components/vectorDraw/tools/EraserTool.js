@@ -15,9 +15,6 @@ export class EraserTool extends BaseTool {
         [TOOL_PROPERTIES.SIZE]: {
             value: 20,
             label: "Eraser Size",
-            min: 5,
-            max: 100,
-            step: 1,
         },
     };
 

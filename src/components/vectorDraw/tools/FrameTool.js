@@ -1,7 +1,6 @@
-import { frameSlice, shapeSlice } from "../store/utils";
+import { frameSlice } from "../store/utils";
 import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 import {
-    createFrameTitleShape,
     DEFAULT_FRAME_TITLE,
     FRAME_TITLE_FONT_FAMILY,
     FRAME_TITLE_FONT_SIZE,
@@ -27,9 +26,6 @@ export class FrameTool extends BaseTool {
         [TOOL_PROPERTIES.STROKE_WIDTH]: {
             value: 1.5,
             label: "Border Width",
-            min: 0,
-            max: 15,
-            step: 1,
         },
         [TOOL_PROPERTIES.BG_COLOR]: {
             value: "transparent",
