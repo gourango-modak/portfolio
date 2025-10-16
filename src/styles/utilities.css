@@ -11,7 +11,7 @@
 }
 
 .section-m-h {
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 104.5px);
 }
 
 .infinite-scroll-item {
