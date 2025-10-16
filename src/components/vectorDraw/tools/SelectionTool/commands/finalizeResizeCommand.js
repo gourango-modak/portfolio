@@ -8,6 +8,7 @@ export function finalizeResizeCommand(selectedIds, currentObjects, type) {
 
     const prevProps = currentCommand.prevProps;
     const newProps = {};
+    const updatedPrevProps = {}; // store only what changed
 
     selectedIds.forEach((id) => {
         const prev = prevProps[id];
@@ -17,10 +18,13 @@ export function finalizeResizeCommand(selectedIds, currentObjects, type) {
         const changed = getChangedProps(prev, curr);
         if (Object.keys(changed).length > 0) {
             newProps[id] = changed;
+            updatedPrevProps[id] = getChangedProps(curr, prev); // store only for undo
         }
     });
 
     if (Object.keys(newProps).length === 0) return;
 
-    commandHistorySlice.getSlice().finalizeCommand(type, { newProps });
+    commandHistorySlice
+        .getSlice()
+        .finalizeCommand(type, { newProps, prevProps: updatedPrevProps });
 }

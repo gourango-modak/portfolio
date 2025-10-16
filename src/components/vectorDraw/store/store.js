@@ -22,8 +22,8 @@ export const useDrawingAppStore = create(
             ...createCanvasObjectSlice(set, get),
         }),
         {
-            sliceName: "shapeSlice", // track only specific slice
-            pathPrefix: "shapes", // track specific properties like shapes/shapeOrder
+            sliceName: "commandHistorySlice",
+            logFullPathsOnChange: ["undoStack"],
         }
     )
 );
