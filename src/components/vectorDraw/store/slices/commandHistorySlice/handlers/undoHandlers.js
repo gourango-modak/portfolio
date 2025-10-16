@@ -144,25 +144,48 @@ export const undoHandlers = {
     [COMMANDS.ADD_FRAME]: (set, cmd) =>
         set((s) => {
             // Remove the added frame
-            const { [cmd.frame.id]: _, ...rest } = s.frameSlice.frames;
+            const { [cmd.frame.id]: _, ...restFrames } = s.frameSlice.frames;
+
+            // Remove its title shape from shapes
+            let restShapes = { ...s.shapeSlice.shapes };
+            if (cmd.frame.titleShapeId) {
+                const { [cmd.frame.titleShapeId]: __, ...remainingShapes } =
+                    restShapes;
+                restShapes = remainingShapes;
+            }
 
             // Remove from selected frames if it was selected
-            const newSel = new Set(s.frameSlice.selectedFrameIds);
-            newSel.delete(cmd.frame.id);
+            const newSelFrames = new Set(s.frameSlice.selectedFrameIds);
+            newSelFrames.delete(cmd.frame.id);
+
+            // Remove title shape from selected shapes if it was selected
+            const newSelShapes = new Set(s.shapeSlice.selectedShapeIds);
+            if (cmd.frame.titleShapeId)
+                newSelShapes.delete(cmd.frame.titleShapeId);
 
             // Recompute selected frames bounding box
             const newBounds =
-                newSel.size > 0 ? computeFramesBoundingBox(newSel, rest) : null;
+                newSelFrames.size > 0
+                    ? computeFramesBoundingBox(newSelFrames, restFrames)
+                    : null;
 
             return {
                 frameSlice: {
                     ...s.frameSlice,
-                    frames: rest,
+                    frames: restFrames,
                     frameOrder: s.frameSlice.frameOrder.filter(
                         (id) => id !== cmd.frame.id
                     ),
-                    selectedFrameIds: newSel,
+                    selectedFrameIds: newSelFrames,
                     selectedFramesBounds: newBounds,
+                },
+                shapeSlice: {
+                    ...s.shapeSlice,
+                    shapes: restShapes,
+                    shapeOrder: s.shapeSlice.shapeOrder.filter(
+                        (id) => id !== cmd.frame.titleShapeId
+                    ),
+                    selectedShapeIds: newSelShapes,
                 },
             };
         }),
