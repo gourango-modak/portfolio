@@ -1,10 +1,10 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/common/ScrollToTop";
 import CenteredLoader from "./components/common/CenteredLoader";
-import { ROUTES } from "./config";
 import RenderRoute from "./components/layout/RenderRoute";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import AppProviders from "./context/AppProviders";
+import { ROUTES } from "./route";
 
 const App = () => {
     const adminRoutes = ROUTES.filter((r) => r.path.startsWith("/admin"));
