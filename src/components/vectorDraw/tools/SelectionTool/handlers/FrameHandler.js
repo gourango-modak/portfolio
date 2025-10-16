@@ -50,12 +50,58 @@ export class FrameHandler extends BaseObjectHandler {
     }
 
     beginResize(selectedIds, objects) {
-        beginResizeCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+        // Clone so we don’t mutate the caller’s object reference
+        const extendedObjects = { ...objects };
+        const extendedSelectedIds = new Set(selectedIds);
+
+        // Include title shapes for any selected frames
+        const frames = objects;
+        selectedIds.forEach((id) => {
+            const frame = frames[id];
+            if (frame?.titleShapeId) {
+                const titleShape =
+                    shapeSlice.getSlice().shapes[frame.titleShapeId];
+                if (titleShape) {
+                    extendedObjects[frame.titleShapeId] = { ...titleShape };
+                    extendedSelectedIds.add(frame.titleShapeId);
+                }
+            }
+        });
+
+        beginResizeCommand(
+            extendedSelectedIds,
+            extendedObjects,
+            COMMANDS.UPDATE_FRAMES
+        );
     }
 
     finalizeResize(tool, selectedIds, objects) {
         if (!tool.resizing) return;
-        finalizeResizeCommand(selectedIds, objects, COMMANDS.UPDATE_FRAMES);
+
+        // Clone to avoid mutating the caller’s reference
+        const extendedObjects = { ...objects };
+        const extendedSelectedIds = new Set(selectedIds);
+
+        // Include title shapes for any selected frames
+        const { shapes } = shapeSlice.getSlice();
+
+        const frames = objects;
+        selectedIds.forEach((id) => {
+            const frame = frames[id];
+            if (frame?.titleShapeId) {
+                const titleShape = shapes[frame.titleShapeId];
+                if (titleShape) {
+                    extendedObjects[frame.titleShapeId] = { ...titleShape };
+                    extendedSelectedIds.add(frame.titleShapeId);
+                }
+            }
+        });
+
+        finalizeResizeCommand(
+            extendedSelectedIds,
+            extendedObjects,
+            COMMANDS.UPDATE_FRAMES
+        );
     }
 
     updateCursor(tool, pointer, bounds) {
@@ -213,7 +259,7 @@ export class FrameHandler extends BaseObjectHandler {
 
         selectedIds.forEach((id) => {
             const frame = this.resizeStartObjects[id];
-            const updated = resizeFrame({
+            const updatedFrame = resizeFrame({
                 frame,
                 handle: this.activeHandle,
                 pointer,
@@ -222,7 +268,17 @@ export class FrameHandler extends BaseObjectHandler {
                 origin,
             });
 
-            this.updateObject(id, updated);
+            this.updateObject(id, updatedFrame);
+
+            const { shapes } = shapeSlice.getSlice();
+            const titleShape = this.getFrameTitleShape(frame, shapes);
+
+            if (titleShape) {
+                shapeSlice.getSlice().updateShape(titleShape.id, {
+                    x: updatedFrame.x,
+                    y: updatedFrame.y,
+                });
+            }
         });
     }
 
@@ -282,6 +338,12 @@ export class FrameHandler extends BaseObjectHandler {
                 });
             });
         });
+    }
+
+    getFrameTitleShape(frame, shapes) {
+        return Object.values(shapes).filter(
+            (s) => s.id === frame.titleShapeId
+        )[0];
     }
 
     getShapesByFrame(frame, shapes) {

@@ -1,3 +1,4 @@
+import { generateId } from "../../../utils/common";
 import { computeShapeBoundingBox } from "../boundingBox/shapeBoundingBox";
 import { CANVAS_MODES } from "../constants";
 import { SHAPES } from "../shapes/constants";
@@ -18,9 +19,10 @@ export function createFrameTitleShape({
     color = "#000",
 }) {
     return {
+        id: generateId(),
         type: SHAPES.TEXT,
         x,
-        y: y - FRAME_TITLE_OFFSET_Y,
+        y,
         width: FRAME_TITLE_WIDTH,
         height: FRAME_TITLE_FONT_SIZE * TEXT_LINE_HEIGHT,
         text,
@@ -31,6 +33,7 @@ export function createFrameTitleShape({
         },
         isEditing: false,
         locked: true,
+        isFrameTitle: true,
     };
 }
 

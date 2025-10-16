@@ -1,6 +1,7 @@
 import { COMMANDS } from "../constants";
 import { computeShapesBoundingBox } from "./../../../../boundingBox/shapesBoundingBox";
 import { computeFramesBoundingBox } from "./../../../../boundingBox/framesBoundingBox";
+import { createFrameTitleShape } from "../../../../utils/frameUtils";
 
 export const executeCommandHandlers = {
     [COMMANDS.ADD_SHAPE]: (set, cmd) =>
@@ -119,14 +120,41 @@ export const executeCommandHandlers = {
         }),
 
     [COMMANDS.ADD_FRAME]: (set, cmd) =>
-        set((s) => ({
-            frameSlice: {
-                ...s.frameSlice,
-                frames: {
-                    ...s.frameSlice.frames,
-                    [cmd.frame.id]: cmd.frame,
+        set((s) => {
+            // Add the frame
+            const newFrames = {
+                ...s.frameSlice.frames,
+                [cmd.frame.id]: cmd.frame,
+            };
+            const newFrameOrder = [...s.frameSlice.frameOrder, cmd.frame.id];
+
+            // Create the title shape for this frame
+            const titleShape = createFrameTitleShape({
+                x: cmd.frame.x,
+                y: cmd.frame.y,
+                color: cmd.frame.properties.borderColor.value,
+            });
+            titleShape.frameId = cmd.frame.id;
+            newFrames[cmd.frame.id].titleShapeId = titleShape.id;
+
+            // Add the title shape to the shapeSlice
+            const newShapes = {
+                ...s.shapeSlice.shapes,
+                [titleShape.id]: titleShape,
+            };
+            const newShapeOrder = [...s.shapeSlice.shapeOrder, titleShape.id];
+
+            return {
+                frameSlice: {
+                    ...s.frameSlice,
+                    frames: newFrames,
+                    frameOrder: newFrameOrder,
                 },
-                frameOrder: [...s.frameSlice.frameOrder, cmd.frame.id],
-            },
-        })),
+                shapeSlice: {
+                    ...s.shapeSlice,
+                    shapes: newShapes,
+                    shapeOrder: newShapeOrder,
+                },
+            };
+        }),
 };

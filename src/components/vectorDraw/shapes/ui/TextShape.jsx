@@ -1,11 +1,18 @@
+import { FRAME_TITLE_OFFSET_Y } from "../../utils/frameUtils";
+
 export const TextShape = ({ shape }) => {
     const {
-        x,
-        y,
         text,
         properties: { color, fontSize, fontFamily },
         isEditing, // flag to hide shape during editing
     } = shape;
+
+    let { x, y } = shape;
+
+    // Update y-axis if its a frame title shape
+    if (shape.isFrameTitle) {
+        y -= FRAME_TITLE_OFFSET_Y;
+    }
 
     // If shape is being edited, skip rendering
     if (isEditing) return null;

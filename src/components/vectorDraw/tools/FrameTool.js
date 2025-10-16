@@ -122,15 +122,7 @@ export class FrameTool extends BaseTool {
             },
         };
 
-        const frameId = frameSlice.getSlice().addFrame(frame);
-
-        const titleShape = createFrameTitleShape({
-            ...this.startPoint,
-            color: this.properties.borderColor.value,
-        });
-        titleShape.frameId = frameId;
-        const titleShapeId = shapeSlice.getSlice().addShape(titleShape);
-        frameSlice.getSlice().updateFrame(frameId, { titleShapeId });
+        frameSlice.getSlice().addFrame(frame);
 
         this.cleanUp();
     }

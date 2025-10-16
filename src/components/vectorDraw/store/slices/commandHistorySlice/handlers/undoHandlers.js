@@ -97,14 +97,31 @@ export const undoHandlers = {
             const { frames, selectedFrameIds, selectedFramesBounds } =
                 s.frameSlice;
             const newFrames = { ...frames };
+            const newShapes = { ...s.shapeSlice.shapes }; // include shapes
+
             for (const id in cmd.prevProps) {
                 const frame = newFrames[id];
                 if (!frame) continue;
+
+                // Update the frame itself
                 newFrames[id] = {
                     ...frame,
                     ...cmd.prevProps[id],
                     version: (frame.version || 0) + 1,
                 };
+
+                // If this frame has a title shape, apply previous props
+                if (frame.titleShapeId) {
+                    const titleShape = newShapes[frame.titleShapeId];
+                    const prevTitleProps = cmd.prevProps[frame.titleShapeId];
+                    if (titleShape && prevTitleProps) {
+                        newShapes[frame.titleShapeId] = {
+                            ...titleShape,
+                            ...prevTitleProps,
+                            version: (titleShape.version || 0) + 1,
+                        };
+                    }
+                }
             }
 
             const newBounds = selectedFrameIds.size
@@ -116,6 +133,10 @@ export const undoHandlers = {
                     ...s.frameSlice,
                     frames: newFrames,
                     selectedFramesBounds: newBounds,
+                },
+                shapeSlice: {
+                    ...s.shapeSlice,
+                    shapes: newShapes,
                 },
             };
         }),
