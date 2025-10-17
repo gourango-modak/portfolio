@@ -22,17 +22,17 @@ export default class Title {
     }
 
     render() {
-        const h1 = document.createElement("h1");
-        h1.contentEditable = !this.readOnly;
-        h1.innerText = this.data.text;
-        h1.classList.add("ce-header", "ce-title-block", "title"); // optional CSS class
+        const div = document.createElement("div");
+        div.contentEditable = !this.readOnly;
+        div.innerText = this.data.text;
+        div.classList.add("ce-header", "ce-title-block", "title"); // optional CSS class
 
         // Optional: handle input changes
-        h1.addEventListener("input", (e) => {
+        div.addEventListener("input", (e) => {
             this.data.text = e.target.innerText;
         });
 
-        return h1;
+        return div;
     }
 
     save(blockContent) {

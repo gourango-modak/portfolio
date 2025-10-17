@@ -22,8 +22,7 @@ export const EDITOR_JS_TOOLS = {
         class: Header,
         inlineToolbar: true,
         config: {
-            levels: [2, 3], // only show h1, h2, h3
-            defaultLevel: 2,
+            defaultLevel: 1,
         },
     },
     list: {
@@ -56,6 +55,9 @@ export const EDITOR_JS_TOOLS = {
     },
     paragraph: {
         class: Paragraph,
+        config: {
+            preserveBlank: true, // This option ensures empty paragraph blocks are saved.
+        },
         inlineToolbar: true,
     },
     table: Table,
@@ -90,6 +92,14 @@ export const getEditorJsTools = (contentType) => {
     const tools = EDITOR_JS_TOOLS;
     switch (contentType) {
         case CONTENT_TYPES.BLOG:
+            tools.header = {
+                class: Header,
+                inlineToolbar: true,
+                config: {
+                    levels: [2, 3], // only show h1, h2, h3
+                    defaultLevel: 2,
+                },
+            };
             return tools;
         case CONTENT_TYPES.PROJECT:
             tools.tagline = TagLine;

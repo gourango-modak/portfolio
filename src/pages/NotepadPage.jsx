@@ -2,13 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import EditorJs from "../components/editorJs/EditorJs";
 import { EDITOR_JS_INITIALDATA } from "../components/editorJs/editorJsConfig";
+import { useAlert } from "../context/AlertProvider";
 
 const NotepadPage = () => {
     const editorRef = useRef(null);
+    const { showAlert } = useAlert();
     const [initialData, setInitialData] = useState(EDITOR_JS_INITIALDATA);
+    const NOTE_STORE_KEY = "gm-notes";
 
     const handleDataAfterSave = (editorData) => {
-        localStorage.setItem("gm-notes", JSON.stringify(editorData));
+        localStorage.setItem(NOTE_STORE_KEY, JSON.stringify(editorData));
     };
 
     const handleOnChange = async () => {
@@ -28,17 +31,37 @@ const NotepadPage = () => {
         });
     };
 
+    const clearNotes = () => {
+        localStorage.removeItem(NOTE_STORE_KEY);
+    };
+
+    const loadNotes = (data) => {
+        setInitialData(JSON.parse(data));
+    };
+
     useEffect(() => {
-        const noteData = localStorage.getItem("gm-notes");
+        const noteData = localStorage.getItem(NOTE_STORE_KEY);
         if (noteData) {
-            setInitialData(JSON.parse(noteData));
+            showAlert("Would you like to continue from where you left off?", {
+                type: "info",
+                buttons: [
+                    {
+                        label: "Cancel",
+                        type: "secondary",
+                        onClick: () => clearNotes,
+                    },
+                    {
+                        label: "Okay",
+                        type: "primary",
+                        onClick: () => loadNotes(noteData),
+                    },
+                ],
+            });
         }
     }, []);
 
-    console.log(initialData);
-
     return (
-        <div className="max-w-6xl mx-auto px-4 relative">
+        <div className="max-w-6xl mx-auto px-4 pt-2 relative">
             {/* Card layout */}
             <div className="bg-white px-6 flex flex-col">
                 {/* Editor content */}
