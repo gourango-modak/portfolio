@@ -159,24 +159,27 @@ export const ExportPanelBody = ({ onExport }) => {
             )}
 
             {/* Step 4: Only Selected Toggle */}
-            {(selectedFrameIds.size > 0 || selectedShapeIds.size > 0) && (
-                <div className="flex items-center justify-between uppercase font-medium mb-4">
-                    <span>Only Selected</span>
-                    <button
-                        type="button"
-                        onClick={() => setOnlySelected(!onlySelected)}
-                        className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
-                            onlySelected ? "bg-indigo-600" : "bg-gray-300"
-                        }`}
-                    >
-                        <div
-                            className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
-                                onlySelected ? "translate-x-5" : "translate-x-0"
+            {(selectedFrameIds.size > 0 || selectedShapeIds.size > 0) &&
+                canvasMode !== CANVAS_MODES.PAGED && (
+                    <div className="flex items-center justify-between uppercase font-medium mb-4">
+                        <span>Only Selected</span>
+                        <button
+                            type="button"
+                            onClick={() => setOnlySelected(!onlySelected)}
+                            className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
+                                onlySelected ? "bg-indigo-600" : "bg-gray-300"
                             }`}
-                        />
-                    </button>
-                </div>
-            )}
+                        >
+                            <div
+                                className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
+                                    onlySelected
+                                        ? "translate-x-5"
+                                        : "translate-x-0"
+                                }`}
+                            />
+                        </button>
+                    </div>
+                )}
 
             {/* Step 5: Background Toggle */}
             {canvasMode === CANVAS_MODES.INFINITE &&

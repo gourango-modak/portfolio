@@ -162,6 +162,12 @@ export const executeCommandHandlers = {
                     ...s.shapeSlice,
                     shapes: newShapes,
                     shapeOrder: newShapeOrder,
+                    selectedShapeIds: cmd?.frameFromTemplate
+                        ? new Set()
+                        : s.shapeSlice.selectedShapeIds,
+                    selectedShapesBounds: cmd?.frameFromTemplate
+                        ? null
+                        : s.shapeSlice.selectedShapesBounds,
                 },
             };
         }),
