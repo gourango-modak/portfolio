@@ -24,7 +24,7 @@ export const ExportPanelBody = ({ onExport }) => {
     const [format, setFormat] = useState(EXPORT_FORMAT.PNG);
     const [scale, setScale] = useState(EXPORT_SCALE.ONE_X);
     const [background, setBackground] = useState(true);
-    const [onlySelected, setOnlySelected] = useState(true);
+    const [onlySelected, setOnlySelected] = useState(false);
     const [scope, setScope] = useState(null);
     const [padding, setPadding] = useState(20);
 
@@ -150,30 +150,27 @@ export const ExportPanelBody = ({ onExport }) => {
                 </div>
             )}
 
-            {/* Step 4: Background Toggle */}
-            {selectedFrameIds.size > 0 ||
-                (selectedShapeIds.size > 0 && (
-                    <div className="flex items-center justify-between uppercase font-medium mb-4">
-                        <span>Only Selected</span>
-                        <button
-                            type="button"
-                            onClick={() => setOnlySelected(!onlySelected)}
-                            className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
-                                onlySelected ? "bg-indigo-600" : "bg-gray-300"
+            {/* Step 4: Only Selected Toggle */}
+            {(selectedFrameIds.size > 0 || selectedShapeIds.size > 0) && (
+                <div className="flex items-center justify-between uppercase font-medium mb-4">
+                    <span>Only Selected</span>
+                    <button
+                        type="button"
+                        onClick={() => setOnlySelected(!onlySelected)}
+                        className={`w-10 h-5 flex items-center rounded-full p-0.5 transition-colors ${
+                            onlySelected ? "bg-indigo-600" : "bg-gray-300"
+                        }`}
+                    >
+                        <div
+                            className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
+                                onlySelected ? "translate-x-5" : "translate-x-0"
                             }`}
-                        >
-                            <div
-                                className={`bg-white w-3 h-3 rounded-full shadow transform transition-transform ${
-                                    onlySelected
-                                        ? "translate-x-5"
-                                        : "translate-x-0"
-                                }`}
-                            />
-                        </button>
-                    </div>
-                ))}
+                        />
+                    </button>
+                </div>
+            )}
 
-            {/* Step 5: Only Selected Toggle */}
+            {/* Step 5: Background Toggle */}
             {canvasMode === CANVAS_MODES.INFINITE &&
                 format !== EXPORT_FORMAT.JSON && (
                     <div className="flex items-center justify-between font-medium uppercase mb-4">
@@ -196,8 +193,10 @@ export const ExportPanelBody = ({ onExport }) => {
                     </div>
                 )}
 
-            {/* Step 6: Only Selected Toggle */}
-            {canvasMode === CANVAS_MODES.INFINITE && (
+            {/* Step 6: Padding */}
+            {(canvasMode === CANVAS_MODES.INFINITE ||
+                (canvasMode === CANVAS_MODES.PAGED &&
+                    activeFrameId === null)) && (
                 <div className="">
                     <label className="flex items-center justify-between text-gray-500 font-medium uppercase mb-2">
                         <span>Padding</span>

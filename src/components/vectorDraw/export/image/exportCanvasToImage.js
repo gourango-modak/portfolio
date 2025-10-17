@@ -21,7 +21,7 @@ export const exportCanvasToImage = async ({
     let exportFrames = frames;
     let exportFrameIds = frameOrder;
 
-    // If onlySelected is true, filter to selected items
+    // Filter to only selected elements if required
     if (onlySelected) {
         exportShapeIds = [...selectedShapeIds];
         exportShapes = Object.fromEntries(
@@ -32,9 +32,50 @@ export const exportCanvasToImage = async ({
         exportFrames = Object.fromEntries(
             exportFrameIds.map((id) => [id, frames[id]])
         );
+
+        // --- Special Case: Single selected frame, no shape selected ---
+        if (selectedFrameIds.size === 1 && selectedShapeIds.size === 0) {
+            const frameId = [...selectedFrameIds][0];
+            const frame = frames[frameId];
+            if (frame) {
+                const shapesUnderFrame = Object.entries(shapes)
+                    .filter(
+                        ([_, shape]) =>
+                            shape.frameId === frameId &&
+                            shape.isFrameTitle !== true
+                    )
+                    .map(([id]) => id);
+
+                exportShapeIds = shapesUnderFrame;
+                exportShapes = Object.fromEntries(
+                    shapesUnderFrame.map((id) => [id, shapes[id]])
+                );
+
+                // Exclude the frame itself in this case
+                exportFrameIds = [];
+                exportFrames = {};
+            }
+        } else {
+            // For normal cases: include selected frames and their shapes
+            const frameShapes = Object.entries(shapes)
+                .filter(
+                    ([_, shape]) =>
+                        selectedFrameIds.has(shape.frameId) &&
+                        shape.isFrameTitle !== true
+                )
+                .map(([id]) => id);
+
+            for (const id of frameShapes) {
+                if (!exportShapeIds.includes(id)) exportShapeIds.push(id);
+            }
+
+            exportShapes = Object.fromEntries(
+                exportShapeIds.map((id) => [id, shapes[id]])
+            );
+        }
     }
 
-    // 1. Check if there’s anything to export
+    // 1. Validate export targets
     const hasShapes = exportShapeIds.length > 0;
     const hasFrames = exportFrameIds.length > 0;
 
@@ -43,7 +84,7 @@ export const exportCanvasToImage = async ({
         return null;
     }
 
-    // 2. Create combined export group
+    // 2. Build export SVG group
     const exportGroup = createExportGroup(
         exportFrames,
         exportShapes,
@@ -51,6 +92,7 @@ export const exportCanvasToImage = async ({
         exportShapeIds
     );
 
+    // 3. Compute bounding box
     const shapesBBox = hasShapes
         ? computeShapesBoundingBox(exportShapeIds, exportShapes)
         : null;
@@ -59,7 +101,7 @@ export const exportCanvasToImage = async ({
         : null;
     const bbox = combineBoundingBoxes([shapesBBox, framesBBox]);
 
-    // 3. Export to image
+    // 4. Export to image
     return await exportElementToImage({
         element: exportGroup,
         bbox,

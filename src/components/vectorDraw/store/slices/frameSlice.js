@@ -70,7 +70,6 @@ export const createFrameSlice = (set, get) => ({
                         ...state.frameSlice,
                         selectedFrameIds: newSelected,
                         selectedFramesBounds: newBounds,
-                        activeFrameId: frameId,
                     },
                     canvasObjectSlice: {
                         ...state.canvasObjectSlice,

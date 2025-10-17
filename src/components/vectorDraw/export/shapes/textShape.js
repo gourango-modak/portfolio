@@ -1,8 +1,13 @@
+import { TEXT_LINE_HEIGHT } from "../../tools/constants";
+
 export function createTextShape(shape) {
     const ns = "http://www.w3.org/2000/svg";
 
     const g = document.createElementNS(ns, "g");
-    g.setAttribute("transform", `translate(${shape.x}, ${shape.y})`);
+    g.setAttribute(
+        "transform",
+        `translate(${shape.x}, ${shape.isFrameTitle ? shape.y : shape.y})`
+    );
 
     const textEl = document.createElementNS(ns, "text");
     textEl.setAttribute("x", 0);
@@ -20,14 +25,13 @@ export function createTextShape(shape) {
     );
 
     // Split text by newlines and create <tspan> for each line
-    const lineHeight = 1.3; // you can also take from shape.properties
     const lines = shape.text.split(/\r?\n/);
     lines.forEach((line, i) => {
         const tspan = document.createElementNS(ns, "tspan");
         tspan.setAttribute("x", 0);
         tspan.setAttribute(
             "dy",
-            i === 0 ? 0 : shape.properties.fontSize.value * lineHeight
+            i === 0 ? 0 : shape.properties.fontSize.value * TEXT_LINE_HEIGHT
         );
         tspan.textContent = line || " "; // preserve empty lines
         textEl.appendChild(tspan);
