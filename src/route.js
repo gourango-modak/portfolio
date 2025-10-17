@@ -6,10 +6,10 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ContactPage from "./pages/ContactPage";
 import ToolsPage from "./pages/ToolsPage";
-import DrawingToolPage from "./pages/DrawingToolPage";
+import CanvasStudioPage from "./pages/CanvasStudioPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
-import RichTextEditorPage from "./pages/AdminPage/RichTextEditorPage";
+import NotepadPage from "./pages/NotepadPage";
 
 export const ROUTES = [
     { path: "/", component: HomePage, layout: true },
@@ -21,17 +21,17 @@ export const ROUTES = [
     { path: "/contact", component: ContactPage, layout: true },
     { path: "/tools", component: ToolsPage, layout: true },
     {
-        path: "/tools/drawing",
-        component: DrawingToolPage,
+        path: "/tools/canvas",
+        component: CanvasStudioPage,
+    },
+    {
+        path: "/tools/notepad",
+        component: NotepadPage,
     },
     { path: "/login", component: LoginPage },
     { path: "/admin", component: AdminPage },
     {
         path: "/admin/:page",
         component: AdminPage,
-    },
-    {
-        path: "/admin/tools/richtexteditor",
-        component: RichTextEditorPage,
     },
 ];

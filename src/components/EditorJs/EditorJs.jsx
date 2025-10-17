@@ -4,11 +4,12 @@ import { EDITOR_JS_TOOLS } from "./editorJsConfig";
 import { useEditor } from "./hooks/useEditor";
 
 const EditorJs = forwardRef(
-    ({ onSave, initialData, tools = EDITOR_JS_TOOLS }, ref) => {
+    ({ onSave, onChange, initialData, tools = EDITOR_JS_TOOLS }, ref) => {
         const editorInstance = useEditor({
             holder: "editorjs-container",
             tools: tools,
             initialData: initialData || {},
+            onChange: onChange,
         });
 
         useImperativeHandle(ref, () => ({

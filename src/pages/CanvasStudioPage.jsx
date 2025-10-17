@@ -1,7 +1,7 @@
 import { DrawingEnvironment } from "./../components/vectorDraw/DrawingEnvironment";
 
-const DrawingToolPage = () => {
+const CanvasStudioPage = () => {
     return <DrawingEnvironment />;
 };
 
-export default DrawingToolPage;
+export default CanvasStudioPage;

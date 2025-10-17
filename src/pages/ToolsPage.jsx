@@ -4,17 +4,18 @@ import SectionHeader from "../components/section/SectionHeader";
 
 const tools = [
     {
-        name: "Drawing App",
-        description: "Create and edit drawings with advanced tools and layers.",
+        name: "Canvas Studio",
+        description:
+            "Sketch, design, and visualize ideas on a flexible drawing board.",
         icon: PenTool,
-        link: "/tools/drawing",
+        link: "/tools/canvas",
     },
     {
-        name: "Rich Text Editor",
+        name: "Notepad",
         description:
-            "Write, format, and export content with a powerful editor.",
+            "Write, style, and organize your thoughts in a clean, distraction-free editor.",
         icon: Type,
-        link: "/",
+        link: "/tools/notepad",
     },
 ];
 

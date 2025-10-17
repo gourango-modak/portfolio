@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import EditorJS from "@editorjs/editorjs";
 
-export const useEditor = ({ holder, tools, initialData }) => {
+export const useEditor = ({ holder, tools, initialData, onChange }) => {
     const editorInstance = useRef(null);
 
     useEffect(() => {
@@ -15,12 +15,22 @@ export const useEditor = ({ holder, tools, initialData }) => {
             editorInstance.current.destroy();
             editorInstance.current = null;
         }
+
+        // ⚡️ Clear the previous DOM content
+        const holderElement = document.getElementById(holder);
+        if (holderElement) {
+            holderElement.innerHTML = "";
+        }
+
         const editor = new EditorJS({
             holder: holder,
             autofocus: true,
             placeholder: "Write your content here...",
             tools: tools,
             data: initialData || {},
+            onChange: () => {
+                onChange?.();
+            },
         });
 
         editorInstance.current = editor;
