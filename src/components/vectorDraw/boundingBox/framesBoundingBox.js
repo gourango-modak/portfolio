@@ -1,4 +1,10 @@
-export const computeFramesBoundingBox = (frameIds, frames) => {
+import { FRAME_TITLE_OFFSET_Y } from "../utils/frameUtils";
+
+export const computeFramesBoundingBox = (
+    frameIds,
+    frames,
+    includeTitleHeight = false
+) => {
     if (!frameIds || frameIds.size <= 0) return null;
 
     let minX = Number.POSITIVE_INFINITY;
@@ -7,12 +13,29 @@ export const computeFramesBoundingBox = (frameIds, frames) => {
     let maxY = Number.NEGATIVE_INFINITY;
 
     frameIds.forEach((id) => {
-        const { x, y, width, height } = frames[id];
+        const {
+            x,
+            y,
+            width,
+            height,
+            properties: { strokeWidth },
+        } = frames[id];
 
-        minX = Math.min(minX, x);
-        minY = Math.min(minY, y);
-        maxX = Math.max(maxX, x + width);
-        maxY = Math.max(maxY, y + height);
+        let adjustedX = x - strokeWidth.value / 2;
+        let adjustedY =
+            y -
+            (includeTitleHeight ? FRAME_TITLE_OFFSET_Y : 0) -
+            strokeWidth.value / 2;
+        let adjustedWidth = width + strokeWidth.value;
+        let adjustedHeight =
+            height +
+            (includeTitleHeight ? FRAME_TITLE_OFFSET_Y : 0) +
+            strokeWidth.value;
+
+        minX = Math.min(minX, adjustedX);
+        minY = Math.min(minY, adjustedY);
+        maxX = Math.max(maxX, adjustedX + adjustedWidth);
+        maxY = Math.max(maxY, adjustedY + adjustedHeight);
     });
 
     return {

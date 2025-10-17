@@ -6,9 +6,9 @@ export function createFrameSvg(frame) {
     rect.setAttribute("y", frame.y);
     rect.setAttribute("width", frame.width);
     rect.setAttribute("height", frame.height);
-    rect.setAttribute("fill", frame.properties.bgColor.value || "transparent");
-    rect.setAttribute("stroke", "rgba(0,0,0,0.2)");
-    rect.setAttribute("stroke-width", 1);
+    rect.setAttribute("fill", frame.properties.bgColor.value);
+    rect.setAttribute("stroke", frame.properties.borderColor.value);
+    rect.setAttribute("stroke-width", frame.properties.strokeWidth.value);
 
     return rect;
 }

@@ -23,6 +23,7 @@ export const TOOL_PROPERTIES = {
 export const TOOL_PROPERTIES_COMPONENTS = {
     [TOOL_PROPERTIES.COLOR]: ColorProperty,
     [TOOL_PROPERTIES.BG_COLOR]: ColorProperty,
+    [TOOL_PROPERTIES.BORDER_COLOR]: ColorProperty,
     [TOOL_PROPERTIES.STROKE_WIDTH]: InputProperty,
     [TOOL_PROPERTIES.WIDTH]: InputProperty,
     [TOOL_PROPERTIES.HEIGHT]: InputProperty,

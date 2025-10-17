@@ -1,4 +1,5 @@
 import { TEXT_LINE_HEIGHT } from "../../tools/constants";
+import { FRAME_TITLE_OFFSET_Y } from "../../utils/frameUtils";
 
 export function createTextShape(shape) {
     const ns = "http://www.w3.org/2000/svg";
@@ -6,7 +7,9 @@ export function createTextShape(shape) {
     const g = document.createElementNS(ns, "g");
     g.setAttribute(
         "transform",
-        `translate(${shape.x}, ${shape.isFrameTitle ? shape.y : shape.y})`
+        `translate(${shape.x}, ${
+            shape.y + shape.properties.fontSize.value - FRAME_TITLE_OFFSET_Y
+        })`
     );
 
     const textEl = document.createElementNS(ns, "text");

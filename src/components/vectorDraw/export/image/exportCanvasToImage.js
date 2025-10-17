@@ -58,11 +58,7 @@ export const exportCanvasToImage = async ({
         } else {
             // For normal cases: include selected frames and their shapes
             const frameShapes = Object.entries(shapes)
-                .filter(
-                    ([_, shape]) =>
-                        selectedFrameIds.has(shape.frameId) &&
-                        shape.isFrameTitle !== true
-                )
+                .filter(([_, shape]) => selectedFrameIds.has(shape.frameId))
                 .map(([id]) => id);
 
             for (const id of frameShapes) {
@@ -97,7 +93,7 @@ export const exportCanvasToImage = async ({
         ? computeShapesBoundingBox(exportShapeIds, exportShapes)
         : null;
     const framesBBox = hasFrames
-        ? computeFramesBoundingBox(exportFrameIds, exportFrames)
+        ? computeFramesBoundingBox(exportFrameIds, exportFrames, true)
         : null;
     const bbox = combineBoundingBoxes([shapesBBox, framesBBox]);
 

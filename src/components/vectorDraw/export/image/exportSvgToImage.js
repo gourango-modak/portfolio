@@ -38,61 +38,6 @@ const addFontDefinition = (svg, fontCss = "") => {
     svg.appendChild(styleEl);
 };
 
-const convertForeignObjectsToText = (svg) => {
-    const foreignObjects = svg.querySelectorAll("foreignObject");
-    foreignObjects.forEach((fo) => {
-        const htmlDiv = fo.querySelector("div");
-        if (!htmlDiv) return;
-
-        const textValue = htmlDiv.textContent || "";
-
-        // Read inline style attributes directly
-        const styleMap = parseInlineStyles(htmlDiv.getAttribute("style") || "");
-
-        const fontSize = parseFloat(styleMap["font-size"] || 16);
-        const lineHeight = parseFloat(styleMap["line-height"] || 1.3);
-        const yStart = Number(fo.getAttribute("y") || 0);
-
-        const textElem = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "text"
-        );
-        textElem.setAttribute("x", fo.getAttribute("x") || 0);
-        textElem.setAttribute("y", yStart + fontSize);
-        textElem.setAttribute("fill", styleMap.color || "#000");
-        textElem.setAttribute(
-            "font-family",
-            styleMap["font-family"] || "sans-serif"
-        );
-        textElem.setAttribute("font-size", fontSize + "px");
-        textElem.setAttribute(
-            "font-weight",
-            styleMap["font-weight"] || "normal"
-        );
-        textElem.setAttribute(
-            "letter-spacing",
-            styleMap["letter-spacing"] || "normal"
-        );
-
-        // Split by newlines and create <tspan> for each line
-        const lines = textValue.split(/\r?\n/);
-        lines.forEach((line, i) => {
-            const tspan = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "tspan"
-            );
-            tspan.setAttribute("x", fo.getAttribute("x") || 0);
-            if (i > 0) {
-                tspan.setAttribute("dy", fontSize * lineHeight);
-            }
-            tspan.textContent = line.trim() ? line : " "; // preserve empty lines
-            textElem.appendChild(tspan);
-        });
-
-        fo.parentNode.replaceChild(textElem, fo);
-    });
-};
-
 const createBaseSvg = ({ x, y, width, height }, background = false) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("width", width);
@@ -126,8 +71,7 @@ const prepareSvgForExport = async (
     const svg = createBaseSvg({ x, y, width, height }, background);
     addFontDefinition(svg, CAVEAT_FONT_CSS);
     svg.appendChild(element);
-    convertForeignObjectsToText(svg);
-    document.body.appendChild(svg);
+    // document.body.appendChild(svg);
     return svg;
 };
 

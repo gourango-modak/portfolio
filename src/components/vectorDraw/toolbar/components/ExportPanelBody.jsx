@@ -40,6 +40,14 @@ export const ExportPanelBody = ({ onExport }) => {
         onExport({ scope, format, scale, background, onlySelected, padding });
     };
 
+    useEffect(() => {
+        if (selectedFrameIds.size > 0 || selectedShapeIds.size > 0) {
+            setOnlySelected(true);
+        } else {
+            setOnlySelected(false);
+        }
+    }, [selectedFrameIds, selectedShapeIds]);
+
     // filter only current mode options and
     // keep infinite mode options if there is no page yet
     const scopeOptions = Object.values(EXPORT_SELECT_SCOPE_OPTIONS).filter(
