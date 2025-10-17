@@ -22,8 +22,8 @@ export const useDrawingAppStore = create(
             ...createCanvasObjectSlice(set, get),
         }),
         {
-            sliceName: "commandHistorySlice",
-            logFullPathsOnChange: ["undoStack"],
+            sliceName: "shapes",
+            logFullPathsOnChange: ["shapes"],
         }
     )
 );

@@ -136,6 +136,9 @@ export const executeCommandHandlers = {
             const titleShape = createFrameTitleShape({
                 x: cmd.frame.x,
                 y: cmd.frame.y,
+                text: cmd?.frameFromTemplate
+                    ? `Page_${newFrameOrder.length}`
+                    : "Frame",
                 color: cmd.frame.properties.borderColor.value,
             });
             titleShape.frameId = cmd.frame.id;
@@ -153,6 +156,7 @@ export const executeCommandHandlers = {
                     ...s.frameSlice,
                     frames: newFrames,
                     frameOrder: newFrameOrder,
+                    activeFrameId: cmd?.frameFromTemplate ? cmd.frame.id : null,
                 },
                 shapeSlice: {
                     ...s.shapeSlice,

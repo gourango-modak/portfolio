@@ -24,6 +24,10 @@ export class FrameHandler extends BaseObjectHandler {
         return this.getSlice().selectedFramesBounds;
     }
 
+    getActiveFrameId() {
+        return this.getSlice().activeFrameId;
+    }
+
     getObjects() {
         return this.getSlice().frames;
     }
@@ -285,6 +289,9 @@ export class FrameHandler extends BaseObjectHandler {
 
     applyMarqueeSelection(tool, pointer) {
         if (!tool.dragging) return;
+
+        // Don't want to select frame when we are in paged canvas mode
+        if (isPagedCanvasMode() && this.getActiveFrameId()) return;
 
         const rect = getRectFromPoints(tool.startPoint, pointer);
         const frames = this.getObjects();

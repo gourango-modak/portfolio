@@ -129,39 +129,30 @@ export const createFrameSlice = (set, get) => ({
         addFrameFromTemplate: () => {
             const id = generateId();
 
-            set((state) => {
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
 
-                const frameWidth = state.frameSlice.frameTemplate.width.value;
-                const frameHeight = state.frameSlice.frameTemplate.height.value;
+            const frameWidth = get().frameSlice.frameTemplate.width.value;
+            const frameHeight = get().frameSlice.frameTemplate.height.value;
 
-                // Calculate center in canvas coordinates
-                const x = viewportWidth / 2 - frameWidth / 2;
-                const y = viewportHeight / 2 - frameHeight / 2;
+            // Calculate center in canvas coordinates
+            const x = viewportWidth / 2 - frameWidth / 2;
+            const y = viewportHeight / 2 - frameHeight / 2;
 
-                const newFrame = {
-                    id,
-                    properties: { ...state.frameSlice.frameTemplate },
-                    x,
-                    y,
-                    width: frameWidth,
-                    height: frameHeight,
-                };
+            const newFrame = {
+                id,
+                properties: { ...get().frameSlice.frameTemplate },
+                x,
+                y,
+                width: frameWidth,
+                height: frameHeight,
+            };
 
-                return {
-                    frameSlice: {
-                        ...state.frameSlice,
-                        frames: { ...state.frameSlice.frames, [id]: newFrame },
-                        frameOrder: [...state.frameSlice.frameOrder, id],
-                        activeFrameId: id,
-                    },
-                    shapeSlice: {
-                        ...get().shapeSlice,
-                        selectedShapeIds: new Set(),
-                        selectedShapesBounds: null,
-                    },
-                };
+            // Execute ADD_FRAME command for history tracking
+            get().commandHistorySlice.executeCommand({
+                type: COMMANDS.ADD_FRAME,
+                frame: newFrame,
+                frameFromTemplate: true,
             });
 
             return id;
