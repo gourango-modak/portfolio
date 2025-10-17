@@ -16,7 +16,7 @@ export const useEditor = ({ holder, tools, initialData, onChange }) => {
             editorInstance.current = null;
         }
 
-        // ⚡️ Clear the previous DOM content
+        // Clear the previous DOM content
         const holderElement = document.getElementById(holder);
         if (holderElement) {
             holderElement.innerHTML = "";
@@ -25,7 +25,7 @@ export const useEditor = ({ holder, tools, initialData, onChange }) => {
         const editor = new EditorJS({
             holder: holder,
             autofocus: true,
-            placeholder: "Write your content here...",
+            placeholder: "Type text or paste...",
             tools: tools,
             data: initialData || {},
             onChange: () => {

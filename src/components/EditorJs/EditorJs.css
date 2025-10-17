@@ -34,7 +34,7 @@
 }
 
 .ce-title-block:empty::before {
-    content: "Enter your title here...";
+    content: "Enter title...";
     color: #9ca3af;
     pointer-events: none;
 }

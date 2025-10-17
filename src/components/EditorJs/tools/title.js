@@ -18,7 +18,7 @@ export default class Title {
         this.data = {
             text: data?.text || "",
         };
-        this.placeholder = "Enter your title here...";
+        this.placeholder = "Enter title...";
     }
 
     render() {
