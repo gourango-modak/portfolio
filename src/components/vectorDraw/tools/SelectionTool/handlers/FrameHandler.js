@@ -2,6 +2,7 @@ import { BaseObjectHandler } from "./BaseObjectHandler";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 import { getBoundingBoxHandleAtPoint } from "../../../components/SelectionOutlineLayer/utils";
 import {
+    canvasObjectSlice,
     canvasPropertiesSlice,
     panelSlice,
     shapeSlice,
@@ -162,7 +163,12 @@ export class FrameHandler extends BaseObjectHandler {
             const selectedIds = this.getSelectedIds();
             // If clicked frame isn't already selected, select it (single-select)
             if (!selectedIds.has(clickedFrame.id)) {
-                this.deselectAll();
+                const { pressedKey } = canvasObjectSlice.getSlice();
+
+                // Don't deselect all if shift key is pressed
+                if (pressedKey !== "Shift") {
+                    this.deselectAll();
+                }
                 this.select(clickedFrame.id);
             }
 

@@ -3,6 +3,7 @@ import { COMMANDS } from "../../../store/slices/commandHistorySlice/constants";
 import { beginMoveCommand } from "../commands/beginMoveCommand";
 import { BaseObjectHandler } from "./BaseObjectHandler";
 import {
+    canvasObjectSlice,
     canvasPropertiesSlice,
     frameSlice,
     panelSlice,
@@ -101,8 +102,13 @@ export class ShapeHandler extends BaseObjectHandler {
 
             // If not already selected, deselect others and select this one
             if (!selectedIds.has(clickedShape.id)) {
-                this.deselectAll();
-                frameSlice.getSlice().deselectAll();
+                const { pressedKey } = canvasObjectSlice.getSlice();
+
+                // Don't deselect all if shift key is pressed
+                if (pressedKey !== "Shift") {
+                    this.deselectAll();
+                    frameSlice.getSlice().deselectAll();
+                }
                 this.select(clickedShape.id);
             }
 

@@ -1,6 +1,7 @@
 export const createCanvasObjectSlice = (set, get) => ({
     canvasObjectSlice: {
         lastSelectedId: null,
+        pressedKey: null,
 
         deselectAll: () =>
             set((state) => {
@@ -11,5 +12,21 @@ export const createCanvasObjectSlice = (set, get) => ({
                     },
                 };
             }),
+
+        setPressedKey: (key) =>
+            set((state) => ({
+                canvasObjectSlice: {
+                    ...state.canvasObjectSlice,
+                    pressedKey: key,
+                },
+            })),
+
+        clearPressedKey: () =>
+            set((state) => ({
+                canvasObjectSlice: {
+                    ...state.canvasObjectSlice,
+                    pressedKey: null,
+                },
+            })),
     },
 });
