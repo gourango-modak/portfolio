@@ -17,6 +17,12 @@
     padding-left: 60px;
 }
 
+@media (max-width: 640px) {
+    .ce-block {
+        padding-left: 0px;
+    }
+}
+
 /* Main editing area */
 .codex-editor__redactor {
     width: 100%;

@@ -61,9 +61,9 @@ const NotepadPage = () => {
     }, []);
 
     return (
-        <div className="max-w-6xl mx-auto px-4 pt-2 relative">
+        <div className="max-w-6xl mx-auto lg:px-4 pt-2 relative">
             {/* Card layout */}
-            <div className="bg-white px-6 flex flex-col">
+            <div className="bg-white px-6 md:pr-21 flex flex-col">
                 {/* Editor content */}
                 <div className="flex-1 min-h-[70vh]">
                     <EditorJs
@@ -76,7 +76,7 @@ const NotepadPage = () => {
             </div>
 
             {/* Scroll buttons */}
-            <div className="fixed bottom-8 right-8 lg:flex flex-col gap-3 hidden">
+            <div className="fixed bottom-8 right-8 md:flex flex-col gap-3 hidden">
                 <button
                     onClick={scrollToTop}
                     className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 shadow-lg transition cursor-pointer"
