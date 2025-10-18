@@ -4,7 +4,7 @@ import { testTextHit } from "../shapes/shapeHitTesting/testTextHit";
 import { canvasPropertiesSlice, frameSlice, shapeSlice } from "../store/utils";
 import { TOOL_PROPERTIES } from "../toolbar/components/properties/constants";
 import { toViewportPoint } from "../utils/canvasUtils";
-import { resolveShapeFrameId } from "../utils/frameUtils";
+import { FRAME_TITLE_OFFSET_Y, resolveShapeFrameId } from "../utils/frameUtils";
 import { BaseTool } from "./BaseTool";
 import { TEXT_LINE_HEIGHT, TOOLS } from "./constants";
 
@@ -24,7 +24,7 @@ export class TextTool extends BaseTool {
     static name = TOOLS.TEXT;
     static label = "Text Tool";
     static shortcut = { code: "KeyI" };
-    static cursor = "text";
+    static cursor = "crosshair";
 
     static defaultProperties = {
         [TOOL_PROPERTIES.COLOR]: {
@@ -33,7 +33,7 @@ export class TextTool extends BaseTool {
             id: "textColor",
         },
         [TOOL_PROPERTIES.FONT_SIZE]: {
-            value: 48,
+            value: 32,
             label: "Font Size",
             step: 1,
         },
@@ -222,7 +222,11 @@ export class TextTool extends BaseTool {
 
         if (existingShape) {
             const startX = existingShape.x;
-            const startY = existingShape.y;
+            let startY = existingShape.y;
+
+            if (existingShape.isFrameTitle) {
+                startY -= FRAME_TITLE_OFFSET_Y;
+            }
 
             // Compute width based on existing shape and viewport
             width = this.calculateTextareaWidth(
@@ -235,7 +239,7 @@ export class TextTool extends BaseTool {
             this.currentTextareaWidth = width;
 
             text = existingShape.text;
-            point = { x: existingShape.x, y: existingShape.y };
+            point = { x: startX, y: startY };
             height = existingShape.height;
             properties = existingShape.properties;
         }

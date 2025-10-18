@@ -10,7 +10,7 @@ export const HandleSquare = ({ x, y, cursor, handleId }) => {
             rx={2}
             width={size}
             height={size}
-            fill="transparent"
+            fill="white"
             stroke={OUTLINE_COLOR}
             strokeWidth={1}
             cursor={cursor}
