@@ -13,7 +13,7 @@ const EditorJs = forwardRef(
         });
 
         useImperativeHandle(ref, () => ({
-            async save() {
+            async save(options) {
                 if (!editorInstance.current) {
                     console.error("Editor instance is not available.");
                     return;
@@ -22,7 +22,7 @@ const EditorJs = forwardRef(
                 try {
                     const content = await editorInstance.current.save();
                     if (onSave) {
-                        onSave(content);
+                        onSave({ content, options });
                     }
                 } catch (err) {
                     console.error("Failed to save blog content:", err);

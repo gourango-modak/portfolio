@@ -55,9 +55,9 @@ export const EDITOR_JS_TOOLS = {
     },
     paragraph: {
         class: Paragraph,
-        config: {
-            preserveBlank: true, // This option ensures empty paragraph blocks are saved.
-        },
+        // config: {
+        //     preserveBlank: true, // This option ensures empty paragraph blocks are saved.
+        // },
         inlineToolbar: true,
     },
     table: Table,
@@ -106,7 +106,24 @@ export const getEditorJsTools = (contentType) => {
             tools.gallery = Gallery;
             return tools;
         default:
-            return tools;
+            return {
+                header: {
+                    class: Header,
+                    inlineToolbar: true,
+                    config: {
+                        defaultLevel: 1,
+                    },
+                },
+                list: {
+                    class: List,
+                    inlineToolbar: true,
+                },
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                },
+                title: Title,
+            };
     }
 };
 
