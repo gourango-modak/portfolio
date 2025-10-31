@@ -10,6 +10,7 @@ import CanvasStudioPage from "./pages/CanvasStudioPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import NotepadPage from "./pages/NotepadPage";
+import { BlogEditor } from "./pages/AdminPage/BlogEditor";
 
 export const ROUTES = [
     { path: "/", component: HomePage, layout: true },
@@ -33,5 +34,9 @@ export const ROUTES = [
     {
         path: "/admin/:page",
         component: AdminPage,
+    },
+    {
+        path: "/admin/blogeditor/:slug",
+        component: BlogEditor,
     },
 ];

@@ -3,7 +3,6 @@ import PostCard from "./PostCard";
 
 const PostsList = ({
     fetchData,
-    onEdit,
     searchTerm = "",
     selectedTags = [],
     maxItems = Infinity,
@@ -11,9 +10,7 @@ const PostsList = ({
     <InfiniteScroll
         key={`${searchTerm}-${selectedTags.join("-")}`} // force remount on filter change
         fetchData={fetchData}
-        renderItem={(post) => (
-            <PostCard key={post.id} post={post} onEdit={onEdit} />
-        )}
+        renderItem={(post) => <PostCard key={post.id} post={post} />}
         limit={10}
         maxItems={maxItems}
         containerClass="grid gap-6 md:grid-cols-2"
