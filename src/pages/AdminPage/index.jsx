@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import DashboardPanel from "./DashboardPanel";
-import BlogsPanel from "./BlogsPanel";
+import { DashboardPanel } from "./DashboardPanel";
+import { BlogsPanel } from "./BlogsPanel";
 import ToolsPanel from "./ToolsPanel";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -44,7 +44,7 @@ const AdminPage = () => {
             />
 
             {/* Main content */}
-            <main className="flex-1 px-6 sm:px-10 py-8">
+            <main className="flex-1 px-6 sm:px-10 py-8 relative w-full">
                 <h1 className="text-3xl font-bold mb-12 sm:mb-10 capitalize text-gray-800">
                     {currentPage}
                 </h1>

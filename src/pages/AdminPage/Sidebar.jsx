@@ -9,6 +9,7 @@ import {
     LogOut,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
     const { logout } = useAuth();
@@ -68,9 +69,9 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
             >
                 {/* Logo */}
                 <div className="flex items-center h-20 p-8 border-b border-gray-200 flex-shrink-0">
-                    <span className="text-2xl font-bold text-indigo-600">
+                    <Link to="/" className="text-2xl font-bold text-indigo-600">
                         Gourango
-                    </span>
+                    </Link>
                 </div>
 
                 {/* Navigation */}
