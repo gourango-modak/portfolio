@@ -11,13 +11,13 @@
 }
 
 .editorjs h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.editorjs h2,
+.editorjs h3,
+.editorjs h4,
+.editorjs h5,
+.editorjs h6 {
     font-weight: 700;
-    padding: 2rem 0 1rem 0 !important;
+    padding: 2rem 0 1rem 0;
     color: #1e293b;
 }
 
