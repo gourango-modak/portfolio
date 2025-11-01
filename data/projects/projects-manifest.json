@@ -1,8 +1,7 @@
 {
-  "totalProjects": 4,
+  "totalProjects": 5,
   "topCategories": [
-    "Mobile Application",
-    "Web Application"
+    "Test 1"
   ],
   "projects": [
     {
@@ -40,6 +39,18 @@
       "slug": "c-net-framework-basic-architecture",
       "createdAt": 1757104757977,
       "id": 1757104758231
+    },
+    {
+      "title": "Project 1",
+      "category": {
+        "name": "Test 1",
+        "id": 1761990110814
+      },
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/1761994113439.json",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "slug": "project-1-1761994113439",
+      "createdAt": 1761994112768,
+      "id": 1761994113439
     }
   ]
 }

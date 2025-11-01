@@ -1,0 +1,15 @@
+{
+  "totalCategories": 2,
+  "categories": [
+    {
+      "name": "Test 1",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1761990110814.json",
+      "id": 1761990110814
+    },
+    {
+      "name": "Test 2",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1761990114445.json",
+      "id": 1761990114445
+    }
+  ]
+}
