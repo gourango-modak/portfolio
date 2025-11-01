@@ -38,7 +38,7 @@ const ProjectCard = ({ ref, project, onEdit }) => {
 
                 <div className="flex-1">
                     {/* Created / Updated Dates */}
-                    <p className="text-sm text-slate-500 mb-1">
+                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
                         {project.updatedAt &&
                         project.updatedAt !== project.createdAt
                             ? `Last Updated on ${formatDate(project.updatedAt)}`
@@ -74,7 +74,7 @@ const ProjectCard = ({ ref, project, onEdit }) => {
             {isAuthenticated && onEdit && (
                 <button
                     onClick={() => handleEdit(project)}
-                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
+                    className="absolute top-4.5 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
                     title="Edit Project"
                 >
                     <Edit3 size={16} className="text-gray-600" />

@@ -1,4 +1,5 @@
 import { Edit3, Layers } from "lucide-react";
+import { formatDate } from "../../utils/date";
 
 export const CategoryCard = ({ category, onEdit }) => {
     return (
@@ -7,9 +8,14 @@ export const CategoryCard = ({ category, onEdit }) => {
                 <div className="text-indigo-600 mt-1 flex-shrink-0">
                     <Layers />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-slate-900">
-                    {category.name}
-                </h3>
+                <div className="flex-1">
+                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
+                        {`Published on ${formatDate(category.createdAt)}`}
+                    </p>
+                    <h3 className="text-xl font-bold mb-2 text-slate-900">
+                        {category.name}
+                    </h3>
+                </div>
             </div>
 
             {onEdit && (

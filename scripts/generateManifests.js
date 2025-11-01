@@ -134,6 +134,7 @@ const generateCategoriesManifest = () => {
                 name: p.name,
                 url: `${CATEGORY_FILES_BASE_URL}/${p._fileName}`,
                 id: p.id,
+                createdAt: p.createdAt,
             };
         }),
     };

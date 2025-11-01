@@ -13,7 +13,7 @@ const PostCard = ({ post, onEdit }) => {
                 </div>
 
                 <div className="flex-1">
-                    <p className="text-sm text-slate-500 mb-1">
+                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
                         {post.updatedAt
                             ? `Last Updated on ${formatDate(post.updatedAt)}`
                             : `Published on ${formatDate(post.createdAt)}`}
@@ -45,7 +45,7 @@ const PostCard = ({ post, onEdit }) => {
             {onEdit && (
                 <button
                     onClick={() => onEdit(post)}
-                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
+                    className="absolute top-4.5 right-4 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
                     title="Edit Post"
                 >
                     <Edit3 size={16} className="text-gray-600" />
