@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
     const { login, isAuthenticated } = useAuth();
@@ -28,10 +28,10 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-slate-50">
+        <div className="flex items-center justify-center h-screen bg-slate-50 p-6">
             <form
                 onSubmit={handleSubmit}
-                className="bg-white shadow-md rounded-2xl p-12 w-100"
+                className="bg-white shadow-md rounded-2xl p-6 sm:p-12 w-100"
             >
                 <h2 className="text-4xl font-semibold text-center mb-12">
                     Login

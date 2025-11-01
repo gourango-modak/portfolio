@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import Sidebar from "./Sidebar";
 import { DashboardPanel } from "./DashboardPanel";
 import { BlogsPanel } from "./BlogsPanel";
 import { ToolsPanel } from "./ToolsPanel";
-import { useNavigate, useParams } from "react-router-dom";
 import { ProjectsPanel } from "./ProjectsPanel";
 import { CategoriesPanel } from "./CategoriesPanel";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const AdminPage = () => {
     const { page } = useParams();
@@ -14,17 +14,19 @@ const AdminPage = () => {
 
     const currentPage = page || "dashboard";
 
+    // Only navigate if page is missing from the URL
+    if (!page) {
+        navigate(`/admin/${currentPage}`, { replace: true });
+    }
+
     const handleNav = (newPage) => {
-        navigate(`/admin/${newPage}`);
+        if (newPage !== currentPage) {
+            navigate(`/admin/${newPage}`);
+        }
     };
 
-    useEffect(() => {
-        if (currentPage) {
-            navigate(`/admin/${currentPage}`);
-        }
-    }, [currentPage]);
-
-    const renderContent = () => {
+    // Memoize content to avoid unnecessary re-renders
+    const content = useMemo(() => {
         switch (currentPage) {
             case "dashboard":
                 return <DashboardPanel />;
@@ -39,7 +41,7 @@ const AdminPage = () => {
             default:
                 return <DashboardPanel />;
         }
-    };
+    }, [currentPage]);
 
     return (
         <div className="min-h-screen bg-gray-100 flex justify-center">
@@ -51,12 +53,36 @@ const AdminPage = () => {
                 setSidebarOpen={setSidebarOpen}
             />
 
-            {/* Main content */}
-            <main className="flex-1 px-6 sm:px-10 py-8 relative w-full">
-                <h1 className="text-3xl font-bold mb-12 sm:mb-10 capitalize text-gray-800">
+            <div className="md:hidden fixed top-0 left-0 right-0 z-30 px-8 py-6 bg-white border-b border-gray-200 md:static">
+                <h1 className="text-2xl font-bold text-indigo-600 capitalize">
                     {currentPage}
                 </h1>
-                <div>{renderContent()}</div>
+            </div>
+
+            {/* Main content */}
+            <main className="flex-1 px-10 relative w-full pt-28 pb-10 md:py-10">
+                {/* <h1 className="text-3xl font-bold mb-12 sm:mb-10 capitalize text-gray-800">
+                    {currentPage}
+                </h1> */}
+                {/* Header — fixed on mobile */}
+                {/* <div className="flex items-center border-b border-gray-200 flex-shrink-0">
+                    <Link to="/" className="text-2xl font-bold text-indigo-600">
+                        Gourango
+                    </Link>
+                </div> */}
+                {/* <div
+                    className="
+            fixed top-0 left-0 right-0 
+            z-30 
+            px-6 sm:px-10 py-4
+            md:static
+          "
+                >
+                    <h1 className="text-3xl font-bold mb-12 sm:mb-10 capitalize text-gray-800">
+                        {currentPage}
+                    </h1>
+                </div> */}
+                <div>{content}</div>
             </main>
         </div>
     );
