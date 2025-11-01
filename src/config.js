@@ -15,6 +15,10 @@ export const PROJECT_FILES_BASE_URL = `${BASE_URL}/projects`;
 export const PROJECTS_MANIFEST_FILE_NAME = "projects-manifest.json";
 export const PROJECT_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECTS_MANIFEST_FILE_NAME}`;
 
+export const CATEGORY_FILES_BASE_URL = `${BASE_URL}/categories`;
+export const CATEGORY_MANIFEST_FILE_NAME = "categories-manifest.json";
+export const CATEGORY_MANIFEST_FILE_URL = `${BASE_URL}/categories/${CATEGORY_MANIFEST_FILE_NAME}`;
+
 export const CONTENT_TYPES = {
     BLOG: "blog",
     PROJECT: "project",

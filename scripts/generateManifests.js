@@ -1,6 +1,13 @@
 import fs from "fs";
 import path from "path";
-import { POST_FILES_BASE_URL, PROJECT_FILES_BASE_URL } from "../src/config.js";
+import {
+    CATEGORY_FILES_BASE_URL,
+    CATEGORY_MANIFEST_FILE_NAME,
+    POST_FILES_BASE_URL,
+    POSTS_MANIFEST_FILE_NAME,
+    PROJECT_FILES_BASE_URL,
+    PROJECTS_MANIFEST_FILE_NAME,
+} from "../src/config.js";
 
 // Helper function to read JSON files from a folder
 const readJsonFiles = (folderPath, excludeFile) => {
@@ -32,7 +39,7 @@ const getTopOccurrences = (arr, topN = 10) => {
 // Generate posts manifest with top 10 tags
 const generatePostsManifest = () => {
     const folder = "public/data/blogs";
-    const manifestFile = "posts-manifest.json";
+    const manifestFile = POSTS_MANIFEST_FILE_NAME;
     const posts = readJsonFiles(folder, manifestFile);
 
     // Collect all tags
@@ -67,7 +74,7 @@ const generatePostsManifest = () => {
 // Generate projects manifest with top 10 categories
 const generateProjectsManifest = () => {
     const folder = "public/data/projects";
-    const manifestFile = "projects-manifest.json";
+    const manifestFile = PROJECTS_MANIFEST_FILE_NAME;
     const projects = readJsonFiles(folder, manifestFile);
 
     // Collect all categories
@@ -99,6 +106,33 @@ const generateProjectsManifest = () => {
     );
 };
 
+// Generate categories manifest
+const generateCategoriesManifest = () => {
+    const folder = "public/data/categories";
+    const manifestFile = CATEGORY_MANIFEST_FILE_NAME;
+    const categories = readJsonFiles(folder, manifestFile);
+
+    const manifest = {
+        totalCategories: categories.length,
+        categories: categories.map((p) => {
+            return {
+                name: p.name,
+                url: `${CATEGORY_FILES_BASE_URL}/${p._fileName}`,
+                id: p.id,
+            };
+        }),
+    };
+
+    fs.writeFileSync(
+        path.join(folder, manifestFile),
+        JSON.stringify(manifest, null, 2)
+    );
+    console.log(
+        `✅ Generated categories manifest with ${categories.length} categories`
+    );
+};
+
 // Run generators
 generatePostsManifest();
 generateProjectsManifest();
+generateCategoriesManifest();

@@ -8,6 +8,7 @@ import { CONTENT_TYPES } from "../../../config";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { fetchProjectBySlug } from "../../../data/projects";
 import ProjectMetaDataModal from "../../../components/project/ProjectMetaDataModal";
+import { fetchAllCategories } from "../../../data/categories";
 
 export const ProjectEditor = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
@@ -51,13 +52,21 @@ export const ProjectEditor = () => {
         navigate("/admin/projects");
     };
 
+    const fetchFn = async (slug) => {
+        const [project, categories] = await Promise.all([
+            fetchProjectBySlug(slug),
+            fetchAllCategories(),
+        ]);
+        return { project, categories };
+    };
+
     return (
         <ResourceLoader
             id={slug}
-            fetchFn={fetchProjectBySlug}
+            fetchFn={fetchFn}
             loadingMessage="Fetching project data..."
         >
-            {(project) => {
+            {({ project, categories }) => {
                 return (
                     <>
                         <div className="max-w-6xl mx-auto lg:px-4 pt-2 relative">
@@ -81,6 +90,7 @@ export const ProjectEditor = () => {
                             onSave={saveMetaData}
                             initialData={project}
                             title="Edit Project"
+                            categories={categories}
                         />
                     </>
                 );

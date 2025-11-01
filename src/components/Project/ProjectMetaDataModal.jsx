@@ -3,10 +3,8 @@ import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
 import Dropdown from "../common/Dropdown";
 import { validateProjectMetaData } from "./projectUtils";
-import {
-    PROJECT_CATEGORIES_OPTIONS,
-    PROJECT_STATUSES_OPTIONS,
-} from "./projectConfig";
+import { PROJECT_STATUSES_OPTIONS } from "./projectConfig";
+import { getCategoryOptions } from "../category/utils";
 
 const defaultMetaData = {
     description: "",
@@ -24,6 +22,7 @@ const ProjectMetaDataModal = ({
     onSave,
     initialData = {},
     title = "Create New Project",
+    categories = [],
 }) => {
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
@@ -137,7 +136,7 @@ const ProjectMetaDataModal = ({
                 <Dropdown
                     label="Category"
                     name="category"
-                    options={PROJECT_CATEGORIES_OPTIONS}
+                    options={getCategoryOptions(categories)}
                     onChange={handleDropdownChange}
                     selected={metaData.category}
                     error={errors.category}

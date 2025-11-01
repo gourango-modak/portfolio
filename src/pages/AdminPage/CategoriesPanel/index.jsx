@@ -1,0 +1,82 @@
+import { useCallback, useRef, useState } from "react";
+import { Plus } from "lucide-react";
+import InfiniteScroll from "./../../../components/common/InfiniteScroll";
+import { SearchBar } from "../../../components/common/SearchBar";
+import { fetchCategories } from "../../../data/categories";
+import { prepareCategoryData } from "../../../components/category/utils";
+import { downloadJson, getContentFileName } from "../../../utils/common";
+import { CategoryCard } from "../../../components/category/CategoryCard";
+import { CategoryModal } from "../../../components/category/CategoryModal";
+
+export const CategoriesPanel = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
+
+    const metaDataRef = useRef({});
+
+    const fetchData = useCallback(
+        (page, limit) =>
+            fetchCategories(page, limit, {
+                searchTerm,
+            }),
+        [searchTerm]
+    );
+
+    const handleEdit = (category) => {
+        metaDataRef.current = category;
+        setMetaDataModalOpen(true);
+    };
+
+    const saveMetaData = async (meta) => {
+        const newCategory = prepareCategoryData(meta);
+        downloadJson(newCategory, getContentFileName(newCategory.id));
+        setMetaDataModalOpen(false);
+    };
+
+    const handleMetaDataModalClose = (meta) => {
+        metaDataRef.current = meta;
+        setMetaDataModalOpen(false);
+    };
+
+    return (
+        <>
+            <div className="flex flex-col gap-6">
+                <div className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <SearchBar
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search by title or author..."
+                    />
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <button
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
+                        flex items-center gap-2 justify-center"
+                            onClick={() => setMetaDataModalOpen(true)}
+                        >
+                            <Plus size={18} /> Create
+                        </button>
+                    </div>
+                </div>
+                <InfiniteScroll
+                    key={searchTerm} // force remount on filter change
+                    fetchData={fetchData}
+                    renderItem={(category) => (
+                        <CategoryCard
+                            key={category.id}
+                            category={category}
+                            onEdit={handleEdit}
+                        />
+                    )}
+                    limit={10}
+                    containerClass="grid grid-cols-1 xl:grid-cols-3 gap-4"
+                />
+            </div>
+            <CategoryModal
+                isOpen={isMetaDataModalOpen}
+                onClose={handleMetaDataModalClose}
+                onSave={saveMetaData}
+                initialData={metaDataRef.current}
+            />
+        </>
+    );
+};
