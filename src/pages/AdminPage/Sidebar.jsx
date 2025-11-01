@@ -46,7 +46,7 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
         <>
             {/* Mobile menu button */}
             <button
-                className="fixed top-6 right-6 z-50 md:hidden p-2 bg-indigo-600 text-white rounded-md shadow-lg"
+                className="fixed top-7 right-8 z-50 md:hidden p-2 bg-indigo-600 text-white rounded-md shadow-lg"
                 onClick={() => setSidebarOpen(!sidebarOpen)}
             >
                 {sidebarOpen ? (
@@ -68,7 +68,7 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
         `}
             >
                 {/* Logo */}
-                <div className="flex items-center px-8 py-6 border-b border-gray-200 flex-shrink-0">
+                <div className="flex items-center px-8 pb-6 pt-8 border-b border-gray-200 flex-shrink-0">
                     <Link to="/" className="text-2xl font-bold text-indigo-600">
                         Gourango
                     </Link>
