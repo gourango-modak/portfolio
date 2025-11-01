@@ -3,6 +3,7 @@
   "topCategories": [
     "Test 1"
   ],
+  "totalInProgressProjects": 5,
   "projects": [
     {
       "title": "Project Name: TaskMaster Pro",
@@ -11,7 +12,8 @@
       "description": "TaskMaster Pro is a modern web application designed to help individuals and teams manage their tasks efficiently. It combines a clean interface, drag-and-drop task management, notifications, and analytics to improve productivity.",
       "slug": "project-name-taskmaster-pro",
       "createdAt": 1757017511575,
-      "id": 1757017512370
+      "id": 1757017512370,
+      "status": "In progress"
     },
     {
       "title": "C# .NET Framework (Basic Architecture and Component Stack)",
@@ -20,7 +22,8 @@
       "description": "C# (C-Sharp) is a modern, object-oriented programming language developed by Microsoft in 2000. It is a part of the .NET ecosystem and is widely used for building desktop, web, mobile, cloud, and enterprise applications. This is originally tied to the .NET Framework, C# has evolved to be the primary language used across the .NET platform which now supports cross-platform development.",
       "slug": "c-net-framework-basic-architecture-and-component-stack",
       "createdAt": 1757104618394,
-      "id": 1757104618553
+      "id": 1757104618553,
+      "status": "In progress"
     },
     {
       "title": "C# .NET Framework",
@@ -29,7 +32,8 @@
       "description": "C# (C-Sharp) is a modern, object-oriented programming language developed by Microsoft in 2000. It is a part of the .NET ecosystem and is widely used for building desktop, web, mobile, cloud, and enterprise applications. This is originally tied to the .NET Framework, C# has evolved to be the primary language used across the .NET platform which now supports cross-platform development.\n\nThe .NET Framework initially la",
       "slug": "c-net-framework",
       "createdAt": 1757104717658,
-      "id": 1757104717985
+      "id": 1757104717985,
+      "status": "In progress"
     },
     {
       "title": "C# .NET Framework (Basic Architecture",
@@ -38,7 +42,8 @@
       "description": "The .NET Framework initially launched in 2002 and it has evolved into a broader and more powerful ecosystem known as .NET 5 and beyond. This platform combines the best of .NET Framework, .NET Core, and Xamarin and it enables the developers to build applications that run on Windows, Linux, and macOS.",
       "slug": "c-net-framework-basic-architecture",
       "createdAt": 1757104757977,
-      "id": 1757104758231
+      "id": 1757104758231,
+      "status": "In progress"
     },
     {
       "title": "Project 1",
@@ -50,7 +55,8 @@
       "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "slug": "project-1-1761994113439",
       "createdAt": 1761994112768,
-      "id": 1761994113439
+      "id": 1761994113439,
+      "status": "In progress"
     }
   ]
 }
