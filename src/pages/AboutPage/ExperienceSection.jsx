@@ -72,7 +72,7 @@ const ExperienceSection = () => {
 
             <div className="flex flex-col md:flex-row gap-8">
                 {/* Left Tabs */}
-                <div className="flex md:flex-col md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 overflow-hidden overflow-x-auto mb-50">
+                <div className="flex md:flex-col md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 overflow-hidden overflow-x-auto md:mb-50">
                     {EXPERIENCE_DATA.map((job, index) => (
                         <button
                             key={job.company}
