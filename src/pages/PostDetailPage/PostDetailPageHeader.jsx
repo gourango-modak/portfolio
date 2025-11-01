@@ -29,7 +29,7 @@ const PostDetailPageHeader = ({ post }) => {
                 )}
                 {/* Read Time */}
                 {post.readTime && (
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-2">
                         <span className="text-gray-400">⌛</span>
                         Read Time:{" "}
                         <span className="text-slate-700 font-medium">

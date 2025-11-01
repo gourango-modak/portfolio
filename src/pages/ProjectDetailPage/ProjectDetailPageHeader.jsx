@@ -33,12 +33,12 @@ const ProjectDetailPageHeader = ({ project }) => {
                 )}
 
                 {/* Status (if not Completed) */}
-                {project.category && (
+                {project.category?.name && (
                     <span className="flex items-center gap-2">
                         <span className="text-gray-400">🏷️</span>
                         Category:{" "}
                         <span className="text-slate-700 font-medium">
-                            {project.category}
+                            {project.category.name}
                         </span>
                     </span>
                 )}

@@ -77,14 +77,6 @@ export const extractHeadings = (content, contentType) => {
         }
     });
 
-    if (contentType == CONTENT_TYPES.PROJECT) {
-        headings.push({
-            id: "view-the-project",
-            level: 2,
-            text: "View the Project",
-        });
-    }
-
     return headings;
 };
 
