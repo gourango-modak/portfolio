@@ -10,12 +10,14 @@ import { CONTENT_TYPES } from "../../../config";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { prepareProjectData } from "./../../../components/project/projectUtils";
 import ProjectMetaDataModal from "./../../../components/project/ProjectMetaDataModal";
+import { fetchAllCategories } from "../../../data/categories";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
 
 export const CreateProject = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
     const editorRef = useRef(null);
     const editorJsDataRef = useRef(null);
     const metaDataRef = useRef({});
@@ -36,6 +38,15 @@ export const CreateProject = () => {
             setMetaDataModalOpen(true);
         }
     };
+
+    useEffect(() => {
+        const loadCategories = async () => {
+            const categories = await fetchAllCategories();
+            setCategories(categories);
+        };
+
+        loadCategories();
+    }, []);
 
     // Handle Ctrl+S / Cmd+S save shortcut
     useEffect(() => {
@@ -85,6 +96,7 @@ export const CreateProject = () => {
                 onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
                 initialData={metaDataRef.current}
+                categories={categories}
             />
         </>
     );

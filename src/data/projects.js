@@ -29,7 +29,7 @@ export const fetchProjects = async (page = 1, pageSize = 10, filters = {}) => {
 
         const matchesCategory =
             selectedCategories.length > 0
-                ? selectedCategories.includes(project.category)
+                ? selectedCategories.includes(project.category.name)
                 : true;
 
         return matchesTitle && matchesCategory;

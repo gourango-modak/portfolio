@@ -78,7 +78,7 @@ const generateProjectsManifest = () => {
     const projects = readJsonFiles(folder, manifestFile);
 
     // Collect all categories
-    const allCategories = projects.map((p) => p.category).filter(Boolean);
+    const allCategories = projects.map((p) => p.category.name).filter(Boolean);
     const topCategories = getTopOccurrences(allCategories, 10);
 
     const manifest = {
