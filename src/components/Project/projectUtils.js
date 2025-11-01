@@ -19,7 +19,7 @@ export const prepareProjectData = (editorJsData, metaData) => {
         updatedAt: Date.now(),
         title: title,
         tagline: tagline,
-        technologies: tags,
+        tags: tags,
         slug: buildSlug(title, id),
         status: metaData.status.value,
         category: {

@@ -58,13 +58,13 @@ const ProjectCard = ({ ref, project, onEdit }) => {
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-4">
-                        {project.technologies?.length > 0 &&
-                            project.technologies.map((tech) => (
+                        {project.tags?.length > 0 &&
+                            project.tags.map((tag) => (
                                 <span
                                     key={tech}
                                     className="text-xs font-semibold bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full"
                                 >
-                                    {tech}
+                                    {tag}
                                 </span>
                             ))}
                     </div>

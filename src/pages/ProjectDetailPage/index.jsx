@@ -3,7 +3,7 @@ import { fetchProjectBySlug } from "../../data/projects";
 import TableOfContents from "../../components/tableOfContents/TableOfContents";
 import { extractHeadings } from "../../components/editorJs/editorJsUtils";
 import ResourceLoader from "../../components/common/ResourceLoader";
-import ProjectContent from "./ProjectContent";
+import { ProjectContent } from "./ProjectContent";
 import { CONTENT_TYPES } from "../../config";
 
 const ProjectDetailPage = () => {

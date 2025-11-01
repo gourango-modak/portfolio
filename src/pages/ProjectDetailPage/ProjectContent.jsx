@@ -3,9 +3,9 @@ import EditorJsContentRenderer from "../../components/editorJs/EditorJsContentRe
 import { truncateBreadcrumb } from "../../utils/common";
 import ProjectDetailPageHeader from "./ProjectDetailPageHeader";
 import ProjectLinks from "./ProjectLinks";
-import ProjectTechnologies from "./ProjectTechnologies";
+import { ProjectTags } from "./ProjectTags";
 
-const ProjectContent = ({ project }) => {
+export const ProjectContent = ({ project }) => {
     const crumbs = [
         { to: "/", label: "Home" },
         { to: "/projects", label: "Projects" },
@@ -19,9 +19,7 @@ const ProjectContent = ({ project }) => {
             <EditorJsContentRenderer content={project.content} />
 
             <ProjectLinks liveUrl={project.liveUrl} repoUrl={project.repoUrl} />
-            <ProjectTechnologies technologies={project.technologies} />
+            <ProjectTags tags={project.tags} />
         </div>
     );
 };
-
-export default ProjectContent;
