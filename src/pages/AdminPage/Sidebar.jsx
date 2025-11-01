@@ -66,7 +66,7 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
                 {/* Logo */}
                 <div className="flex items-center px-6 py-4 border-b border-gray-200 flex-shrink-0">
                     <Link to="/" className="text-2xl font-bold text-indigo-600">
-                        Gourango
+                        Gourango.
                     </Link>
                 </div>
 
