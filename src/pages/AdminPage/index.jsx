@@ -53,12 +53,12 @@ const AdminPage = () => {
                 setSidebarOpen={setSidebarOpen}
             />
 
-            <div className="md:hidden fixed top-0 left-0 right-0 z-30 px-8 pb-6 pt-8 bg-white border-b border-gray-200 md:static">
+            <div className="md:hidden fixed top-0 left-0 right-0 z-30 px-6 py-4 bg-white border-b border-gray-200 md:static">
                 <h1 className="text-2xl font-bold text-indigo-600 capitalize">
                     {currentPage}
                 </h1>
             </div>
-            <main className="flex-1 px-9 relative w-full pt-28 pb-10 md:py-9">
+            <main className="flex-1 px-6 md:px-9 relative w-full pt-24 pb-10 md:py-9">
                 <div>{content}</div>
             </main>
         </div>

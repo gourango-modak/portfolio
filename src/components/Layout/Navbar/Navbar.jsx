@@ -23,7 +23,7 @@ const Navbar = () => {
 
                 <DesktopNavbar />
 
-                <div className="md:hidden">
+                <div className="md:hidden flex items-center">
                     <button
                         onClick={toggleMenu}
                         className="text-slate-600 hover:text-indigo-600"
