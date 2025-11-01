@@ -1,31 +1,32 @@
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import EditorJs from "../../components/editorJs/EditorJs";
+import EditorJs from "../../../components/editorJs/EditorJs";
 import {
     getEditorJsInitialData,
     getEditorJsTools,
-} from "../../components/editorJs/editorJsConfig";
-import { downloadJson, getContentFileName } from "../../utils/common";
-import { useNavigate, useParams } from "react-router-dom";
-import { CONTENT_TYPES } from "../../config";
-import PostMetaDataModal from "../../components/post/PostMetaDataModal";
-import { ScrollButtons } from "../../components/common/ScrollButtons";
-import { preparePostData } from "../../components/post/postUtils";
+} from "../../../components/editorJs/editorJsConfig";
+import { downloadJson, getContentFileName } from "../../../utils/common";
+import { useNavigate } from "react-router-dom";
+import { CONTENT_TYPES } from "../../../config";
+import { ScrollButtons } from "../../../components/common/ScrollButtons";
+import { prepareProjectData } from "./../../../components/project/projectUtils";
+import ProjectMetaDataModal from "./../../../components/project/ProjectMetaDataModal";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
 
-export const CreateBlog = () => {
+export const CreateProject = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
     const editorRef = useRef(null);
     const editorJsDataRef = useRef(null);
+    const metaDataRef = useRef({});
     const navigate = useNavigate();
 
     const editorJsTools = useMemo(
-        () => getEditorJsTools(CONTENT_TYPES.BLOG),
+        () => getEditorJsTools(CONTENT_TYPES.PROJECT),
         []
     );
     const editorJsInitData = useMemo(
-        () => getEditorJsInitialData(CONTENT_TYPES.BLOG),
+        () => getEditorJsInitialData(CONTENT_TYPES.PROJECT),
         []
     );
 
@@ -53,10 +54,15 @@ export const CreateBlog = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
-        const newPost = preparePostData(editorJsDataRef.current, meta);
-        downloadJson(newPost, getContentFileName(newPost.id));
+        const newProject = prepareProjectData(editorJsDataRef.current, meta);
+        downloadJson(newProject, getContentFileName(newProject.id));
         setMetaDataModalOpen(false);
-        navigate(-1);
+        navigate("/admin/projects");
+    };
+
+    const handleMetaDataModalClose = (meta) => {
+        metaDataRef.current = meta;
+        setMetaDataModalOpen(false);
     };
 
     return (
@@ -74,10 +80,11 @@ export const CreateBlog = () => {
                 </div>
                 <ScrollButtons />
             </div>
-            <PostMetaDataModal
+            <ProjectMetaDataModal
                 isOpen={isMetaDataModalOpen}
-                onClose={() => setMetaDataModalOpen(false)}
+                onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
+                initialData={metaDataRef.current}
             />
         </>
     );

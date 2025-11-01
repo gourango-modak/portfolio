@@ -4,6 +4,7 @@ import { DashboardPanel } from "./DashboardPanel";
 import { BlogsPanel } from "./BlogsPanel";
 import ToolsPanel from "./ToolsPanel";
 import { useNavigate, useParams } from "react-router-dom";
+import { ProjectsPanel } from "./ProjectsPanel";
 
 const AdminPage = () => {
     const { page } = useParams();
@@ -29,7 +30,7 @@ const AdminPage = () => {
             case "blogs":
                 return <BlogsPanel />;
             case "projects":
-                return <Projects />;
+                return <ProjectsPanel />;
             case "categories":
                 return <Categories />;
             case "tools":
@@ -59,12 +60,6 @@ const AdminPage = () => {
         </div>
     );
 };
-
-const Projects = () => (
-    <div className="text-gray-600">
-        <p>Manage your projects here.</p>
-    </div>
-);
 
 const Categories = () => (
     <div className="text-gray-600">

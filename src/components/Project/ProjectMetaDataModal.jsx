@@ -22,8 +22,8 @@ const ProjectMetaDataModal = ({
     isOpen,
     onClose,
     onSave,
-    onBack,
     initialData = {},
+    title = "Create New Project",
 }) => {
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
@@ -61,12 +61,6 @@ const ProjectMetaDataModal = ({
         }
     };
 
-    const handleBack = () => {
-        setErrors({});
-        setMetaData(defaultMetaData);
-        onBack(metaData);
-    };
-
     const handleSave = () => {
         const validationErrors = validateProjectMetaData(metaData);
         if (Object.keys(validationErrors).length > 0) {
@@ -80,9 +74,7 @@ const ProjectMetaDataModal = ({
     };
 
     const handleClose = () => {
-        onClose();
-        setMetaData(defaultMetaData);
-        setErrors({});
+        onClose(metaData);
     };
 
     return (
@@ -90,15 +82,9 @@ const ProjectMetaDataModal = ({
             isOpen={isOpen}
             onClose={handleClose}
             style={{ width: "w-2xl" }}
-            title={"Create New Project"}
+            title={title}
             footer={
                 <>
-                    <button
-                        onClick={handleBack}
-                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-300"
-                    >
-                        Back
-                    </button>
                     <button
                         onClick={handleSave}
                         className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"

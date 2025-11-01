@@ -10,8 +10,10 @@ import CanvasStudioPage from "./pages/CanvasStudioPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import NotepadPage from "./pages/NotepadPage";
-import { BlogEditor } from "./pages/AdminPage/BlogEditor";
-import { CreateBlog } from "./pages/AdminPage/CreateBlog";
+import { BlogEditor } from "./pages/AdminPage/BlogsPanel/BlogEditor";
+import { CreateBlog } from "./pages/AdminPage/BlogsPanel/CreateBlog";
+import { ProjectEditor } from "./pages/AdminPage/ProjectsPanel/ProjectEditor";
+import { CreateProject } from "./pages/AdminPage/ProjectsPanel/CreateProject";
 
 export const ROUTES = [
     { path: "/", component: HomePage, layout: true },
@@ -43,5 +45,13 @@ export const ROUTES = [
     {
         path: "/admin/:page",
         component: AdminPage,
+    },
+    {
+        path: "/admin/project/:slug",
+        component: ProjectEditor,
+    },
+    {
+        path: "/admin/project",
+        component: CreateProject,
     },
 ];

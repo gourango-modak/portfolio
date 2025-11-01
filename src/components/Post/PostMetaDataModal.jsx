@@ -8,7 +8,13 @@ const defaultMetaData = {
     readTime: "",
 };
 
-const PostMetaDataModal = ({ isOpen, onClose, onSave, initialData }) => {
+const PostMetaDataModal = ({
+    isOpen,
+    onClose,
+    onSave,
+    initialData,
+    title = "Create Post",
+}) => {
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
@@ -45,14 +51,14 @@ const PostMetaDataModal = ({ isOpen, onClose, onSave, initialData }) => {
     };
 
     const handleClose = () => {
-        onClose();
+        onClose(metaData);
     };
 
     return (
         <Modal
             isOpen={isOpen}
             onClose={handleClose}
-            title="Create Post"
+            title={title}
             style={{ width: "w-lg" }}
             footer={
                 <>

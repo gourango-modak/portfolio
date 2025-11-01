@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import EditorJs from "../../components/editorJs/EditorJs";
-import { getEditorJsTools } from "../../components/editorJs/editorJsConfig";
-import { downloadJson, getContentFileName } from "../../utils/common";
-import { fetchPostBySlug } from "../../data/posts";
+import EditorJs from "../../../components/editorJs/EditorJs";
+import { getEditorJsTools } from "../../../components/editorJs/editorJsConfig";
+import { downloadJson, getContentFileName } from "../../../utils/common";
 import { useNavigate, useParams } from "react-router-dom";
-import ResourceLoader from "../../components/common/ResourceLoader";
-import { CONTENT_TYPES } from "../../config";
-import PostMetaDataModal from "../../components/post/PostMetaDataModal";
-import { ScrollButtons } from "../../components/common/ScrollButtons";
+import ResourceLoader from "../../../components/common/ResourceLoader";
+import { CONTENT_TYPES } from "../../../config";
+import { ScrollButtons } from "../../../components/common/ScrollButtons";
+import { fetchProjectBySlug } from "../../../data/projects";
+import ProjectMetaDataModal from "../../../components/project/ProjectMetaDataModal";
 
-export const BlogEditor = () => {
+export const ProjectEditor = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
     const { slug } = useParams();
     const editorRef = useRef(null);
@@ -40,24 +40,24 @@ export const BlogEditor = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
-        const postData = await fetchPostBySlug(slug);
-        const updatedPost = {
-            ...postData,
+        const projectData = await fetchProjectBySlug(slug);
+        const updatedProject = {
+            ...projectData,
             ...meta,
             content: editorJsDataRef.current,
         };
-        downloadJson(updatedPost, getContentFileName(updatedPost.id));
+        downloadJson(updatedProject, getContentFileName(updatedProject.id));
         setMetaDataModalOpen(false);
-        navigate(-1);
+        navigate("/admin/projects");
     };
 
     return (
         <ResourceLoader
             id={slug}
-            fetchFn={fetchPostBySlug}
-            loadingMessage="Fetching post data..."
+            fetchFn={fetchProjectBySlug}
+            loadingMessage="Fetching project data..."
         >
-            {(post) => {
+            {(project) => {
                 return (
                     <>
                         <div className="max-w-6xl mx-auto lg:px-4 pt-2 relative">
@@ -66,20 +66,21 @@ export const BlogEditor = () => {
                                     <EditorJs
                                         ref={editorRef}
                                         onSave={handleDataAfterSave}
-                                        initialData={post.content}
+                                        initialData={project.content}
                                         tools={getEditorJsTools(
-                                            CONTENT_TYPES.BLOG
+                                            CONTENT_TYPES.PROJECT
                                         )}
                                     />
                                 </div>
                             </div>
                             <ScrollButtons />
                         </div>
-                        <PostMetaDataModal
+                        <ProjectMetaDataModal
                             isOpen={isMetaDataModalOpen}
                             onClose={() => setMetaDataModalOpen(false)}
                             onSave={saveMetaData}
-                            initialData={post}
+                            initialData={project}
+                            title="Edit Project"
                         />
                     </>
                 );

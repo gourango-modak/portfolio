@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { Plus } from "lucide-react";
-import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
-import { SearchBar } from "../../../components/common/SearchBar";
 import InfiniteScroll from "./../../../components/common/InfiniteScroll";
-import { fetchPosts } from "../../../data/posts";
-import PostCard from "../../../components/post/PostCard";
 import { useNavigate } from "react-router-dom";
+import { SearchBar } from "../../../components/common/SearchBar";
+import { fetchProjects } from "./../../../data/projects";
+import ProjectCard from "./../../../components/project/ProjectCard";
+import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
 
-export const BlogsPanel = () => {
+export const ProjectsPanel = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -26,7 +26,7 @@ export const BlogsPanel = () => {
 
     const fetchData = useCallback(
         (page, limit) =>
-            fetchPosts(page, limit, {
+            fetchProjects(page, limit, {
                 searchTerm,
                 selectedTags,
                 selectedCategories,
@@ -34,12 +34,12 @@ export const BlogsPanel = () => {
         [searchTerm, selectedCategories, selectedTags]
     );
 
-    const handleEdit = (post) => {
-        navigate(`/admin/blog/${post.slug}`);
+    const handleEdit = (project) => {
+        navigate(`/admin/project/${project.slug}`);
     };
 
-    const handleCreateNewPost = () => {
-        navigate("/admin/blog");
+    const handleCreateNewProject = () => {
+        navigate("/admin/project");
     };
 
     return (
@@ -66,7 +66,7 @@ export const BlogsPanel = () => {
                     <button
                         className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
                         flex items-center gap-2 justify-center"
-                        onClick={handleCreateNewPost}
+                        onClick={handleCreateNewProject}
                     >
                         <Plus size={18} /> Create
                     </button>
@@ -77,8 +77,12 @@ export const BlogsPanel = () => {
                     "-"
                 )}-${selectedTags.join("-")}`} // force remount on filter change
                 fetchData={fetchData}
-                renderItem={(post) => (
-                    <PostCard key={post.id} post={post} onEdit={handleEdit} />
+                renderItem={(project) => (
+                    <ProjectCard
+                        key={project.id}
+                        project={project}
+                        onEdit={handleEdit}
+                    />
                 )}
                 limit={10}
                 containerClass="grid grid-cols-1 xl:grid-cols-2 gap-4"
