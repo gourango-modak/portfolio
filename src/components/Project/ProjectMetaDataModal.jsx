@@ -4,7 +4,7 @@ import { InputField } from "../common/InputField";
 import Dropdown from "../common/Dropdown";
 import { validateProjectMetaData } from "./projectUtils";
 import { getCategoryOptions } from "../category/utils";
-import { CONTENT_STATUSES } from "../../config";
+import { CONTENT_STATUSES_OPTIONS } from "../../config";
 
 const defaultMetaData = {
     description: "",
@@ -128,7 +128,7 @@ const ProjectMetaDataModal = ({
                 <Dropdown
                     label="Status"
                     name="status"
-                    options={CONTENT_STATUSES}
+                    options={CONTENT_STATUSES_OPTIONS}
                     onChange={handleDropdownChange}
                     selected={metaData.status}
                     error={errors.status}

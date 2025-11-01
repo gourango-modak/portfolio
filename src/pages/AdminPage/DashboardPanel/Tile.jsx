@@ -4,14 +4,12 @@ export const Tile = ({ title, count, icon, color = "indigo" }) => {
 
     return (
         <div className="relative p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 bg-white flex items-center justify-between">
-            {/* Icon Circle */}
             <div
                 className={`w-12 h-12 flex items-center justify-center rounded-full ${iconBg} ${iconColor}`}
             >
                 {icon}
             </div>
 
-            {/* Info */}
             <div className="ml-4 flex-1">
                 <h4 className="text-base font-medium text-gray-500">{title}</h4>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{count}</p>

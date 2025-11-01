@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
 import { validatePostMetaData } from "./postUtils";
+import { CONTENT_STATUSES, CONTENT_STATUSES_OPTIONS } from "../../config";
+import Dropdown from "../common/Dropdown";
 
 const defaultMetaData = {
     description: "",
     readTime: "",
+    status: "",
 };
 
 const PostMetaDataModal = ({
@@ -35,6 +38,18 @@ const PostMetaDataModal = ({
 
         // clear error if value entered
         if (value.trim() !== "") {
+            setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
+
+    const handleDropdownChange = ({ name, value }) => {
+        setMetaData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        // clear error if value entered
+        if (value?.toString().trim() !== "") {
             setErrors((prev) => ({ ...prev, [name]: "" }));
         }
     };
@@ -71,6 +86,14 @@ const PostMetaDataModal = ({
                 </>
             }
         >
+            <Dropdown
+                label="Status"
+                name="status"
+                options={CONTENT_STATUSES_OPTIONS}
+                onChange={handleDropdownChange}
+                selected={metaData.status}
+                error={errors.status}
+            />
             <InputField
                 label="Short Description"
                 name="description"

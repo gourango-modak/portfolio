@@ -40,18 +40,21 @@ const Dropdown = ({
     };
 
     return (
-        <div className="relative mb-4" ref={dropdownRef}>
+        <div className="relative mb-4">
             {label && (
                 <DropdownLabel label={label} required={required} name={name} />
             )}
-            <DropdownButton
-                name={name}
-                selected={selected}
-                placeholder={placeholder}
-                error={error}
-                isOpen={isOpen}
-                toggleDropdown={toggleDropdown}
-            />
+            <div ref={dropdownRef}>
+                <DropdownButton
+                    name={name}
+                    selected={selected}
+                    placeholder={placeholder}
+                    error={error}
+                    isOpen={isOpen}
+                    toggleDropdown={toggleDropdown}
+                />
+            </div>
+
             {isOpen && (
                 <DropdownList
                     options={options}
@@ -67,10 +70,7 @@ const Dropdown = ({
 
 /** Label subcomponent */
 const DropdownLabel = ({ label, required, name }) => (
-    <label
-        className="block mb-2 text-sm font-medium text-gray-700"
-        htmlFor={name}
-    >
+    <label className="block mb-2 text-sm font-medium text-gray-700">
         {label} {required && <span className="text-red-500">*</span>}
     </label>
 );

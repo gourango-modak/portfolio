@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { Plus } from "lucide-react";
 import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
 import { SearchBar } from "../../../components/common/SearchBar";
 import InfiniteScroll from "./../../../components/common/InfiniteScroll";
@@ -7,12 +6,14 @@ import { fetchPosts, fetchPostTags } from "../../../data/posts";
 import PostCard from "../../../components/post/PostCard";
 import { useNavigate } from "react-router-dom";
 import { fetchAllCategories } from "../../../data/categories";
+import { CONTENT_STATUSES } from "../../../config";
 
 export const BlogsPanel = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
+    const [selectedStatuses, setSelectedStatuses] = useState([]);
 
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
@@ -38,17 +39,16 @@ export const BlogsPanel = () => {
                 searchTerm,
                 selectedTags,
                 selectedCategories,
+                selectedStatuses,
             }),
-        [searchTerm, selectedCategories, selectedTags]
+        [searchTerm, selectedCategories, selectedTags, selectedStatuses]
     );
 
     const handleEdit = (post) => {
         navigate(`/admin/blog/${post.slug}`);
     };
 
-    const handleCreateNewPost = () => {
-        navigate("/admin/blog");
-    };
+    const statuses = [CONTENT_STATUSES.IN_PROGRESS, CONTENT_STATUSES.COMPLETED];
 
     return (
         <div className="flex flex-col gap-6">
@@ -56,9 +56,9 @@ export const BlogsPanel = () => {
                 <SearchBar
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search by title or author..."
+                    placeholder="Search by blog title..."
                 />
-                <div className="flex flex-col md:flex-row gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <MultiSelectDropdown
                         label="Categories"
                         options={categories}
@@ -71,13 +71,12 @@ export const BlogsPanel = () => {
                         selectedOptions={selectedTags}
                         setSelectedOptions={setSelectedTags}
                     />
-                    <button
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
-                        flex items-center gap-2 justify-center"
-                        onClick={handleCreateNewPost}
-                    >
-                        <Plus size={18} /> Create
-                    </button>
+                    <MultiSelectDropdown
+                        label="Statuses"
+                        options={statuses}
+                        selectedOptions={selectedStatuses}
+                        setSelectedOptions={setSelectedStatuses}
+                    />
                 </div>
             </div>
             <InfiniteScroll

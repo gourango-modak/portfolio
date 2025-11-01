@@ -1,5 +1,5 @@
 import { PenSquare, PenTool, PlusSquare, Type } from "lucide-react";
-import { ToolCard } from "../../../components/common/ToolCard";
+import { ToolCard } from "../../components/common/ToolCard";
 
 const tools = [
     {

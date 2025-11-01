@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import { Plus } from "lucide-react";
-import InfiniteScroll from "./../../../components/common/InfiniteScroll";
-import { SearchBar } from "../../../components/common/SearchBar";
-import { fetchCategories } from "../../../data/categories";
-import { prepareCategoryData } from "../../../components/category/utils";
-import { downloadJson, getContentFileName } from "../../../utils/common";
-import { CategoryCard } from "../../../components/category/CategoryCard";
-import { CategoryModal } from "../../../components/category/CategoryModal";
+import InfiniteScroll from "../../components/common/InfiniteScroll";
+import { SearchBar } from "../../components/common/SearchBar";
+import { fetchCategories } from "../../data/categories";
+import { prepareCategoryData } from "../../components/category/utils";
+import { downloadJson, getContentFileName } from "../../utils/common";
+import { CategoryCard } from "../../components/category/CategoryCard";
+import { CategoryModal } from "../../components/category/CategoryModal";
 
 export const CategoriesPanel = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -54,7 +54,7 @@ export const CategoriesPanel = () => {
                     <SearchBar
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="Search by title or author..."
+                        placeholder="Search by name..."
                     />
                     <div className="flex flex-col md:flex-row gap-4">
                         <button

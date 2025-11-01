@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { Plus } from "lucide-react";
 import InfiniteScroll from "./../../../components/common/InfiniteScroll";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../../../components/common/SearchBar";
@@ -7,12 +6,14 @@ import { fetchProjects, fetchProjectTags } from "./../../../data/projects";
 import ProjectCard from "./../../../components/project/ProjectCard";
 import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
 import { fetchAllCategories } from "../../../data/categories";
+import { CONTENT_STATUSES } from "../../../config";
 
 export const ProjectsPanel = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
+    const [selectedStatuses, setSelectedStatuses] = useState([]);
 
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
@@ -38,17 +39,16 @@ export const ProjectsPanel = () => {
                 searchTerm,
                 selectedTags,
                 selectedCategories,
+                selectedStatuses,
             }),
-        [searchTerm, selectedCategories, selectedTags]
+        [searchTerm, selectedCategories, selectedTags, selectedStatuses]
     );
 
     const handleEdit = (project) => {
         navigate(`/admin/project/${project.slug}`);
     };
 
-    const handleCreateNewProject = () => {
-        navigate("/admin/project");
-    };
+    const statuses = [CONTENT_STATUSES.IN_PROGRESS, CONTENT_STATUSES.COMPLETED];
 
     return (
         <div className="flex flex-col gap-6">
@@ -56,7 +56,7 @@ export const ProjectsPanel = () => {
                 <SearchBar
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search by title or author..."
+                    placeholder="Search by project title..."
                 />
                 <div className="flex flex-col md:flex-row gap-4">
                     <MultiSelectDropdown
@@ -71,13 +71,12 @@ export const ProjectsPanel = () => {
                         selectedOptions={selectedTags}
                         setSelectedOptions={setSelectedTags}
                     />
-                    <button
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
-                        flex items-center gap-2 justify-center"
-                        onClick={handleCreateNewProject}
-                    >
-                        <Plus size={18} /> Create
-                    </button>
+                    <MultiSelectDropdown
+                        label="Statuses"
+                        options={statuses}
+                        selectedOptions={selectedStatuses}
+                        setSelectedOptions={setSelectedStatuses}
+                    />
                 </div>
             </div>
             <InfiniteScroll

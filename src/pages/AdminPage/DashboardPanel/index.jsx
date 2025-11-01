@@ -23,38 +23,32 @@ export const DashboardPanel = () => {
         {
             title: "Total Blogs",
             count: getTotalPostsCount(),
-            icon: <FileText size={32} />, // 📰 for articles/blogs
-            color: "indigo",
+            icon: <FileText size={32} />,
         },
         {
             title: "Total Projects",
             count: getTotalProjectsCount(),
-            icon: <Layers size={32} />, // 🧩 stacked layers = projects/components
-            color: "green",
+            icon: <Layers size={32} />,
         },
         {
             title: "Total Categories",
             count: getTotalCategoriesCount(),
-            icon: <FolderTree size={32} />, // 🗂️ hierarchical structure for categories
-            color: "amber",
+            icon: <FolderTree size={32} />,
         },
         {
             title: "Total Tags",
             count: getTotalTagsCount(),
-            icon: <Tags size={32} />, // 🏷️ perfect for tags
-            color: "yellow",
+            icon: <Tags size={32} />,
         },
         {
             title: "Total In Progress Posts",
             count: getInProgressPostsCount(),
-            icon: <Clock size={32} />, // ⏳ indicates ongoing work
-            color: "pink",
+            icon: <Clock size={32} />,
         },
         {
             title: "Total In Progress Projects",
             count: getInProgressProjectsCount(),
-            icon: <Hammer size={32} />, // 🔨 "under construction" vibe
-            color: "rose",
+            icon: <Hammer size={32} />,
         },
     ];
 
@@ -66,7 +60,6 @@ export const DashboardPanel = () => {
                     title={tile.title}
                     count={tile.count}
                     icon={tile.icon}
-                    color={tile.color}
                 />
             ))}
         </div>
