@@ -10,7 +10,7 @@ const ProjectDetailPage = () => {
     const { slug } = useParams();
 
     return (
-        <section className="pt-30 min-h-screen bg-gray-50/50 pb-24">
+        <section className="pt-24 md:pt-30 min-h-screen bg-gray-50/50 pb-24">
             <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
                 <ResourceLoader
                     id={slug}

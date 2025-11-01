@@ -13,7 +13,7 @@ const PostDetailPage = () => {
     const { slug } = useParams();
 
     return (
-        <section className="pt-24 min-h-screen pb-20 bg-gray-50/50">
+        <section className="pt-24 md:pt-30 min-h-screen pb-20 bg-gray-50/50">
             <ResourceLoader
                 id={slug}
                 fetchFn={fetchPostBySlug}
