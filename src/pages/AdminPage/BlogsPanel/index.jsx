@@ -35,7 +35,11 @@ export const BlogsPanel = () => {
     );
 
     const handleEdit = (post) => {
-        navigate(`/admin/blogeditor/${post.slug}`);
+        navigate(`/admin/blog/${post.slug}`);
+    };
+
+    const handleCreateNewPost = () => {
+        navigate("/admin/blog");
     };
 
     return (
@@ -60,8 +64,9 @@ export const BlogsPanel = () => {
                         setSelectedOptions={setSelectedTags}
                     />
                     <button
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 justify-center"
-                        onClick={() => console.log("clicked")}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
+                        flex items-center gap-2 justify-center"
+                        onClick={handleCreateNewPost}
                     >
                         <Plus size={18} /> Create
                     </button>

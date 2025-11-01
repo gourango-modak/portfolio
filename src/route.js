@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import NotepadPage from "./pages/NotepadPage";
 import { BlogEditor } from "./pages/AdminPage/BlogEditor";
+import { CreateBlog } from "./pages/AdminPage/CreateBlog";
 
 export const ROUTES = [
     { path: "/", component: HomePage, layout: true },
@@ -32,8 +33,12 @@ export const ROUTES = [
     { path: "/login", component: LoginPage },
     { path: "/admin", component: AdminPage },
     {
-        path: "/admin/blogeditor/:slug",
+        path: "/admin/blog/:slug",
         component: BlogEditor,
+    },
+    {
+        path: "/admin/blog",
+        component: CreateBlog,
     },
     {
         path: "/admin/:page",
