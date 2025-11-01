@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { DashboardPanel } from "./DashboardPanel";
 import { BlogsPanel } from "./BlogsPanel";
@@ -15,6 +15,12 @@ const AdminPage = () => {
     const handleNav = (newPage) => {
         navigate(`/admin/${newPage}`);
     };
+
+    useEffect(() => {
+        if (page) {
+            navigate(`/admin/${page}`);
+        }
+    }, [page]);
 
     const renderContent = () => {
         switch (currentPage) {
