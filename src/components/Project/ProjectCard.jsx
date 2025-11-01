@@ -42,7 +42,7 @@ const ProjectCard = ({ ref, project, onEdit }) => {
                         {project.updatedAt &&
                         project.updatedAt !== project.createdAt
                             ? `Last Updated on ${formatDate(project.updatedAt)}`
-                            : `Published on ${formatDate(project.startDate)}`}
+                            : `Published on ${formatDate(project.createdAt)}`}
                     </p>
 
                     <h3 className="text-xl font-bold mb-2 text-slate-900">
