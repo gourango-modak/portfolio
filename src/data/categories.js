@@ -68,3 +68,11 @@ export const fetchCategoryById = async (id) => {
 
     return await res.json();
 };
+
+/**
+ * get total categories count
+ */
+export const getTotalCategoriesCount = async () => {
+    const manifest = await getCategoryManifest();
+    return manifest.totalCategories || 0;
+};

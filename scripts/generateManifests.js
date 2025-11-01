@@ -3,6 +3,7 @@ import path from "path";
 import {
     CATEGORY_FILES_BASE_URL,
     CATEGORY_MANIFEST_FILE_NAME,
+    CONTENT_STATUSES,
     POST_FILES_BASE_URL,
     POST_TAGS_MANIFEST_FILE_NAME,
     POSTS_MANIFEST_FILE_NAME,
@@ -47,10 +48,15 @@ const generatePostsManifest = () => {
     // Collect all tags
     const allTags = posts.flatMap((post) => post.tags || []);
     const topTags = getTopOccurrences(allTags, 10);
+    // Count in-progress posts
+    const totalInProgressPosts = posts.filter(
+        (post) => post.status?.toLowerCase() === CONTENT_STATUSES.IN_PROGRESS
+    ).length;
 
     const manifest = {
         totalPosts: posts.length,
         topTags,
+        totalInProgressPosts,
         posts: posts.map((p) => {
             return {
                 title: p.title,
@@ -60,6 +66,7 @@ const generatePostsManifest = () => {
                 slug: p.slug,
                 createdAt: p.createdAt,
                 id: p.id,
+                status: p.status,
             };
         }),
     };
@@ -82,10 +89,16 @@ const generateProjectsManifest = () => {
     // Collect all categories
     const allCategories = projects.map((p) => p.category?.name).filter(Boolean);
     const topCategories = getTopOccurrences(allCategories, 10);
+    // Count in-progress projects
+    const totalInProgressProjects = projects.filter(
+        (project) =>
+            project.status?.toLowerCase() === CONTENT_STATUSES.IN_PROGRESS
+    ).length;
 
     const manifest = {
         totalProjects: projects.length,
         topCategories,
+        totalInProgressProjects,
         projects: projects.map((p) => {
             return {
                 title: p.title,
@@ -95,6 +108,7 @@ const generateProjectsManifest = () => {
                 slug: p.slug,
                 createdAt: p.createdAt,
                 id: p.id,
+                status: p.status,
             };
         }),
     };

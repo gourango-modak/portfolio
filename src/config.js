@@ -30,6 +30,19 @@ export const CONTENT_TYPES = {
     PROJECT: "project",
 };
 
+export const CONTENT_STATUSES = {
+    IN_PROGRESS: "In progress",
+    COMPLETED: "Completed",
+};
+
+export const CONTENT_STATUSES_OPTIONS = [
+    {
+        label: CONTENT_STATUSES.IN_PROGRESS,
+        value: CONTENT_STATUSES.IN_PROGRESS,
+    },
+    { label: CONTENT_STATUSES.COMPLETED, value: CONTENT_STATUSES.COMPLETED },
+];
+
 export const NAV_LINKS = [
     { to: "/projects", label: "Projects" },
     { to: "/blog", label: "Blog" },

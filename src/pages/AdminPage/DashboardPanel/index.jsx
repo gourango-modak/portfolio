@@ -1,31 +1,60 @@
-import { FileText, Layers, Activity, PieChart } from "lucide-react";
+import {
+    FileText,
+    Layers,
+    FolderTree,
+    Tags,
+    Clock,
+    Hammer,
+} from "lucide-react";
 import { Tile } from "./Tile";
+import {
+    getTotalPostsCount,
+    getInProgressPostsCount,
+} from "../../../data/posts";
+import {
+    getTotalProjectsCount,
+    getInProgressProjectsCount,
+} from "../../../data/projects";
+import { getTotalCategoriesCount } from "../../../data/categories";
+import { getTotalTagsCount } from "../../../data/utils";
 
 export const DashboardPanel = () => {
     const tiles = [
         {
             title: "Total Blogs",
-            count: 25,
-            icon: <FileText size={32} />,
+            count: getTotalPostsCount(),
+            icon: <FileText size={32} />, // 📰 for articles/blogs
             color: "indigo",
         },
         {
             title: "Total Projects",
-            count: 12,
-            icon: <Layers size={32} />,
+            count: getTotalProjectsCount(),
+            icon: <Layers size={32} />, // 🧩 stacked layers = projects/components
             color: "green",
         },
         {
-            title: "Categories",
-            count: 8,
-            icon: <PieChart size={32} />,
+            title: "Total Categories",
+            count: getTotalCategoriesCount(),
+            icon: <FolderTree size={32} />, // 🗂️ hierarchical structure for categories
+            color: "amber",
+        },
+        {
+            title: "Total Tags",
+            count: getTotalTagsCount(),
+            icon: <Tags size={32} />, // 🏷️ perfect for tags
             color: "yellow",
         },
         {
-            title: "In Progress",
-            count: 5,
-            icon: <Activity size={32} />,
+            title: "Total In Progress Posts",
+            count: getInProgressPostsCount(),
+            icon: <Clock size={32} />, // ⏳ indicates ongoing work
             color: "pink",
+        },
+        {
+            title: "Total In Progress Projects",
+            count: getInProgressProjectsCount(),
+            icon: <Hammer size={32} />, // 🔨 "under construction" vibe
+            color: "rose",
         },
     ];
 

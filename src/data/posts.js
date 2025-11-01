@@ -100,3 +100,27 @@ export const fetchPostTags = async () => {
     const manifest = await getPostTagsManifest();
     return manifest.tags || [];
 };
+
+/**
+ * get total posts count
+ */
+export const getTotalPostsCount = async () => {
+    const manifest = await getPostManifest();
+    return manifest.totalPosts || 0;
+};
+
+/**
+ * get post tags count
+ */
+export const getTotalPostTagsCount = async () => {
+    const manifest = await getPostTagsManifest();
+    return manifest.totalTags || 0;
+};
+
+/**
+ * get in-progress status posts count
+ */
+export const getInProgressPostsCount = async () => {
+    const manifest = await getPostManifest();
+    return manifest.totalInProgressPosts || 0;
+};

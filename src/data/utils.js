@@ -1,5 +1,7 @@
 import { SIMULATE_API_DELAY_SEC } from "../config";
 import { delay } from "../utils/common";
+import { getTotalPostTagsCount } from "./posts";
+import { getTotalProjectTagsCount } from "./projects";
 
 // A mock API to simulate fetching data with filter
 export const fetchItems = (page, limit, filter = {}) => {
@@ -47,4 +49,10 @@ export const fetchData = async (url) => {
     }
 
     return await fetch(url);
+};
+
+export const getTotalTagsCount = async () => {
+    const postTagsCount = await getTotalPostTagsCount();
+    const projectTagsCount = await getTotalProjectTagsCount();
+    return postTagsCount + projectTagsCount;
 };

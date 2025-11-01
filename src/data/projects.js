@@ -113,3 +113,27 @@ export const fetchProjectTags = async () => {
     const manifest = await getProjectTagsManifest();
     return manifest.tags || [];
 };
+
+/**
+ * get total projects count
+ */
+export const getTotalProjectsCount = async () => {
+    const manifest = await getProjectManifest();
+    return manifest.totalProjects || 0;
+};
+
+/**
+ * get project tags count
+ */
+export const getTotalProjectTagsCount = async () => {
+    const manifest = await getProjectTagsManifest();
+    return manifest.totalTags || 0;
+};
+
+/**
+ * get in-progress status projects count
+ */
+export const getInProgressProjectsCount = async () => {
+    const manifest = await getProjectManifest();
+    return manifest.totalInProgressProjects || 0;
+};
