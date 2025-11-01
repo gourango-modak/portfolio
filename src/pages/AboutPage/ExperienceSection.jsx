@@ -9,21 +9,33 @@ const EXPERIENCE_DATA = [
         period: "2021 - Present",
         responsibilities: [
             <>
-                Develop and maintain robust web applications using{" "}
+                Designed and developed{" "}
                 <span className="font-semibold text-slate-700">
-                    ASP.NET Core, C#
+                    robust web applications
                 </span>{" "}
-                and modern front-end frameworks.
-            </>,
-            <>
-                Develop and maintain robust desktop applications using{" "}
+                using{" "}
                 <span className="font-semibold text-slate-700">
-                    Winform, C++, MFC
-                </span>
-                .
+                    ASP.NET Core and modern front-end frameworks
+                </span>{" "}
+                , delivering high-quality, maintainable code.
             </>,
             <>
-                Design and manage scalable databases with{" "}
+                Built and maintained{" "}
+                <span className="font-semibold text-slate-700">
+                    desktop applications
+                </span>{" "}
+                leveraging{" "}
+                <span className="font-semibold text-slate-700">
+                    WinForms, C++, and MFC
+                </span>{" "}
+                , enhancing legacy system performance and usability.
+            </>,
+            <>
+                Architected and optimized{" "}
+                <span className="font-semibold text-slate-700">
+                    scalable database solutions
+                </span>{" "}
+                with{" "}
                 <span className="font-semibold text-slate-700">
                     MS SQL Server
                 </span>{" "}
@@ -31,10 +43,30 @@ const EXPERIENCE_DATA = [
                 <span className="font-semibold text-slate-700">
                     Entity Framework Core
                 </span>
-                .
+                , improving query efficiency and data integrity.
             </>,
-            "Collaborate with cross-functional teams to define, design, and ship new features.",
-            "Lead code reviews and mentor junior engineers to uphold code quality standards.",
+            <>
+                Collaborated with cross-functional teams to{" "}
+                <span className="font-semibold text-slate-700">
+                    define, design, and implement new features
+                </span>
+                , ensuring alignment with business requirements.
+            </>,
+            <>
+                <span className="font-semibold text-slate-700">
+                    Led code reviews
+                </span>
+                and mentored junior engineers, establishing best practices and
+                raising overall code quality across projects.
+            </>,
+            <>
+                Implemented{" "}
+                <span className="font-semibold text-slate-700">
+                    performance improvements and bug fixes
+                </span>
+                , contributing to a more stable and responsive software
+                environment.
+            </>,
         ],
     },
     {
@@ -43,20 +75,40 @@ const EXPERIENCE_DATA = [
         period: "2021 - 2021",
         responsibilities: [
             <>
-                Developed standalone applications using{" "}
+                Developed{" "}
+                <span className="font-semibold text-slate-700">
+                    standalone Java applications
+                </span>{" "}
+                using{" "}
                 <span className="font-semibold text-slate-700">
                     Spring Boot
-                </span>{" "}
-                in Java.
+                </span>
+                , following best practices for modular and scalable design.
             </>,
             <>
                 Designed and implemented{" "}
                 <span className="font-semibold text-slate-700">
                     RESTful APIs
-                </span>{" "}
-                to serve data efficiently.
+                </span>
+                , enabling efficient data flow between back-end services and
+                front-end clients.
             </>,
-            "Worked with Microservices Architecture for modular and scalable applications.",
+            <>
+                Gained hands-on experience with{" "}
+                <span className="font-semibold text-slate-700">
+                    microservices architecture
+                </span>
+                , supporting modular, maintainable, and scalable application
+                development.
+            </>,
+            <>
+                Participated in team{" "}
+                <span className="font-semibold text-slate-700">
+                    code reviews and collaborative planning
+                </span>
+                , gaining foundational experience in agile development
+                processes.
+            </>,
         ],
     },
 ];
