@@ -11,9 +11,15 @@ export const POST_FILES_BASE_URL = `${BASE_URL}/blogs`;
 export const POSTS_MANIFEST_FILE_NAME = "posts-manifest.json";
 export const POSTS_MANIFEST_FILE_URL = `${BASE_URL}/blogs/${POSTS_MANIFEST_FILE_NAME}`;
 
+export const POST_TAGS_MANIFEST_FILE_NAME = "post-tags-manifest.json";
+export const POST_TAGS_MANIFEST_FILE_URL = `${BASE_URL}/blogs/${POST_TAGS_MANIFEST_FILE_NAME}`;
+
 export const PROJECT_FILES_BASE_URL = `${BASE_URL}/projects`;
 export const PROJECTS_MANIFEST_FILE_NAME = "projects-manifest.json";
 export const PROJECT_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECTS_MANIFEST_FILE_NAME}`;
+
+export const PROJECT_TAGS_MANIFEST_FILE_NAME = "project-tags-manifest.json";
+export const PROJECT_TAGS_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECT_TAGS_MANIFEST_FILE_NAME}`;
 
 export const CATEGORY_FILES_BASE_URL = `${BASE_URL}/categories`;
 export const CATEGORY_MANIFEST_FILE_NAME = "categories-manifest.json";

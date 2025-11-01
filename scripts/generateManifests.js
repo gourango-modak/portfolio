@@ -4,17 +4,19 @@ import {
     CATEGORY_FILES_BASE_URL,
     CATEGORY_MANIFEST_FILE_NAME,
     POST_FILES_BASE_URL,
+    POST_TAGS_MANIFEST_FILE_NAME,
     POSTS_MANIFEST_FILE_NAME,
     PROJECT_FILES_BASE_URL,
+    PROJECT_TAGS_MANIFEST_FILE_NAME,
     PROJECTS_MANIFEST_FILE_NAME,
 } from "../src/config.js";
 
 // Helper function to read JSON files from a folder
-const readJsonFiles = (folderPath, excludeFile) => {
+const readJsonFiles = (folderPath) => {
     const dir = path.resolve(folderPath);
     const files = fs
         .readdirSync(dir)
-        .filter((f) => f.endsWith(".json") && f !== excludeFile);
+        .filter((f) => f.endsWith(".json") && !f.includes("manifest"));
 
     return files.map((file) => {
         const content = fs.readFileSync(path.join(dir, file), "utf-8");
@@ -40,7 +42,7 @@ const getTopOccurrences = (arr, topN = 10) => {
 const generatePostsManifest = () => {
     const folder = "public/data/blogs";
     const manifestFile = POSTS_MANIFEST_FILE_NAME;
-    const posts = readJsonFiles(folder, manifestFile);
+    const posts = readJsonFiles(folder);
 
     // Collect all tags
     const allTags = posts.flatMap((post) => post.tags || []);
@@ -75,10 +77,10 @@ const generatePostsManifest = () => {
 const generateProjectsManifest = () => {
     const folder = "public/data/projects";
     const manifestFile = PROJECTS_MANIFEST_FILE_NAME;
-    const projects = readJsonFiles(folder, manifestFile);
+    const projects = readJsonFiles(folder);
 
     // Collect all categories
-    const allCategories = projects.map((p) => p.category.name).filter(Boolean);
+    const allCategories = projects.map((p) => p.category?.name).filter(Boolean);
     const topCategories = getTopOccurrences(allCategories, 10);
 
     const manifest = {
@@ -110,7 +112,8 @@ const generateProjectsManifest = () => {
 const generateCategoriesManifest = () => {
     const folder = "public/data/categories";
     const manifestFile = CATEGORY_MANIFEST_FILE_NAME;
-    const categories = readJsonFiles(folder, manifestFile);
+    const categories = readJsonFiles(folder);
+    console.log(categories);
 
     const manifest = {
         totalCategories: categories.length,
@@ -132,7 +135,61 @@ const generateCategoriesManifest = () => {
     );
 };
 
+// Generate project tags manifest
+const generateProjectTagsManifest = () => {
+    const folder = "public/data/projects";
+    const manifestFile = PROJECT_TAGS_MANIFEST_FILE_NAME;
+    const projects = readJsonFiles(folder);
+
+    // Extract all tags from all projects, flatten, and remove duplicates
+    const allTags = projects
+        .map((p) => p.tags || []) // ensure it's always an array
+        .flat() // flatten nested arrays
+        .map((tag) => tag.trim().toLowerCase()) // normalize case/spacing
+        .filter((tag, index, self) => tag && self.indexOf(tag) === index); // unique + non-empty
+
+    const manifest = {
+        totalTags: allTags.length,
+        tags: allTags,
+    };
+
+    fs.writeFileSync(
+        path.join(folder, manifestFile),
+        JSON.stringify(manifest, null, 2)
+    );
+    console.log(
+        `✅ Generated project tags manifest with ${allTags.length} tags`
+    );
+};
+
+// Generate post tags manifest
+const generatePostTagsManifest = () => {
+    const folder = "public/data/blogs";
+    const manifestFile = POST_TAGS_MANIFEST_FILE_NAME;
+    const posts = readJsonFiles(folder);
+
+    // Extract all tags from all projects, flatten, and remove duplicates
+    const allTags = posts
+        .map((p) => p.tags || []) // ensure it's always an array
+        .flat() // flatten nested arrays
+        .map((tag) => tag.trim().toLowerCase()) // normalize case/spacing
+        .filter((tag, index, self) => tag && self.indexOf(tag) === index); // unique + non-empty
+
+    const manifest = {
+        totalTags: allTags.length,
+        tags: allTags,
+    };
+
+    fs.writeFileSync(
+        path.join(folder, manifestFile),
+        JSON.stringify(manifest, null, 2)
+    );
+    console.log(`✅ Generated post tags manifest with ${allTags.length} tags`);
+};
+
 // Run generators
 generatePostsManifest();
+generatePostTagsManifest();
 generateProjectsManifest();
+generateProjectTagsManifest();
 generateCategoriesManifest();

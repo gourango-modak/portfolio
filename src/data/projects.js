@@ -1,8 +1,14 @@
-import { PROJECT_MANIFEST_FILE_URL } from "../config";
+import {
+    PROJECT_MANIFEST_FILE_URL,
+    PROJECT_TAGS_MANIFEST_FILE_URL,
+} from "../config";
 import { fetchData } from "./utils";
 
-// Cache manifest in memory
+// Cache project manifest in memory
 let cachedProjectManifest = null;
+
+// Cache project tags manifest in memory
+let cachedProjectTagsManifest = null;
 
 /**
  * Fetch the projects manifest file and cache it
@@ -87,4 +93,23 @@ export const fetchProjectByUrl = async (url) => {
     }
 
     return await res.json();
+};
+
+/**
+ * Fetch the project tags manifest file and cache it
+ */
+const getProjectTagsManifest = async () => {
+    if (!cachedProjectTagsManifest) {
+        const res = await fetchData(PROJECT_TAGS_MANIFEST_FILE_URL);
+        cachedProjectTagsManifest = await res.json();
+    }
+    return cachedProjectTagsManifest;
+};
+
+/**
+ * Fetch all project tags
+ */
+export const fetchProjectTags = async () => {
+    const manifest = await getProjectTagsManifest();
+    return manifest.tags || [];
 };

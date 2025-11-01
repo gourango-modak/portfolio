@@ -1,8 +1,14 @@
-import { POSTS_MANIFEST_FILE_URL } from "../config";
+import {
+    POST_TAGS_MANIFEST_FILE_URL,
+    POSTS_MANIFEST_FILE_URL,
+} from "../config";
 import { fetchData } from "./utils";
 
-// Cache manifest in memory
+// Cache post manifest in memory
 let cachedPostManifest = null;
+
+// Cache post tags manifest in memory
+let cachedPostTagsManifest = null;
 
 /**
  * Fetch the posts manifest file and cache it
@@ -77,13 +83,20 @@ export const fetchPostBySlug = async (slug) => {
 };
 
 /**
- * Fetch a single post by url
+ * Fetch the post tags manifest file and cache it
  */
-export const fetchPostByUrl = async (url) => {
-    const res = await fetchData(url);
-    if (!res.ok) {
-        throw new Error(`Failed to fetch content for post with url ${url}`);
+const getPostTagsManifest = async () => {
+    if (!cachedPostTagsManifest) {
+        const res = await fetchData(POST_TAGS_MANIFEST_FILE_URL);
+        cachedPostTagsManifest = await res.json();
     }
+    return cachedPostTagsManifest;
+};
 
-    return await res.json();
+/**
+ * Fetch all post tags
+ */
+export const fetchPostTags = async () => {
+    const manifest = await getPostTagsManifest();
+    return manifest.tags || [];
 };

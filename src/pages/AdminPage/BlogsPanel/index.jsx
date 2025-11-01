@@ -1,11 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
 import { SearchBar } from "../../../components/common/SearchBar";
 import InfiniteScroll from "./../../../components/common/InfiniteScroll";
-import { fetchPosts } from "../../../data/posts";
+import { fetchPosts, fetchPostTags } from "../../../data/posts";
 import PostCard from "../../../components/post/PostCard";
 import { useNavigate } from "react-router-dom";
+import { fetchAllCategories } from "../../../data/categories";
 
 export const BlogsPanel = () => {
     const navigate = useNavigate();
@@ -13,16 +14,23 @@ export const BlogsPanel = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const categories = ["Tutorial", "Frontend", "Backend"];
-    const tags = [
-        "tutorial",
-        "getting-started",
-        "css",
-        "frontend",
-        "backend",
-        "data",
-        "performance",
-    ];
+    const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+        const loadCategories = async () => {
+            const categories = await fetchAllCategories();
+            setCategories(categories.map((c) => c.name));
+        };
+
+        const loadTags = async () => {
+            const tags = await fetchPostTags();
+            setTags(tags);
+        };
+
+        loadCategories();
+        loadTags();
+    }, []);
 
     const fetchData = useCallback(
         (page, limit) =>

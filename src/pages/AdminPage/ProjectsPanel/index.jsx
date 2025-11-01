@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 import InfiniteScroll from "./../../../components/common/InfiniteScroll";
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../../../components/common/SearchBar";
-import { fetchProjects } from "./../../../data/projects";
+import { fetchProjects, fetchProjectTags } from "./../../../data/projects";
 import ProjectCard from "./../../../components/project/ProjectCard";
 import { MultiSelectDropdown } from "../../../components/common/MultiSelectDropdown";
 import { fetchAllCategories } from "../../../data/categories";
@@ -15,16 +15,7 @@ export const ProjectsPanel = () => {
     const [selectedTags, setSelectedTags] = useState([]);
 
     const [categories, setCategories] = useState([]);
-
-    const tags = [
-        "tutorial",
-        "getting-started",
-        "css",
-        "frontend",
-        "backend",
-        "data",
-        "performance",
-    ];
+    const [tags, setTags] = useState([]);
 
     useEffect(() => {
         const loadCategories = async () => {
@@ -32,7 +23,13 @@ export const ProjectsPanel = () => {
             setCategories(categories.map((c) => c.name));
         };
 
+        const loadTags = async () => {
+            const tags = await fetchProjectTags();
+            setTags(tags);
+        };
+
         loadCategories();
+        loadTags();
     }, []);
 
     const fetchData = useCallback(
