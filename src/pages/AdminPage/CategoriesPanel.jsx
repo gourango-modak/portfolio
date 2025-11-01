@@ -56,7 +56,7 @@ export const CategoriesPanel = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="Search by name..."
                     />
-                    <div className="flex flex-col md:flex-row gap-4">
+                    <div className="flex flex-col md:flex-row gap-4 w-full sm:w-auto">
                         <button
                             className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
                         flex items-center gap-2 justify-center"
