@@ -58,7 +58,7 @@ const AdminPage = () => {
                     {currentPage}
                 </h1>
             </div>
-            <main className="flex-1 px-8 relative w-full pt-28 pb-10 md:py-10">
+            <main className="flex-1 px-9 relative w-full pt-28 pb-10 md:py-9">
                 <div>{content}</div>
             </main>
         </div>

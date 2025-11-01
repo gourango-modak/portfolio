@@ -50,7 +50,7 @@ export const CategoriesPanel = () => {
     return (
         <>
             <div className="flex flex-col gap-6">
-                <div className="flex gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div className="flex flex-wrap gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
                     <SearchBar
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
