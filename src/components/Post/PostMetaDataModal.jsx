@@ -8,13 +8,7 @@ const defaultMetaData = {
     readTime: "",
 };
 
-const PostMetaDataModal = ({
-    isOpen,
-    onClose,
-    onSave,
-    onBack,
-    initialData,
-}) => {
+const PostMetaDataModal = ({ isOpen, onClose, onSave, initialData }) => {
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
@@ -39,11 +33,6 @@ const PostMetaDataModal = ({
         }
     };
 
-    const handleBack = () => {
-        setMetaData(defaultMetaData);
-        onBack(metaData);
-    };
-
     const handleSave = () => {
         const validationErrors = validatePostMetaData(metaData);
         if (Object.keys(validationErrors).length > 0) {
@@ -57,7 +46,6 @@ const PostMetaDataModal = ({
 
     const handleClose = () => {
         onClose();
-        setMetaData(defaultMetaData);
     };
 
     return (
@@ -68,12 +56,6 @@ const PostMetaDataModal = ({
             style={{ width: "w-lg" }}
             footer={
                 <>
-                    <button
-                        onClick={handleBack}
-                        className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-300"
-                    >
-                        Back
-                    </button>
                     <button
                         onClick={handleSave}
                         className="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer hover:bg-indigo-700"
