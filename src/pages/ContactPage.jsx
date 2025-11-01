@@ -39,12 +39,12 @@ const ContactPage = () => {
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer"
+            className="flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer w-full"
         >
             <div className="flex-shrink-0 w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
                 {icon}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-1 min-w-0">
                 <h3 className="font-semibold text-lg text-slate-900">
                     {title}
                 </h3>
@@ -59,7 +59,7 @@ const ContactPage = () => {
                         {display}
                     </a>
                 ) : (
-                    <span className="text-slate-700 mt-1 text-sm">
+                    <span className="text-slate-700 mt-1 text-sm break-words">
                         {display}
                     </span>
                 )}
@@ -68,7 +68,7 @@ const ContactPage = () => {
     );
 
     return (
-        <section className="pt-30 pb-30 bg-gray-50">
+        <section className="pt-30 pb-25 bg-gray-50">
             <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
                     <h1 className="text-4xl font-bold text-slate-900">
@@ -82,10 +82,10 @@ const ContactPage = () => {
                 </p>
 
                 {/* Contact and Social Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 pt-8">
                     {/* Left Column: Contact Info */}
                     <div className="flex flex-col gap-6">
-                        <h2 className="text-2xl font-bold text-slate-800 pb-2">
+                        <h2 className="text-2xl font-bold text-slate-800 pb-2 text-center md:text-left">
                             Contact Information
                         </h2>
                         {contactInfo.map((info) => (
@@ -95,7 +95,7 @@ const ContactPage = () => {
 
                     {/* Right Column: Social Links */}
                     <div className="flex flex-col gap-6">
-                        <h2 className="text-2xl font-bold text-slate-800 pb-2">
+                        <h2 className="text-2xl font-bold text-slate-800 pb-2 text-center md:text-left">
                             Find Me Online
                         </h2>
                         {socialLinks.map((social) => (
