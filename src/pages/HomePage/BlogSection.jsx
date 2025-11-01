@@ -4,9 +4,9 @@ import Section from "../../components/Section/Section";
 import SectionHeader from "../../components/Section/SectionHeader";
 import PostsList from "./../../components/post/PostsList";
 
-const BlogSection = () => {
+const BlogSection = ({ bgClass = "bg-white/50" }) => {
     return (
-        <Section bgClass="bg-white/50 mb-30">
+        <Section bgClass={bgClass}>
             <SectionHeader
                 title="From My Blog"
                 text="I write about technology, development, and everything in

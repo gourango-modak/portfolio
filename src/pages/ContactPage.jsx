@@ -38,7 +38,7 @@ const ContactPage = () => {
                                         href="mailto:gourango.modak@example.com"
                                         className="text-indigo-600 hover:underline"
                                     >
-                                        gourango.modak@example.com
+                                        gourango.modak.2@gmail.com
                                     </a>
                                 </div>
                             </div>
@@ -75,10 +75,10 @@ const ContactPage = () => {
                                         Explore my projects and code.
                                     </p>
                                     <a
-                                        href="#"
+                                        href="https://github.com/gourango-modak"
                                         className="text-indigo-600 hover:underline"
                                     >
-                                        github.com/yourusername
+                                        github.com/gourango-modak
                                     </a>
                                 </div>
                             </div>
@@ -95,10 +95,10 @@ const ContactPage = () => {
                                         Let's connect professionally.
                                     </p>
                                     <a
-                                        href="#"
+                                        href="https://www.linkedin.com/in/gourango-modak/"
                                         className="text-indigo-600 hover:underline"
                                     >
-                                        linkedin.com/in/yourusername
+                                        linkedin.com/in/gourango-modak
                                     </a>
                                 </div>
                             </div>
