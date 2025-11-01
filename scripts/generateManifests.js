@@ -113,7 +113,6 @@ const generateCategoriesManifest = () => {
     const folder = "public/data/categories";
     const manifestFile = CATEGORY_MANIFEST_FILE_NAME;
     const categories = readJsonFiles(folder);
-    console.log(categories);
 
     const manifest = {
         totalCategories: categories.length,
@@ -172,8 +171,15 @@ const generatePostTagsManifest = () => {
     const allTags = posts
         .map((p) => p.tags || []) // ensure it's always an array
         .flat() // flatten nested arrays
-        .map((tag) => tag.trim().toLowerCase()) // normalize case/spacing
-        .filter((tag, index, self) => tag && self.indexOf(tag) === index); // unique + non-empty
+        .map((tag) => tag.trim()) // trim but keep original case
+        .filter((tag, index, self) => {
+            // Find the first occurrence ignoring case
+            return (
+                tag &&
+                index ===
+                    self.findIndex((t) => t.toLowerCase() === tag.toLowerCase())
+            );
+        });
 
     const manifest = {
         totalTags: allTags.length,
