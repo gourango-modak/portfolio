@@ -4,7 +4,7 @@ import ProjectSection from "./ProjectSection";
 
 const HomePage = () => {
     return (
-        <div className="bg-gray-50">
+        <div className="bg-gray-50 pb-10">
             <HeroSection />
             <BlogSection />
             <ProjectSection bgClass="bg-gray-50" />

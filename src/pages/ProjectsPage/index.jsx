@@ -16,7 +16,7 @@ const ProjectsPage = () => {
 
     return (
         <>
-            <section className="pt-30 pb-20 min-h-screen bg-gray-50">
+            <section className="pt-30 pb-30 min-h-screen bg-gray-50">
                 <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
                     <ProjectPageHeader />
                     <div className="mb-12">

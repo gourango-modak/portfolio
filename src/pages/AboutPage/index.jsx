@@ -4,7 +4,7 @@ import SkillsSection from "./../../components/Skills/SkillsSection";
 
 const AboutPage = () => {
     return (
-        <main className="bg-gray-50">
+        <main className="bg-gray-50 pb-20">
             <AboutSection />
             <ExperienceSection />
             <SkillsSection bgClass="bg-gray-50" />

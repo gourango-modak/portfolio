@@ -1,6 +1,6 @@
 import { fetchProjects } from "./../../data/projects";
-import Section from "../../components/Section/Section";
-import SectionHeader from "../../components/Section/SectionHeader";
+import Section from "../../components/section/Section";
+import SectionHeader from "../../components/section/SectionHeader";
 import ProjectsList from "../../components/project/ProjectsList";
 import { Link } from "react-router-dom";
 
