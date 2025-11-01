@@ -32,11 +32,11 @@ export const ROUTES = [
     { path: "/login", component: LoginPage },
     { path: "/admin", component: AdminPage },
     {
-        path: "/admin/:page",
-        component: AdminPage,
-    },
-    {
         path: "/admin/blogeditor/:slug",
         component: BlogEditor,
+    },
+    {
+        path: "/admin/:page",
+        component: AdminPage,
     },
 ];

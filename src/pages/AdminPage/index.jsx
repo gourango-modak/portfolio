@@ -17,10 +17,10 @@ const AdminPage = () => {
     };
 
     useEffect(() => {
-        if (page) {
-            navigate(`/admin/${page}`);
+        if (currentPage) {
+            navigate(`/admin/${currentPage}`);
         }
-    }, [page]);
+    }, [currentPage]);
 
     const renderContent = () => {
         switch (currentPage) {
