@@ -50,7 +50,7 @@ const generatePostsManifest = () => {
     const topTags = getTopOccurrences(allTags, 10);
     // Count in-progress posts
     const totalInProgressPosts = posts.filter(
-        (post) => post.status?.toLowerCase() === CONTENT_STATUSES.IN_PROGRESS
+        (post) => post.status === CONTENT_STATUSES.IN_PROGRESS
     ).length;
 
     const manifest = {
@@ -91,8 +91,7 @@ const generateProjectsManifest = () => {
     const topCategories = getTopOccurrences(allCategories, 10);
     // Count in-progress projects
     const totalInProgressProjects = projects.filter(
-        (project) =>
-            project.status?.toLowerCase() === CONTENT_STATUSES.IN_PROGRESS
+        (project) => project.status === CONTENT_STATUSES.IN_PROGRESS
     ).length;
 
     const manifest = {
