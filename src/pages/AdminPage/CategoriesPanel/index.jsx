@@ -13,6 +13,7 @@ export const CategoriesPanel = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
 
     const metaDataRef = useRef({});
+    const isEditingRef = useRef(false);
 
     const fetchData = useCallback(
         (page, limit) =>
@@ -24,6 +25,7 @@ export const CategoriesPanel = () => {
 
     const handleEdit = (category) => {
         metaDataRef.current = category;
+        isEditingRef.current = true;
         setMetaDataModalOpen(true);
     };
 
@@ -31,11 +33,18 @@ export const CategoriesPanel = () => {
         const newCategory = prepareCategoryData(meta);
         downloadJson(newCategory, getContentFileName(newCategory.id));
         setMetaDataModalOpen(false);
+        isEditingRef.current = false;
     };
 
     const handleMetaDataModalClose = (meta) => {
         metaDataRef.current = meta;
+        isEditingRef.current = false;
         setMetaDataModalOpen(false);
+    };
+
+    const handleCreateCategory = () => {
+        metaDataRef.current = {};
+        setMetaDataModalOpen(true);
     };
 
     return (
@@ -51,7 +60,7 @@ export const CategoriesPanel = () => {
                         <button
                             className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg cursor-pointer
                         flex items-center gap-2 justify-center"
-                            onClick={() => setMetaDataModalOpen(true)}
+                            onClick={handleCreateCategory}
                         >
                             <Plus size={18} /> Create
                         </button>
@@ -76,6 +85,9 @@ export const CategoriesPanel = () => {
                 onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
                 initialData={metaDataRef.current}
+                title={
+                    isEditingRef.current ? "Edit Category" : "Create Category"
+                }
             />
         </>
     );

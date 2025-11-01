@@ -64,7 +64,7 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
           ${
               sidebarOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0
-          w-full md:w-64
+          w-full md:w-54 lg:w-64
         `}
             >
                 {/* Logo */}

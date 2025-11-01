@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { DashboardPanel } from "./DashboardPanel";
 import { BlogsPanel } from "./BlogsPanel";
-import ToolsPanel from "./ToolsPanel";
+import { ToolsPanel } from "./ToolsPanel";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProjectsPanel } from "./ProjectsPanel";
 import { CategoriesPanel } from "./CategoriesPanel";
