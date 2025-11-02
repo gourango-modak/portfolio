@@ -36,7 +36,7 @@ const AppsPage = () => {
                 />
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                    {applications.map((app) => (
+                    {APPLICATIONS.map((app) => (
                         <AppCard key={app.name} app={app} />
                     ))}
                 </div>
