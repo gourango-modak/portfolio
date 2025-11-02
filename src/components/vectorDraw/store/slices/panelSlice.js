@@ -51,6 +51,20 @@ export const createPanelSlice = (set, get) => ({
                 },
             })),
 
+        closeToolbarPanel: () =>
+            set((state) => ({
+                panelSlice: {
+                    ...state.panelSlice,
+                    panels: {
+                        ...state.panelSlice.panels,
+                        [PANELS.TOOLBAR_PANEL]: {
+                            ...state.panelSlice.panels[PANELS.TOOLBAR_PANEL],
+                            isVisible: false,
+                        },
+                    },
+                },
+            })),
+
         openInspectorPanel: (target) =>
             set((state) => ({
                 panelSlice: {

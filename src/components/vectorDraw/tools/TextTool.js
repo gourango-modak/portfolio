@@ -195,6 +195,10 @@ export class TextTool extends BaseTool {
         this.cleanUp(); // removes livePath etc.
     }
 
+    clearBlurEvent() {
+        this.textarea.removeEventListener("blur", this.handleOnBlur);
+    }
+
     createTextInput(existingShape) {
         const { text, point, width, height, properties, minHeight } =
             this.getTextInputInitialState(existingShape);
@@ -298,10 +302,9 @@ export class TextTool extends BaseTool {
 
         const adjustSize = () =>
             this.adjustTextareaSize(point, minHeight, properties);
-        const commitOnBlur = () => this.handleBlurCommit();
-
         this.textarea.addEventListener("input", adjustSize);
-        this.textarea.addEventListener("blur", commitOnBlur);
+        this.handleOnBlur = this.handleBlurCommit.bind(this);
+        this.textarea.addEventListener("blur", this.handleOnBlur);
     }
 
     createHiddenSpan(text, properties) {

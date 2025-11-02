@@ -68,6 +68,12 @@ export const createCanvasPropertiesSlice = (set, get) => ({
                 get().toolbarSlice.setActiveTool(TOOLS.SELECTION);
                 get().panelSlice.closeToolPropertiesPanel();
 
+                if (mode === CANVAS_MODES.SHORTCUTS) {
+                    get().panelSlice.closeToolbarPanel();
+                } else {
+                    get().panelSlice.openToolbarPanel();
+                }
+
                 const updatedProperties = {
                     ...state.canvasPropertiesSlice.properties,
                     mode: {
