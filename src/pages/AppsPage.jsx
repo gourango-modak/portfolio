@@ -17,6 +17,13 @@ const applications = [
         icon: Type,
         link: "/applications/notepad",
     },
+    {
+        name: "DayNotes",
+        description:
+            "Capture your daily tasks, notes, and ideas in a simple, date-focused editor. Track your last week’s entries, plan ahead, and keep everything organized at a glance.",
+        icon: Type,
+        link: "/applications/daynotes",
+    },
 ];
 
 const AppsPage = () => {
@@ -28,7 +35,7 @@ const AppsPage = () => {
                     text="These are applications I personally developed to streamline creative and technical workflows—making drawing, note-taking, blog writing, and creating technical documentation or diagrams seamless, efficient, and effortless."
                 />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                     {applications.map((app) => (
                         <AppCard key={app.name} app={app} />
                     ))}

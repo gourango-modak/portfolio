@@ -14,6 +14,7 @@ import { BlogEditor } from "./pages/AdminPage/BlogsPanel/BlogEditor";
 import { CreateBlog } from "./pages/AdminPage/BlogsPanel/CreateBlog";
 import { ProjectEditor } from "./pages/AdminPage/ProjectsPanel/ProjectEditor";
 import { CreateProject } from "./pages/AdminPage/ProjectsPanel/CreateProject";
+import DayNotesPage from "./pages/DayNotesPage";
 
 export const ROUTES = [
     { path: "/", component: HomePage, layout: true },
@@ -31,6 +32,10 @@ export const ROUTES = [
     {
         path: "/applications/notepad",
         component: NotepadPage,
+    },
+    {
+        path: "/applications/daynotes",
+        component: DayNotesPage,
     },
     { path: "/login", component: LoginPage },
     { path: "/admin", component: AdminPage },
