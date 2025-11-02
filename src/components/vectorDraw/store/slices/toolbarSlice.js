@@ -13,8 +13,7 @@ export const createToolbarSlice = (set, get) => ({
             set(() => {
                 const { closeToolPropertiesPanel, openToolPropertiesPanel } =
                     get().panelSlice;
-                const { activeGroup, setActiveGroup, setGroupSelection } =
-                    get().toolbarSlice;
+                const { activeGroup, setActiveGroup } = get().toolbarSlice;
 
                 // Manage tool properties panel visibility
                 if (TOOLS_PROPERTIES_PANEL_DISABLED.includes(toolName)) {
