@@ -10,6 +10,7 @@ import { CONTENT_TYPES } from "../../../config";
 import PostMetaDataModal from "../../../components/post/PostMetaDataModal";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { preparePostData } from "../../../components/post/postUtils";
+import { useAlert } from "../../../context/AlertProvider";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -17,23 +18,69 @@ const MemoizedEditorJs = memo(EditorJs);
 export const CreateBlog = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
     const editorRef = useRef(null);
-    const editorJsDataRef = useRef(null);
-    const metaDataRef = useRef({});
+    const editorJsFinalDataRef = useRef(null);
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
+    const [editorJsInitData, setEditorJsInitData] = useState(
+        getEditorJsInitialData(CONTENT_TYPES.BLOG)
+    );
+    const [metaData, setMetaData] = useState({});
+
+    const NEW_BLOG_STORE_KEY = "gm-new-blog";
 
     const editorJsTools = useMemo(
         () => getEditorJsTools(CONTENT_TYPES.BLOG),
         []
     );
-    const editorJsInitData = useMemo(
-        () => getEditorJsInitialData(CONTENT_TYPES.BLOG),
-        []
-    );
+
+    const clearBlog = () => {
+        localStorage.removeItem(NEW_BLOG_STORE_KEY);
+    };
+
+    const loadBlog = (blog) => {
+        const blogObj = JSON.parse(blog);
+        setMetaData(blogObj.metaData);
+        setEditorJsInitData(blogObj.content);
+    };
+
+    useEffect(() => {
+        const blog = localStorage.getItem(NEW_BLOG_STORE_KEY);
+        if (blog) {
+            showAlert("Would you like to continue from where you left off?", {
+                type: "info",
+                buttons: [
+                    {
+                        label: "Cancel",
+                        type: "secondary",
+                        onClick: clearBlog,
+                    },
+                    {
+                        label: "Okay",
+                        type: "primary",
+                        onClick: () => loadBlog(blog),
+                    },
+                ],
+            });
+        }
+    }, []);
+
+    const handleOnChange = async (options) => {
+        if (editorRef.current) {
+            await editorRef.current.save(options);
+        }
+    };
 
     const handleDataAfterSave = async ({ content }) => {
         if (content) {
-            editorJsDataRef.current = content;
-            setMetaDataModalOpen(true);
+            editorJsFinalDataRef.current = content;
+
+            localStorage.setItem(
+                NEW_BLOG_STORE_KEY,
+                JSON.stringify({
+                    content,
+                    metaData: null,
+                })
+            );
         }
     };
 
@@ -46,6 +93,8 @@ export const CreateBlog = () => {
                 if (editorRef.current) {
                     await editorRef.current.save();
                 }
+
+                setMetaDataModalOpen(true);
             }
         };
 
@@ -54,15 +103,28 @@ export const CreateBlog = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
-        const newPost = preparePostData(editorJsDataRef.current, meta);
+        const newPost = preparePostData(editorJsFinalDataRef.current, meta);
         downloadJson(newPost, getContentFileName(newPost.id));
         setMetaDataModalOpen(false);
         navigate("/admin/blogs");
     };
 
     const handleMetaDataModalClose = (meta) => {
-        metaDataRef.current = meta;
         setMetaDataModalOpen(false);
+        setMetaData(meta);
+
+        const blog = localStorage.getItem(NEW_BLOG_STORE_KEY);
+
+        if (blog) {
+            const blogObj = JSON.parse(blog);
+            localStorage.setItem(
+                NEW_BLOG_STORE_KEY,
+                JSON.stringify({
+                    content: blogObj.content,
+                    metaData: meta,
+                })
+            );
+        }
     };
 
     return (
@@ -73,6 +135,7 @@ export const CreateBlog = () => {
                         <MemoizedEditorJs
                             ref={editorRef}
                             onSave={handleDataAfterSave}
+                            onChange={handleOnChange}
                             initialData={editorJsInitData}
                             tools={editorJsTools}
                         />
@@ -84,7 +147,7 @@ export const CreateBlog = () => {
                 isOpen={isMetaDataModalOpen}
                 onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
-                initialData={metaDataRef.current}
+                initialData={metaData}
             />
         </>
     );

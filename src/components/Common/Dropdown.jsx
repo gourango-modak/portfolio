@@ -53,17 +53,16 @@ const Dropdown = ({
                     isOpen={isOpen}
                     toggleDropdown={toggleDropdown}
                 />
+                {isOpen && (
+                    <DropdownList
+                        options={options}
+                        selected={selected}
+                        handleSelect={handleSelect}
+                        name={name}
+                    />
+                )}
+                {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
             </div>
-
-            {isOpen && (
-                <DropdownList
-                    options={options}
-                    selected={selected}
-                    handleSelect={handleSelect}
-                    name={name}
-                />
-            )}
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </div>
     );
 };
