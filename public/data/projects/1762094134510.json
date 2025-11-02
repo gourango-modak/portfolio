@@ -1,0 +1,450 @@
+{
+  "description": "Before we explore Redis specifically, let’s establish what we mean by push and pull replication models.\n\nPull-based replication: Replicas periodically ask the master, “What’s new?” The replica is responsible for fetching updates. Think of it like checking your mailbox; you decide when to check, and you pull out whatever’s there.\n\nRedis uses the push model. When a write command is executed on the master, Redis propagates that command to all connected replicas immediately (or as immediately as the network allows).",
+  "liveUrl": "https://arpitbhayani.me/blogs/redis-replication",
+  "repoUrl": "https://arpitbhayani.me/blogs/redis-replication",
+  "startDate": "12/12/2024",
+  "endDate": "12/27/2024",
+  "status": "Completed",
+  "category": {
+    "name": "Test 1",
+    "id": 1761990110814
+  },
+  "id": 1762094134510,
+  "createdAt": 1762094134441,
+  "updatedAt": 1762094134441,
+  "title": "Lorem Ipsum",
+  "tagline": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "tags": [],
+  "slug": "lorem-ipsum-1762094134510",
+  "content": {
+    "time": 1762094091321,
+    "blocks": [
+      {
+        "id": "I_mbo4BomB",
+        "type": "title",
+        "data": {
+          "text": "Lorem Ipsum"
+        }
+      },
+      {
+        "id": "UVAR2u90yv",
+        "type": "tagline",
+        "data": {
+          "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        }
+      },
+      {
+        "id": "yEqWqFGuJg",
+        "type": "header",
+        "data": {
+          "text": "Redis Replication",
+          "level": 2
+        }
+      },
+      {
+        "id": "7QyKi8ZNI7",
+        "type": "paragraph",
+        "data": {
+          "text": "To understand why push makes sense, we need to understand how Redis replication actually works."
+        }
+      },
+      {
+        "id": "3x3SCjGy-G",
+        "type": "header",
+        "data": {
+          "text": "The Replication Protocol",
+          "level": 3
+        }
+      },
+      {
+        "id": "Ylw9auBSDX",
+        "type": "paragraph",
+        "data": {
+          "text": "When a replica connects to a master, here’s what happens:"
+        }
+      },
+      {
+        "id": "mqB_H_s_l0",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "The replica sends a&nbsp;<code class=\"inline-code\">PSYNC</code>&nbsp;command to the master",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "If this is the first sync or the replica is too far behind, the master performs a full resync:Master creates an RDB snapshot in the backgroundMaster buffers all new writes during snapshot creationMaster sends the RDB file to the replicaMaster sends the buffered writes",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "After the initial sync, the master enters push mode:Every write command executed on the master is immediately sent to all replicasThis happens via the replication backlog bufferReplicas execute these commands in the same order",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "oGs6GBrtgb",
+        "type": "paragraph",
+        "data": {
+          "text": "This is where the push nature becomes evident. The master doesn’t wait for replicas to ask for updates; it actively streams commands as they happen."
+        }
+      },
+      {
+        "id": "sV_cOQ5HsG",
+        "type": "header",
+        "data": {
+          "text": "Replication Backlog",
+          "level": 3
+        }
+      },
+      {
+        "id": "HhH6UV5h7C",
+        "type": "paragraph",
+        "data": {
+          "text": "The replication backlog is a circular buffer that the master maintains. It stores a recent history of write commands (default 1MB, but tunable). This buffer serves two critical purposes:"
+        }
+      },
+      {
+        "id": "fabn3Vz8BA",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "If a replica disconnects briefly, it can resume from where it left off",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Provides a cushion when replicas temporarily fall behind",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "5--LjG2P7T",
+        "type": "paragraph",
+        "data": {
+          "text": "The backlog itself is a push-oriented data structure. The master continuously appends to it and pushes offsets to replicas, rather than replicas pulling from specific offsets."
+        }
+      },
+      {
+        "id": "7jaCi1l7In",
+        "type": "header",
+        "data": {
+          "text": "Why Push?",
+          "level": 2
+        }
+      },
+      {
+        "id": "sXkl_C-a83",
+        "type": "paragraph",
+        "data": {
+          "text": "Now let’s get to the heart of the matter: why did Redis choose push-based replication?"
+        }
+      },
+      {
+        "id": "v78YMnYREz",
+        "type": "header",
+        "data": {
+          "text": "Minimizing Replication Lag",
+          "level": 3
+        }
+      },
+      {
+        "id": "WepyW3pdB1",
+        "type": "paragraph",
+        "data": {
+          "text": "The primary driver is latency. Redis is designed for microsecond-level operations. In a pull-based model, you’d have unavoidable replication lag due to:"
+        }
+      },
+      {
+        "id": "qeXadBC1XE",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Polling interval: Replicas would need to wait for the next poll cycle",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Batching overhead: Multiple writes between polls would bunch up",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Request-response latency: Each pull requires a round-trip",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "xDSEI7Z6Kn",
+        "type": "paragraph",
+        "data": {
+          "text": "With push-based replication, commands propagate to replicas immediately after execution on the master. The only delay is network transmission time. For most use cases, this means replication lag measured in single-digit milliseconds rather than seconds."
+        }
+      },
+      {
+        "id": "MTlalBWzZQ",
+        "type": "paragraph",
+        "data": {
+          "text": "Imagine you’re using Redis for session storage in a web application with read replicas. A user logs in (writes to the master), then immediately makes another request that hits a replica. With pull-based replication on a 1-second polling interval, there’s a 50% chance (on average) that the replica doesn’t have the session yet. With push-based replication, the session is likely already there."
+        }
+      },
+      {
+        "id": "SxrDl3i7Zf",
+        "type": "header",
+        "data": {
+          "text": "Simplified Mental Model and Consistency",
+          "level": 3
+        }
+      },
+      {
+        "id": "Jy1RlekIJx",
+        "type": "paragraph",
+        "data": {
+          "text": "Push-based replication creates a clearer consistency model for developers. When you write to Redis, you know:"
+        }
+      },
+      {
+        "id": "N9S6SIW4fJ",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "The write is persisted on the master",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "The write is immediately propagated to all connected replicas",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Replicas apply writes in the exact order they occurred on the master",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "ooVQHvpgVN",
+        "type": "paragraph",
+        "data": {
+          "text": "This is easier to reason about than: “The write is on the master, and replicas will eventually discover it whenever they next poll.”"
+        }
+      },
+      {
+        "id": "27v19llB-P",
+        "type": "paragraph",
+        "data": {
+          "text": "The push model naturally implements sequential consistency at the replica level. Each replica sees writes in the same order they were executed on the master, which is crucial for maintaining data integrity."
+        }
+      },
+      {
+        "id": "fFVug2hnLy",
+        "type": "header",
+        "data": {
+          "text": "Network Efficiency",
+          "level": 3
+        }
+      },
+      {
+        "id": "SGbDYnzy9s",
+        "type": "paragraph",
+        "data": {
+          "text": "Counterintuitively, push can be more network-efficient than pull in many scenarios."
+        }
+      },
+      {
+        "id": "3iz62yGKdp",
+        "type": "paragraph",
+        "data": {
+          "text": "In pull-based systems:"
+        }
+      },
+      {
+        "id": "xbAWCi3GJJ",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Replicas must regularly poll even when there are no updates (wasted bandwidth)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Each poll is a request-response cycle (protocol overhead)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Batching updates requires additional complexity to handle variable batch sizes",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "kbbo0oQuKJ",
+        "type": "paragraph",
+        "data": {
+          "text": "In push-based systems:"
+        }
+      },
+      {
+        "id": "mt2Kg3mntU",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Network traffic only occurs when there are actual writes",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "The master controls the flow, eliminating redundant polls",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "The protocol is simpler, just stream commands as they arrive",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "uCc1NtSOUM",
+        "type": "paragraph",
+        "data": {
+          "text": "Consider a Redis instance with 1000 writes per second and 10 replicas. In a push model, you send 1000 commands to each replica (10,000 messages). In a pull model with 1-second polling, you’d have 10 polls per second (minimum) plus the 10,000 data messages, and that’s just to match the push latency."
+        }
+      },
+      {
+        "id": "2YNERPUb9d",
+        "type": "header",
+        "data": {
+          "text": "The Single-Threaded Nature of Redis",
+          "level": 3
+        }
+      },
+      {
+        "id": "u7tY_8gqBO",
+        "type": "paragraph",
+        "data": {
+          "text": "Redis’s core design is single-threaded (for command execution). This actually makes push-based replication more natural to implement."
+        }
+      },
+      {
+        "id": "6PITWxjaag",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s why: When Redis executes a write command on the master, it’s already holding the execution context. At that exact moment, it can:"
+        }
+      },
+      {
+        "id": "dsGgcblm3D",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Execute the command",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Immediately propagate it to the replication backlog",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Push it to all connected replicas’ output buffers",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "nvNDYebAvW",
+        "type": "paragraph",
+        "data": {
+          "text": "This happens atomically within the same event loop iteration. There’s no need for background threads, complex synchronization, or state management."
+        }
+      },
+      {
+        "id": "GPTYOK8Ul3",
+        "type": "paragraph",
+        "data": {
+          "text": "In a pull model, Redis would need to:"
+        }
+      },
+      {
+        "id": "m8HOyeWje3",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Queue incoming replica requests",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Maintain per-replica state about what they’ve seen",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Respond to each pull request individually",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Handle concurrent pulls from multiple replicas",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "tL5nxwlAom",
+        "type": "paragraph",
+        "data": {
+          "text": "This would introduce significantly more complexity in a single-threaded architecture."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
