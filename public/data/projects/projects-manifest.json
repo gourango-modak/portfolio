@@ -1,0 +1,22 @@
+{
+  "totalProjects": 1,
+  "topCategories": [
+    "Test 1"
+  ],
+  "totalInProgressProjects": 0,
+  "projects": [
+    {
+      "title": "Lorem Ipsum",
+      "category": {
+        "name": "Test 1",
+        "id": 1761990110814
+      },
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/1762094134510.json",
+      "description": "Before we explore Redis specifically, let’s establish what we mean by push and pull replication models.\n\nPull-based replication: Replicas periodically ask the master, “What’s new?” The replica is responsible for fetching updates. Think of it like checking your mailbox; you decide when to check, and you pull out whatever’s there.\n\nRedis uses the push model. When a write command is executed on the master, Redis propagates that command to all connected replicas immediately (or as immediately as the network allows).",
+      "slug": "lorem-ipsum-1762094134510",
+      "createdAt": 1762094134441,
+      "id": 1762094134510,
+      "status": "Completed"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "totalCategories": 2,
+  "categories": [
+    {
+      "name": "Web Development",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1762094411287.json",
+      "id": 1762094411287,
+      "createdAt": 1762094410653
+    },
+    {
+      "name": "Desktop App Development",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1762094435931.json",
+      "id": 1762094435931,
+      "createdAt": 1762094435177
+    }
+  ]
+}
