@@ -28,14 +28,8 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-slate-50">
-            <form
-                onSubmit={handleSubmit}
-                className="bg-white shadow-md rounded-2xl p-6 sm:p-12 md:w-100 m-6"
-            >
-                <h2 className="text-4xl font-semibold text-center mb-12">
-                    Login
-                </h2>
+        <div className="flex items-center justify-center h-screen">
+            <form onSubmit={handleSubmit} className="md:w-80 m-6">
                 <input
                     type="password"
                     placeholder="Enter password"
@@ -52,7 +46,7 @@ const LoginPage = () => {
                     type="submit"
                     className="w-full bg-indigo-600 text-white rounded px-3 py-2 hover:bg-indigo-700 cursor-pointer"
                 >
-                    Login
+                    Next
                 </button>
             </form>
         </div>
