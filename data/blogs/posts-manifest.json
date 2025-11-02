@@ -1,61 +1,17 @@
 {
-  "totalPosts": 3,
-  "topTags": [
-    "C++",
-    "CSharp",
-    "Python",
-    "Golang",
-    "Test1",
-    "Test2",
-    "Test3",
-    "Test4",
-    "Test5",
-    "Test6"
-  ],
+  "totalPosts": 1,
+  "topTags": [],
   "totalInProgressPosts": 0,
   "posts": [
     {
-      "title": "Project Name: TaskMaster Pro",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1757017512370.json",
+      "title": "Redis Replication Internals",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762094023721.json",
       "tags": [],
-      "description": "TaskMaster Pro is a modern web application designed to help individuals and teams manage their tasks efficiently. It combines a clean interface, drag-and-drop task management, notifications, and analytics to improve productivity.",
-      "slug": "project-name-taskmaster-pro-1757017512370",
-      "createdAt": 1757017511575,
-      "id": 1757017512370,
+      "description": "Before we explore Redis specifically, let’s establish what we mean by push and pull replication models.\n\nPull-based replication: Replicas periodically ask the master, “What’s new?” The replica is responsible for fetching updates. Think of it like checking your mailbox; you decide when to check, and you pull out whatever’s there.\n\nRedis uses the push model. When a write command is executed on the master, Redis propagates that command to all connected replicas immediately (or as immediately as the network allows).",
+      "slug": "redis-replication-internals-1762094023721",
+      "createdAt": 1762094023166,
+      "id": 1762094023721,
       "status": "Completed"
-    },
-    {
-      "title": "How to Use ConfigureAwait to Improve C# Async Performance",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1757017854025_howtouseconfigureawaittoimprovecasyncperformance.json",
-      "tags": [
-        "C++",
-        "CSharp",
-        "Python",
-        "Golang",
-        "Test1",
-        "Test2",
-        "Test3",
-        "Test4",
-        "Test5",
-        "Test6",
-        "Test7",
-        "Test8",
-        "Test9",
-        "Test10"
-      ],
-      "description": "Learn how to boost your C# async code performance using ConfigureAwait. This blog explains the concept in simple terms with practical examples for faster, scalable, and deadlock-free applications.",
-      "slug": "how-to-use-configureawait-to-improve-c-async-performance",
-      "createdAt": 1757017853960,
-      "id": 1757017854025
-    },
-    {
-      "title": "asdf",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1757170396137.json",
-      "tags": [],
-      "description": "asdf",
-      "slug": "asdf",
-      "createdAt": 1757170395359,
-      "id": 1757170396137
     }
   ]
 }

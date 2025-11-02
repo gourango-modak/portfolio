@@ -2,16 +2,16 @@
   "totalCategories": 2,
   "categories": [
     {
-      "name": "Test 1",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1761990110814.json",
-      "id": 1761990110814,
-      "createdAt": 1761990110296
+      "name": "Web Development",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1762094411287.json",
+      "id": 1762094411287,
+      "createdAt": 1762094410653
     },
     {
-      "name": "Test 2",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1761990114445.json",
-      "id": 1761990114445,
-      "createdAt": 1761990113464
+      "name": "Desktop App Development",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/categories/1762094435931.json",
+      "id": 1762094435931,
+      "createdAt": 1762094435177
     }
   ]
 }
