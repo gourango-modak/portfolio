@@ -70,6 +70,7 @@ export const createCanvasPropertiesSlice = (set, get) => ({
 
                 if (mode === CANVAS_MODES.SHORTCUTS) {
                     get().panelSlice.closeToolbarPanel();
+                    get().panelSlice.closeInspectorPanel();
                 } else {
                     get().panelSlice.openToolbarPanel();
                 }
