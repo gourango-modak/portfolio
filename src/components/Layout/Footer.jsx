@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <footer className="bg-white border-t border-gray-200 py-6">
+        <footer className="bg-white border-t border-gray-200 py-10 md:py-6">
             <div className="container mx-auto px-6 md:px-12 max-w-6xl">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     {/* Left Section */}
@@ -26,12 +26,6 @@ const Footer = () => {
                             className="hover:text-indigo-600 transition-colors duration-200"
                         >
                             Projects
-                        </Link>
-                        <Link
-                            to="/resume"
-                            className="hover:text-indigo-600 transition-colors duration-200"
-                        >
-                            Resume
                         </Link>
                         <Link
                             to="/blog"
