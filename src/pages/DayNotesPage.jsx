@@ -5,10 +5,8 @@ import "react-day-picker/dist/style.css";
 import { DateButton } from "../components/common/DateButton";
 
 const NOTE_STORE_PREFIX = "gm-todo-notes";
-const MAX_DAYS = 7;
-const RECENT_DAYS_COUNT = 5;
-
-const MemoizedEditorJs = memo(EditorJs);
+const MAX_DAYS = 30;
+const RECENT_DAYS_COUNT = 7;
 
 const DayNotesPage = () => {
     const editorRef = useRef(null);
@@ -61,16 +59,25 @@ const DayNotesPage = () => {
             d1.getDate() === d2.getDate()
         );
     };
-    const isDateVisible = (date) => {
-        return visibleDates.some((vDate) => isSameDay(vDate, date));
-    };
-    const hasNote = (date) => !!localStorage.getItem(getStorageKey(date));
+    const isDateVisible = (date) =>
+        visibleDates.some((vDate) => isSameDay(vDate, date));
+
     const handleCalendarSelect = (date) => {
-        if (date) {
-            setCalendarDate(date);
-            setActiveDate(date);
+        if (!date) return;
+        setActiveDate(date);
+        setCalendarDate(date);
+
+        if (!isDateVisible(date)) {
+            setVisibleDates((prevDates) => {
+                if (prevDates.length === MAX_DAYS) {
+                    prevDates.pop();
+                }
+                return [...prevDates, date];
+            });
         }
     };
+
+    const hasNote = (date) => !!localStorage.getItem(getStorageKey(date));
 
     useEffect(() => {
         clearExpiredNotes();
@@ -81,40 +88,37 @@ const DayNotesPage = () => {
 
     const recentDateButtons = useMemo(
         () =>
-            visibleDates.map((date) => {
-                const active = isSameDay(date, activeDate);
-                return (
-                    <DateButton
-                        key={formatDateKey(date)}
-                        date={date}
-                        active={active}
-                        onClick={() => setActiveDate(date)}
-                    />
-                );
-            }),
+            visibleDates.map((date) => (
+                <DateButton
+                    key={formatDateKey(date)}
+                    date={date}
+                    active={isSameDay(date, activeDate)}
+                    onClick={() => setActiveDate(date)}
+                />
+            )),
         [visibleDates, activeDate]
     );
 
-    const calendarSelectedButton = !isDateVisible(calendarDate) ? (
-        <div>
-            <p className="px-4 pb-2 mb-2 text-gray-500 border-b border-gray-200">
-                Calendar Date
-            </p>
-            <DateButton
-                date={calendarDate}
-                active={isSameDay(calendarDate, activeDate)}
-                onClick={() => setActiveDate(calendarDate)}
+    const memoizedEditor = useMemo(() => {
+        return (
+            <EditorJs
+                ref={editorRef}
+                onSave={handleDataAfterSave}
+                onChange={handleOnChange}
+                initialData={initialData}
             />
-        </div>
-    ) : null;
+        );
+    }, [initialData, handleDataAfterSave, handleOnChange]);
 
     return (
-        <div className="flex gap-8">
+        <div className="flex flex-col md:flex-row">
             {/* Left Side – Dates + Calendar */}
-            <div className="fixed flex flex-col justify-between w-[350px] h-screen border-r border-gray-200 p-2">
-                <div>{recentDateButtons}</div>
-                {calendarSelectedButton}
-                <div className="pl-4">
+            <div className="md:fixed md:flex md:flex-col md:w-[350px] md:h-screen md:border-r md:border-gray-200 p-2 w-full z-10">
+                {/* Recent Dates */}
+                <div className="flex md:flex-col overflow-hidden overflow-x-auto md:overflow-visible gap-2 md:gap-0">
+                    {recentDateButtons}
+                </div>
+                <div className="hidden md:block mt-4 pl-2">
                     <DayPicker
                         mode="single"
                         selected={calendarDate}
@@ -148,13 +152,8 @@ const DayNotesPage = () => {
             </div>
 
             {/* Right Side – Editor */}
-            <div className="flex-1 ml-[370px] pt-8">
-                <MemoizedEditorJs
-                    ref={editorRef}
-                    onSave={handleDataAfterSave}
-                    onChange={handleOnChange}
-                    initialData={initialData}
-                />
+            <div className="flex-1 md:pl-[370px] w-full p-4 md:pt-8">
+                {memoizedEditor}
             </div>
         </div>
     );

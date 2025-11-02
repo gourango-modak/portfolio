@@ -31,6 +31,7 @@
 
 .ce-toolbar__actions {
     left: 0px;
+    right: 100% !important;
 }
 
 .ce-title-block:empty::before {
