@@ -11,6 +11,7 @@ import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { prepareProjectData } from "./../../../components/project/projectUtils";
 import ProjectMetaDataModal from "./../../../components/project/ProjectMetaDataModal";
 import { fetchAllCategories } from "../../../data/categories";
+import { useAlert } from "../../../context/AlertProvider";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -19,23 +20,69 @@ export const CreateProject = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const editorRef = useRef(null);
-    const editorJsDataRef = useRef(null);
-    const metaDataRef = useRef({});
+    const editorJsFinalDataRef = useRef(null);
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
+    const [editorJsInitData, setEditorJsInitData] = useState(
+        getEditorJsInitialData(CONTENT_TYPES.PROJECT)
+    );
+    const [metaData, setMetaData] = useState({});
+
+    const NEW_PROJECT_STORE_KEY = "gm-new-project";
 
     const editorJsTools = useMemo(
         () => getEditorJsTools(CONTENT_TYPES.PROJECT),
         []
     );
-    const editorJsInitData = useMemo(
-        () => getEditorJsInitialData(CONTENT_TYPES.PROJECT),
-        []
-    );
+
+    const clearProject = () => {
+        localStorage.removeItem(NEW_PROJECT_STORE_KEY);
+    };
+
+    const loadProject = (project) => {
+        const projectObj = JSON.parse(project);
+        setMetaData(projectObj.metaData);
+        setEditorJsInitData(projectObj.content);
+    };
+
+    useEffect(() => {
+        const project = localStorage.getItem(NEW_PROJECT_STORE_KEY);
+        if (project) {
+            showAlert("Would you like to continue from where you left off?", {
+                type: "info",
+                buttons: [
+                    {
+                        label: "Cancel",
+                        type: "secondary",
+                        onClick: clearProject,
+                    },
+                    {
+                        label: "Okay",
+                        type: "primary",
+                        onClick: () => loadProject(project),
+                    },
+                ],
+            });
+        }
+    }, []);
+
+    const handleOnChange = async (options) => {
+        if (editorRef.current) {
+            await editorRef.current.save(options);
+        }
+    };
 
     const handleDataAfterSave = async ({ content }) => {
         if (content) {
-            editorJsDataRef.current = content;
-            setMetaDataModalOpen(true);
+            editorJsFinalDataRef.current = content;
+
+            localStorage.setItem(
+                NEW_PROJECT_STORE_KEY,
+                JSON.stringify({
+                    content,
+                    metaData: null,
+                })
+            );
         }
     };
 
@@ -57,6 +104,8 @@ export const CreateProject = () => {
                 if (editorRef.current) {
                     await editorRef.current.save();
                 }
+
+                setMetaDataModalOpen(true);
             }
         };
 
@@ -65,15 +114,31 @@ export const CreateProject = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
-        const newProject = prepareProjectData(editorJsDataRef.current, meta);
+        const newProject = prepareProjectData(
+            editorJsFinalDataRef.current,
+            meta
+        );
         downloadJson(newProject, getContentFileName(newProject.id));
         setMetaDataModalOpen(false);
         navigate("/admin/projects");
     };
 
     const handleMetaDataModalClose = (meta) => {
-        metaDataRef.current = meta;
         setMetaDataModalOpen(false);
+        setMetaData(meta);
+
+        const project = localStorage.getItem(NEW_PROJECT_STORE_KEY);
+
+        if (project) {
+            const projectObj = JSON.parse(project);
+            localStorage.setItem(
+                NEW_PROJECT_STORE_KEY,
+                JSON.stringify({
+                    content: projectObj.content,
+                    metaData: meta,
+                })
+            );
+        }
     };
 
     return (
@@ -84,6 +149,7 @@ export const CreateProject = () => {
                         <MemoizedEditorJs
                             ref={editorRef}
                             onSave={handleDataAfterSave}
+                            onChange={handleOnChange}
                             initialData={editorJsInitData}
                             tools={editorJsTools}
                         />
@@ -95,7 +161,7 @@ export const CreateProject = () => {
                 isOpen={isMetaDataModalOpen}
                 onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
-                initialData={metaDataRef.current}
+                initialData={metaData}
                 categories={categories}
             />
         </>
