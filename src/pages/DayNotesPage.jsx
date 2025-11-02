@@ -89,7 +89,6 @@ const DayNotesPage = () => {
                         date={date}
                         active={active}
                         onClick={() => setActiveDate(date)}
-                        hasNote={hasNote(date)}
                     />
                 );
             }),
@@ -105,7 +104,6 @@ const DayNotesPage = () => {
                 date={calendarDate}
                 active={isSameDay(calendarDate, activeDate)}
                 onClick={() => setActiveDate(calendarDate)}
-                hasNote={hasNote(calendarDate)}
             />
         </div>
     ) : null;
@@ -137,9 +135,12 @@ const DayNotesPage = () => {
                         }}
                         modifiersStyles={{
                             hasNote: {
-                                backgroundColor: "#dcfce7",
+                                backgroundColor: "#eef2ff",
                                 borderRadius: "50%",
-                                color: "#166534",
+                                color: "#4f39f6",
+                            },
+                            selected: {
+                                color: "#4f39f6",
                             },
                         }}
                     />

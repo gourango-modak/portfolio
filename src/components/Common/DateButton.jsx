@@ -1,6 +1,6 @@
 import { CalendarDays } from "lucide-react";
 
-export const DateButton = ({ date, active, onClick, hasNote }) => {
+export const DateButton = ({ date, active, onClick }) => {
     const getLocalISODate = (date) => {
         if (!(date instanceof Date)) return "";
         const localDate = new Date(date);
@@ -34,7 +34,6 @@ export const DateButton = ({ date, active, onClick, hasNote }) => {
                     </div>
                 </div>
             </div>
-            {hasNote && <span className="w-2 h-2 rounded-full bg-green-500" />}
         </button>
     );
 };
