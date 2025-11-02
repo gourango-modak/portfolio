@@ -27,14 +27,23 @@ const LoginPage = () => {
         }
     };
 
+    const handleOnChange = (e) => {
+        e.preventDefault();
+        setPassword(e.target.value);
+        setError(null);
+    };
+
     return (
         <div className="flex items-center justify-center h-screen">
             <form onSubmit={handleSubmit} className="md:w-80 m-6">
+                <h2 className="text-4xl font-semibold text-center mb-8 text-slate-700">
+                    Login
+                </h2>
                 <input
                     type="password"
                     placeholder="Enter password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleOnChange}
                     className={`w-full px-4 py-2 border rounded-lg mb-3 outline-none resize-none focus:ring-2 hide-scrollbar ${
                         error
                             ? "border-red-500 focus:ring-red-500 focus:border-red-500"
@@ -46,7 +55,7 @@ const LoginPage = () => {
                     type="submit"
                     className="w-full bg-indigo-600 text-white rounded px-3 py-2 hover:bg-indigo-700 cursor-pointer"
                 >
-                    Next
+                    Sign In
                 </button>
             </form>
         </div>

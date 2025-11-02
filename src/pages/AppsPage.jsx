@@ -2,25 +2,25 @@ import { PenTool, Type } from "lucide-react";
 import SectionHeader from "../components/section/SectionHeader";
 import { AppCard } from "../components/common/AppCard";
 
-const applications = [
+export const APPLICATIONS = [
     {
         name: "Canvas Studio",
         description:
-            "Sketch, design, and visualize ideas on a flexible drawing board.",
+            "Sketch, design, and visualize ideas on a flexible and intuitive drawing board.",
         icon: PenTool,
         link: "/applications/canvas-studio",
     },
     {
         name: "Notepad",
         description:
-            "Write, style, and organize your thoughts in a clean, distraction-free editor.",
+            "Write, style, and organize your thoughts in a clean, distraction-free writing space.",
         icon: Type,
         link: "/applications/notepad",
     },
     {
         name: "DayNotes",
         description:
-            "Capture your daily tasks, notes, and ideas in a simple, date-focused editor. Track your last week’s entries, plan ahead, and keep everything organized at a glance.",
+            "Capture daily tasks, notes, and ideas in a simple, date-focused editor. Review recent entries and stay organized at a glance.",
         icon: Type,
         link: "/applications/daynotes",
     },
