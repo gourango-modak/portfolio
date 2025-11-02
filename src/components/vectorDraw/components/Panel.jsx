@@ -120,7 +120,7 @@ export const Panel = ({
                 left: position.x,
                 top: position.y,
             }}
-            className={`absolute ${isVisible ? "visible" : "invisible"}`}
+            className={`absolute ${isVisible ? "visible" : "hidden"}`}
         >
             {children}
         </div>

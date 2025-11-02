@@ -5,7 +5,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import ContactPage from "./pages/ContactPage";
-import ToolsPage from "./pages/ToolsPage";
+import AppsPage from "./pages/AppsPage";
 import CanvasStudioPage from "./pages/CanvasStudioPage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
@@ -23,13 +23,13 @@ export const ROUTES = [
     { path: "/projects", component: ProjectsPage, layout: true },
     { path: "/projects/:slug", component: ProjectDetailPage, layout: true },
     { path: "/contact", component: ContactPage, layout: true },
-    { path: "/tools", component: ToolsPage, layout: true },
+    { path: "/applications", component: AppsPage, layout: true },
     {
-        path: "/tools/canvas",
+        path: "/applications/canvas-studio",
         component: CanvasStudioPage,
     },
     {
-        path: "/tools/notepad",
+        path: "/applications/notepad",
         component: NotepadPage,
     },
     { path: "/login", component: LoginPage },

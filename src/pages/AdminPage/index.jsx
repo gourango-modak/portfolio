@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import Sidebar from "./Sidebar";
 import { DashboardPanel } from "./DashboardPanel";
 import { BlogsPanel } from "./BlogsPanel";
-import { ToolsPanel } from "./ToolsPanel";
+import { AppsPanel } from "./AppsPanel";
 import { ProjectsPanel } from "./ProjectsPanel";
 import { CategoriesPanel } from "./CategoriesPanel";
 import { useNavigate, useParams } from "react-router-dom";
@@ -36,8 +36,8 @@ const AdminPage = () => {
                 return <ProjectsPanel />;
             case "categories":
                 return <CategoriesPanel />;
-            case "tools":
-                return <ToolsPanel />;
+            case "applications":
+                return <AppsPanel />;
             default:
                 return <DashboardPanel />;
         }

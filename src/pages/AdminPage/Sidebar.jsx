@@ -3,10 +3,10 @@ import {
     FileText,
     Box,
     Tag,
-    Settings,
     Menu,
     X,
     LogOut,
+    ToolCase,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -36,9 +36,9 @@ const Sidebar = ({ currentPage, onNavigate, sidebarOpen, setSidebarOpen }) => {
             icon: <Tag className="w-5 h-5" />,
         },
         {
-            page: "tools",
-            label: "Tools",
-            icon: <Settings className="w-5 h-5" />,
+            page: "applications",
+            label: "Applications",
+            icon: <ToolCase className="w-5 h-5" />,
         },
     ];
 

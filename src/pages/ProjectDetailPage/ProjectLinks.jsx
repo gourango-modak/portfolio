@@ -1,5 +1,5 @@
 import { Github, Rocket } from "lucide-react";
-import { ToolCard } from "../../components/common/ToolCard";
+import { AppCard } from "../../components/common/AppCard";
 
 const ProjectLinks = ({ liveUrl, repoUrl }) => {
     if (!liveUrl && !repoUrl) return null;
@@ -8,9 +8,9 @@ const ProjectLinks = ({ liveUrl, repoUrl }) => {
         <section>
             <div className="grid sm:grid-cols-2 gap-6 pt-6">
                 {liveUrl && (
-                    <ToolCard
+                    <AppCard
                         key={liveUrl}
-                        tool={{
+                        app={{
                             name: "Live Demo",
                             description: "Experience the app in action.",
                             icon: Rocket,
@@ -19,9 +19,9 @@ const ProjectLinks = ({ liveUrl, repoUrl }) => {
                     />
                 )}
                 {repoUrl && (
-                    <ToolCard
+                    <AppCard
                         key={repoUrl}
-                        tool={{
+                        app={{
                             name: "Source Code",
                             description: "Explore the full code on GitHub.",
                             icon: Github,

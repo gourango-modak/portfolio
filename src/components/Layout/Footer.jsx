@@ -46,10 +46,10 @@ const Footer = () => {
                             Contact
                         </Link>
                         <Link
-                            to="/tools"
+                            to="/applications"
                             className="hover:text-indigo-600 transition-colors duration-200"
                         >
-                            Tools
+                            Applications
                         </Link>
                     </nav>
 

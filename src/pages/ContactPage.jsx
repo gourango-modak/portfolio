@@ -36,7 +36,7 @@ const ContactPage = () => {
 
     const InfoCard = ({ icon, title, subtitle, link, display }) => (
         <a
-            href={link}
+            href={link ? link : null}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-start gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer w-full"
@@ -50,14 +50,9 @@ const ContactPage = () => {
                 </h3>
                 <p className="text-slate-500 text-sm">{subtitle}</p>
                 {link ? (
-                    <a
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-600 hover:underline mt-1 text-sm break-words"
-                    >
+                    <p className="text-indigo-600 hover:underline mt-1 text-sm break-words">
                         {display}
-                    </a>
+                    </p>
                 ) : (
                     <span className="text-slate-700 mt-1 text-sm break-words">
                         {display}

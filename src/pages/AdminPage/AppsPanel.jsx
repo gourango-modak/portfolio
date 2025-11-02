@@ -1,7 +1,7 @@
 import { PenSquare, PenTool, PlusSquare, Type } from "lucide-react";
-import { ToolCard } from "../../components/common/ToolCard";
+import { AppCard } from "../../components/common/AppCard";
 
-const tools = [
+const applications = [
     {
         name: "Canvas Studio",
         description:
@@ -30,11 +30,11 @@ const tools = [
     },
 ];
 
-export const ToolsPanel = () => {
+export const AppsPanel = () => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-            {tools.map((tool) => (
-                <ToolCard key={tool.name} tool={tool} />
+            {applications.map((app) => (
+                <AppCard key={app.name} app={app} />
             ))}
         </div>
     );
