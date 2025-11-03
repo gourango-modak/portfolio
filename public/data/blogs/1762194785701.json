@@ -1,7 +1,10 @@
 {
   "description": "Learn how to master the Monitor class in C# for thread synchronization. This blog explains mutual exclusion, thread coordination with Wait and Pulse, timed locks, and real-world use cases like producer-consumer pipelines, all with clear examples for building safe, high-performance multithreaded applications.",
   "readTime": 15,
-  "status": "In progress",
+  "status": {
+    "label": "In progress",
+    "value": "In progress"
+  },
   "id": 1762194785701,
   "createdAt": 1762194785085,
   "updatedAt": 1762194785085,
@@ -9,7 +12,7 @@
   "tags": [],
   "slug": "mastering-the-monitor-class-in-c-deep-dive-with-examples-and-use-cases-1762194785701",
   "content": {
-    "time": 1762194747668,
+    "time": 1762194970073,
     "blocks": [
       {
         "id": "UE7Tn7jJ7B",
@@ -59,7 +62,9 @@
         "type": "list",
         "data": {
           "style": "ordered",
-          "meta": {},
+          "meta": {
+            "counterType": "numeric"
+          },
           "items": [
             {
               "content": "Mutual exclusion: Ensuring only one thread accesses a shared resource at a time.\n",
@@ -100,7 +105,7 @@
         "id": "qzUi9iZXPD",
         "type": "code",
         "data": {
-          "language": "csharp",
+          "language": "",
           "code": "private static readonly object _lock = new object();\nprivate static int _counter = 0;\n\npublic static void IncrementCounter()\n{\n    Monitor.Enter(_lock);       // Acquire lock\n    try\n    {\n        _counter++;\n        Console.WriteLine($\"Counter: {_counter}\");\n    }\n    finally\n    {\n        Monitor.Exit(_lock);    // Release lock\n    }\n}\n"
         }
       },
@@ -140,7 +145,7 @@
         "id": "t5aWY-kwEm",
         "type": "header",
         "data": {
-          "text": "<code class=\"inline-code\">TryEnter</code> — Timed Lock Acquisition",
+          "text": "TryEnter — Timed Lock Acquisition",
           "level": 2
         }
       },
@@ -155,7 +160,7 @@
         "id": "LFWouXplMu",
         "type": "code",
         "data": {
-          "language": "csharp",
+          "language": "",
           "code": "if (Monitor.TryEnter(_lock, TimeSpan.FromSeconds(2)))\n{\n    try\n    {\n        Console.WriteLine(\"Lock acquired, processing...\");\n        Thread.Sleep(1000);\n    }\n    finally\n    {\n        Monitor.Exit(_lock);\n    }\n}\nelse\n{\n    Console.WriteLine(\"Could not acquire lock, moving on...\");\n}\n"
         }
       },
@@ -276,7 +281,7 @@
         "id": "3mj8z7k-IG",
         "type": "code",
         "data": {
-          "language": "csharp",
+          "language": "",
           "code": "using System;\nusing System.Collections.Generic;\nusing System.Threading;\n\npublic class ProducerConsumerQueue\n{\n    private readonly Queue<int> _queue = new();\n    private readonly object _lock = new();\n    private const int MAX_SIZE = 5;\n\n    public void Produce(int item)\n    {\n        Monitor.Enter(_lock);\n        try\n        {\n            while (_queue.Count >= MAX_SIZE)\n                Monitor.Wait(_lock); // Wait if queue is full\n\n            _queue.Enqueue(item);\n            Console.WriteLine($\"Produced: {item}\");\n            Monitor.Pulse(_lock);    // Signal consumer\n        }\n        finally\n        {\n            Monitor.Exit(_lock);\n        }\n    }\n\n    public void Consume()\n    {\n        Monitor.Enter(_lock);\n        try\n        {\n            while (_queue.Count == 0)\n                Monitor.Wait(_lock); // Wait if queue is empty\n\n            int item = _queue.Dequeue();\n            Console.WriteLine($\"Consumed: {item}\");\n            Monitor.Pulse(_lock);   // Signal producer\n        }\n        finally\n        {\n            Monitor.Exit(_lock);\n        }\n    }\n}\n"
         }
       },
@@ -291,7 +296,7 @@
         "id": "3QRrsk4RQe",
         "type": "code",
         "data": {
-          "language": "csharp",
+          "language": "",
           "code": "var pc = new ProducerConsumerQueue();\n\nnew Thread(() => {\n    for (int i = 1; i <= 10; i++)\n    {\n        pc.Produce(i);\n        Thread.Sleep(300);\n    }\n}).Start();\n\nnew Thread(() => {\n    for (int i = 1; i <= 10; i++)\n    {\n        pc.Consume();\n        Thread.Sleep(500);\n    }\n}).Start();\n"
         }
       },
@@ -353,7 +358,7 @@
         "id": "C927t_1kxA",
         "type": "code",
         "data": {
-          "language": "csharp",
+          "language": "",
           "code": "Monitor.Enter(_lock);\ntry\n{\n    while (!condition)\n        Monitor.Wait(_lock); // Wait until condition becomes true\n\n    // Critical section code here\n}\nfinally\n{\n    Monitor.Exit(_lock);\n}\n"
         }
       },
@@ -402,7 +407,9 @@
         "type": "list",
         "data": {
           "style": "ordered",
-          "meta": {},
+          "meta": {
+            "counterType": "numeric"
+          },
           "items": [
             {
               "content": "Producer-Consumer Pipelines\nBackground tasks producing data (e.g., file downloads)\nWorkers consuming data (e.g., processing or uploading)",
@@ -463,7 +470,9 @@
         "type": "list",
         "data": {
           "style": "ordered",
-          "meta": {},
+          "meta": {
+            "counterType": "numeric"
+          },
           "items": [
             {
               "content": "Always use <code data-start=\"6506\" data-end=\"6515\">finally</code> block with Exit\nPrevents deadlocks if exceptions occur.\n",
@@ -509,12 +518,12 @@
               "items": []
             },
             {
-              "content": "Provides mutual exclusion (<code data-start=\"6977\" data-end=\"6984\">Enter</code> / <code data-start=\"6987\" data-end=\"6993\">Exit</code>) and thread coordination (<code data-start=\"7024\" data-end=\"7030\">Wait</code> / <code data-start=\"7033\" data-end=\"7040\">Pulse</code> / <code data-start=\"7043\" data-end=\"7053\">PulseAll</code>).\n",
+              "content": "Provides mutual exclusion (<code class=\"inline-code\">Enter</code> / <code class=\"inline-code\">Exit</code>) and thread coordination (<code class=\"inline-code\">Wait</code> / <code class=\"inline-code\">Pulse</code> / <code class=\"inline-code\">PulseAll</code>).\n",
               "meta": {},
               "items": []
             },
             {
-              "content": "<code data-start=\"7058\" data-end=\"7064\">lock</code> is just a simpler wrapper for <code data-start=\"7099\" data-end=\"7119\">Monitor.Enter/Exit</code>.\n",
+              "content": "<code data-start=\"7058\" data-end=\"7064\">lock</code> is just a simpler wrapper for <code class=\"inline-code\">Monitor.Enter/Exit</code>.\n",
               "meta": {},
               "items": []
             },
