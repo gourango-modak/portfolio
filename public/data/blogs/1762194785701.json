@@ -12,7 +12,7 @@
   "tags": [],
   "slug": "mastering-the-monitor-class-in-c-deep-dive-with-examples-and-use-cases-1762194785701",
   "content": {
-    "time": 1762194970073,
+    "time": 1762195403676,
     "blocks": [
       {
         "id": "UE7Tn7jJ7B",
@@ -105,7 +105,7 @@
         "id": "qzUi9iZXPD",
         "type": "code",
         "data": {
-          "language": "",
+          "language": "csharp",
           "code": "private static readonly object _lock = new object();\nprivate static int _counter = 0;\n\npublic static void IncrementCounter()\n{\n    Monitor.Enter(_lock);       // Acquire lock\n    try\n    {\n        _counter++;\n        Console.WriteLine($\"Counter: {_counter}\");\n    }\n    finally\n    {\n        Monitor.Exit(_lock);    // Release lock\n    }\n}\n"
         }
       },
@@ -160,7 +160,7 @@
         "id": "LFWouXplMu",
         "type": "code",
         "data": {
-          "language": "",
+          "language": "csharp",
           "code": "if (Monitor.TryEnter(_lock, TimeSpan.FromSeconds(2)))\n{\n    try\n    {\n        Console.WriteLine(\"Lock acquired, processing...\");\n        Thread.Sleep(1000);\n    }\n    finally\n    {\n        Monitor.Exit(_lock);\n    }\n}\nelse\n{\n    Console.WriteLine(\"Could not acquire lock, moving on...\");\n}\n"
         }
       },
@@ -281,7 +281,7 @@
         "id": "3mj8z7k-IG",
         "type": "code",
         "data": {
-          "language": "",
+          "language": "csharp",
           "code": "using System;\nusing System.Collections.Generic;\nusing System.Threading;\n\npublic class ProducerConsumerQueue\n{\n    private readonly Queue<int> _queue = new();\n    private readonly object _lock = new();\n    private const int MAX_SIZE = 5;\n\n    public void Produce(int item)\n    {\n        Monitor.Enter(_lock);\n        try\n        {\n            while (_queue.Count >= MAX_SIZE)\n                Monitor.Wait(_lock); // Wait if queue is full\n\n            _queue.Enqueue(item);\n            Console.WriteLine($\"Produced: {item}\");\n            Monitor.Pulse(_lock);    // Signal consumer\n        }\n        finally\n        {\n            Monitor.Exit(_lock);\n        }\n    }\n\n    public void Consume()\n    {\n        Monitor.Enter(_lock);\n        try\n        {\n            while (_queue.Count == 0)\n                Monitor.Wait(_lock); // Wait if queue is empty\n\n            int item = _queue.Dequeue();\n            Console.WriteLine($\"Consumed: {item}\");\n            Monitor.Pulse(_lock);   // Signal producer\n        }\n        finally\n        {\n            Monitor.Exit(_lock);\n        }\n    }\n}\n"
         }
       },
@@ -296,7 +296,7 @@
         "id": "3QRrsk4RQe",
         "type": "code",
         "data": {
-          "language": "",
+          "language": "csharp",
           "code": "var pc = new ProducerConsumerQueue();\n\nnew Thread(() => {\n    for (int i = 1; i <= 10; i++)\n    {\n        pc.Produce(i);\n        Thread.Sleep(300);\n    }\n}).Start();\n\nnew Thread(() => {\n    for (int i = 1; i <= 10; i++)\n    {\n        pc.Consume();\n        Thread.Sleep(500);\n    }\n}).Start();\n"
         }
       },
@@ -358,7 +358,7 @@
         "id": "C927t_1kxA",
         "type": "code",
         "data": {
-          "language": "",
+          "language": "csharp",
           "code": "Monitor.Enter(_lock);\ntry\n{\n    while (!condition)\n        Monitor.Wait(_lock); // Wait until condition becomes true\n\n    // Critical section code here\n}\nfinally\n{\n    Monitor.Exit(_lock);\n}\n"
         }
       },
