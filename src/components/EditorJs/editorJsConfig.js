@@ -16,6 +16,7 @@ import EditorJsCodeBlock from "./blocks/EditorJsCodeBlock";
 import EditorJsGalleryBlock from "./blocks/EditorJsGalleryBlock";
 import EditorJsListBlock from "./blocks/EditorJsListBlock";
 import EditorJsImageBlock from "./blocks/EditorJsImageBlock";
+import EditorJsTableBlock from "./blocks/EditorJsTableBlock";
 
 export const EDITOR_JS_TOOLS = {
     header: {
@@ -174,4 +175,5 @@ export const EDITORJS_BLOCKS = {
     image: EditorJsImageBlock,
     code: EditorJsCodeBlock,
     gallery: EditorJsGalleryBlock,
+    table: EditorJsTableBlock,
 };
