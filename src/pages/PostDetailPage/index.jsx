@@ -27,7 +27,7 @@ const PostDetailPage = () => {
                     ];
 
                     return (
-                        <div className="container mx-auto px-6 md:px-12 md:max-w-6xl lg:flex lg:gap-12">
+                        <div className="container mx-auto px-6 md:px-12 md:max-w-7xl lg:flex lg:gap-12">
                             {/* Left Column: TOC (fixed inside this space) */}
                             <div className="w-64 hidden lg:block">
                                 <TableOfContents

@@ -64,7 +64,7 @@ const ContactPage = () => {
 
     return (
         <section className="pt-30 pb-25 bg-gray-50">
-            <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
+            <div className="container mx-auto px-6 md:px-12 md:max-w-7xl">
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
                     <h1 className="text-4xl font-bold text-slate-900">
                         Get In Touch

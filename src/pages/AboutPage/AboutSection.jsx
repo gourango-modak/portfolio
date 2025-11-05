@@ -5,7 +5,7 @@ import profile from "../../assets/gm_original.png"; // adjust path to your image
 const AboutSection = () => {
     return (
         <section className="pt-30 pb-20 min-h-screen bg-gray-50">
-            <div className="container mx-auto px-6 md:px-12 md:max-w-6xl">
+            <div className="container mx-auto px-6 md:px-12 md:max-w-7xl">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
                     {/* Image */}
                     <div className="order-1 lg:order-2 flex justify-center lg:justify-start items-start">

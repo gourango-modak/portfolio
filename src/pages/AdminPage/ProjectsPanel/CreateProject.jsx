@@ -143,7 +143,7 @@ export const CreateProject = () => {
 
     return (
         <>
-            <div className="max-w-6xl mx-auto lg:px-4 pt-2 relative">
+            <div className="max-w-7xl mx-auto lg:px-4 pt-2 relative">
                 <div className="bg-white px-6 md:pr-21 flex flex-col">
                     <div className="flex-1 min-h-[70vh]">
                         <MemoizedEditorJs

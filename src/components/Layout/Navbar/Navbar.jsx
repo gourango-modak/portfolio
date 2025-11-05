@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-white shadow-sm fixed w-full top-0 z-50">
-            <div className="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center md:max-w-6xl">
+            <div className="container mx-auto px-6 md:px-12 py-4 flex justify-between items-center md:max-w-7xl">
                 <NavLink
                     to="/"
                     className="text-2xl font-bold text-indigo-600"

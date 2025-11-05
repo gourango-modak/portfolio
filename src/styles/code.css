@@ -4,6 +4,11 @@ code[class*="language-"],
     background: #303030 !important;
 }
 
+.language-none {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
 .editorjs-content code .inline-code {
     background: #303030;
     color: white;

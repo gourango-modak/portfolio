@@ -2,8 +2,7 @@ const EditorJsListBlock = ({ style, items }) => {
     const isOrdered = style === "ordered";
     const ListTag = isOrdered ? "ol" : "ul";
 
-    // Prose-like left padding (adjusted for text size)
-    const paddingClass = "pl-6 sm:pl-7";
+    const paddingClass = "pl-6 sm:pl-7"; // consistent padding for nested lists
 
     return (
         <ListTag
@@ -15,11 +14,14 @@ const EditorJsListBlock = ({ style, items }) => {
       `}
         >
             {items.map((item, i) => (
-                <li
-                    key={i}
-                    className="mb-2 pl-2 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: item.content }}
-                />
+                <li key={i} className="mb-2 pl-2 leading-relaxed">
+                    <div dangerouslySetInnerHTML={{ __html: item.content }} />
+
+                    {/* ✅ Render nested list recursively if it exists */}
+                    {item.items && item.items.length > 0 && (
+                        <EditorJsListBlock style={style} items={item.items} />
+                    )}
+                </li>
             ))}
         </ListTag>
     );

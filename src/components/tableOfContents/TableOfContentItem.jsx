@@ -54,7 +54,7 @@ const TableOfContentItem = ({
 
     return (
         <li id={`toc-${item.id}`}>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between text-sm">
                 <a
                     href="#"
                     onClick={handleClick}

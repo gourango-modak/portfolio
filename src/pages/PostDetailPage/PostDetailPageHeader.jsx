@@ -8,7 +8,7 @@ const PostDetailPageHeader = ({ post }) => {
             </h1>
 
             {/* Project Meta */}
-            <div className="flex flex-wrap gap-y-3 gap-x-6 text-gray-600 pb-6 border-b border-gray-200">
+            <div className="flex flex-wrap gap-y-3 gap-x-6 text-gray-600 pb-6 border-b border-gray-200 text-sm">
                 {/* Author */}
                 <span className="flex items-center gap-2">
                     <span className="text-gray-400">✍️</span>
