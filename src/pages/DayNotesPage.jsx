@@ -69,7 +69,7 @@ const DayNotesPage = () => {
 
         if (!isDateVisible(date)) {
             setVisibleDates((prevDates) => {
-                if (prevDates.length === MAX_DAYS) {
+                if (prevDates.length === RECENT_DAYS_COUNT) {
                     prevDates.pop();
                 }
                 return [...prevDates, date];

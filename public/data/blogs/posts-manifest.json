@@ -1,5 +1,5 @@
 {
-  "totalPosts": 2,
+  "totalPosts": 3,
   "topTags": [],
   "totalInProgressPosts": 1,
   "posts": [
@@ -21,6 +21,19 @@
       "slug": "mastering-the-monitor-class-in-c-deep-dive-with-examples-and-use-cases-1762194785701",
       "createdAt": 1762194785085,
       "id": 1762194785701,
+      "status": {
+        "label": "In progress",
+        "value": "In progress"
+      }
+    },
+    {
+      "title": "Redis Replication Internals",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762363509787.json",
+      "tags": [],
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+      "slug": "redis-replication-internals-1762363509787",
+      "createdAt": 1762363509606,
+      "id": 1762363509787,
       "status": "In progress"
     }
   ]
