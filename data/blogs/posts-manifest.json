@@ -1,7 +1,7 @@
 {
-  "totalPosts": 1,
+  "totalPosts": 3,
   "topTags": [],
-  "totalInProgressPosts": 0,
+  "totalInProgressPosts": 1,
   "posts": [
     {
       "title": "Redis Replication Internals",
@@ -12,6 +12,29 @@
       "createdAt": 1762094023166,
       "id": 1762094023721,
       "status": "Completed"
+    },
+    {
+      "title": "Mastering the Monitor Class in C#: Deep Dive with Examples and Use Cases",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762194785701.json",
+      "tags": [],
+      "description": "Learn how to master the Monitor class in C# for thread synchronization. This blog explains mutual exclusion, thread coordination with Wait and Pulse, timed locks, and real-world use cases like producer-consumer pipelines, all with clear examples for building safe, high-performance multithreaded applications.",
+      "slug": "mastering-the-monitor-class-in-c-deep-dive-with-examples-and-use-cases-1762194785701",
+      "createdAt": 1762194785085,
+      "id": 1762194785701,
+      "status": {
+        "label": "In progress",
+        "value": "In progress"
+      }
+    },
+    {
+      "title": "Redis Replication Internals",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762363509787.json",
+      "tags": [],
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+      "slug": "redis-replication-internals-1762363509787",
+      "createdAt": 1762363509606,
+      "id": 1762363509787,
+      "status": "In progress"
     }
   ]
 }
