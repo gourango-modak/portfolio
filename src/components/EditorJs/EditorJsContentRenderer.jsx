@@ -1,4 +1,4 @@
-import { shouldRenderBlock } from "./editorJsUtils";
+import { shouldRenderBlock } from "./utils";
 import RenderBlock from "./RenderBlock";
 
 const EditorJsContentRenderer = ({ content }) => {

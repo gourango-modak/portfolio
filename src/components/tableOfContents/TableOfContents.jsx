@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import TableOfContentList from "./TableOfContentList";
 import { useActiveHeading } from "./hooks/useActiveHeading";
 import { scrollToSection } from "./tableOfContentsUtils";
-import { flattenHeadings } from "../editorJs/editorJsUtils";
+import { flattenHeadings } from "../editorJs/utils";
 import { useTableOfContentScroll } from "./hooks/useTableOfContentScroll";
 
 const TableOfContents = ({ headings }) => {

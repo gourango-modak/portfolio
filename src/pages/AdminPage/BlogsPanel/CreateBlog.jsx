@@ -3,7 +3,7 @@ import EditorJs from "../../../components/editorJs/EditorJs";
 import {
     getEditorJsInitialData,
     getEditorJsTools,
-} from "../../../components/editorJs/editorJsConfig";
+} from "../../../components/editorJs/config";
 import { downloadJson, getContentFileName } from "../../../utils/common";
 import { useNavigate } from "react-router-dom";
 import { CONTENT_TYPES } from "../../../config";
@@ -11,6 +11,10 @@ import PostMetaDataModal from "../../../components/post/PostMetaDataModal";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { preparePostData } from "../../../components/post/postUtils";
 import { useAlert } from "../../../context/AlertProvider";
+import {
+    downloadContentImages,
+    processContentData,
+} from "../../../components/editorJs/utils";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -104,7 +108,11 @@ export const CreateBlog = () => {
 
     const saveMetaData = async (meta) => {
         const newPost = preparePostData(editorJsFinalDataRef.current, meta);
-        downloadJson(newPost, getContentFileName(newPost.id));
+        downloadContentImages(newPost);
+        downloadJson(
+            processContentData(newPost),
+            getContentFileName(newPost.id)
+        );
         setMetaDataModalOpen(false);
         navigate("/admin/blogs");
     };

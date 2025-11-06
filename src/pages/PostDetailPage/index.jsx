@@ -4,7 +4,7 @@ import PostDetailPageHeader from "./PostDetailPageHeader";
 import { fetchPostBySlug } from "../../data/posts";
 import EditorJsContentRenderer from "./../../components/editorJs/EditorJsContentRenderer";
 import TableOfContents from "../../components/tableOfContents/TableOfContents";
-import { extractHeadings } from "../../components/editorJs/editorJsUtils";
+import { extractHeadings } from "../../components/editorJs/utils";
 import ResourceLoader from "../../components/common/ResourceLoader";
 import { truncateBreadcrumb } from "../../utils/common";
 import { CONTENT_TYPES } from "../../config";

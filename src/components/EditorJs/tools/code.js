@@ -1,4 +1,4 @@
-import { CUSTOM_TOOLS } from "../editorJsConfig";
+import { CUSTOM_TOOLS } from "../config";
 
 class Code {
     static get toolbox() {

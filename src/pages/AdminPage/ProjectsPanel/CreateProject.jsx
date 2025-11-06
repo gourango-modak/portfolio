@@ -3,7 +3,7 @@ import EditorJs from "../../../components/editorJs/EditorJs";
 import {
     getEditorJsInitialData,
     getEditorJsTools,
-} from "../../../components/editorJs/editorJsConfig";
+} from "../../../components/editorJs/config";
 import { downloadJson, getContentFileName } from "../../../utils/common";
 import { useNavigate } from "react-router-dom";
 import { CONTENT_TYPES } from "../../../config";
@@ -12,6 +12,10 @@ import { prepareProjectData } from "./../../../components/project/projectUtils";
 import ProjectMetaDataModal from "./../../../components/project/ProjectMetaDataModal";
 import { fetchAllCategories } from "../../../data/categories";
 import { useAlert } from "../../../context/AlertProvider";
+import {
+    downloadContentImages,
+    processContentData,
+} from "../../../components/editorJs/utils";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -118,7 +122,11 @@ export const CreateProject = () => {
             editorJsFinalDataRef.current,
             meta
         );
-        downloadJson(newProject, getContentFileName(newProject.id));
+        downloadContentImages(newProject);
+        downloadJson(
+            processContentData(newProject),
+            getContentFileName(newProject.id)
+        );
         setMetaDataModalOpen(false);
         navigate("/admin/projects");
     };

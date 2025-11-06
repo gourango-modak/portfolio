@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { flattenHeadings } from "../../editorJs/editorJsUtils";
+import { flattenHeadings } from "../../editorJs/utils";
 
 /**
  * Hook to track active heading based on scroll

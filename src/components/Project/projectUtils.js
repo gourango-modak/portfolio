@@ -1,9 +1,5 @@
 import { buildSlug, generateId, isValidUrl } from "../../utils/common";
-import {
-    extractTagline,
-    extractTags,
-    extractTitle,
-} from "../editorJs/editorJsUtils";
+import { extractTagline, extractTags, extractTitle } from "../editorJs/utils";
 
 export const prepareProjectData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);

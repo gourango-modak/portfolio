@@ -25,6 +25,8 @@ export const CATEGORY_FILES_BASE_URL = `${BASE_URL}/categories`;
 export const CATEGORY_MANIFEST_FILE_NAME = "categories-manifest.json";
 export const CATEGORY_MANIFEST_FILE_URL = `${BASE_URL}/categories/${CATEGORY_MANIFEST_FILE_NAME}`;
 
+export const IMAGES_BASE_URL = `${BASE_URL}/images`;
+
 export const CONTENT_TYPES = {
     BLOG: "blog",
     PROJECT: "project",

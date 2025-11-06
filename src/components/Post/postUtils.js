@@ -1,5 +1,5 @@
 import { buildSlug, generateId } from "../../utils/common";
-import { extractTags, extractTitle } from "../editorJs/editorJsUtils";
+import { extractTags, extractTitle, updateImageUrls } from "../editorJs/utils";
 
 export const preparePostData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);

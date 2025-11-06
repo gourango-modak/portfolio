@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import "./EditorJs.css";
-import { EDITOR_JS_TOOLS } from "./editorJsConfig";
+import { EDITOR_JS_TOOLS } from "./config";
 import { useEditor } from "./hooks/useEditor";
 
 const EditorJs = forwardRef(

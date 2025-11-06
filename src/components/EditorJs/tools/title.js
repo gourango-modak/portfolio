@@ -1,4 +1,4 @@
-import { CUSTOM_TOOLS } from "../editorJsConfig";
+import { CUSTOM_TOOLS } from "../config";
 
 export default class Title {
     static get toolbox() {

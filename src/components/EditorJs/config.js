@@ -1,6 +1,5 @@
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import ImageTool from "@editorjs/image";
 import Paragraph from "@editorjs/paragraph";
 import Table from "@editorjs/table";
 import Code from "./tools/code";
@@ -17,56 +16,7 @@ import EditorJsGalleryBlock from "./blocks/EditorJsGalleryBlock";
 import EditorJsListBlock from "./blocks/EditorJsListBlock";
 import EditorJsImageBlock from "./blocks/EditorJsImageBlock";
 import EditorJsTableBlock from "./blocks/EditorJsTableBlock";
-
-export const EDITOR_JS_TOOLS = {
-    header: {
-        class: Header,
-        inlineToolbar: true,
-        config: {
-            defaultLevel: 1,
-        },
-    },
-    list: {
-        class: List,
-        inlineToolbar: true,
-    },
-    image: {
-        class: ImageTool,
-        config: {
-            uploader: {
-                // This mock uploader returns the path to a local asset.
-                // Replace this with your actual image upload logic.
-                async uploadByFile(file) {
-                    return {
-                        success: 1,
-                        file: {
-                            url: `/src/assets/${file.name}`,
-                        },
-                    };
-                },
-                // Allows uploading images via a URL.
-                async uploadByUrl(url) {
-                    return {
-                        success: 1,
-                        file: { url },
-                    };
-                },
-            },
-        },
-    },
-    paragraph: {
-        class: Paragraph,
-        // config: {
-        //     preserveBlank: true, // This option ensures empty paragraph blocks are saved.
-        // },
-        inlineToolbar: true,
-    },
-    table: Table,
-    code: Code,
-    title: Title,
-    tags: TagList,
-    inlineCode: InlineCode,
-};
+import ResizableImage from "./tools/ResizableImage";
 
 export const CUSTOM_TOOLS = {
     CODE: {
@@ -87,6 +37,36 @@ export const CUSTOM_TOOLS = {
     INLINE_CODE: {
         TYPE: "inlineCode",
     },
+    RESIZABLE_IMAGE: {
+        TYPE: "resizableImage",
+    },
+};
+
+export const EDITOR_JS_TOOLS = {
+    header: {
+        class: Header,
+        inlineToolbar: true,
+        config: {
+            defaultLevel: 1,
+        },
+    },
+    list: {
+        class: List,
+        inlineToolbar: true,
+    },
+    paragraph: {
+        class: Paragraph,
+        // config: {
+        //     preserveBlank: true, // This option ensures empty paragraph blocks are saved.
+        // },
+        inlineToolbar: true,
+    },
+    table: Table,
+    [CUSTOM_TOOLS.CODE.TYPE]: Code,
+    [CUSTOM_TOOLS.TITLE.TYPE]: Title,
+    [CUSTOM_TOOLS.TAGLIST.TYPE]: TagList,
+    [CUSTOM_TOOLS.INLINE_CODE.TYPE]: InlineCode,
+    [CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE]: ResizableImage,
 };
 
 export const getEditorJsTools = (contentType) => {

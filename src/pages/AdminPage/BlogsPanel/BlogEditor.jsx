@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import EditorJs from "../../../components/editorJs/EditorJs";
-import { getEditorJsTools } from "../../../components/editorJs/editorJsConfig";
+import { getEditorJsTools } from "../../../components/editorJs/config";
 import { downloadJson, getContentFileName } from "../../../utils/common";
 import { fetchPostBySlug } from "../../../data/posts";
 import { useNavigate, useParams } from "react-router-dom";

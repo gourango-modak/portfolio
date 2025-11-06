@@ -1,5 +1,5 @@
 import { isValidUrl } from "../../../utils/common";
-import { CUSTOM_TOOLS } from "../editorJsConfig";
+import { CUSTOM_TOOLS } from "../config";
 
 export default class Gallery {
     static get toolbox() {

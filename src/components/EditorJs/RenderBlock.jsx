@@ -1,5 +1,5 @@
-import { EDITORJS_BLOCKS } from "./editorJsConfig";
-import { generateHeaderBlockId } from "./editorJsUtils";
+import { EDITORJS_BLOCKS } from "./config";
+import { generateHeaderBlockId } from "./utils";
 
 const RenderBlock = ({ block, index }) => {
     const BlockComponent = EDITORJS_BLOCKS[block.type];

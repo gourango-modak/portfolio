@@ -5,7 +5,7 @@ import {
     CUSTOM_TOOLS,
     EDITOR_JS_INITIALDATA,
     getEditorJsTools,
-} from "../components/editorJs/editorJsConfig";
+} from "../components/editorJs/config";
 import { useAlert } from "../context/AlertProvider";
 import { downloadFile } from "../utils/common";
 
