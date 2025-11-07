@@ -13,7 +13,7 @@ export const validateCategoryMetaData = (data, categories) => {
         // Check if name already exists (case-insensitive)
         const nameExists = categories.some(
             (category) =>
-                category.name.toLowerCase() === data.name.trim().toLowerCase()
+                category.toLowerCase() === data.name.trim().toLowerCase()
         );
         if (nameExists) {
             errors.name = "Name already exists";
@@ -25,15 +25,43 @@ export const validateCategoryMetaData = (data, categories) => {
 
 export const getCategoryOptions = (categories) => {
     return categories.map((cat) => ({
-        label: cat.name,
-        value: cat.name,
+        label: cat,
+        value: cat,
     }));
 };
 
+export const mapCategoryToOption = (statusValue) => {
+    return statusValue
+        ? {
+              label: safeInitial.category,
+              value: safeInitial.category,
+          }
+        : "";
+};
+
 export const addCategoryAndPrepare = async (newCategory) => {
-    const categories = fetchAllCategories();
+    const categories = await fetchAllCategories();
+    const totalCategories = await getTotalCategoriesCount();
     return {
-        totalCategories: getTotalCategoriesCount(),
+        totalCategories: totalCategories + 1,
         categories: [...categories, newCategory],
+    };
+};
+
+export const updateCategoryAndPrepare = async (
+    oldCategory,
+    updatedCategory
+) => {
+    const categories = await fetchAllCategories();
+    const totalCategories = await getTotalCategoriesCount();
+
+    // Replace oldCategory with updatedCategory
+    const updatedCategories = categories.map((cat) =>
+        cat === oldCategory ? updatedCategory : cat
+    );
+
+    return {
+        totalCategories,
+        categories: updatedCategories,
     };
 };

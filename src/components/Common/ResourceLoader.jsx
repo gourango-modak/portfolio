@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLoader } from "../../context/LoaderContext";
 
 const ResourceLoader = ({
-    id,
+    id = null,
     fetchFn,
     children,
     errorUI = null,
@@ -13,8 +13,6 @@ const ResourceLoader = ({
     const { showLoader, hideLoader } = useLoader();
 
     useEffect(() => {
-        if (!id) return;
-
         let isMounted = true;
 
         const loadData = async () => {

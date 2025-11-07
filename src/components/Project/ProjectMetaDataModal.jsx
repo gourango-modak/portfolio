@@ -3,7 +3,7 @@ import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
 import Dropdown from "../common/Dropdown";
 import { validateProjectMetaData } from "./utils";
-import { getCategoryOptions } from "../category/utils";
+import { getCategoryOptions, mapCategoryToOption } from "../category/utils";
 import {
     CONTENT_STATUSES_OPTIONS,
     mapContentStatusToOption,
@@ -27,15 +27,12 @@ const ProjectMetaDataModal = ({
     title = "Create New Project",
     categories = [],
 }) => {
-    const mapCategoryValueToOption = (categoryValue) => {
-        return categories.find((opt) => opt.name === categoryValue) || "";
-    };
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
         ...safeInitial,
         status: mapContentStatusToOption(safeInitial.status),
-        category: mapCategoryValueToOption(safeInitial.category.name),
+        category: mapCategoryToOption(safeInitial.category),
     });
     const [errors, setErrors] = useState({});
 
@@ -44,7 +41,7 @@ const ProjectMetaDataModal = ({
             ...defaultMetaData,
             ...initialData,
             status: mapContentStatusToOption(initialData.status),
-            category: mapCategoryValueToOption(initialData.category.name),
+            category: mapCategoryToOption(initialData.category),
         });
     }, [initialData]);
 

@@ -12,6 +12,7 @@ import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { preparePostData } from "../../../components/post/utils";
 import { useAlert } from "../../../context/AlertProvider";
 import { downloadContentImages } from "../../../components/editorJs/utils";
+import { fetchAllCategories } from "../../../data/categories";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -25,6 +26,7 @@ export const CreateBlog = () => {
     const [editorJsInitData, setEditorJsInitData] = useState(
         getEditorJsInitialData(CONTENT_TYPES.BLOG)
     );
+    const [categories, setCategories] = useState([]);
     const [metaData, setMetaData] = useState({});
 
     const NEW_BLOG_STORE_KEY = "gm-new-blog";
@@ -63,6 +65,15 @@ export const CreateBlog = () => {
                 ],
             });
         }
+    }, []);
+
+    useEffect(() => {
+        const loadCategories = async () => {
+            const categories = await fetchAllCategories();
+            setCategories(categories);
+        };
+
+        loadCategories();
     }, []);
 
     const handleOnChange = async (options) => {
@@ -150,6 +161,7 @@ export const CreateBlog = () => {
                 onClose={handleMetaDataModalClose}
                 onSave={saveMetaData}
                 initialData={metaData}
+                categories={categories}
             />
         </>
     );

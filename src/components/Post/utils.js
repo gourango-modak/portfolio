@@ -18,6 +18,7 @@ export const preparePostData = (editorJsData, metaData) => {
         tags: tags,
         slug: buildSlug(title, id),
         status: metaData.status.value,
+        category: metaData.category.value,
         content: editorJsData,
     };
 };

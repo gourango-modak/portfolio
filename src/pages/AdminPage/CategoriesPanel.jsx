@@ -1,13 +1,16 @@
 import { useCallback, useRef, useState } from "react";
 import { Plus } from "lucide-react";
-import InfiniteScroll from "../../components/common/InfiniteScroll";
 import { SearchBar } from "../../components/common/SearchBar";
 import { fetchCategories } from "../../data/categories";
 import { downloadJson } from "../../utils/common";
 import { CategoryCard } from "../../components/category/CategoryCard";
 import { CategoryModal } from "../../components/category/CategoryModal";
 import { CATEGORY_MANIFEST_FILE_NAME } from "../../config";
-import { addCategoryAndPrepare } from "../../components/category/utils";
+import {
+    addCategoryAndPrepare,
+    updateCategoryAndPrepare,
+} from "../../components/category/utils";
+import ResourceLoader from "../../components/common/ResourceLoader";
 
 export const CategoriesPanel = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -17,8 +20,8 @@ export const CategoriesPanel = () => {
     const isEditingRef = useRef(false);
 
     const fetchData = useCallback(
-        (page, limit) =>
-            fetchCategories(page, limit, {
+        () =>
+            fetchCategories({
                 searchTerm,
             }),
         [searchTerm]
@@ -31,7 +34,17 @@ export const CategoriesPanel = () => {
     };
 
     const saveMetaData = async (meta) => {
-        const categoriesManifest = await addCategoryAndPrepare(meta.name);
+        let categoriesManifest;
+
+        if (isEditingRef.current) {
+            categoriesManifest = await updateCategoryAndPrepare(
+                metaDataRef.current,
+                meta.name
+            );
+        } else {
+            categoriesManifest = await addCategoryAndPrepare(meta.name);
+        }
+
         downloadJson(categoriesManifest, CATEGORY_MANIFEST_FILE_NAME);
         setMetaDataModalOpen(false);
         isEditingRef.current = false;
@@ -67,19 +80,22 @@ export const CategoriesPanel = () => {
                         </button>
                     </div>
                 </div>
-                <InfiniteScroll
-                    key={searchTerm} // force remount on filter change
-                    fetchData={fetchData}
-                    renderItem={(category) => (
-                        <CategoryCard
-                            key={category.id}
-                            category={category}
-                            onEdit={handleEdit}
-                        />
-                    )}
-                    limit={10}
-                    containerClass="grid grid-cols-1 xl:grid-cols-3 gap-4"
-                />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <ResourceLoader
+                        fetchFn={fetchData}
+                        loadingMessage="Fetching categories..."
+                    >
+                        {(categories) => {
+                            return categories.map((cat) => (
+                                <CategoryCard
+                                    key={cat}
+                                    category={cat}
+                                    onEdit={handleEdit}
+                                />
+                            ));
+                        }}
+                    </ResourceLoader>
+                </div>
             </div>
             <CategoryModal
                 isOpen={isMetaDataModalOpen}

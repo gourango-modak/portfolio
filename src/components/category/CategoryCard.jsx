@@ -1,21 +1,15 @@
 import { Edit3, Layers } from "lucide-react";
-import { formatDate } from "../../utils/date";
 
 export const CategoryCard = ({ category, onEdit }) => {
     return (
         <div className="bg-white/60 backdrop-blur-lg p-6 rounded-xl shadow-lg border border-gray-200 hover:border-indigo-400 hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6 relative">
-            <div className="flex flex-1 gap-6">
+            <div className="flex gap-6">
                 <div className="text-indigo-600 mt-1 flex-shrink-0">
                     <Layers />
                 </div>
-                <div className="flex-1">
-                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
-                        {`Published on ${formatDate(category.createdAt)}`}
-                    </p>
-                    <h3 className="text-xl font-bold mb-2 text-slate-900">
-                        {category.name}
-                    </h3>
-                </div>
+                <h3 className="text-lg font-bold mb-2 text-slate-900 mr-6">
+                    {category}
+                </h3>
             </div>
 
             {onEdit && (

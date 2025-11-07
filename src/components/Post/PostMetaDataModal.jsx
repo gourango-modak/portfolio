@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
 import { validatePostMetaData } from "./utils";
-import { CONTENT_STATUSES_OPTIONS } from "../../config";
+import {
+    CONTENT_STATUSES_OPTIONS,
+    mapContentStatusToOption,
+} from "../../config";
 import Dropdown from "../common/Dropdown";
+import { getCategoryOptions, mapCategoryToOption } from "../category/utils";
 
 const defaultMetaData = {
     description: "",
@@ -17,18 +21,14 @@ const PostMetaDataModal = ({
     onSave,
     initialData,
     title = "Create Post",
+    categories = [],
 }) => {
-    const mapStatusToOption = (statusValue) => {
-        return (
-            CONTENT_STATUSES_OPTIONS.find((opt) => opt.value === statusValue) ||
-            ""
-        );
-    };
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
         ...safeInitial,
-        status: mapStatusToOption(safeInitial.status),
+        status: mapContentStatusToOption(safeInitial.status),
+        category: mapCategoryToOption(safeInitial.category),
     });
     const [errors, setErrors] = useState({});
 
@@ -36,7 +36,8 @@ const PostMetaDataModal = ({
         setMetaData({
             ...defaultMetaData,
             ...initialData,
-            status: mapStatusToOption(initialData?.status),
+            status: mapContentStatusToOption(safeInitial.status),
+            category: mapCategoryToOption(safeInitial.category),
         });
     }, [initialData]);
 
@@ -97,14 +98,24 @@ const PostMetaDataModal = ({
                 </>
             }
         >
-            <Dropdown
-                label="Status"
-                name="status"
-                options={CONTENT_STATUSES_OPTIONS}
-                onChange={handleDropdownChange}
-                selected={metaData.status}
-                error={errors.status}
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Dropdown
+                    label="Status"
+                    name="status"
+                    options={CONTENT_STATUSES_OPTIONS}
+                    onChange={handleDropdownChange}
+                    selected={metaData.status}
+                    error={errors.status}
+                />
+                <Dropdown
+                    label="Category"
+                    name="category"
+                    options={getCategoryOptions(categories)}
+                    onChange={handleDropdownChange}
+                    selected={metaData.category}
+                    error={errors.category}
+                />
+            </div>
             <InputField
                 label="Short Description"
                 name="description"

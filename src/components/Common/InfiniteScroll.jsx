@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 export default function InfiniteScroll({
     fetchData,
     renderItem,
-    limit = 10,
+    limit = Infinity,
     containerClass = "",
     itemClass = "",
     loadingComponent = null,

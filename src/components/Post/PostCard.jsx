@@ -13,7 +13,7 @@ const PostCard = ({ post, onEdit }) => {
                 </div>
 
                 <div className="flex-1">
-                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
+                    <p className="text-sm text-slate-500 mb-1 mr-6">
                         {post.updatedAt
                             ? `Last Updated on ${formatDate(post.updatedAt)}`
                             : `Published on ${formatDate(post.createdAt)}`}

@@ -38,7 +38,7 @@ const ProjectCard = ({ ref, project, onEdit }) => {
 
                 <div className="flex-1">
                     {/* Created / Updated Dates */}
-                    <p className="text-sm text-slate-500 mb-1 w-[80%] sm:w-full">
+                    <p className="text-sm text-slate-500 mb-1 mr-6">
                         {project.updatedAt &&
                         project.updatedAt !== project.createdAt
                             ? `Last Updated on ${formatDate(project.updatedAt)}`

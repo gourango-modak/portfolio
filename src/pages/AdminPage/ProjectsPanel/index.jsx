@@ -21,7 +21,7 @@ export const ProjectsPanel = () => {
     useEffect(() => {
         const loadCategories = async () => {
             const categories = await fetchAllCategories();
-            setCategories(categories.map((c) => c.name));
+            setCategories(categories);
         };
 
         const loadTags = async () => {

@@ -18,11 +18,7 @@ const getCategoryManifest = async () => {
 /**
  * Fetch categories with optional pagination and filters
  */
-export const fetchCategories = async (
-    page = 1,
-    pageSize = 10,
-    filters = {}
-) => {
+export const fetchCategories = async (filters = {}) => {
     const manifest = await getCategoryManifest();
     const allCategories = manifest.categories || [];
 
@@ -30,15 +26,9 @@ export const fetchCategories = async (
 
     // Apply filters
     const filteredCategories = allCategories.filter((cat) =>
-        cat.name.toLowerCase().includes(searchTerm.toLowerCase())
+        cat.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    // Pagination
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = Math.min(startIndex + pageSize, filteredCategories.length);
-    const categories = filteredCategories.slice(startIndex, endIndex);
-
-    return categories;
+    return filteredCategories;
 };
 
 /**
