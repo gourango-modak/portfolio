@@ -1,21 +1,16 @@
 {
   "totalProjects": 1,
-  "topCategories": [
-    "Test 1"
-  ],
+  "topCategories": [],
   "totalInProgressProjects": 0,
   "projects": [
     {
-      "title": "Lorem Ipsum",
-      "category": {
-        "name": "Test 1",
-        "id": 1761990110814
-      },
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/1762094134510.json",
-      "description": "Before we explore Redis specifically, let’s establish what we mean by push and pull replication models.\n\nPull-based replication: Replicas periodically ask the master, “What’s new?” The replica is responsible for fetching updates. Think of it like checking your mailbox; you decide when to check, and you pull out whatever’s there.\n\nRedis uses the push model. When a write command is executed on the master, Redis propagates that command to all connected replicas immediately (or as immediately as the network allows).",
-      "slug": "lorem-ipsum-1762094134510",
-      "createdAt": 1762094134441,
-      "id": 1762094134510,
+      "title": "generateImageFileName",
+      "category": "Web Development",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/1762535552269.json",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "slug": "generateimagefilename-1762535552269",
+      "createdAt": 1762535552093,
+      "id": 1762535552269,
       "status": "Completed"
     }
   ]
