@@ -8,6 +8,7 @@ import ResourceLoader from "../../../components/common/ResourceLoader";
 import { CONTENT_TYPES } from "../../../config";
 import PostMetaDataModal from "../../../components/post/PostMetaDataModal";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
+import { downloadContentImages } from "../../../components/editorJs/utils";
 
 export const BlogEditor = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
@@ -40,6 +41,7 @@ export const BlogEditor = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
+        downloadContentImages(editorJsDataRef.current);
         const postData = await fetchPostBySlug(slug);
         const updatedPost = {
             ...postData,

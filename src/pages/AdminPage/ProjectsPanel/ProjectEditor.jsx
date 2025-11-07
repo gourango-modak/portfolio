@@ -9,6 +9,7 @@ import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { fetchProjectBySlug } from "../../../data/projects";
 import ProjectMetaDataModal from "../../../components/project/ProjectMetaDataModal";
 import { fetchAllCategories } from "../../../data/categories";
+import { downloadContentImages } from "../../../components/editorJs/utils";
 
 export const ProjectEditor = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
@@ -41,6 +42,7 @@ export const ProjectEditor = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
+        downloadContentImages(editorJsDataRef.current);
         const projectData = await fetchProjectBySlug(slug);
         const updatedProject = {
             ...projectData,

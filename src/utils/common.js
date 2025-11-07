@@ -9,12 +9,11 @@ export const downloadJson = (data, fileName) => {
     downloadFile(blob, fileName);
 };
 
-export const downloadFile = (data, fileName) => {
+export const downloadFile = async (data, fileName) => {
     let url;
     let revokeUrl = false;
 
     if (data instanceof Blob) {
-        // If it's already a Blob, create an object URL
         url = URL.createObjectURL(data);
         revokeUrl = true;
     } else if (typeof data === "string") {
@@ -32,15 +31,24 @@ export const downloadFile = (data, fileName) => {
             url = URL.createObjectURL(blob);
             revokeUrl = true;
         } else {
-            // Assume it's a normal URL
-            url = data;
+            // Normal URL → fetch the file first
+            try {
+                const response = await fetch(data);
+                if (!response.ok) throw new Error("Failed to fetch file");
+                const blob = await response.blob();
+                url = URL.createObjectURL(blob);
+                revokeUrl = true;
+            } catch (err) {
+                console.error("Failed to download file:", err);
+                return;
+            }
         }
     } else {
         console.error("Invalid data type for download");
         return;
     }
 
-    // Create a temporary <a> element to trigger download
+    // Trigger download
     const a = document.createElement("a");
     a.href = url;
     a.download = fileName;

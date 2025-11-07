@@ -18,15 +18,26 @@ const PostMetaDataModal = ({
     initialData,
     title = "Create Post",
 }) => {
+    const mapStatusToOption = (statusValue) => {
+        return (
+            CONTENT_STATUSES_OPTIONS.find((opt) => opt.value === statusValue) ||
+            ""
+        );
+    };
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
         ...safeInitial,
+        status: mapStatusToOption(safeInitial.status),
     });
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        setMetaData({ ...defaultMetaData, ...initialData });
+        setMetaData({
+            ...defaultMetaData,
+            ...initialData,
+            status: mapStatusToOption(initialData?.status),
+        });
     }, [initialData]);
 
     const handleChange = (e) => {

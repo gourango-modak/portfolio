@@ -226,6 +226,20 @@ export function generateImageFileName(originalName, uniqueId) {
     return `${nameWithoutExt}_${marker}_${uniqueId}.${extension}`;
 }
 
+export function extractOriginalFileName(fileName) {
+    const extension = fileName.split(".").pop();
+    let nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+
+    const marker = "UID";
+
+    // If the marker exists, remove it and the uniqueId
+    if (nameWithoutExt.includes(`_${marker}_`)) {
+        nameWithoutExt = nameWithoutExt.split(`_${marker}_`)[0];
+    }
+
+    return `${nameWithoutExt}.${extension}`;
+}
+
 export const downloadContentImages = (content) => {
     const images = extractImages(content);
     images.forEach((img) => {
