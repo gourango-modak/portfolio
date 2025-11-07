@@ -1,26 +1,39 @@
-import { generateId } from "../../utils/common";
+import {
+    fetchAllCategories,
+    getTotalCategoriesCount,
+} from "../../data/categories";
 
-export const validateCategoryMetaData = (data) => {
+export const validateCategoryMetaData = (data, categories) => {
     const errors = {};
-    if (!data.name.trim()) errors.name = "Name is required";
+
+    // Check if name is empty
+    if (!data.name.trim()) {
+        errors.name = "Name is required";
+    } else {
+        // Check if name already exists (case-insensitive)
+        const nameExists = categories.some(
+            (category) =>
+                category.name.toLowerCase() === data.name.trim().toLowerCase()
+        );
+        if (nameExists) {
+            errors.name = "Name already exists";
+        }
+    }
 
     return errors;
-};
-
-export const prepareCategoryData = (metaData) => {
-    const isEditing = Boolean(metaData?.id);
-    const id = isEditing ? metaData.id : generateId();
-
-    return {
-        ...metaData,
-        id: id,
-        createdAt: isEditing ? metaData.createdAt : Date.now(),
-    };
 };
 
 export const getCategoryOptions = (categories) => {
     return categories.map((cat) => ({
         label: cat.name,
-        value: cat.id,
+        value: cat.name,
     }));
+};
+
+export const addCategoryAndPrepare = async (newCategory) => {
+    const categories = fetchAllCategories();
+    return {
+        totalCategories: getTotalCategoriesCount(),
+        categories: [...categories, newCategory],
+    };
 };

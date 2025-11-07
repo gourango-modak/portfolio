@@ -50,26 +50,6 @@ export const fetchAllCategories = async () => {
 };
 
 /**
- * Fetch a single category by id
- */
-export const fetchCategoryById = async (id) => {
-    const manifest = await getCategoryManifest();
-    const allCategories = manifest.categories || [];
-
-    const category = allCategories.find((c) => c.id === id);
-    if (!category) {
-        throw new Error(`Category with id ${id} not found`);
-    }
-
-    const res = await fetchData(category.url);
-    if (!res.ok) {
-        throw new Error(`Failed to fetch content for category with id ${id}`);
-    }
-
-    return await res.json();
-};
-
-/**
  * get total categories count
  */
 export const getTotalCategoriesCount = async () => {

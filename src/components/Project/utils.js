@@ -24,10 +24,7 @@ export const prepareProjectData = (editorJsData, metaData) => {
         tags: tags,
         slug: buildSlug(title, id),
         status: metaData.status.value,
-        category: {
-            name: metaData.category.label,
-            id: metaData.category.value,
-        },
+        category: metaData.category.label,
         content: editorJsData,
     };
 };

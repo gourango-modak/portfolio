@@ -4,7 +4,10 @@ import { InputField } from "../common/InputField";
 import Dropdown from "../common/Dropdown";
 import { validateProjectMetaData } from "./utils";
 import { getCategoryOptions } from "../category/utils";
-import { CONTENT_STATUSES_OPTIONS } from "../../config";
+import {
+    CONTENT_STATUSES_OPTIONS,
+    mapContentStatusToOption,
+} from "../../config";
 
 const defaultMetaData = {
     description: "",
@@ -24,15 +27,25 @@ const ProjectMetaDataModal = ({
     title = "Create New Project",
     categories = [],
 }) => {
+    const mapCategoryValueToOption = (categoryValue) => {
+        return categories.find((opt) => opt.name === categoryValue) || "";
+    };
     const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
         ...defaultMetaData,
         ...safeInitial,
+        status: mapContentStatusToOption(safeInitial.status),
+        category: mapCategoryValueToOption(safeInitial.category.name),
     });
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        setMetaData({ ...defaultMetaData, ...initialData });
+        setMetaData({
+            ...defaultMetaData,
+            ...initialData,
+            status: mapContentStatusToOption(initialData.status),
+            category: mapCategoryValueToOption(initialData.category.name),
+        });
     }, [initialData]);
 
     const handleChange = (e) => {

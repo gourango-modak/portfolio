@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 import {
-    CATEGORY_FILES_BASE_URL,
-    CATEGORY_MANIFEST_FILE_NAME,
     CONTENT_STATUSES,
     POST_FILES_BASE_URL,
     POST_TAGS_MANIFEST_FILE_NAME,
@@ -118,33 +116,6 @@ const generateProjectsManifest = () => {
     );
     console.log(
         `✅ Generated projects manifest with ${projects.length} projects and top categories`
-    );
-};
-
-// Generate categories manifest
-const generateCategoriesManifest = () => {
-    const folder = "public/data/categories";
-    const manifestFile = CATEGORY_MANIFEST_FILE_NAME;
-    const categories = readJsonFiles(folder);
-
-    const manifest = {
-        totalCategories: categories.length,
-        categories: categories.map((p) => {
-            return {
-                name: p.name,
-                url: `${CATEGORY_FILES_BASE_URL}/${p._fileName}`,
-                id: p.id,
-                createdAt: p.createdAt,
-            };
-        }),
-    };
-
-    fs.writeFileSync(
-        path.join(folder, manifestFile),
-        JSON.stringify(manifest, null, 2)
-    );
-    console.log(
-        `✅ Generated categories manifest with ${categories.length} categories`
     );
 };
 

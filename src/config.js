@@ -21,7 +21,6 @@ export const PROJECT_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECTS_MANIFE
 export const PROJECT_TAGS_MANIFEST_FILE_NAME = "project-tags-manifest.json";
 export const PROJECT_TAGS_MANIFEST_FILE_URL = `${BASE_URL}/projects/${PROJECT_TAGS_MANIFEST_FILE_NAME}`;
 
-export const CATEGORY_FILES_BASE_URL = `${BASE_URL}/categories`;
 export const CATEGORY_MANIFEST_FILE_NAME = "categories-manifest.json";
 export const CATEGORY_MANIFEST_FILE_URL = `${BASE_URL}/categories/${CATEGORY_MANIFEST_FILE_NAME}`;
 
@@ -44,6 +43,12 @@ export const CONTENT_STATUSES_OPTIONS = [
     },
     { label: CONTENT_STATUSES.COMPLETED, value: CONTENT_STATUSES.COMPLETED },
 ];
+
+export const mapContentStatusToOption = (statusValue) => {
+    return (
+        CONTENT_STATUSES_OPTIONS.find((opt) => opt.value === statusValue) || ""
+    );
+};
 
 export const NAV_LINKS = [
     { to: "/projects", label: "Projects" },

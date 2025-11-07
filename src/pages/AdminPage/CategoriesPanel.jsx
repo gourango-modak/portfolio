@@ -3,10 +3,11 @@ import { Plus } from "lucide-react";
 import InfiniteScroll from "../../components/common/InfiniteScroll";
 import { SearchBar } from "../../components/common/SearchBar";
 import { fetchCategories } from "../../data/categories";
-import { prepareCategoryData } from "../../components/category/utils";
-import { downloadJson, getContentFileName } from "../../utils/common";
+import { downloadJson } from "../../utils/common";
 import { CategoryCard } from "../../components/category/CategoryCard";
 import { CategoryModal } from "../../components/category/CategoryModal";
+import { CATEGORY_MANIFEST_FILE_NAME } from "../../config";
+import { addCategoryAndPrepare } from "../../components/category/utils";
 
 export const CategoriesPanel = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -30,8 +31,8 @@ export const CategoriesPanel = () => {
     };
 
     const saveMetaData = async (meta) => {
-        const newCategory = prepareCategoryData(meta);
-        downloadJson(newCategory, getContentFileName(newCategory.id));
+        const categoriesManifest = await addCategoryAndPrepare(meta.name);
+        downloadJson(categoriesManifest, CATEGORY_MANIFEST_FILE_NAME);
         setMetaDataModalOpen(false);
         isEditingRef.current = false;
     };

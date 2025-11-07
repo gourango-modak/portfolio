@@ -2,6 +2,7 @@ import Modal from "../modal/Modal";
 import { useEffect, useState } from "react";
 import { validateCategoryMetaData } from "./utils";
 import { InputField } from "../common/InputField";
+import { fetchAllCategories } from "../../data/categories";
 
 const defaultMetaData = {
     name: "",
@@ -38,8 +39,9 @@ export const CategoryModal = ({
         }
     };
 
-    const handleSave = () => {
-        const validationErrors = validateCategoryMetaData(metaData);
+    const handleSave = async () => {
+        const categories = await fetchAllCategories();
+        const validationErrors = validateCategoryMetaData(metaData, categories);
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
