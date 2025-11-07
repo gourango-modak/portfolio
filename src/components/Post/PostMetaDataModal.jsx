@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
-import { validatePostMetaData } from "./postUtils";
+import { validatePostMetaData } from "./utils";
 import { CONTENT_STATUSES_OPTIONS } from "../../config";
 import Dropdown from "../common/Dropdown";
 

@@ -1,5 +1,6 @@
-import { fileToBase64 } from "../../../utils/common";
+import { fileToBase64, generateId } from "../../../utils/common";
 import { CUSTOM_TOOLS } from "../config";
+import { generateImageFileName } from "../utils";
 
 export default class ResizableImage {
     static get toolbox() {
@@ -315,7 +316,7 @@ export default class ResizableImage {
     save() {
         return {
             url: this.data.url,
-            name: this.data.name,
+            name: generateImageFileName(this.data.name, generateId()),
             width: this.data.width || "auto",
             height: this.data.height || "auto",
             alignment: this.data.alignment || "center",

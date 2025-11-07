@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import { InputField } from "../common/InputField";
 import Dropdown from "../common/Dropdown";
-import { validateProjectMetaData } from "./projectUtils";
+import { validateProjectMetaData } from "./utils";
 import { getCategoryOptions } from "../category/utils";
 import { CONTENT_STATUSES_OPTIONS } from "../../config";
 

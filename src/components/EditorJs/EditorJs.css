@@ -42,6 +42,10 @@
 
 /* Image Tool Styles */
 
+.resizable-image-wrapper {
+    padding: 1.25rem 0;
+}
+
 .image-toolbar {
     display: none;
     gap: 4px;

@@ -9,12 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { CONTENT_TYPES } from "../../../config";
 import PostMetaDataModal from "../../../components/post/PostMetaDataModal";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
-import { preparePostData } from "../../../components/post/postUtils";
+import { preparePostData } from "../../../components/post/utils";
 import { useAlert } from "../../../context/AlertProvider";
-import {
-    downloadContentImages,
-    processContentData,
-} from "../../../components/editorJs/utils";
+import { downloadContentImages } from "../../../components/editorJs/utils";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -107,12 +104,9 @@ export const CreateBlog = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
+        downloadContentImages(editorJsFinalDataRef.current);
         const newPost = preparePostData(editorJsFinalDataRef.current, meta);
-        downloadContentImages(newPost);
-        downloadJson(
-            processContentData(newPost),
-            getContentFileName(newPost.id)
-        );
+        downloadJson(newPost, getContentFileName(newPost.id));
         setMetaDataModalOpen(false);
         navigate("/admin/blogs");
     };

@@ -186,7 +186,7 @@ export const generateHeaderBlockId = (text, maxLength = 60) => {
 export const shouldRenderBlock = (block) =>
     !NON_RENDER_EDITORJS_BLOCKS.includes(block.type);
 
-export function extractImages(uniqueId, editorData) {
+export function extractImages(editorData) {
     const images = [];
     if (!editorData || !Array.isArray(editorData.blocks)) return images;
 
@@ -196,7 +196,7 @@ export function extractImages(uniqueId, editorData) {
             block.data?.url
         ) {
             images.push({
-                name: generateImageFileName(block.data.name, uniqueId),
+                name: block.data.name,
                 url: block.data.url,
             });
         }
@@ -205,7 +205,7 @@ export function extractImages(uniqueId, editorData) {
     return images;
 }
 
-export function updateImageUrls(uniqueId, editorData) {
+export function updateImageUrls(editorData) {
     if (!editorData || !Array.isArray(editorData.blocks)) return;
 
     editorData.blocks.forEach((block) => {
@@ -213,30 +213,28 @@ export function updateImageUrls(uniqueId, editorData) {
             block.type === CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE &&
             block.data?.url
         ) {
-            block.data.url = `${IMAGES_BASE_URL}/${generateImageFileName(
-                block.data.name,
-                uniqueId
-            )}`;
+            block.data.url = `${IMAGES_BASE_URL}/${block.data.name}`;
         }
     });
 }
 
-export function generateImageFileName(filename, id) {
-    const lastDotIndex = filename.lastIndexOf(".");
-    const name =
-        lastDotIndex !== -1 ? filename.slice(0, lastDotIndex) : filename;
-    const ext = lastDotIndex !== -1 ? filename.slice(lastDotIndex + 1) : "";
-    return ext ? `${name}_${id}.${ext}` : `${name}_${id}`;
+export function generateImageFileName(originalName, uniqueId) {
+    const extension = originalName.split(".").pop();
+    const nameWithoutExt = originalName.replace(/\.[^/.]+$/, "");
+
+    const marker = "UID";
+
+    // If the filename already contains the marker, don't append uniqueId again
+    if (nameWithoutExt.includes(marker)) {
+        return originalName; // already has marker, return as-is
+    }
+
+    return `${nameWithoutExt}_${marker}_${uniqueId}.${extension}`;
 }
 
 export const downloadContentImages = (content) => {
-    const images = extractImages(content.id, content.content);
+    const images = extractImages(content);
     images.forEach((img) => {
         downloadFile(img.url, img.name);
     });
-};
-
-export const processContentData = (content) => {
-    updateImageUrls(content.id, content.content);
-    return content;
 };

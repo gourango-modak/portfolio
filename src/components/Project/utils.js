@@ -1,5 +1,10 @@
 import { buildSlug, generateId, isValidUrl } from "../../utils/common";
-import { extractTagline, extractTags, extractTitle } from "../editorJs/utils";
+import {
+    extractTagline,
+    extractTags,
+    extractTitle,
+    updateImageUrls,
+} from "../editorJs/utils";
 
 export const prepareProjectData = (editorJsData, metaData) => {
     const tags = extractTags(editorJsData);
@@ -7,6 +12,7 @@ export const prepareProjectData = (editorJsData, metaData) => {
     const tagline = extractTagline(editorJsData);
     const isEditing = Boolean(metaData?.id);
     const id = isEditing ? metaData.id : generateId();
+    updateImageUrls(editorJsData);
 
     return {
         ...metaData,

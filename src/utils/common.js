@@ -11,16 +11,36 @@ export const downloadJson = (data, fileName) => {
 
 export const downloadFile = (data, fileName) => {
     let url;
+    let revokeUrl = false;
 
     if (data instanceof Blob) {
+        // If it's already a Blob, create an object URL
         url = URL.createObjectURL(data);
+        revokeUrl = true;
     } else if (typeof data === "string") {
-        url = data; // assume already a URL (data URL or external URL)
+        if (data.startsWith("data:")) {
+            // Base64 Data URL → convert to Blob
+            const arr = data.split(",");
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            const blob = new Blob([u8arr], { type: mime });
+            url = URL.createObjectURL(blob);
+            revokeUrl = true;
+        } else {
+            // Assume it's a normal URL
+            url = data;
+        }
     } else {
         console.error("Invalid data type for download");
         return;
     }
 
+    // Create a temporary <a> element to trigger download
     const a = document.createElement("a");
     a.href = url;
     a.download = fileName;
@@ -28,8 +48,7 @@ export const downloadFile = (data, fileName) => {
     a.click();
     document.body.removeChild(a);
 
-    // Revoke only if we created the object URL
-    if (data instanceof Blob) URL.revokeObjectURL(url);
+    if (revokeUrl) URL.revokeObjectURL(url);
 };
 
 export const importJsonFile = (onJsonLoaded) => {
@@ -159,4 +178,13 @@ export function fileToBase64(file) {
         reader.onerror = (err) => reject(err);
         reader.readAsDataURL(file);
     });
+}
+
+export function hashBase64(base64) {
+    let hash = 0;
+    for (let i = 0; i < base64.length; i++) {
+        hash = (hash << 5) - hash + base64.charCodeAt(i);
+        hash |= 0;
+    }
+    return hash;
 }

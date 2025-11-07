@@ -6,6 +6,7 @@ export const preparePostData = (editorJsData, metaData) => {
     const title = extractTitle(editorJsData);
     const isEditing = Boolean(metaData?.id);
     const id = isEditing ? metaData.id : generateId();
+    updateImageUrls(editorJsData);
 
     return {
         ...metaData,

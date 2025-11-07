@@ -8,14 +8,11 @@ import { downloadJson, getContentFileName } from "../../../utils/common";
 import { useNavigate } from "react-router-dom";
 import { CONTENT_TYPES } from "../../../config";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
-import { prepareProjectData } from "./../../../components/project/projectUtils";
+import { prepareProjectData } from "./../../../components/project/utils";
 import ProjectMetaDataModal from "./../../../components/project/ProjectMetaDataModal";
 import { fetchAllCategories } from "../../../data/categories";
 import { useAlert } from "../../../context/AlertProvider";
-import {
-    downloadContentImages,
-    processContentData,
-} from "../../../components/editorJs/utils";
+import { downloadContentImages } from "../../../components/editorJs/utils";
 
 // Memoized EditorJs to prevent re-renders
 const MemoizedEditorJs = memo(EditorJs);
@@ -118,15 +115,12 @@ export const CreateProject = () => {
     }, []);
 
     const saveMetaData = async (meta) => {
+        downloadContentImages(editorJsFinalDataRef.current);
         const newProject = prepareProjectData(
             editorJsFinalDataRef.current,
             meta
         );
-        downloadContentImages(newProject);
-        downloadJson(
-            processContentData(newProject),
-            getContentFileName(newProject.id)
-        );
+        downloadJson(newProject, getContentFileName(newProject.id));
         setMetaDataModalOpen(false);
         navigate("/admin/projects");
     };
