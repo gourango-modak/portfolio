@@ -191,10 +191,7 @@ export function extractImages(editorData) {
     if (!editorData || !Array.isArray(editorData.blocks)) return images;
 
     editorData.blocks.forEach((block) => {
-        if (
-            block.type === CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE &&
-            block.data?.url
-        ) {
+        if (block.type === CUSTOM_TOOLS.IMAGE.TYPE && block.data?.url) {
             images.push({
                 name: block.data.name,
                 url: block.data.url,
@@ -209,10 +206,7 @@ export function updateImageUrls(editorData) {
     if (!editorData || !Array.isArray(editorData.blocks)) return;
 
     editorData.blocks.forEach((block) => {
-        if (
-            block.type === CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE &&
-            block.data?.url
-        ) {
+        if (block.type === CUSTOM_TOOLS.IMAGE.TYPE && block.data?.url) {
             block.data.url = `${IMAGES_BASE_URL}/${block.data.name}`;
         }
     });

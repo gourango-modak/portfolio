@@ -8,6 +8,7 @@ import TagList from "./tools/tagList";
 import TagLine from "./tools/tagline";
 import InlineCode from "./tools/inlineCode";
 import Gallery from "./tools/gallery";
+import ResizableImage from "./tools/resizableImage";
 import { CONTENT_TYPES } from "../../config";
 import EditorJsHeaderBlock from "./blocks/EditorJsHeaderBlock";
 import EditorJsParagraphBlock from "./blocks/EditorJsParagraphBlock";
@@ -16,7 +17,6 @@ import EditorJsGalleryBlock from "./blocks/EditorJsGalleryBlock";
 import EditorJsListBlock from "./blocks/EditorJsListBlock";
 import EditorJsImageBlock from "./blocks/EditorJsImageBlock";
 import EditorJsTableBlock from "./blocks/EditorJsTableBlock";
-import ResizableImage from "./tools/ResizableImage";
 
 export const CUSTOM_TOOLS = {
     CODE: {
@@ -37,8 +37,8 @@ export const CUSTOM_TOOLS = {
     INLINE_CODE: {
         TYPE: "inlineCode",
     },
-    RESIZABLE_IMAGE: {
-        TYPE: "resizableImage",
+    IMAGE: {
+        TYPE: "image",
     },
 };
 
@@ -66,7 +66,7 @@ export const EDITOR_JS_TOOLS = {
     [CUSTOM_TOOLS.TITLE.TYPE]: Title,
     [CUSTOM_TOOLS.TAGLIST.TYPE]: TagList,
     [CUSTOM_TOOLS.INLINE_CODE.TYPE]: InlineCode,
-    [CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE]: ResizableImage,
+    [CUSTOM_TOOLS.IMAGE.TYPE]: ResizableImage,
 };
 
 export const getEditorJsTools = (contentType) => {

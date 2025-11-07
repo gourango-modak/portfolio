@@ -11,7 +11,7 @@ export default class ResizableImage {
     }
 
     static get type() {
-        return CUSTOM_TOOLS.RESIZABLE_IMAGE.TYPE;
+        return CUSTOM_TOOLS.IMAGE.TYPE;
     }
 
     constructor({ data, api }) {

@@ -1,28 +1,40 @@
 const EditorJsImageBlock = ({
-    file,
+    file, // { url, name, width, height, alignment }
     caption,
     withBorder,
     withBackground,
     stretched,
     maxHeight = "800px", // customizable max height
 }) => {
+    // Use image object width, height, alignment or fallback
+    const width = file?.width || (stretched ? "100%" : "auto");
+    const height = file?.height || "auto";
+    const alignment = file?.alignment || "center";
+
     return (
         <div
             className={`
-                ${stretched ? "w-full" : ""} 
                 ${withBackground ? "bg-gray-100 p-2" : ""} 
                 ${withBorder ? "border border-gray-300" : ""}
             `}
         >
             <div
-                className="flex justify-center items-center w-full overflow-hidden"
-                style={{ maxHeight }}
+                className="flex w-full overflow-hidden"
+                style={{
+                    justifyContent:
+                        alignment === "left"
+                            ? "flex-start"
+                            : alignment === "right"
+                            ? "flex-end"
+                            : "center",
+                    maxHeight,
+                }}
             >
                 <img
                     src={file?.url}
-                    alt={caption || "editor image"}
-                    className="w-full h-auto object-contain"
-                    style={{ maxHeight }}
+                    alt={caption || file?.name || "editor image"}
+                    className="object-contain"
+                    style={{ width, height, maxHeight }}
                 />
             </div>
             {caption && (
