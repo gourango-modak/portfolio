@@ -9,8 +9,10 @@ let cachedCategoryManifest = null;
  */
 const getCategoryManifest = async () => {
     if (!cachedCategoryManifest) {
-        const res = await fetchData(CATEGORY_MANIFEST_FILE_URL);
-        cachedCategoryManifest = await res.json();
+        try {
+            const res = await fetchData(CATEGORY_MANIFEST_FILE_URL);
+            cachedCategoryManifest = await res.json();
+        } catch {}
     }
     return cachedCategoryManifest;
 };
@@ -20,7 +22,7 @@ const getCategoryManifest = async () => {
  */
 export const fetchCategories = async (filters = {}) => {
     const manifest = await getCategoryManifest();
-    const allCategories = manifest.categories || [];
+    const allCategories = manifest?.categories || [];
 
     const { searchTerm = "" } = filters;
 
@@ -36,7 +38,7 @@ export const fetchCategories = async (filters = {}) => {
  */
 export const fetchAllCategories = async () => {
     const manifest = await getCategoryManifest();
-    return manifest.categories || [];
+    return manifest?.categories || [];
 };
 
 /**
@@ -44,5 +46,5 @@ export const fetchAllCategories = async () => {
  */
 export const getTotalCategoriesCount = async () => {
     const manifest = await getCategoryManifest();
-    return manifest.totalCategories || 0;
+    return manifest?.totalCategories || 0;
 };

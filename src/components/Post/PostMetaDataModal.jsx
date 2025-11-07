@@ -98,24 +98,22 @@ const PostMetaDataModal = ({
                 </>
             }
         >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Dropdown
-                    label="Status"
-                    name="status"
-                    options={CONTENT_STATUSES_OPTIONS}
-                    onChange={handleDropdownChange}
-                    selected={metaData.status}
-                    error={errors.status}
-                />
-                <Dropdown
-                    label="Category"
-                    name="category"
-                    options={getCategoryOptions(categories)}
-                    onChange={handleDropdownChange}
-                    selected={metaData.category}
-                    error={errors.category}
-                />
-            </div>
+            <Dropdown
+                label="Status"
+                name="status"
+                options={CONTENT_STATUSES_OPTIONS}
+                onChange={handleDropdownChange}
+                selected={metaData.status}
+                error={errors.status}
+            />
+            <Dropdown
+                label="Category"
+                name="category"
+                options={getCategoryOptions(categories)}
+                onChange={handleDropdownChange}
+                selected={metaData.category}
+                error={errors.category}
+            />
             <InputField
                 label="Short Description"
                 name="description"

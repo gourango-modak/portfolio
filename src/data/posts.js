@@ -15,15 +15,17 @@ let cachedPostTagsManifest = null;
  */
 const getPostManifest = async () => {
     if (!cachedPostManifest) {
-        const res = await fetchData(POSTS_MANIFEST_FILE_URL);
-        cachedPostManifest = await res.json();
+        try {
+            const res = await fetchData(POSTS_MANIFEST_FILE_URL);
+            cachedPostManifest = await res.json();
+        } catch {}
     }
     return cachedPostManifest;
 };
 
 export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getPostManifest();
-    const allPosts = manifest.posts || [];
+    const allPosts = manifest?.posts || [];
 
     const { searchTerm = "", selectedTags = [] } = filters;
 
@@ -55,7 +57,7 @@ export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {
  */
 export const getTopTags = async () => {
     const manifest = await getPostManifest();
-    return manifest.topTags || [];
+    return manifest?.topTags || [];
 };
 
 /**
@@ -63,7 +65,7 @@ export const getTopTags = async () => {
  */
 export const fetchPostBySlug = async (slug) => {
     const manifest = await getPostManifest();
-    const allPosts = manifest.posts || [];
+    const allPosts = manifest?.posts || [];
 
     const post = allPosts.find((p) => p.slug === slug);
     if (!post) {
@@ -87,8 +89,10 @@ export const fetchPostBySlug = async (slug) => {
  */
 const getPostTagsManifest = async () => {
     if (!cachedPostTagsManifest) {
-        const res = await fetchData(POST_TAGS_MANIFEST_FILE_URL);
-        cachedPostTagsManifest = await res.json();
+        try {
+            const res = await fetchData(POST_TAGS_MANIFEST_FILE_URL);
+            cachedPostTagsManifest = await res.json();
+        } catch {}
     }
     return cachedPostTagsManifest;
 };
@@ -98,7 +102,7 @@ const getPostTagsManifest = async () => {
  */
 export const fetchPostTags = async () => {
     const manifest = await getPostTagsManifest();
-    return manifest.tags || [];
+    return manifest?.tags || [];
 };
 
 /**
@@ -106,7 +110,7 @@ export const fetchPostTags = async () => {
  */
 export const getTotalPostsCount = async () => {
     const manifest = await getPostManifest();
-    return manifest.totalPosts || 0;
+    return manifest?.totalPosts || 0;
 };
 
 /**
@@ -114,7 +118,7 @@ export const getTotalPostsCount = async () => {
  */
 export const getTotalPostTagsCount = async () => {
     const manifest = await getPostTagsManifest();
-    return manifest.totalTags || 0;
+    return manifest?.totalTags || 0;
 };
 
 /**
@@ -122,5 +126,5 @@ export const getTotalPostTagsCount = async () => {
  */
 export const getInProgressPostsCount = async () => {
     const manifest = await getPostManifest();
-    return manifest.totalInProgressPosts || 0;
+    return manifest?.totalInProgressPosts || 0;
 };

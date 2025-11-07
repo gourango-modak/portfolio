@@ -15,15 +15,17 @@ let cachedProjectTagsManifest = null;
  */
 const getProjectManifest = async () => {
     if (!cachedProjectManifest) {
-        const res = await fetchData(PROJECT_MANIFEST_FILE_URL);
-        cachedProjectManifest = await res.json();
+        try {
+            const res = await fetchData(PROJECT_MANIFEST_FILE_URL);
+            cachedProjectManifest = await res.json();
+        } catch {}
     }
     return cachedProjectManifest;
 };
 
 export const fetchProjects = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getProjectManifest();
-    const allProjects = manifest.projects || [];
+    const allProjects = manifest?.projects || [];
 
     const { searchTerm = "", selectedCategories = [] } = filters;
 
@@ -54,7 +56,7 @@ export const fetchProjects = async (page = 1, pageSize = 10, filters = {}) => {
  */
 export const getTopCategories = async () => {
     const manifest = await getProjectManifest();
-    return manifest.topCategories || [];
+    return manifest?.topCategories || [];
 };
 
 /**
@@ -62,7 +64,7 @@ export const getTopCategories = async () => {
  */
 export const fetchProjectBySlug = async (slug) => {
     const manifest = await getProjectManifest();
-    const allProjects = manifest.projects || [];
+    const allProjects = manifest?.projects || [];
 
     const project = allProjects.find((p) => p.slug === slug);
     if (!project) {
@@ -100,8 +102,10 @@ export const fetchProjectByUrl = async (url) => {
  */
 const getProjectTagsManifest = async () => {
     if (!cachedProjectTagsManifest) {
-        const res = await fetchData(PROJECT_TAGS_MANIFEST_FILE_URL);
-        cachedProjectTagsManifest = await res.json();
+        try {
+            const res = await fetchData(PROJECT_TAGS_MANIFEST_FILE_URL);
+            cachedProjectTagsManifest = await res.json();
+        } catch {}
     }
     return cachedProjectTagsManifest;
 };
@@ -111,7 +115,7 @@ const getProjectTagsManifest = async () => {
  */
 export const fetchProjectTags = async () => {
     const manifest = await getProjectTagsManifest();
-    return manifest.tags || [];
+    return manifest?.tags || [];
 };
 
 /**
@@ -119,7 +123,7 @@ export const fetchProjectTags = async () => {
  */
 export const getTotalProjectsCount = async () => {
     const manifest = await getProjectManifest();
-    return manifest.totalProjects || 0;
+    return manifest?.totalProjects || 0;
 };
 
 /**
@@ -127,7 +131,7 @@ export const getTotalProjectsCount = async () => {
  */
 export const getTotalProjectTagsCount = async () => {
     const manifest = await getProjectTagsManifest();
-    return manifest.totalTags || 0;
+    return manifest?.totalTags || 0;
 };
 
 /**
@@ -135,5 +139,5 @@ export const getTotalProjectTagsCount = async () => {
  */
 export const getInProgressProjectsCount = async () => {
     const manifest = await getProjectManifest();
-    return manifest.totalInProgressProjects || 0;
+    return manifest?.totalInProgressProjects || 0;
 };

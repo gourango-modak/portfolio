@@ -13,12 +13,14 @@ export const InputField = ({
 }) => {
     const textareaRef = useRef(null);
 
-    // Effect to auto-adjust textarea height on value change
     useEffect(() => {
         const textarea = textareaRef.current;
         if (!textarea) return;
 
-        // Adjust height according to content
+        // Reset height first to recalculate correctly
+        textarea.style.height = "auto";
+
+        // Then adjust height based on new content
         textarea.style.height = `${computeTextareaHeight(
             textarea,
             minRows,
@@ -28,7 +30,6 @@ export const InputField = ({
 
     return (
         <div className="mb-4">
-            {/* Label */}
             <label
                 htmlFor={name}
                 className="block text-sm font-medium text-slate-700 mb-2"
@@ -37,7 +38,6 @@ export const InputField = ({
                 {required && <span className="text-red-500 ml-1">*</span>}
             </label>
 
-            {/* Textarea */}
             <textarea
                 ref={textareaRef}
                 id={name}
@@ -54,7 +54,6 @@ export const InputField = ({
                 }`}
             />
 
-            {/* Error message */}
             {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </div>
     );
