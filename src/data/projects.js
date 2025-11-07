@@ -27,20 +27,35 @@ export const fetchProjects = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getProjectManifest();
     const allProjects = manifest?.projects || [];
 
-    const { searchTerm = "", selectedCategories = [] } = filters;
+    const {
+        searchTerm = "",
+        selectedTags = [],
+        selectedStatuses = [],
+        selectedCategories = [],
+    } = filters;
 
     // Apply filters
     const filteredProjects = allProjects.filter((project) => {
         const matchesTitle = project.title
-            .toLowerCase()
+            ?.toLowerCase()
             .includes(searchTerm.toLowerCase());
+
+        const matchesTags =
+            selectedTags.length > 0
+                ? project.tags?.some((tag) => selectedTags.includes(tag))
+                : true;
+
+        const matchesStatus =
+            selectedStatuses.length > 0
+                ? selectedStatuses.includes(project.status)
+                : true;
 
         const matchesCategory =
             selectedCategories.length > 0
-                ? selectedCategories.includes(project.category.name)
+                ? selectedCategories.includes(project.category)
                 : true;
 
-        return matchesTitle && matchesCategory;
+        return matchesTitle && matchesTags && matchesStatus && matchesCategory;
     });
 
     // Pagination
