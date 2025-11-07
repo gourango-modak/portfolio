@@ -1,6 +1,17 @@
 {
-  "totalPosts": 0,
+  "totalPosts": 1,
   "topTags": [],
-  "totalInProgressPosts": 0,
-  "posts": []
+  "totalInProgressPosts": 1,
+  "posts": [
+    {
+      "title": "Lorem Ipsum",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762534065773.json",
+      "tags": [],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "slug": "lorem-ipsum-1762534065773",
+      "createdAt": 1762534065167,
+      "id": 1762534065773,
+      "status": "In progress"
+    }
+  ]
 }
