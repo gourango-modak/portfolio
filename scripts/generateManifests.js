@@ -183,4 +183,3 @@ generatePostsManifest();
 generatePostTagsManifest();
 generateProjectsManifest();
 generateProjectTagsManifest();
-generateCategoriesManifest();
