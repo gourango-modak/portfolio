@@ -213,17 +213,21 @@ export function updateImageUrls(editorData) {
 }
 
 export function generateImageFileName(originalName, uniqueId) {
-    const extension = originalName.split(".").pop();
-    const nameWithoutExt = originalName.replace(/\.[^/.]+$/, "");
+    if (originalName) {
+        const extension = originalName.split(".").pop();
+        const nameWithoutExt = originalName.replace(/\.[^/.]+$/, "");
 
-    const marker = "UID";
+        const marker = "UID";
 
-    // If the filename already contains the marker, don't append uniqueId again
-    if (nameWithoutExt.includes(marker)) {
-        return originalName; // already has marker, return as-is
+        // If the filename already contains the marker, don't append uniqueId again
+        if (nameWithoutExt.includes(marker)) {
+            return originalName; // already has marker, return as-is
+        }
+
+        return `${nameWithoutExt}_${marker}_${uniqueId}.${extension}`;
     }
 
-    return `${nameWithoutExt}_${marker}_${uniqueId}.${extension}`;
+    return null;
 }
 
 export function extractOriginalFileName(fileName) {
