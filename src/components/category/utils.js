@@ -3,13 +3,13 @@ import {
     getTotalCategoriesCount,
 } from "../../data/categories";
 
-export const validateCategoryMetaData = (data, categories) => {
+export const validateCategoryMetaData = (data, categories, isEditing) => {
     const errors = {};
 
     // Check if name is empty
     if (!data.name.trim()) {
         errors.name = "Name is required";
-    } else {
+    } else if (!isEditing) {
         // Check if name already exists (case-insensitive)
         const nameExists = categories.some(
             (category) =>

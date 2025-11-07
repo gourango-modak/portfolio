@@ -27,21 +27,35 @@ export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {
     const manifest = await getPostManifest();
     const allPosts = manifest?.posts || [];
 
-    const { searchTerm = "", selectedTags = [] } = filters;
+    const {
+        searchTerm = "",
+        selectedTags = [],
+        selectedStatuses = [],
+        selectedCategories = [],
+    } = filters;
 
     // Apply filters
     const filteredPosts = allPosts.filter((post) => {
         const matchesTitle = post.title
-            .toLowerCase()
+            ?.toLowerCase()
             .includes(searchTerm.toLowerCase());
 
-        // Ensure post.tags is an array, and check intersection with selectedTags
         const matchesTags =
             selectedTags.length > 0
                 ? post.tags?.some((tag) => selectedTags.includes(tag))
                 : true;
 
-        return matchesTitle && matchesTags;
+        const matchesStatus =
+            selectedStatuses.length > 0
+                ? selectedStatuses.includes(post.status)
+                : true;
+
+        const matchesCategory =
+            selectedCategories.length > 0
+                ? selectedCategories.includes(post.category)
+                : true;
+
+        return matchesTitle && matchesTags && matchesStatus && matchesCategory;
     });
 
     // Pagination

@@ -48,6 +48,7 @@ export const CategoriesPanel = () => {
         downloadJson(categoriesManifest, CATEGORY_MANIFEST_FILE_NAME);
         setMetaDataModalOpen(false);
         isEditingRef.current = false;
+        metaDataRef.current = {};
     };
 
     const handleMetaDataModalClose = (meta) => {
@@ -105,6 +106,7 @@ export const CategoriesPanel = () => {
                 title={
                     isEditingRef.current ? "Edit Category" : "Create Category"
                 }
+                isEditing={isEditingRef.current}
             />
         </>
     );

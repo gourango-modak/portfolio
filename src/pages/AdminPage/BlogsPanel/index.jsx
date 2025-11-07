@@ -82,7 +82,7 @@ export const BlogsPanel = () => {
             <InfiniteScroll
                 key={`${searchTerm}-${selectedCategories.join(
                     "-"
-                )}-${selectedTags.join("-")}`} // force remount on filter change
+                )}-${selectedTags.join("-")}-${selectedStatuses.join("-")}`} // force remount on filter change
                 fetchData={fetchData}
                 renderItem={(post) => (
                     <PostCard key={post.id} post={post} onEdit={handleEdit} />

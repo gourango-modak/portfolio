@@ -14,16 +14,15 @@ export const CategoryModal = ({
     onSave,
     initialData,
     title = "Create Category",
+    isEditing = false,
 }) => {
-    const safeInitial = initialData ?? {}; // fallback if null or undefined
     const [metaData, setMetaData] = useState({
-        ...defaultMetaData,
-        ...safeInitial,
+        name: initialData || "",
     });
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        setMetaData({ ...defaultMetaData, ...initialData });
+        setMetaData({ name: initialData || "" });
     }, [initialData]);
 
     const handleChange = (e) => {
@@ -41,7 +40,11 @@ export const CategoryModal = ({
 
     const handleSave = async () => {
         const categories = await fetchAllCategories();
-        const validationErrors = validateCategoryMetaData(metaData, categories);
+        const validationErrors = validateCategoryMetaData(
+            metaData,
+            categories,
+            isEditing
+        );
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
