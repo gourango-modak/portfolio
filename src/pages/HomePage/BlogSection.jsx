@@ -8,9 +8,8 @@ const BlogSection = ({ bgClass = "bg-white/50" }) => {
     return (
         <Section bgClass={bgClass}>
             <SectionHeader
-                title="From My Blog"
-                text="I write about technology, development, and everything in
-                    between. Here are some of my latest articles."
+                title="My Writings"
+                text="I share insights on technology, software development, and everything in between. Here are some of my latest writings."
             />
             <PostsList fetchData={fetchPosts} maxItems={6} />
             <div className="mt-16 text-center">

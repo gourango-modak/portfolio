@@ -1,4 +1,4 @@
-import { Github, Linkedin, Facebook } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
@@ -56,9 +56,14 @@ const Footer = () => {
                     {/* Right Section - Social Icons */}
                     <div className="flex space-x-4">
                         {[
-                            { icon: Github, href: "#" },
-                            { icon: Linkedin, href: "#" },
-                            { icon: Facebook, href: "#" },
+                            {
+                                icon: Github,
+                                href: "https://github.com/gourango-modak",
+                            },
+                            {
+                                icon: Linkedin,
+                                href: "https://www.linkedin.com/in/gourango-modak/",
+                            },
                         ].map(({ icon: Icon, href }, i) => (
                             <a
                                 key={i}

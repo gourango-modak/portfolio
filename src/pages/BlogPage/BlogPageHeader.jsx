@@ -7,8 +7,8 @@ const BlogPageHeader = () => {
                 </h1>
             </div>
             <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-                Here I share my thoughts on software development, .NET, and the
-                tech world.
+                Thoughts, lessons, and experiments from my journey in software
+                engineering.
             </p>
         </>
     );
