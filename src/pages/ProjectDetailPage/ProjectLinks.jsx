@@ -1,5 +1,6 @@
 import { Github, Rocket } from "lucide-react";
 import { AppCard } from "../../components/common/AppCard";
+import { generateId } from "../../utils/common";
 
 const ProjectLinks = ({ liveUrl, repoUrl }) => {
     if (!liveUrl && !repoUrl) return null;
@@ -9,7 +10,7 @@ const ProjectLinks = ({ liveUrl, repoUrl }) => {
             <div className="grid sm:grid-cols-2 gap-6 pt-6">
                 {liveUrl && (
                     <AppCard
-                        key={liveUrl}
+                        key={`${liveUrl}_${generateId()}`}
                         app={{
                             name: "Live Demo",
                             description: "Experience the app in action.",
@@ -20,7 +21,7 @@ const ProjectLinks = ({ liveUrl, repoUrl }) => {
                 )}
                 {repoUrl && (
                     <AppCard
-                        key={repoUrl}
+                        key={`${repoUrl}_${generateId()}`}
                         app={{
                             name: "Source Code",
                             description: "Explore the full code on GitHub.",

@@ -5,13 +5,19 @@
   "projects": [
     {
       "title": "Dynamic Blog Post Filtering System",
-      "category": "None",
+      "category": {
+        "label": "None",
+        "value": "None"
+      },
       "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/projects/1762587893718.json",
       "description": "Building a scalable and flexible content filtering system is a core feature of any blog or content platform. In this project, I developed a dynamic blog post fetching module that allows users to search, filter, and paginate blog posts based on various criteria like tags, status, and categories — all efficiently handled on the client side.",
       "slug": "dynamic-blog-post-filtering-system-1762587893718",
       "createdAt": 1762587893154,
       "id": 1762587893718,
-      "status": "Completed"
+      "status": {
+        "label": "Completed",
+        "value": "Completed"
+      }
     }
   ]
 }

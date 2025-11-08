@@ -7,7 +7,7 @@ const EditorJsContentRenderer = ({ content }) => {
     return (
         <div className="editorjs-content">
             {content.blocks.filter(shouldRenderBlock).map((block, index) => (
-                <RenderBlock key={index} block={block} index={index} />
+                <RenderBlock key={block.id} block={block} index={index} />
             ))}
         </div>
     );

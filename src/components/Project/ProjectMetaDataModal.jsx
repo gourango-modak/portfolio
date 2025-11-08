@@ -34,6 +34,7 @@ const ProjectMetaDataModal = ({
         status: mapContentStatusToOption(safeInitial.status),
         category: mapCategoryToOption(safeInitial.category),
     });
+
     const [errors, setErrors] = useState({});
 
     useEffect(() => {

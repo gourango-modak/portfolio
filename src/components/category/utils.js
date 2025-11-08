@@ -31,7 +31,7 @@ export const getCategoryOptions = (categories) => {
 };
 
 export const mapCategoryToOption = (category) => {
-    if (category?.value !== "") return category;
+    if (category?.value) return category;
 
     return category
         ? {

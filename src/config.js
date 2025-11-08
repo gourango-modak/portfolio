@@ -45,7 +45,7 @@ export const CONTENT_STATUSES_OPTIONS = [
 ];
 
 export const mapContentStatusToOption = (statusValue) => {
-    if (statusValue?.value !== "") return statusValue;
+    if (statusValue?.value) return statusValue;
     return (
         CONTENT_STATUSES_OPTIONS.find((opt) => opt.value === statusValue) || ""
     );
