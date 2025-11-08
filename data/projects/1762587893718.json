@@ -4,14 +4,8 @@
   "repoUrl": "http://localhost:5173/portfolio#/admin/project",
   "startDate": "12/12/2024",
   "endDate": "12/24/2024",
-  "status": {
-    "label": "Completed",
-    "value": "Completed"
-  },
-  "category": {
-    "label": "None",
-    "value": "None"
-  },
+  "status": "Completed",
+  "category": "None",
   "id": 1762587893718,
   "createdAt": 1762587893154,
   "updatedAt": 1762587893154,
@@ -20,7 +14,7 @@
   "tags": [],
   "slug": "dynamic-blog-post-filtering-system-1762587893718",
   "content": {
-    "time": 1762588781822,
+    "time": 1762589506967,
     "blocks": [
       {
         "id": "Pcp8yc9-0h",
