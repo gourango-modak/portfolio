@@ -1,6 +1,7 @@
 {
-  "totalCategories": 1,
+  "totalCategories": 2,
   "categories": [
-    "Web Development"
+    "Web Development",
+    "None"
   ]
 }

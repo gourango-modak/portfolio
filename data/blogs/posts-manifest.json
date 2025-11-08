@@ -1,17 +1,17 @@
 {
   "totalPosts": 1,
   "topTags": [],
-  "totalInProgressPosts": 1,
+  "totalInProgressPosts": 0,
   "posts": [
     {
-      "title": "Lorem Ipsum",
-      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762534065773.json",
+      "title": "How I Learned System Design",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762586104470.json",
       "tags": [],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "slug": "lorem-ipsum-1762534065773",
-      "createdAt": 1762534065167,
-      "id": 1762534065773,
-      "status": "In progress"
+      "description": "System Design is intimidating at first.\nPeople throw words like “Sharding”, “CQRS”, “load balancer”, “eventual consistency”…\nAt first, it made me feel dumb. But then I realized\nEveryone feels lost in the beginning.\nSystem design isn’t a single topic. It’s not a “chapter” you can complete in a week.",
+      "slug": "how-i-learned-system-design-1762586104470",
+      "createdAt": 1762586103491,
+      "id": 1762586104470,
+      "status": "Completed"
     }
   ]
 }
