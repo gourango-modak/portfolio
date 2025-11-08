@@ -4,12 +4,13 @@ import { getEditorJsTools } from "../../../components/editorJs/config";
 import { downloadJson, getContentFileName } from "../../../utils/common";
 import { useNavigate, useParams } from "react-router-dom";
 import ResourceLoader from "../../../components/common/ResourceLoader";
-import { CONTENT_TYPES } from "../../../config";
+import { CONTENT_TYPES, getStatusFromOption } from "../../../config";
 import { ScrollButtons } from "../../../components/common/ScrollButtons";
 import { fetchProjectBySlug } from "../../../data/projects";
 import ProjectMetaDataModal from "../../../components/project/ProjectMetaDataModal";
 import { fetchAllCategories } from "../../../data/categories";
 import { downloadContentImages } from "../../../components/editorJs/utils";
+import { getCategoryFromOption } from "../../../components/category/utils";
 
 export const ProjectEditor = () => {
     const [isMetaDataModalOpen, setMetaDataModalOpen] = useState(false);
@@ -47,6 +48,8 @@ export const ProjectEditor = () => {
         const updatedProject = {
             ...projectData,
             ...meta,
+            status: getStatusFromOption(meta.status),
+            category: getCategoryFromOption(meta.category),
             content: editorJsDataRef.current,
         };
         downloadJson(updatedProject, getContentFileName(updatedProject.id));
