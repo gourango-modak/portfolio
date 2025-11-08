@@ -90,7 +90,7 @@ export const CreateBlog = () => {
                 NEW_BLOG_STORE_KEY,
                 JSON.stringify({
                     content,
-                    metaData: null,
+                    metaData,
                 })
             );
         }
