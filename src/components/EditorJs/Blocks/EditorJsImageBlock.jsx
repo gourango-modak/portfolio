@@ -24,7 +24,7 @@ const EditorJsImageBlock = ({
                 src={url}
                 alt={extractOriginalFileName(name)}
                 className="object-contain"
-                style={{ width, height }}
+                style={{ width, height: "auto" }}
             />
         </div>
     );
