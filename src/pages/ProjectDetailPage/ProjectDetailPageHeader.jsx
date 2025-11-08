@@ -1,3 +1,4 @@
+import { CONTENT_STATUSES } from "../../config";
 import { formatDate } from "./../../utils/date";
 
 const ProjectDetailPageHeader = ({ project }) => {
@@ -22,23 +23,24 @@ const ProjectDetailPageHeader = ({ project }) => {
                 )}
 
                 {/* Status (if not Completed) */}
-                {project.status && project.status !== "Completed" && (
-                    <span className="flex items-center gap-2">
-                        <span className="text-gray-400">⏳</span>
-                        Status:{" "}
-                        <span className="text-slate-700 font-medium">
-                            {project.status}
+                {project.status &&
+                    project.status !== CONTENT_STATUSES.COMPLETED && (
+                        <span className="flex items-center gap-2">
+                            <span className="text-gray-400">⏳</span>
+                            Status:{" "}
+                            <span className="text-slate-700 font-medium">
+                                {project.status}
+                            </span>
                         </span>
-                    </span>
-                )}
+                    )}
 
                 {/* Status (if not Completed) */}
-                {project.category?.name && (
+                {project.category && (
                     <span className="flex items-center gap-2">
                         <span className="text-gray-400">🏷️</span>
                         Category:{" "}
                         <span className="text-slate-700 font-medium">
-                            {project.category.name}
+                            {project.category}
                         </span>
                     </span>
                 )}
