@@ -19,7 +19,10 @@ const BlogPage = () => {
             <div className="container mx-auto px-6 md:px-12 md:max-w-7xl">
                 <BlogPageHeader />
                 <div className="mb-12">
-                    <SearchInput onSearch={setSearchTerm} />
+                    <SearchInput
+                        onSearch={setSearchTerm}
+                        placeholder="Search blog by title..."
+                    />
                     <TagFilter
                         topTags={topTags}
                         selectedTags={selectedTags}

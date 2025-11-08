@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const SearchInput = ({ searchTerm, onSearch, debounceTime = 300 }) => {
+const SearchInput = ({
+    searchTerm,
+    onSearch,
+    debounceTime = 300,
+    placeholder = "Search by title...",
+}) => {
     const [value, setValue] = useState(searchTerm || "");
 
     // Debounce effect
@@ -17,7 +22,7 @@ const SearchInput = ({ searchTerm, onSearch, debounceTime = 300 }) => {
         <div className="relative max-w-lg mx-auto mb-6">
             <input
                 type="text"
-                placeholder="Search articles by title..."
+                placeholder={placeholder}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-400 bg-gray-50 text-gray-800 outline-none rounded-full shadow-sm
