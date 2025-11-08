@@ -4,8 +4,14 @@
   "repoUrl": "http://localhost:5173/portfolio#/admin/project",
   "startDate": "12/12/2024",
   "endDate": "12/24/2024",
-  "status": "Completed",
-  "category": "None",
+  "status": {
+    "label": "Completed",
+    "value": "Completed"
+  },
+  "category": {
+    "label": "None",
+    "value": "None"
+  },
   "id": 1762587893718,
   "createdAt": 1762587893154,
   "updatedAt": 1762587893154,
@@ -14,7 +20,7 @@
   "tags": [],
   "slug": "dynamic-blog-post-filtering-system-1762587893718",
   "content": {
-    "time": 1762587869065,
+    "time": 1762588781822,
     "blocks": [
       {
         "id": "Pcp8yc9-0h",
@@ -24,8 +30,8 @@
         }
       },
       {
-        "id": "CUXrTu7UJ7",
-        "type": "tagline",
+        "id": "lSd8hQ3704",
+        "type": "paragraph",
         "data": {
           "text": "Building a scalable and flexible content filtering system is a core feature of any blog or content platform. In this project, I developed a dynamic blog post fetching module that allows users to search, filter, and paginate blog posts based on various criteria like tags, status, and categories — all efficiently handled on the client side."
         }
@@ -156,7 +162,9 @@
         "type": "list",
         "data": {
           "style": "ordered",
-          "meta": {},
+          "meta": {
+            "counterType": "numeric"
+          },
           "items": [
             {
               "content": "Retrieves post data from a manifest file.\n",
@@ -180,7 +188,7 @@
         "id": "hatvbX1sI3",
         "type": "code",
         "data": {
-          "language": "javascript",
+          "language": "",
           "code": "export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {\n    const manifest = await getPostManifest();\n    const allPosts = manifest?.posts || [];\n\n    const {\n        searchTerm = \"\",\n        selectedTags = [],\n        selectedStatuses = [],\n        selectedCategories = [],\n    } = filters;\n\n    const filteredPosts = allPosts.filter((post) => {\n        const matchesTitle = post.title\n            ?.toLowerCase()\n            .includes(searchTerm.toLowerCase());\n\n        const matchesTags =\n            selectedTags.length > 0\n                ? post.tags?.some((tag) => selectedTags.includes(tag))\n                : true;\n\n        const matchesStatus =\n            selectedStatuses.length > 0\n                ? selectedStatuses.includes(post.status)\n                : true;\n\n        const matchesCategory =\n            selectedCategories.length > 0\n                ? selectedCategories.includes(post.category)\n                : true;\n\n        return matchesTitle && matchesTags && matchesStatus && matchesCategory;\n    });\n\n    const startIndex = (page - 1) * pageSize;\n    const endIndex = Math.min(startIndex + pageSize, filteredPosts.length);\n    const posts = filteredPosts.slice(startIndex, endIndex);\n\n    return posts;\n};\n"
         }
       },
