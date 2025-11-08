@@ -1,0 +1,890 @@
+{
+  "description": "System Design is intimidating at first.\nPeople throw words like “Sharding”, “CQRS”, “load balancer”, “eventual consistency”…\nAt first, it made me feel dumb. But then I realized\nEveryone feels lost in the beginning.\nSystem design isn’t a single topic. It’s not a “chapter” you can complete in a week.",
+  "readTime": 10,
+  "status": "Completed",
+  "category": "Web Development",
+  "id": 1762586104470,
+  "createdAt": 1762586103491,
+  "updatedAt": 1762586103491,
+  "title": "How I Learned System Design",
+  "tags": [],
+  "slug": "how-i-learned-system-design-1762586104470",
+  "content": {
+    "time": 1762586063388,
+    "blocks": [
+      {
+        "id": "BTpz-2Gb2f",
+        "type": "title",
+        "data": {
+          "text": "How I Learned System Design"
+        }
+      },
+      {
+        "id": "XBXvgpHij6",
+        "type": "paragraph",
+        "data": {
+          "text": "– The honest journey from total confusion to clarity"
+        }
+      },
+      {
+        "id": "TZvrO8DY9c",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/0_05jTJuOCH4THyaYt_UID_1762586064073.webp",
+          "name": "0_05jTJuOCH4THyaYt_UID_1762586064073.webp",
+          "width": "572px",
+          "height": "381.333px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "VwY6GJZTvJ",
+        "type": "paragraph",
+        "data": {
+          "text": "Let me be brutally honest with you."
+        }
+      },
+      {
+        "id": "j2WmkaU0tB",
+        "type": "paragraph",
+        "data": {
+          "text": "There was a time I used to skip every video or blog that said “System Design”.I’d think“This is for senior engineers, architects, not for me.”"
+        }
+      },
+      {
+        "id": "gKyLokhiSQ",
+        "type": "paragraph",
+        "data": {
+          "text": "I was wrong."
+        }
+      },
+      {
+        "id": "VK4eFcBBjn",
+        "type": "paragraph",
+        "data": {
+          "text": "Because one day, in an interview, they asked me:“Can you design a ride-sharing app like Uber?”And I froze."
+        }
+      },
+      {
+        "id": "-gv1tfg3-i",
+        "type": "paragraph",
+        "data": {
+          "text": "I talked about REST APIs.I mentioned MySQL.Then… silence.No clue how to handle scale, no idea about queues, or even how to store real-time location."
+        }
+      },
+      {
+        "id": "WIvgZ2jpRi",
+        "type": "paragraph",
+        "data": {
+          "text": "That day I decided this won’t happen again. Here’s how I went from being totally lost to confidently discussing architecture in interviews, and even proposing better designs at work."
+        }
+      },
+      {
+        "id": "spDUlFCqdQ",
+        "type": "header",
+        "data": {
+          "text": "1. First, I Accepted I Knew Nothing and That Was Okay",
+          "level": 2
+        }
+      },
+      {
+        "id": "3AsCx429_s",
+        "type": "paragraph",
+        "data": {
+          "text": "System Design is intimidating at first.People throw words like “sharding”, “CQRS”, “load balancer”, “eventual consistency”…"
+        }
+      },
+      {
+        "id": "Oec5V-yxlT",
+        "type": "paragraph",
+        "data": {
+          "text": "At first, it made me feel dumb. But then I realizedEveryone feels lost in the beginning."
+        }
+      },
+      {
+        "id": "dfqjQN68kh",
+        "type": "paragraph",
+        "data": {
+          "text": "System design isn’t a single topic. It’s not a “chapter” you can complete in a week.It’s a mix of:"
+        }
+      },
+      {
+        "id": "qFrXZuNThx",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "How data flows",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "How services talk to each other",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "How systems survive under huge traffic",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "And how to make things fault-tolerant, fast, and reliable",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "hewmeDe-XO",
+        "type": "paragraph",
+        "data": {
+          "text": "Once I accepted that this will take time, it felt lighter. I stopped chasing perfection and focused on small wins."
+        }
+      },
+      {
+        "id": "aPWWX3owA7",
+        "type": "header",
+        "data": {
+          "text": "2. I Broke Down “System Design” Into Mini Topics",
+          "level": 2
+        }
+      },
+      {
+        "id": "PTUhhY5nc7",
+        "type": "paragraph",
+        "data": {
+          "text": "System Design is not one big subject it’s a set of interconnected building blocks.So I made a map for myself:"
+        }
+      },
+      {
+        "id": "dP8KzVlqat",
+        "type": "header",
+        "data": {
+          "text": "a) The Basics",
+          "level": 3
+        }
+      },
+      {
+        "id": "Ap9NCTMxgV",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "What happens when you type a URL in the browser",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "What is DNS, Load Balancer, CDN",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "TCP vs UDP, HTTP vs HTTPS",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "oyEr3xDlAT",
+        "type": "paragraph",
+        "data": {
+          "text": "Even these basics were eye-opening. LikeDid you know DNS is like a phonebook of the internet? And CDNs are why YouTube loads fast?"
+        }
+      },
+      {
+        "id": "g4mgOITRzC",
+        "type": "header",
+        "data": {
+          "text": "b) Data and Storage",
+          "level": 3
+        }
+      },
+      {
+        "id": "27GMUNZSpc",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "SQL vs NoSQL",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Indexing, Replication, Sharding",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "When to choose MongoDB vs PostgreSQL",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "4Ucc7d7LGe",
+        "type": "paragraph",
+        "data": {
+          "text": "I learned this the hard way. In one project, we chose Mongo for transactional data. Later, we regretted it."
+        }
+      },
+      {
+        "id": "dw0hRt7hh6",
+        "type": "header",
+        "data": {
+          "text": "c) Scaling Techniques",
+          "level": 3
+        }
+      },
+      {
+        "id": "3mLNlcjalx",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Horizontal vs Vertical scaling",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Caching (Redis, Memcached)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Load balancing (Round-robin, IP Hashing)",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "0B88Z8aiIn",
+        "type": "paragraph",
+        "data": {
+          "text": "I loved this part. It made me feel like I could finally design something for millions of users even if it was just on paper."
+        }
+      },
+      {
+        "id": "ebgnrp1hSc",
+        "type": "header",
+        "data": {
+          "text": "d) Architecture Patterns",
+          "level": 3
+        }
+      },
+      {
+        "id": "z2u19nq1j_",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Monolith vs Microservices",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Event-Driven Architecture",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Pub/Sub, Message Queues (Kafka, RabbitMQ)",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Agu5Ywpf-j",
+        "type": "paragraph",
+        "data": {
+          "text": "This made me understand&nbsp;why&nbsp;companies like Netflix use microservices not just because it’s trendy, but because it makes sense at scale."
+        }
+      },
+      {
+        "id": "wtQalRFWwI",
+        "type": "header",
+        "data": {
+          "text": "3. I Watched Real People Think, Not Just Teach",
+          "level": 2
+        }
+      },
+      {
+        "id": "IIJwiQ-OcN",
+        "type": "paragraph",
+        "data": {
+          "text": "Instead of watching tutorial-style videos, I started watching mock interviews."
+        }
+      },
+      {
+        "id": "N_DcmLNAWQ",
+        "type": "paragraph",
+        "data": {
+          "text": "And trust me, that changed everything."
+        }
+      },
+      {
+        "id": "L6Hrz5anBC",
+        "type": "paragraph",
+        "data": {
+          "text": "Because when someone thinks aloud, makes mistakes, backtracks, and justifies their choices you learn how to&nbsp;think, not just&nbsp;copy."
+        }
+      },
+      {
+        "id": "Xfc5nDsDcB",
+        "type": "paragraph",
+        "data": {
+          "text": "Channels that really helped:"
+        }
+      },
+      {
+        "id": "Jp6BLGaRlp",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Gaurav Sen explains from the ground up",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Exponent mock interviews with real candidates",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "ByteByteGo visual, storytelling approach",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "fslKJ6Oq23",
+        "type": "paragraph",
+        "data": {
+          "text": "I learned how to:"
+        }
+      },
+      {
+        "id": "PAqdSS8uYH",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Ask the right clarifying questions",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Define functional and non-functional requirements",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Walk through API design, DB choices, scaling logic",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Always talk about&nbsp;tradeoffs, not just choices",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "z-z6eenXcZ",
+        "type": "header",
+        "data": {
+          "text": "4. I Started Drawing Even If It Was Just on Paper",
+          "level": 2
+        }
+      },
+      {
+        "id": "s1OxnlXrkU",
+        "type": "paragraph",
+        "data": {
+          "text": "One surprising thing that helped me? Drawing."
+        }
+      },
+      {
+        "id": "k5CdWIIxwv",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/0_SXByOhjvsphJRqrF_UID_1762586063684.webp",
+          "name": "0_SXByOhjvsphJRqrF_UID_1762586063684.webp",
+          "width": "293px",
+          "height": "439.5px",
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "AzSZXcf0tz",
+        "type": "paragraph",
+        "data": {
+          "text": "I’m not an artist. But sketching out a flow from client → load balancer → app servers → DB made it click."
+        }
+      },
+      {
+        "id": "3lddjnOn_N",
+        "type": "paragraph",
+        "data": {
+          "text": "When I drew:"
+        }
+      },
+      {
+        "id": "oM_jhr5--x",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "The request flow felt real",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "I saw where bottlenecks could happen",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "I understood where to place a cache, when to use a queue",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Qd9brKv08M",
+        "type": "paragraph",
+        "data": {
+          "text": "Even today, when I’m stuck, I grab a pen and paper.That sketch often gives me the clarity that reading never did."
+        }
+      },
+      {
+        "id": "B02xDecSgT",
+        "type": "header",
+        "data": {
+          "text": "5. I Practiced With Real System Design Problems",
+          "level": 2
+        }
+      },
+      {
+        "id": "Q9ax0VxEUx",
+        "type": "paragraph",
+        "data": {
+          "text": "Once I was confident with basics, I stopped watching and started designing."
+        }
+      },
+      {
+        "id": "v3M0vlxXzv",
+        "type": "paragraph",
+        "data": {
+          "text": "Here’s how I practiced:"
+        }
+      },
+      {
+        "id": "FA_myAqRgV",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Pick a real-world system: WhatsApp, YouTube, Zomato, Instagram",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Write the&nbsp;functional requirements&nbsp;first (what the system should do)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Then add&nbsp;non-functional requirements&nbsp;(scale, availability, latency)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Do rough estimation (users, QPS, DB size)",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Design a&nbsp;high-level architecture",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "el2RWznaC-",
+        "type": "paragraph",
+        "data": {
+          "text": "Go deeper into:"
+        }
+      },
+      {
+        "id": "09aJSjX9kN",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "DB schema",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "APIs",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Scaling strategies",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Handling failures",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Edge cases",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "KRmmFIs9sK",
+        "type": "paragraph",
+        "data": {
+          "text": "I wrote one design per week.And not just one solution but&nbsp;multiple possibilities."
+        }
+      },
+      {
+        "id": "xekaoxCkWi",
+        "type": "paragraph",
+        "data": {
+          "text": "Because in real interviews (and real jobs), there’s rarely one perfect answer.It’s all about justifying&nbsp;why&nbsp;you picked X over Y."
+        }
+      },
+      {
+        "id": "pg401R-cWA",
+        "type": "header",
+        "data": {
+          "text": "6. I Applied It at Work",
+          "level": 2
+        }
+      },
+      {
+        "id": "9FS0ivjpKw",
+        "type": "paragraph",
+        "data": {
+          "text": "Theory is useless unless you apply it."
+        }
+      },
+      {
+        "id": "JgZvrSKwZp",
+        "type": "paragraph",
+        "data": {
+          "text": "At work, I was working on a high-traffic service for EMI generation.It had Kafka events, REST APIs, complex transactions."
+        }
+      },
+      {
+        "id": "RpHEZZx30v",
+        "type": "paragraph",
+        "data": {
+          "text": "This is where I started applying design principles:"
+        }
+      },
+      {
+        "id": "n-4UoQLtUk",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "I proposed breaking a monolith into services",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Used queues for async communication",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Introduced retries and dead-letter queues",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "And even debated Kafka vs gRPC (based on latency and control)",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "KdgJsMBAUK",
+        "type": "paragraph",
+        "data": {
+          "text": "It wasn’t perfect. But it gave me confidence that system design isn’t just interview stuff it’s&nbsp;real, valuable skill&nbsp;that helps your team and your product."
+        }
+      },
+      {
+        "id": "bkEjVSwHST",
+        "type": "header",
+        "data": {
+          "text": "7. I Started Explaining to Others",
+          "level": 2
+        }
+      },
+      {
+        "id": "lEuR7Des8f",
+        "type": "paragraph",
+        "data": {
+          "text": "This was the final level."
+        }
+      },
+      {
+        "id": "sMj5utjK1p",
+        "type": "paragraph",
+        "data": {
+          "text": "When you explain something be it to a junior, an intern, or in a blog you spot the gaps in your own understanding."
+        }
+      },
+      {
+        "id": "rmw0uQR3Un",
+        "type": "paragraph",
+        "data": {
+          "text": "So I:"
+        }
+      },
+      {
+        "id": "EYrfGc03u4",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Mentored juniors during onboarding",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Took small sessions to explain caching, DB design, and queues",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Wrote articles with diagrams",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Started preparing juniors for design interviews",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "kbR4efR17F",
+        "type": "paragraph",
+        "data": {
+          "text": "Every time I explained something, I realized:If I can teach it simply, I actually understand it well."
+        }
+      },
+      {
+        "id": "_cH8DBxUez",
+        "type": "header",
+        "data": {
+          "text": "My Honest Advice to You",
+          "level": 2
+        }
+      },
+      {
+        "id": "4in6a1UdJy",
+        "type": "paragraph",
+        "data": {
+          "text": "If you’re starting today, or if you’ve failed in your first design interview I want to tell you this:"
+        }
+      },
+      {
+        "id": "JWW9JI9AMQ",
+        "type": "paragraph",
+        "data": {
+          "text": "System Design is not magic.You don’t need 10 years of experience.You don’t need to memorize Gaurav Sen’s diagrams."
+        }
+      },
+      {
+        "id": "Ngxq0ToWmK",
+        "type": "paragraph",
+        "data": {
+          "text": "You just need to:"
+        }
+      },
+      {
+        "id": "0Hs0pzFp8z",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Start with basics",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Think in real-world use cases",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Build a structure",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Practice weekly",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Ask “why” behind every choice",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "And slowly improve",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "8bj9vDSsim",
+        "type": "paragraph",
+        "data": {
+          "text": "Even if you give 30 minutes daily in 3 months, you’ll see the difference."
+        }
+      },
+      {
+        "id": "nhsYuPGtPl",
+        "type": "header",
+        "data": {
+          "text": "Final Thought: It’s Not About Answers It’s About Approach",
+          "level": 2
+        }
+      },
+      {
+        "id": "l5zmp2Ztra",
+        "type": "paragraph",
+        "data": {
+          "text": "In system design, you’ll often feel uncertain. That’s normal.What matters is how you approach a problem."
+        }
+      },
+      {
+        "id": "N_Wb1pMfGe",
+        "type": "paragraph",
+        "data": {
+          "text": "When you explain:"
+        }
+      },
+      {
+        "id": "2fLLtKvr62",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "What’s the scale?",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "What’s the bottleneck?",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "What are the tradeoffs of this DB vs that one?",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "What if this service fails?",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "hQxvaQ_xBT",
+        "type": "paragraph",
+        "data": {
+          "text": "That’s what makes you a strong engineer.Not the number of diagrams you memorized."
+        }
+      },
+      {
+        "id": "-S8ezbz69i",
+        "type": "paragraph",
+        "data": {
+          "text": "So keep going.Start with “How does a URL work?” and end with designing Instagram."
+        }
+      },
+      {
+        "id": "3AnNZ7h2vm",
+        "type": "paragraph",
+        "data": {
+          "text": "You’ll be amazed at how far you’ve come one system at a time."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}

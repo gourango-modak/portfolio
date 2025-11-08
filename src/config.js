@@ -50,6 +50,11 @@ export const mapContentStatusToOption = (statusValue) => {
     );
 };
 
+export const getStatusFromOption = (statusOption) => {
+    if (statusOption === "") return CONTENT_STATUSES.COMPLETED;
+    return statusOption.value;
+};
+
 export const NAV_LINKS = [
     { to: "/projects", label: "Projects" },
     { to: "/blog", label: "Blog" },

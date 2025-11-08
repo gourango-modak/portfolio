@@ -1,4 +1,6 @@
+import { getStatusFromOption } from "../../config";
 import { buildSlug, generateId } from "../../utils/common";
+import { getCategoryFromOption } from "../category/utils";
 import { extractTags, extractTitle, updateImageUrls } from "../editorJs/utils";
 
 export const preparePostData = (editorJsData, metaData) => {
@@ -17,8 +19,8 @@ export const preparePostData = (editorJsData, metaData) => {
         title: title,
         tags: tags,
         slug: buildSlug(title, id),
-        status: metaData.status.value,
-        category: metaData.category.value,
+        status: getStatusFromOption(metaData.status),
+        category: getCategoryFromOption(metaData.category),
         content: editorJsData,
     };
 };

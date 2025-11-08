@@ -30,13 +30,18 @@ export const getCategoryOptions = (categories) => {
     }));
 };
 
-export const mapCategoryToOption = (statusValue) => {
-    return statusValue
+export const mapCategoryToOption = (category) => {
+    return category
         ? {
-              label: safeInitial.category,
-              value: safeInitial.category,
+              label: category,
+              value: category,
           }
         : "";
+};
+
+export const getCategoryFromOption = (categoryOption) => {
+    if (categoryOption === "") return "None";
+    return categoryOption.value;
 };
 
 export const addCategoryAndPrepare = async (newCategory) => {

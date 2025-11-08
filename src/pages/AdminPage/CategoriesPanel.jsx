@@ -48,7 +48,7 @@ export const CategoriesPanel = () => {
         downloadJson(categoriesManifest, CATEGORY_MANIFEST_FILE_NAME);
         setMetaDataModalOpen(false);
         isEditingRef.current = false;
-        metaDataRef.current = {};
+        metaDataRef.current = "";
     };
 
     const handleMetaDataModalClose = (meta) => {
@@ -58,7 +58,7 @@ export const CategoriesPanel = () => {
     };
 
     const handleCreateCategory = () => {
-        metaDataRef.current = {};
+        metaDataRef.current = "";
         setMetaDataModalOpen(true);
     };
 
