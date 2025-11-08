@@ -1,0 +1,275 @@
+{
+  "description": "Building a scalable and flexible content filtering system is a core feature of any blog or content platform. In this project, I developed a dynamic blog post fetching module that allows users to search, filter, and paginate blog posts based on various criteria like tags, status, and categories — all efficiently handled on the client side.",
+  "liveUrl": "http://localhost:5173/portfolio#/admin/project",
+  "repoUrl": "http://localhost:5173/portfolio#/admin/project",
+  "startDate": "12/12/2024",
+  "endDate": "12/24/2024",
+  "status": "Completed",
+  "category": "None",
+  "id": 1762587893718,
+  "createdAt": 1762587893154,
+  "updatedAt": 1762587893154,
+  "title": "Dynamic Blog Post Filtering System",
+  "tagline": "Building a scalable and flexible content filtering system is a core feature of any blog or content platform. In this project, I developed a dynamic blog post fetching module that allows users to search, filter, and paginate blog posts based on various criteria like tags, status, and categories — all efficiently handled on the client side.",
+  "tags": [],
+  "slug": "dynamic-blog-post-filtering-system-1762587893718",
+  "content": {
+    "time": 1762587869065,
+    "blocks": [
+      {
+        "id": "Pcp8yc9-0h",
+        "type": "title",
+        "data": {
+          "text": "Dynamic Blog Post Filtering System"
+        }
+      },
+      {
+        "id": "CUXrTu7UJ7",
+        "type": "tagline",
+        "data": {
+          "text": "Building a scalable and flexible content filtering system is a core feature of any blog or content platform. In this project, I developed a dynamic blog post fetching module that allows users to search, filter, and paginate blog posts based on various criteria like tags, status, and categories — all efficiently handled on the client side."
+        }
+      },
+      {
+        "id": "ellIT05uXA",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Architecture Overview_UID_1762587869451.png",
+          "name": "Architecture Overview_UID_1762587869451.png",
+          "width": "478px",
+          "height": "625.025px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "XaE4UxwJaW",
+        "type": "header",
+        "data": {
+          "text": "🚀 Key Features",
+          "level": 2
+        }
+      },
+      {
+        "id": "Dkbx2Mf2N3",
+        "type": "header",
+        "data": {
+          "text": "🔍 Smart Search",
+          "level": 3
+        }
+      },
+      {
+        "id": "WAl0_QHWVX",
+        "type": "paragraph",
+        "data": {
+          "text": "Users can quickly find articles by typing part of a title. The search is case-insensitive and optimized for partial matches — meaning users can discover posts easily, even if they don’t remember the exact title."
+        }
+      },
+      {
+        "id": "v8nhU46Aq8",
+        "type": "header",
+        "data": {
+          "text": "🏷️ Multi-Tag Filtering",
+          "level": 3
+        }
+      },
+      {
+        "id": "7okFuZwQFs",
+        "type": "paragraph",
+        "data": {
+          "text": "Posts can belong to multiple tags (e.g., “JavaScript”, “React”, “Web Development”).\nThe filtering logic checks for intersection between selected tags and each post’s tag list, ensuring only relevant posts appear."
+        }
+      },
+      {
+        "id": "mMNkks2bjr",
+        "type": "header",
+        "data": {
+          "text": "🧭 Category &amp; Status Filtering",
+          "level": 3
+        }
+      },
+      {
+        "id": "pro37V5PQw",
+        "type": "paragraph",
+        "data": {
+          "text": "In addition to tags, posts can be filtered by:"
+        }
+      },
+      {
+        "id": "LhaxttZ5wF",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Status — such as <code data-start=\"1255\" data-end=\"1266\">published</code>, <code data-start=\"1268\" data-end=\"1275\">draft</code>, or <code data-start=\"1280\" data-end=\"1290\">archived</code>\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Category — like <code data-start=\"1313\" data-end=\"1323\">Tutorial</code>, <code data-start=\"1325\" data-end=\"1339\">Tech Insight</code>, or <code data-start=\"1344\" data-end=\"1357\">Career Tips</code>\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "zxJlovk8BV",
+        "type": "paragraph",
+        "data": {
+          "text": "This combination gives users granular control over the type of content they want to view."
+        }
+      },
+      {
+        "id": "bpXNM1yl_u",
+        "type": "header",
+        "data": {
+          "text": "📄 Pagination",
+          "level": 3
+        }
+      },
+      {
+        "id": "3H3Ze-TRdD",
+        "type": "paragraph",
+        "data": {
+          "text": "The system supports customizable pagination with parameters for <code data-start=\"1536\" data-end=\"1542\">page</code> and <code data-start=\"1547\" data-end=\"1557\">pageSize</code>.\nThis keeps the UI responsive, displaying only a subset of posts at a time while maintaining a smooth navigation experience."
+        }
+      },
+      {
+        "id": "javA2E-NXJ",
+        "type": "header",
+        "data": {
+          "text": "🧠 Implementation Details",
+          "level": 2
+        }
+      },
+      {
+        "id": "yhz4UPlEME",
+        "type": "paragraph",
+        "data": {
+          "text": "The core of this system is the <code data-start=\"1752\" data-end=\"1764\">fetchPosts</code> function, which:"
+        }
+      },
+      {
+        "id": "ykjFDa-sx4",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Retrieves post data from a manifest file.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Applies multiple filters in a single pass for performance.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Returns a paginated subset of the filtered posts.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "hatvbX1sI3",
+        "type": "code",
+        "data": {
+          "language": "javascript",
+          "code": "export const fetchPosts = async (page = 1, pageSize = 10, filters = {}) => {\n    const manifest = await getPostManifest();\n    const allPosts = manifest?.posts || [];\n\n    const {\n        searchTerm = \"\",\n        selectedTags = [],\n        selectedStatuses = [],\n        selectedCategories = [],\n    } = filters;\n\n    const filteredPosts = allPosts.filter((post) => {\n        const matchesTitle = post.title\n            ?.toLowerCase()\n            .includes(searchTerm.toLowerCase());\n\n        const matchesTags =\n            selectedTags.length > 0\n                ? post.tags?.some((tag) => selectedTags.includes(tag))\n                : true;\n\n        const matchesStatus =\n            selectedStatuses.length > 0\n                ? selectedStatuses.includes(post.status)\n                : true;\n\n        const matchesCategory =\n            selectedCategories.length > 0\n                ? selectedCategories.includes(post.category)\n                : true;\n\n        return matchesTitle && matchesTags && matchesStatus && matchesCategory;\n    });\n\n    const startIndex = (page - 1) * pageSize;\n    const endIndex = Math.min(startIndex + pageSize, filteredPosts.length);\n    const posts = filteredPosts.slice(startIndex, endIndex);\n\n    return posts;\n};\n"
+        }
+      },
+      {
+        "id": "0d4gYHGW-C",
+        "type": "header",
+        "data": {
+          "text": "🧩 Tech Stack",
+          "level": 2
+        }
+      },
+      {
+        "id": "p-x__1VBJu",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Frontend: React.js\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Data Handling: JavaScript (async/await, filter/map)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Storage: JSON-based post manifest\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "UI Design: Tailwind CSS for clean, responsive layouts\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "b70QOElrX8",
+        "type": "header",
+        "data": {
+          "text": "💡 Outcome",
+          "level": 2
+        }
+      },
+      {
+        "id": "FUBH5ifp6n",
+        "type": "paragraph",
+        "data": {
+          "text": "This modular filtering approach allows the blog platform to:"
+        }
+      },
+      {
+        "id": "axwc6dL805",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Efficiently handle hundreds of posts\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Scale easily when new filter types are added\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Keep code clean, readable, and easily testable\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "6lcALiGjKZ",
+        "type": "paragraph",
+        "data": {
+          "text": "It’s a small but essential feature that significantly improves user experience — making content discovery fast, flexible, and intuitive."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
