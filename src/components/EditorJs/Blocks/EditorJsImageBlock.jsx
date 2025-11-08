@@ -4,8 +4,8 @@ const EditorJsImageBlock = ({
     url,
     name,
     width,
-    height,
     alignment = "center",
+    isFirstBlock,
 }) => {
     // Convert alignment prop to CSS justifyContent
     const justifyContent =
@@ -17,7 +17,9 @@ const EditorJsImageBlock = ({
 
     return (
         <div
-            className="flex w-full overflow-hidden mb-6"
+            className={`flex w-full overflow-hidden mb-6 ${
+                isFirstBlock ? "mt-6" : ""
+            }`}
             style={{ justifyContent }}
         >
             <img
