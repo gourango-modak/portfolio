@@ -22,7 +22,7 @@ const PostDetailPage = () => {
                 {(post) => {
                     const crumbs = [
                         { to: "/", label: "Home" },
-                        { to: "/Blog", label: "Blog" },
+                        { to: "/blog", label: "Blog" },
                         { label: truncateBreadcrumb(post.title) },
                     ];
 
