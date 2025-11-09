@@ -16,7 +16,7 @@
   "tags": [],
   "slug": "keyset-pagination-seek-method-in-sql-efficient-paging-for-large-datasets-1762678664228",
   "content": {
-    "time": 1762681995688,
+    "time": 1762683622027,
     "blocks": [
       {
         "id": "7uQ20IDRzF",
@@ -62,7 +62,7 @@
           "meta": {},
           "items": [
             {
-              "content": "Keep track of the last seen key (usually an indexed column like <code data-start=\"931\" data-end=\"940\">OrderID</code> or <code data-start=\"944\" data-end=\"955\">CreatedAt</code>)\n",
+              "content": "Keep track of the last seen key (usually an indexed column like <code class=\"inline-code\">OrderID</code> or <code class=\"inline-code\">CreatedAt</code>)\n",
               "meta": {},
               "items": []
             },
@@ -100,7 +100,7 @@
         "id": "qaEoc3r8Cq",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Page 10, 100 rows per page\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 900 ROWS FETCH NEXT 100 ROWS ONLY;"
         }
       },
@@ -124,7 +124,7 @@
               "items": []
             },
             {
-              "content": "As the OFFSET grows, queries become slower.\n",
+              "content": "As the <code class=\"inline-code\">OFFSET</code> grows, queries become slower.\n",
               "meta": {},
               "items": []
             },
@@ -155,7 +155,7 @@
         "id": "Xf7o86Pghn",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Page 1: fetch first 100 rows\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Page 2: fetch next 100 rows using last seen OrderID\nDECLARE @LastOrderID INT = 100;\n\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
@@ -176,7 +176,7 @@
           },
           "items": [
             {
-              "content": "Uses an indexed column (<code data-start=\"2046\" data-end=\"2055\">OrderID</code>) for efficient retrieval.\n",
+              "content": "Uses an indexed column (<code class=\"inline-code\">OrderID</code>) for efficient retrieval.\n",
               "meta": {},
               "items": []
             },
@@ -281,21 +281,21 @@
         "id": "CoG-lqcEfY",
         "type": "paragraph",
         "data": {
-          "text": "Imagine an <code data-start=\"3237\" data-end=\"3245\">Orders</code> table with columns: <code data-start=\"3266\" data-end=\"3275\">OrderID</code>, <code data-start=\"3277\" data-end=\"3289\">CustomerID</code>, <code data-start=\"3291\" data-end=\"3302\">OrderDate</code>, <code data-start=\"3304\" data-end=\"3317\">TotalAmount</code>."
+          "text": "Imagine an <code class=\"inline-code\">Orders</code> table with columns: <code class=\"inline-code\">OrderID, CustomerID, OrderDate, TotalAmount</code>."
         }
       },
       {
         "id": "y-VUnZVZNR",
         "type": "paragraph",
         "data": {
-          "text": "Non-optimized OFFSET query:"
+          "text": "Non-optimized <code class=\"inline-code\">OFFSET</code> query:"
         }
       },
       {
         "id": "8rr_OAbK8e",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Slow for large tables\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 9000 ROWS FETCH NEXT 100 ROWS ONLY;"
         }
       },
@@ -310,7 +310,7 @@
         "id": "kSrv3BJuds",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- First page\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Next page (seek method)\nDECLARE @LastOrderID INT = 100;\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
@@ -381,7 +381,7 @@
         "id": "OUWefVVvq9",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "DECLARE @LastPostID INT = 450;\n\nSELECT TOP 20 PostID, UserID, Content, CreatedAt\nFROM Posts\nWHERE PostID > @LastPostID\nORDER BY PostID;"
         }
       },
@@ -432,7 +432,7 @@
         "id": "6jy63mcRZl",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "DECLARE @LastOrderID INT = 1000;\n\nSELECT TOP 500 OrderID, CustomerID, TotalAmount, OrderDate\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
@@ -495,7 +495,7 @@
           "meta": {},
           "items": [
             {
-              "content": "Backend SQL uses WHERE OrderID &gt; lastOrderID",
+              "content": "Backend SQL uses WHERE <code class=\"inline-code\">OrderID &gt; lastOrderID</code>",
               "meta": {},
               "items": []
             },
