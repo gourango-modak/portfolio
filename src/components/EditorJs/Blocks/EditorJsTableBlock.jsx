@@ -17,7 +17,7 @@ const EditorJsTableBlock = ({ content }) => {
                             {row.map((cell, cellIndex) => (
                                 <td
                                     key={cellIndex}
-                                    className="border border-slate-300 px-4 py-2 text-base sm:text-lg"
+                                    className="border border-slate-300 px-4 py-2 text-base"
                                     dangerouslySetInnerHTML={{ __html: cell }}
                                 />
                             ))}

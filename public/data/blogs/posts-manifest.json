@@ -1,7 +1,7 @@
 {
   "totalPosts": 3,
   "topTags": [],
-  "totalInProgressPosts": 1,
+  "totalInProgressPosts": 0,
   "posts": [
     {
       "title": "How I Learned System Design",
@@ -34,7 +34,10 @@
       "slug": "keyset-pagination-seek-method-in-sql-efficient-paging-for-large-datasets-1762678664228",
       "createdAt": 1762678663691,
       "id": 1762678664228,
-      "status": "In progress"
+      "status": {
+        "label": "In progress",
+        "value": "In progress"
+      }
     }
   ]
 }
