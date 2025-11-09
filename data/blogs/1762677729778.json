@@ -1,8 +1,14 @@
 {
   "description": "Learn how SQL Server uses clustered and non-clustered indexes to optimize queries. This blog provides practical examples with real-world tables, demonstrating index seeks, scans, and execution plans to help you understand and improve database performance.",
   "readTime": 15,
-  "status": "In progress",
-  "category": "None",
+  "status": {
+    "label": "In progress",
+    "value": "In progress"
+  },
+  "category": {
+    "label": "None",
+    "value": "None"
+  },
   "id": 1762677729778,
   "createdAt": 1762677729482,
   "updatedAt": 1762677729482,
@@ -10,7 +16,7 @@
   "tags": [],
   "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
   "content": {
-    "time": 1762677698587,
+    "time": 1762681809817,
     "blocks": [
       {
         "id": "05lK_nY15Z",
@@ -184,11 +190,10 @@
         }
       },
       {
-        "id": "pdtEVOFing",
-        "type": "header",
+        "id": "325GdAY8wN",
+        "type": "paragraph",
         "data": {
-          "text": "Example Query",
-          "level": 3
+          "text": "<b>Example Query</b>"
         }
       },
       {
@@ -323,14 +328,14 @@
         }
       },
       {
-        "id": "i9U9QOBtR7",
+        "id": "ml8eebgnFn",
         "type": "list",
         "data": {
           "style": "unordered",
           "meta": {},
           "items": [
             {
-              "content": "<b>Scan:</b> Reads the clustered index sequentially.\n",
+              "content": "<b>Scan:</b> Reads the clustered index sequentially.",
               "meta": {},
               "items": []
             },
@@ -343,11 +348,10 @@
         }
       },
       {
-        "id": "t8igWk9Gq_",
-        "type": "header",
+        "id": "onmLvy42Ao",
+        "type": "paragraph",
         "data": {
-          "text": "Create Primary Key / Clustered Index",
-          "level": 4
+          "text": "<b>Create Primary Key / Clustered Index</b>"
         }
       },
       {
@@ -366,11 +370,10 @@
         }
       },
       {
-        "id": "n-_dKEc8g8",
-        "type": "header",
+        "id": "yqD0fzpFwa",
+        "type": "paragraph",
         "data": {
-          "text": "Queries to Demonstrate Seek vs Scan",
-          "level": 4
+          "text": "<b>Queries to Demonstrate Seek vs Scan</b>"
         }
       },
       {
@@ -382,26 +385,24 @@
         }
       },
       {
-        "id": "8rNFpYKerv",
-        "type": "header",
+        "id": "u5UC9bXpOa",
+        "type": "paragraph",
         "data": {
-          "text": "Execution Details",
-          "level": 4
+          "text": "<b>Execution Details</b>"
         }
       },
       {
-        "id": "4lWe1EPxKA",
-        "type": "list",
+        "id": "1-N8_yKUdA",
+        "type": "paragraph",
         "data": {
-          "style": "ordered",
-          "meta": {},
-          "items": [
-            {
-              "content": "Clustered Index Seek\nSQL Server uses the clustered index on <code class=\"inline-code\">OrderID</code> to directly locate the requested row.\nActual Number of Rows Read: 1 (only the row with <code class=\"inline-code\">OrderID = 500</code> is accessed).\nThe seek operator quickly navigates the index tree to the exact location.\nExecution plan will show a Clustered Index Seek with very low estimated and actual I/O cost.",
-              "meta": {},
-              "items": []
-            }
-          ]
+          "text": "<b>Clustered index Seek</b>"
+        }
+      },
+      {
+        "id": "IUjBBGSZVs",
+        "type": "paragraph",
+        "data": {
+          "text": "SQL Server uses the clustered index on <code class=\"inline-code\">OrderID</code> to directly locate the requested row.\nActual Number of Rows Read: 1 (only the row with <code class=\"inline-code\">OrderID = 500</code> is accessed).\nThe seek operator quickly navigates the index tree to the exact location.\nExecution plan will show a Clustered Index Seek with very low estimated and actual I/O cost."
         }
       },
       {
@@ -416,21 +417,17 @@
         }
       },
       {
-        "id": "dc7yl6vC_t",
-        "type": "list",
+        "id": "Czev1OoCYa",
+        "type": "paragraph",
         "data": {
-          "style": "ordered",
-          "meta": {
-            "start": 1,
-            "counterType": "numeric"
-          },
-          "items": [
-            {
-              "content": "Clustered Index Scan\nSQL Server scans the entire clustered index because the <code data-start=\"1175\" data-end=\"1188\">TotalAmount</code> column does not have an index.\nActual Number of Rows Read: 10,000 (all rows are checked against the condition <code class=\"inline-code\">TotalAmount &gt; 1500</code>).\nThis is less efficient, especially as table size grows, because every row must be evaluated.\nExecution plan will show a Clustered Index Scan, with higher estimated and actual I/O cost compared to the seek.",
-              "meta": {},
-              "items": []
-            }
-          ]
+          "text": "<b>Clustered Index Scan\n</b>"
+        }
+      },
+      {
+        "id": "6ub272pkVe",
+        "type": "paragraph",
+        "data": {
+          "text": "SQL Server scans the entire clustered index because the <code data-start=\"1175\" data-end=\"1188\">TotalAmount</code> column does not have an index.\nActual Number of Rows Read: 10,000 (all rows are checked against the condition <code class=\"inline-code\">TotalAmount &gt; 1500</code>).\nThis is less efficient, especially as table size grows, because every row must be evaluated.\nExecution plan will show a Clustered Index Scan, with higher estimated and actual I/O cost compared to the seek."
         }
       },
       {
@@ -473,11 +470,10 @@
         }
       },
       {
-        "id": "D8baSQez7H",
-        "type": "header",
+        "id": "rNyty6WJ8j",
+        "type": "paragraph",
         "data": {
-          "text": "Create Non-Clustered Index",
-          "level": 4
+          "text": "<b>Create Non-Clustered Index</b>"
         }
       },
       {
@@ -489,11 +485,10 @@
         }
       },
       {
-        "id": "epS_XtDJO6",
-        "type": "header",
+        "id": "njxLIxCEiw",
+        "type": "paragraph",
         "data": {
-          "text": "Queries to Demonstrate Non-Clustered Seek vs Scan",
-          "level": 4
+          "text": "Queries to Demonstrate Non-Clustered Seek vs Scan"
         }
       },
       {
@@ -505,26 +500,24 @@
         }
       },
       {
-        "id": "61mc3o0HPv",
-        "type": "header",
+        "id": "U_md8N5D_L",
+        "type": "paragraph",
         "data": {
-          "text": "Execution Details",
-          "level": 4
+          "text": "<b>Execution Details</b>"
         }
       },
       {
-        "id": "OVJCSAt5l_",
-        "type": "list",
+        "id": "fQf2seiodx",
+        "type": "paragraph",
         "data": {
-          "style": "ordered",
-          "meta": {},
-          "items": [
-            {
-              "content": "Non-Clustered Index Seek\nSQL Server uses the non-clustered index on <code data-start=\"714\" data-end=\"725\">OrderDate</code> to directly locate matching rows.\nActual Number of Rows Read: Depends on how many rows match the date, e.g., 1–10 rows in our dummy dataset.\nEfficient because SQL Server searches the B-Tree structure of the non-clustered index, avoiding a full table scan.\nExecution plan shows Non-Clustered Index Seek with very low I/O cost.",
-              "meta": {},
-              "items": []
-            }
-          ]
+          "text": "<b>Non-Clustered Index Seek\n</b>"
+        }
+      },
+      {
+        "id": "zJxE44JH0b",
+        "type": "paragraph",
+        "data": {
+          "text": "SQL Server uses the non-clustered index on <code class=\"inline-code\">OrderDate</code> to directly locate matching rows.\nActual Number of Rows Read: Depends on how many rows match the date, e.g., 1–10 rows in our dummy dataset.\nEfficient because SQL Server searches the B-Tree structure of the non-clustered index, avoiding a full table scan.\nExecution plan shows Non-Clustered Index Seek with very low I/O cost."
         }
       },
       {
@@ -539,21 +532,17 @@
         }
       },
       {
-        "id": "W-R-LXGWlm",
-        "type": "list",
+        "id": "K1neF1Yue8",
+        "type": "paragraph",
         "data": {
-          "style": "ordered",
-          "meta": {
-            "start": 1,
-            "counterType": "numeric"
-          },
-          "items": [
-            {
-              "content": "Non-Clustered Index Scan\nSQL Server scans the entire non-clustered index because the query requests a range of dates.\nActual Number of Rows Read: All rows in the index that fall within the range (potentially thousands, depending on dataset).\nMore efficient than a table scan, but still reads many rows.\nExecution plan shows Non-Clustered Index Scan, with moderate I/O cost.",
-              "meta": {},
-              "items": []
-            }
-          ]
+          "text": "<b>Non-Clustered Index Scan\n</b>"
+        }
+      },
+      {
+        "id": "-uoy90BOhk",
+        "type": "paragraph",
+        "data": {
+          "text": "SQL Server scans the entire non-clustered index because the query requests a range of dates.\nActual Number of Rows Read: All rows in the index that fall within the range (potentially thousands, depending on dataset).\nMore efficient than a table scan, but still reads many rows.\nExecution plan shows Non-Clustered Index Scan, with moderate I/O cost."
         }
       },
       {
@@ -714,7 +703,7 @@
               "items": []
             },
             {
-              "content": "Avoid <code data-start=\"4087\" data-end=\"4097\">SELECT *</code> — select only needed columns.\n",
+              "content": "Avoid <code class=\"inline-code\">SELECT*</code>— select only needed columns.\n",
               "meta": {},
               "items": []
             },
