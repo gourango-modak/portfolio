@@ -1,0 +1,545 @@
+{
+  "description": "Learn how Keyset (Seek) Pagination improves query performance for large datasets. This blog explains how it works, compares it with traditional OFFSET pagination, and shows practical real-world use cases like infinite scroll, dashboards, and APIs.",
+  "readTime": 15,
+  "status": "In progress",
+  "category": "None",
+  "id": 1762678664228,
+  "createdAt": 1762678663691,
+  "updatedAt": 1762678663691,
+  "title": "Keyset Pagination (Seek Method) in SQL: Efficient Paging for Large Datasets",
+  "tags": [],
+  "slug": "keyset-pagination-seek-method-in-sql-efficient-paging-for-large-datasets-1762678664228",
+  "content": {
+    "time": 1762678641857,
+    "blocks": [
+      {
+        "id": "7uQ20IDRzF",
+        "type": "title",
+        "data": {
+          "text": "Keyset Pagination (Seek Method) in SQL: Efficient Paging for Large Datasets"
+        }
+      },
+      {
+        "id": "uX-xU7G3Uc",
+        "type": "paragraph",
+        "data": {
+          "text": "Pagination is a common requirement in web and database applications. Whether you’re building an infinite scroll feed or a reporting dashboard, retrieving data efficiently is critical — especially for large datasets. In this blog, we explore Keyset Pagination, also known as the Seek Method, its advantages, drawbacks, and practical usage with SQL examples."
+        }
+      },
+      {
+        "id": "izEXZDNTNw",
+        "type": "header",
+        "data": {
+          "text": "1. What is Keyset (Seek) Pagination?",
+          "level": 2
+        }
+      },
+      {
+        "id": "85ConorSKb",
+        "type": "paragraph",
+        "data": {
+          "text": "Keyset Pagination is a strategy that avoids the inefficiency of traditional OFFSET-based pagination by using a known key to “seek” the next set of rows instead of skipping rows."
+        }
+      },
+      {
+        "id": "eEfidBUNkW",
+        "type": "paragraph",
+        "data": {
+          "text": "Core idea:"
+        }
+      },
+      {
+        "id": "XZ3A0WpHKd",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Keep track of the last seen key (usually an indexed column like <code data-start=\"931\" data-end=\"940\">OrderID</code> or <code data-start=\"944\" data-end=\"955\">CreatedAt</code>)\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Query for rows greater than the last key instead of offsetting a large number of rows\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "opMM3PsOwT",
+        "type": "paragraph",
+        "data": {
+          "text": "This approach ensures fast, scalable queries, even on very large tables."
+        }
+      },
+      {
+        "id": "m2xYCNByQ9",
+        "type": "header",
+        "data": {
+          "text": "2. Why OFFSET Pagination Can Be Slow",
+          "level": 2
+        }
+      },
+      {
+        "id": "m_DaQPBqMa",
+        "type": "paragraph",
+        "data": {
+          "text": "Traditional OFFSET-based pagination works like this:"
+        }
+      },
+      {
+        "id": "qaEoc3r8Cq",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Page 10, 100 rows per page\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 900 ROWS FETCH NEXT 100 ROWS ONLY;"
+        }
+      },
+      {
+        "id": "KtT6lglxYr",
+        "type": "paragraph",
+        "data": {
+          "text": "<b>Problems:</b>"
+        }
+      },
+      {
+        "id": "r8uiTbl3Cn",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "SQL Server (or any RDBMS) still scans/skips the first 900 rows internally.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "As the OFFSET grows, queries become slower.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Can lead to unstable results in rapidly updated tables (rows may be added/deleted while paging).\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "gF_U0MDxtQ",
+        "type": "header",
+        "data": {
+          "text": "3. How Keyset Pagination Works",
+          "level": 2
+        }
+      },
+      {
+        "id": "mW6jcigaCe",
+        "type": "paragraph",
+        "data": {
+          "text": "Instead of skipping rows, Keyset Pagination “seeks” the next rows using a key:"
+        }
+      },
+      {
+        "id": "Xf7o86Pghn",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Page 1: fetch first 100 rows\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Page 2: fetch next 100 rows using last seen OrderID\nDECLARE @LastOrderID INT = 100;\n\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+        }
+      },
+      {
+        "id": "6Qx1ZCa1Ac",
+        "type": "paragraph",
+        "data": {
+          "text": "<b>Key Points:</b>"
+        }
+      },
+      {
+        "id": "6YLnKGjKmL",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Uses an indexed column (<code data-start=\"2046\" data-end=\"2055\">OrderID</code>) for efficient retrieval.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Avoids scanning rows that have already been displayed.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Excellent for highly dynamic tables.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "VWtbx22Lv4",
+        "type": "header",
+        "data": {
+          "text": "4. Advantages of Keyset Pagination",
+          "level": 2
+        }
+      },
+      {
+        "id": "l9JDDHTFHM",
+        "type": "table",
+        "data": {
+          "withHeadings": true,
+          "content": [
+            [
+              "Advantage",
+              "Explanation"
+            ],
+            [
+              "Performance at scale",
+              "No OFFSET scanning; avoids skipping millions of rows."
+            ],
+            [
+              "Stable results",
+              "Less likely to miss or duplicate rows in tables with frequent inserts/deletes."
+            ],
+            [
+              "Efficient index usage",
+              "Database can use Index Seek instead of a scan."
+            ]
+          ]
+        }
+      },
+      {
+        "id": "9UQ00njSC3",
+        "type": "header",
+        "data": {
+          "text": "5. Drawbacks / Limitations",
+          "level": 2
+        }
+      },
+      {
+        "id": "Ou2mMY2fqb",
+        "type": "table",
+        "data": {
+          "withHeadings": true,
+          "content": [
+            [
+              "Limitation",
+              "Explanation"
+            ],
+            [
+              "No random page access",
+              "Cannot jump directly to page 50; you must iterate sequentially."
+            ],
+            [
+              "Requires unique and ordered key",
+              "Key column must be unique and sequential to prevent missing rows."
+            ],
+            [
+              "Complex multi-column ordering",
+              "Queries with multiple ORDER BY columns need composite keys or extra logic."
+            ],
+            [
+              "Stateful on client",
+              "Client must track the last seen key for each page."
+            ],
+            [
+              "Limited backward navigation",
+              "Going to previous pages requires reversing order and filtering by key."
+            ]
+          ]
+        }
+      },
+      {
+        "id": "Hd38qm3MGS",
+        "type": "header",
+        "data": {
+          "text": "6. Practical Example with Orders Table",
+          "level": 2
+        }
+      },
+      {
+        "id": "CoG-lqcEfY",
+        "type": "paragraph",
+        "data": {
+          "text": "Imagine an <code data-start=\"3237\" data-end=\"3245\">Orders</code> table with columns: <code data-start=\"3266\" data-end=\"3275\">OrderID</code>, <code data-start=\"3277\" data-end=\"3289\">CustomerID</code>, <code data-start=\"3291\" data-end=\"3302\">OrderDate</code>, <code data-start=\"3304\" data-end=\"3317\">TotalAmount</code>."
+        }
+      },
+      {
+        "id": "y-VUnZVZNR",
+        "type": "paragraph",
+        "data": {
+          "text": "Non-optimized OFFSET query:"
+        }
+      },
+      {
+        "id": "8rr_OAbK8e",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Slow for large tables\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 9000 ROWS FETCH NEXT 100 ROWS ONLY;"
+        }
+      },
+      {
+        "id": "KKn3ZMCRnq",
+        "type": "paragraph",
+        "data": {
+          "text": "Optimized Keyset Pagination:"
+        }
+      },
+      {
+        "id": "kSrv3BJuds",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- First page\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Next page (seek method)\nDECLARE @LastOrderID INT = 100;\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+        }
+      },
+      {
+        "id": "FXqqxq9IAR",
+        "type": "paragraph",
+        "data": {
+          "text": "<b>Benefits:</b>"
+        }
+      },
+      {
+        "id": "04qrB8ZCx5",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Even with millions of rows, the query reads only the rows it needs.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Execution plans show Index Seek, avoiding large scans.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "00kEWJEbwN",
+        "type": "header",
+        "data": {
+          "text": "7. Real-World Use Cases",
+          "level": 2
+        }
+      },
+      {
+        "id": "tNXHMv6Hht",
+        "type": "header",
+        "data": {
+          "text": "7.1 Infinite Scroll / Social Feeds",
+          "level": 3
+        }
+      },
+      {
+        "id": "6rUt2uHwCp",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Platforms like Twitter, LinkedIn, and Facebook use keyset pagination for feeds.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Example: Fetch the next 20 posts after the last displayed post ID:",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "OUWefVVvq9",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\nDECLARE @LastPostID INT = 450;\n\nSELECT TOP 20 PostID, UserID, Content, CreatedAt\nFROM Posts\nWHERE PostID > @LastPostID\nORDER BY PostID;"
+        }
+      },
+      {
+        "id": "lcD5TYg8h_",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Why it works: Users scroll continuously, and the database only retrieves rows after the last seen post, making it very fast even with millions of posts.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "vkfUjKzQWi",
+        "type": "header",
+        "data": {
+          "text": "7.2 Reporting Dashboards",
+          "level": 3
+        }
+      },
+      {
+        "id": "UOtNTBhDM5",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "When generating daily sales reports or order logs, dashboards often query large tables with millions of rows.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Keyset pagination allows fetching small chunks sequentially without slowing down queries:\n\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "6jy63mcRZl",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\nDECLARE @LastOrderID INT = 1000;\n\nSELECT TOP 500 OrderID, CustomerID, TotalAmount, OrderDate\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+        }
+      },
+      {
+        "id": "FmS0zV8E03",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Efficient for server-side processing and avoids expensive OFFSET scans.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "VSwnR3PsRJ",
+        "type": "header",
+        "data": {
+          "text": "7.3 APIs for Large Data Retrieval",
+          "level": 3
+        }
+      },
+      {
+        "id": "nrvlSZvPNQ",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Many REST APIs returning paginated JSON use Keyset Pagination for high-performance endpoints.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Example API request:\n\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Oxiku5m1zx",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "GET /api/orders?lastOrderID=1000&limit=100\n"
+        }
+      },
+      {
+        "id": "cSdIA0u59n",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Backend SQL uses WHERE OrderID &gt; lastOrderID",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Clients receive the next batch of results quickly, even for huge datasets.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "AJq5RkUyqu",
+        "type": "header",
+        "data": {
+          "text": "8. Summary",
+          "level": 2
+        }
+      },
+      {
+        "id": "7p1T8mEt37",
+        "type": "paragraph",
+        "data": {
+          "text": "Keyset (Seek) Pagination is a highly efficient alternative to OFFSET-based pagination for large datasets."
+        }
+      },
+      {
+        "id": "0NmVUkv82I",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Advantages:</b> Fast, stable, scalable, optimized index usage.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "<b>Limitations:</b> No random page access, client must track state, complex multi-column ordering.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "r9HQEAMXcG",
+        "type": "paragraph",
+        "data": {
+          "text": "It is widely used in real-world applications like social feeds, dashboards, and paginated APIs to provide a smooth and fast user experience, even when dealing with millions of rows."
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
