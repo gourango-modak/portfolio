@@ -69,15 +69,13 @@ const DayNotesPage = () => {
 
         if (!isDateVisible(date)) {
             setVisibleDates((prevDates) => {
-                if (prevDates.length === RECENT_DAYS_COUNT) {
+                if (prevDates.length === RECENT_DAYS_COUNT + 1) {
                     prevDates.pop();
                 }
                 return [...prevDates, date];
             });
         }
     };
-
-    const hasNote = (date) => !!localStorage.getItem(getStorageKey(date));
 
     useEffect(() => {
         clearExpiredNotes();
@@ -113,7 +111,7 @@ const DayNotesPage = () => {
     return (
         <div className="flex flex-col md:flex-row">
             {/* Left Side – Dates + Calendar */}
-            <div className="md:fixed md:flex md:flex-col md:w-[350px] md:h-screen md:border-r md:border-gray-200 p-2 w-full z-10">
+            <div className="md:fixed md:flex md:flex-col md:w-[280px] md:h-screen md:border-r md:border-gray-200 p-2 w-full z-10">
                 {/* Recent Dates */}
                 <div className="flex md:flex-col overflow-hidden overflow-x-auto md:overflow-visible gap-2 md:gap-0">
                     {recentDateButtons}
@@ -152,7 +150,7 @@ const DayNotesPage = () => {
             </div>
 
             {/* Right Side – Editor */}
-            <div className="flex-1 md:pl-[370px] w-full p-4 md:pt-8">
+            <div className="flex-1 md:pl-[300px] w-full p-4 md:pt-8">
                 {memoizedEditor}
             </div>
         </div>
