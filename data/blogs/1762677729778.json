@@ -1,0 +1,737 @@
+{
+  "description": "Learn how SQL Server uses clustered and non-clustered indexes to optimize queries. This blog provides practical examples with real-world tables, demonstrating index seeks, scans, and execution plans to help you understand and improve database performance.",
+  "readTime": 15,
+  "status": "In progress",
+  "category": "None",
+  "id": 1762677729778,
+  "createdAt": 1762677729482,
+  "updatedAt": 1762677729482,
+  "title": "Mastering Query Optimization in MS SQL Server",
+  "tags": [],
+  "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
+  "content": {
+    "time": 1762677698587,
+    "blocks": [
+      {
+        "id": "05lK_nY15Z",
+        "type": "title",
+        "data": {
+          "text": "Mastering Query Optimization in MS SQL Server"
+        }
+      },
+      {
+        "id": "tllORhs3kn",
+        "type": "paragraph",
+        "data": {
+          "text": "Database performance is critical for modern applications. Slow queries can bottleneck your system, frustrate users, and increase costs. In this blog, we’ll explore query optimization in MS SQL Server, including execution plans, scan types, and practical strategies to make your queries faster and more efficient."
+        }
+      },
+      {
+        "id": "5e1qiOnOco",
+        "type": "header",
+        "data": {
+          "text": "1. Understanding the Query Optimizer",
+          "level": 2
+        }
+      },
+      {
+        "id": "n24fgFoSmZ",
+        "type": "paragraph",
+        "data": {
+          "text": "The SQL Server Query Optimizer is the engine that decides how your queries are executed."
+        }
+      },
+      {
+        "id": "PHCmMpu9Dr",
+        "type": "paragraph",
+        "data": {
+          "text": "It evaluates multiple execution plans, estimates costs, and chooses the plan with the lowest estimated resource usage. The optimizer considers:"
+        }
+      },
+      {
+        "id": "ZfW6SJQeFC",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Indexes available on the table\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Table and column statistics\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Join types and conditions\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Filter criteria\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "aj593ILQOR",
+        "type": "paragraph",
+        "data": {
+          "text": "<b>Key takeaway:</b> Even a well-written query can perform poorly if the optimizer doesn’t have the right indexes or statistics."
+        }
+      },
+      {
+        "id": "VCswtHQHZ1",
+        "type": "header",
+        "data": {
+          "text": "2. Creating the Orders Table and Dummy Data'",
+          "level": 2
+        }
+      },
+      {
+        "id": "k847vQlGZA",
+        "type": "paragraph",
+        "data": {
+          "text": "To demonstrate different scan types and indexes practically, we’ll create a table and insert dummy data."
+        }
+      },
+      {
+        "id": "j7a4BxJ6mj",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Drop table if exists\nIF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;\n\n-- Create Orders table\nCREATE TABLE Orders (\n    OrderID INT,\n    CustomerID INT,\n    OrderDate DATETIME,\n    TotalAmount DECIMAL(10,2)\n);\n\n-- Insert dummy data\nINSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\nVALUES\n(1, 1, '2025-01-01', 1200.50),\n(2, 2, '2025-02-15', 850.00),\n(3, 1, '2025-03-10', 400.00),\n(4, 3, '2025-04-05', 1500.75),\n(5, 2, '2025-05-20', 700.25),\n(6, 4, '2025-06-30', 950.00),\n(7, 1, '2025-07-15', 600.50),\n(8, 3, '2025-08-01', 1300.00),\n(9, 2, '2025-09-12', 1100.00),\n(10, 5, '2025-10-08', 450.00);\n\n-- Add more rows for larger test\nDECLARE @i INT = 11;\nWHILE @i <= 1000000\nBEGIN\n    INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\n    VALUES (\n        @i,\n        (ABS(CHECKSUM(NEWID())) % 10) + 1, -- Random CustomerID 1-10\n        DATEADD(DAY, -(@i % 365), '2025-01-01'),\n        CAST((ABS(CHECKSUM(NEWID())) % 2000) + 100 AS DECIMAL(10,2))\n    );\n    SET @i = @i + 1;\nEND"
+        }
+      },
+      {
+        "id": "kYEoWW0hcx",
+        "type": "header",
+        "data": {
+          "text": "3. Analyzing Query Execution Plans",
+          "level": 2
+        }
+      },
+      {
+        "id": "OQCs-LCYj1",
+        "type": "paragraph",
+        "data": {
+          "text": "Execution plans are the most important tool to understand how SQL Server executes your queries. They visually show how data is retrieved, which indexes are used, and where performance bottlenecks occur."
+        }
+      },
+      {
+        "id": "7EzXrykppU",
+        "type": "paragraph",
+        "data": {
+          "text": "Steps to analyze a query in SSMS:"
+        }
+      },
+      {
+        "id": "ZppcGNpnIX",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {
+            "counterType": "numeric"
+          },
+          "items": [
+            {
+              "content": "Open a query window.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Enable Actual Execution Plan (<code class=\"inline-code\">Ctrl + M</code>).\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Run your query.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Observe the operators such as:",
+              "meta": {},
+              "items": [
+                {
+                  "content": "Clustered Index Scan / Seek",
+                  "meta": {},
+                  "items": []
+                },
+                {
+                  "content": "Non-Clustered Index Scan / Seek",
+                  "meta": {},
+                  "items": []
+                },
+                {
+                  "content": "Table Scan",
+                  "meta": {},
+                  "items": []
+                },
+                {
+                  "content": "Nested Loop Join or Hash Match",
+                  "meta": {},
+                  "items": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "pdtEVOFing",
+        "type": "header",
+        "data": {
+          "text": "Example Query",
+          "level": 3
+        }
+      },
+      {
+        "id": "2_cTAaXJsF",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Query to analyze\nSELECT CustomerID, SUM(TotalAmount) AS TotalSpent\nFROM Orders\nWHERE OrderDate >= '2025-01-01'\nGROUP BY CustomerID;"
+        }
+      },
+      {
+        "id": "JeoY1ZrEnR",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "With proper indexes, the execution plan will show Index Seek and Aggregate operators.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Without indexes, you may see a Table Scan, which is inefficient for large datasets.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "UJ6wibJ0kC",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Hover over each operator in the execution plan to see estimated rows, I/O cost, and CPU cost.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Compare execution plans before and after creating indexes to see the performance improvement.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "NIrhfBIdRO",
+        "type": "header",
+        "data": {
+          "text": "4. Common Scan Types in SQL Server",
+          "level": 2
+        }
+      },
+      {
+        "id": "-APntV5ALb",
+        "type": "header",
+        "data": {
+          "text": "4.1 Table Scan",
+          "level": 3
+        }
+      },
+      {
+        "id": "hPZ0_qwjLo",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Reads all rows in a table.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Happens when no suitable index exists for the column in the WHERE clause.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Expensive on large tables.\n\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "Mr6tea8gGu",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Table scan example\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
+        }
+      },
+      {
+        "id": "XRiiGFIOLD",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Execution plan shows Table Scan — inefficient for large datasets.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "2VxIZHZtpW",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Table Scan Example_UID_1762673816458.png",
+          "name": "Table Scan Example_UID_1762673816458.png",
+          "width": "657px",
+          "height": "397.478px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "kcicjIYcM3",
+        "type": "header",
+        "data": {
+          "text": "4.2 Clustered Index Scan / Seek",
+          "level": 3
+        }
+      },
+      {
+        "id": "i9U9QOBtR7",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Scan:</b> Reads the clustered index sequentially.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "<b>Seek:</b> Directly finds matching rows via the clustered index (very efficient).",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "t8igWk9Gq_",
+        "type": "header",
+        "data": {
+          "text": "Create Primary Key / Clustered Index",
+          "level": 4
+        }
+      },
+      {
+        "id": "LAu8hiekq-",
+        "type": "paragraph",
+        "data": {
+          "text": "Since we didn’t include the primary key while creating the table, we’ll add it now to demonstrate index-related scan operations:"
+        }
+      },
+      {
+        "id": "gyWFEUpNXQ",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Add primary key (clustered index) for demonstration\nALTER TABLE Orders\nADD CONSTRAINT PK_Orders_OrderID PRIMARY KEY CLUSTERED (OrderID);"
+        }
+      },
+      {
+        "id": "n-_dKEc8g8",
+        "type": "header",
+        "data": {
+          "text": "Queries to Demonstrate Seek vs Scan",
+          "level": 4
+        }
+      },
+      {
+        "id": "oJapH11FfV",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Clustered Index Seek (single row)\nSELECT * FROM Orders WHERE OrderID = 500;\n\n-- Clustered Index Scan\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
+        }
+      },
+      {
+        "id": "8rNFpYKerv",
+        "type": "header",
+        "data": {
+          "text": "Execution Details",
+          "level": 4
+        }
+      },
+      {
+        "id": "4lWe1EPxKA",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Clustered Index Seek\nSQL Server uses the clustered index on <code class=\"inline-code\">OrderID</code> to directly locate the requested row.\nActual Number of Rows Read: 1 (only the row with <code class=\"inline-code\">OrderID = 500</code> is accessed).\nThe seek operator quickly navigates the index tree to the exact location.\nExecution plan will show a Clustered Index Seek with very low estimated and actual I/O cost.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "ViYrF_XkoH",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Index Seek Example_UID_1762677699495.png",
+          "name": "Index Seek Example_UID_1762677699495.png",
+          "width": "572px",
+          "height": "447.924px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "dc7yl6vC_t",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {
+            "start": 1,
+            "counterType": "numeric"
+          },
+          "items": [
+            {
+              "content": "Clustered Index Scan\nSQL Server scans the entire clustered index because the <code data-start=\"1175\" data-end=\"1188\">TotalAmount</code> column does not have an index.\nActual Number of Rows Read: 10,000 (all rows are checked against the condition <code class=\"inline-code\">TotalAmount &gt; 1500</code>).\nThis is less efficient, especially as table size grows, because every row must be evaluated.\nExecution plan will show a Clustered Index Scan, with higher estimated and actual I/O cost compared to the seek.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "9w4iQZi-xZ",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Index Scan Example_UID_1762677698840.png",
+          "name": "Index Scan Example_UID_1762677698840.png",
+          "width": "559px",
+          "height": "447.413px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "45JbbEm4GJ",
+        "type": "header",
+        "data": {
+          "text": "4.3 Non-Clustered Index Scan / Seek",
+          "level": 3
+        }
+      },
+      {
+        "id": "bEqblJ4wEc",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Non-clustered scan:</b> Reads the entire index.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "<b>Non-clustered seek:</b> Quickly retrieves matching rows using the index.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "D8baSQez7H",
+        "type": "header",
+        "data": {
+          "text": "Create Non-Clustered Index",
+          "level": 4
+        }
+      },
+      {
+        "id": "c6MXPMXF4D",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Create a non-clustered index\nCREATE NONCLUSTERED INDEX idx_OrderDate ON Orders(OrderDate);"
+        }
+      },
+      {
+        "id": "epS_XtDJO6",
+        "type": "header",
+        "data": {
+          "text": "Queries to Demonstrate Non-Clustered Seek vs Scan",
+          "level": 4
+        }
+      },
+      {
+        "id": "-7CkDnsGBa",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Non-Clustered Index Seek\nSELECT * FROM Orders WHERE OrderDate = '2025-07-15';\n\n-- Non-Clustered Index Scan (range query)\nSELECT OrderDate FROM Orders;"
+        }
+      },
+      {
+        "id": "61mc3o0HPv",
+        "type": "header",
+        "data": {
+          "text": "Execution Details",
+          "level": 4
+        }
+      },
+      {
+        "id": "OVJCSAt5l_",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Non-Clustered Index Seek\nSQL Server uses the non-clustered index on <code data-start=\"714\" data-end=\"725\">OrderDate</code> to directly locate matching rows.\nActual Number of Rows Read: Depends on how many rows match the date, e.g., 1–10 rows in our dummy dataset.\nEfficient because SQL Server searches the B-Tree structure of the non-clustered index, avoiding a full table scan.\nExecution plan shows Non-Clustered Index Seek with very low I/O cost.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "ETij7x4vJ0",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Non-clustered Index Seek Example_UID_1762677698713.png",
+          "name": "Non-clustered Index Seek Example_UID_1762677698713.png",
+          "width": "536px",
+          "height": "383.376px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "W-R-LXGWlm",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {
+            "start": 1,
+            "counterType": "numeric"
+          },
+          "items": [
+            {
+              "content": "Non-Clustered Index Scan\nSQL Server scans the entire non-clustered index because the query requests a range of dates.\nActual Number of Rows Read: All rows in the index that fall within the range (potentially thousands, depending on dataset).\nMore efficient than a table scan, but still reads many rows.\nExecution plan shows Non-Clustered Index Scan, with moderate I/O cost.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "dLlmQuIZt-",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Non-clustered Index Scan Example_UID_1762677698855.png",
+          "name": "Non-clustered Index Scan Example_UID_1762677698855.png",
+          "width": "535px",
+          "height": "382.921px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "zFkirfkjIN",
+        "type": "header",
+        "data": {
+          "text": "4.4 Covering Index",
+          "level": 3
+        }
+      },
+      {
+        "id": "jzYExXLK7_",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "An index that contains all columns required by the query.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Avoids table lookups (bookmark lookups), making queries faster.\n\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "ekrU5ZxJwn",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Covering index example\nCREATE NONCLUSTERED INDEX idx_CoveringOrders\nON Orders(CustomerID)\nINCLUDE (TotalAmount);\n\n-- Query covered by the index\nSELECT CustomerID, TotalAmount\nFROM Orders\nWHERE CustomerID = 2;"
+        }
+      },
+      {
+        "id": "-8gAoO30Jc",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "Query using these columns will only scan the index.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "GYVxdzGxNs",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Convering Index Example_UID_1762677698930.png",
+          "name": "Convering Index Example_UID_1762677698930.png",
+          "width": "528px",
+          "height": "461.023px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "Mohrb0m9iL",
+        "type": "header",
+        "data": {
+          "text": "4.5 Index Intersection",
+          "level": 3
+        }
+      },
+      {
+        "id": "07lbYQp5tg",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "SQL Server can combine multiple indexes to satisfy a query.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Useful when multiple conditions exist on different columns.\n\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "w0H7DDZO5m",
+        "type": "code",
+        "data": {
+          "language": "",
+          "code": "//sql\n-- Additional index for demonstration\nCREATE NONCLUSTERED INDEX idx_TotalAmount ON Orders(TotalAmount);\n\n-- SQL Server may combine two indexes\nSELECT * FROM Orders\nWHERE TotalAmount = 1900 AND OrderDate = '2024-11-15';"
+        }
+      },
+      {
+        "id": "-OAo_it3W4",
+        "type": "list",
+        "data": {
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "&nbsp; Execution plan may show Index Intersection / Seek + Combine.",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "O7glQP0xpi",
+        "type": "image",
+        "data": {
+          "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/images/Index Intersection Example_UID_1762677699183.png",
+          "name": "Index Intersection Example_UID_1762677699183.png",
+          "width": "516px",
+          "height": "349.46px",
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "bestbqFxkV",
+        "type": "header",
+        "data": {
+          "text": "5. Tips for Query Optimization",
+          "level": 2
+        }
+      },
+      {
+        "id": "QP8ajq1v86",
+        "type": "list",
+        "data": {
+          "style": "ordered",
+          "meta": {
+            "counterType": "numeric"
+          },
+          "items": [
+            {
+              "content": "Analyze Execution Plans before creating new indexes.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Avoid <code data-start=\"4087\" data-end=\"4097\">SELECT *</code> — select only needed columns.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Use covering indexes to minimize table lookups.\n",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Keep statistics updated for accurate optimization.\n",
+              "meta": {},
+              "items": []
+            }
+          ]
+        }
+      }
+    ],
+    "version": "2.31.0-rc.7"
+  }
+}
