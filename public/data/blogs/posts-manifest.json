@@ -1,7 +1,7 @@
 {
   "totalPosts": 3,
   "topTags": [],
-  "totalInProgressPosts": 2,
+  "totalInProgressPosts": 1,
   "posts": [
     {
       "title": "How I Learned System Design",
@@ -21,7 +21,10 @@
       "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
       "createdAt": 1762677729482,
       "id": 1762677729778,
-      "status": "In progress"
+      "status": {
+        "label": "In progress",
+        "value": "In progress"
+      }
     },
     {
       "title": "Keyset Pagination (Seek Method) in SQL: Efficient Paging for Large Datasets",

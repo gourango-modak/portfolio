@@ -41,6 +41,10 @@
     font-size: 1.25rem;
 }
 
+.editorjs-content p b {
+    color: #1e293b;
+}
+
 /* .editorjs ul:not(ul ul),
 .editorjs ol:not(ol ol) {
     margin-bottom: 1.25rem;

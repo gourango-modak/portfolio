@@ -77,7 +77,7 @@ export const getEditorJsTools = (contentType) => {
                 class: Header,
                 inlineToolbar: true,
                 config: {
-                    levels: [2, 3, 4, 5], // only show h1, h2, h3
+                    levels: [2, 3], // only show h1, h2, h3
                     defaultLevel: 2,
                 },
             };

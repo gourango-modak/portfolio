@@ -40,6 +40,10 @@
     pointer-events: none;
 }
 
+.ce-block b {
+    color: #1e293b;
+}
+
 /* Image Tool Styles */
 
 .resizable-image-wrapper {
