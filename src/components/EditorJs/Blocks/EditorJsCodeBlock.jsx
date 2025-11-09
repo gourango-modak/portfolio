@@ -4,6 +4,7 @@ import "prismjs/themes/prism-okaidia.css";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-python";
 import "prismjs/components/prism-csharp";
+import "prismjs/components/prism-sql";
 import { Copy, Check } from "lucide-react"; // icons
 
 const EditorJsCodeBlock = ({ code, language }) => {

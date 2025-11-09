@@ -1,7 +1,7 @@
 {
-  "totalPosts": 1,
+  "totalPosts": 2,
   "topTags": [],
-  "totalInProgressPosts": 0,
+  "totalInProgressPosts": 1,
   "posts": [
     {
       "title": "How I Learned System Design",
@@ -12,6 +12,16 @@
       "createdAt": 1762586103491,
       "id": 1762586104470,
       "status": "Completed"
+    },
+    {
+      "title": "Mastering Query Optimization in MS SQL Server",
+      "url": "https://raw.githubusercontent.com/gourango-modak/portfolio/refs/heads/master/public/data/blogs/1762677729778.json",
+      "tags": [],
+      "description": "Learn how SQL Server uses clustered and non-clustered indexes to optimize queries. This blog provides practical examples with real-world tables, demonstrating index seeks, scans, and execution plans to help you understand and improve database performance.",
+      "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
+      "createdAt": 1762677729482,
+      "id": 1762677729778,
+      "status": "In progress"
     }
   ]
 }
