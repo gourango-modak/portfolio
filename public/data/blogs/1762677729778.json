@@ -16,7 +16,7 @@
   "tags": [],
   "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
   "content": {
-    "time": 1762681809817,
+    "time": 1762682617305,
     "blocks": [
       {
         "id": "05lK_nY15Z",
@@ -95,7 +95,7 @@
         "id": "VCswtHQHZ1",
         "type": "header",
         "data": {
-          "text": "2. Creating the Orders Table and Dummy Data'",
+          "text": "2. Creating the Orders Table and Dummy Data",
           "level": 2
         }
       },
@@ -110,8 +110,8 @@
         "id": "j7a4BxJ6mj",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Drop table if exists\nIF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;\n\n-- Create Orders table\nCREATE TABLE Orders (\n    OrderID INT,\n    CustomerID INT,\n    OrderDate DATETIME,\n    TotalAmount DECIMAL(10,2)\n);\n\n-- Insert dummy data\nINSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\nVALUES\n(1, 1, '2025-01-01', 1200.50),\n(2, 2, '2025-02-15', 850.00),\n(3, 1, '2025-03-10', 400.00),\n(4, 3, '2025-04-05', 1500.75),\n(5, 2, '2025-05-20', 700.25),\n(6, 4, '2025-06-30', 950.00),\n(7, 1, '2025-07-15', 600.50),\n(8, 3, '2025-08-01', 1300.00),\n(9, 2, '2025-09-12', 1100.00),\n(10, 5, '2025-10-08', 450.00);\n\n-- Add more rows for larger test\nDECLARE @i INT = 11;\nWHILE @i <= 1000000\nBEGIN\n    INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\n    VALUES (\n        @i,\n        (ABS(CHECKSUM(NEWID())) % 10) + 1, -- Random CustomerID 1-10\n        DATEADD(DAY, -(@i % 365), '2025-01-01'),\n        CAST((ABS(CHECKSUM(NEWID())) % 2000) + 100 AS DECIMAL(10,2))\n    );\n    SET @i = @i + 1;\nEND"
+          "language": "sql",
+          "code": "-- Drop table if exists\nIF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;\n\n-- Create Orders table\nCREATE TABLE Orders (\n    OrderID INT,\n    CustomerID INT,\n    OrderDate DATETIME,\n    TotalAmount DECIMAL(10,2)\n);\n\n-- Insert dummy data\nINSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\nVALUES\n(1, 1, '2025-01-01', 1200.50),\n(2, 2, '2025-02-15', 850.00),\n(3, 1, '2025-03-10', 400.00),\n(4, 3, '2025-04-05', 1500.75),\n(5, 2, '2025-05-20', 700.25),\n(6, 4, '2025-06-30', 950.00),\n(7, 1, '2025-07-15', 600.50),\n(8, 3, '2025-08-01', 1300.00),\n(9, 2, '2025-09-12', 1100.00),\n(10, 5, '2025-10-08', 450.00);\n\n-- Add more rows for larger test\nDECLARE @i INT = 11;\nWHILE @i <= 1000000\nBEGIN\n    INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\n    VALUES (\n        @i,\n        (ABS(CHECKSUM(NEWID())) % 10) + 1, -- Random CustomerID 1-10\n        DATEADD(DAY, -(@i % 365), '2025-01-01'),\n        CAST((ABS(CHECKSUM(NEWID())) % 2000) + 100 AS DECIMAL(10,2))\n    );\n    SET @i = @i + 1;\nEND"
         }
       },
       {
@@ -200,8 +200,8 @@
         "id": "2_cTAaXJsF",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Query to analyze\nSELECT CustomerID, SUM(TotalAmount) AS TotalSpent\nFROM Orders\nWHERE OrderDate >= '2025-01-01'\nGROUP BY CustomerID;"
+          "language": "sql",
+          "code": "-- Query to analyze\nSELECT CustomerID, SUM(TotalAmount) AS TotalSpent\nFROM Orders\nWHERE OrderDate >= '2025-01-01'\nGROUP BY CustomerID;"
         }
       },
       {
@@ -289,8 +289,8 @@
         "id": "Mr6tea8gGu",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Table scan example\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
+          "language": "sql",
+          "code": "-- Table scan example\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
         }
       },
       {
@@ -351,7 +351,7 @@
         "id": "onmLvy42Ao",
         "type": "paragraph",
         "data": {
-          "text": "<b>Create Primary Key / Clustered Index</b>"
+          "text": "<b>4.2.1 Create Primary Key / Clustered Index</b>"
         }
       },
       {
@@ -365,30 +365,30 @@
         "id": "gyWFEUpNXQ",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Add primary key (clustered index) for demonstration\nALTER TABLE Orders\nADD CONSTRAINT PK_Orders_OrderID PRIMARY KEY CLUSTERED (OrderID);"
+          "language": "sql",
+          "code": "-- Add primary key (clustered index) for demonstration\nALTER TABLE Orders\nADD CONSTRAINT PK_Orders_OrderID PRIMARY KEY CLUSTERED (OrderID);"
         }
       },
       {
         "id": "yqD0fzpFwa",
         "type": "paragraph",
         "data": {
-          "text": "<b>Queries to Demonstrate Seek vs Scan</b>"
+          "text": "<b>4.2.2</b>&nbsp;<b>Queries to Demonstrate Seek vs Scan</b>"
         }
       },
       {
         "id": "oJapH11FfV",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Clustered Index Seek (single row)\nSELECT * FROM Orders WHERE OrderID = 500;\n\n-- Clustered Index Scan\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
+          "language": "sql",
+          "code": "-- Clustered Index Seek (single row)\nSELECT * FROM Orders WHERE OrderID = 500;\n\n-- Clustered Index Scan\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
         }
       },
       {
         "id": "u5UC9bXpOa",
         "type": "paragraph",
         "data": {
-          "text": "<b>Execution Details</b>"
+          "text": "<b>4.2.3 Execution Details</b>"
         }
       },
       {
@@ -473,15 +473,15 @@
         "id": "rNyty6WJ8j",
         "type": "paragraph",
         "data": {
-          "text": "<b>Create Non-Clustered Index</b>"
+          "text": "<b>4.3.1 Create Non-Clustered Index</b>"
         }
       },
       {
         "id": "c6MXPMXF4D",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Create a non-clustered index\nCREATE NONCLUSTERED INDEX idx_OrderDate ON Orders(OrderDate);"
+          "language": "sql",
+          "code": "-- Create a non-clustered index\nCREATE NONCLUSTERED INDEX idx_OrderDate ON Orders(OrderDate);"
         }
       },
       {
@@ -495,15 +495,15 @@
         "id": "-7CkDnsGBa",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Non-Clustered Index Seek\nSELECT * FROM Orders WHERE OrderDate = '2025-07-15';\n\n-- Non-Clustered Index Scan (range query)\nSELECT OrderDate FROM Orders;"
+          "language": "sql",
+          "code": "-- Non-Clustered Index Seek\nSELECT * FROM Orders WHERE OrderDate = '2025-07-15';\n\n-- Non-Clustered Index Scan (range query)\nSELECT OrderDate FROM Orders;"
         }
       },
       {
         "id": "U_md8N5D_L",
         "type": "paragraph",
         "data": {
-          "text": "<b>Execution Details</b>"
+          "text": "<b>4.3.2 Execution Details</b>"
         }
       },
       {
@@ -588,8 +588,8 @@
         "id": "ekrU5ZxJwn",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Covering index example\nCREATE NONCLUSTERED INDEX idx_CoveringOrders\nON Orders(CustomerID)\nINCLUDE (TotalAmount);\n\n-- Query covered by the index\nSELECT CustomerID, TotalAmount\nFROM Orders\nWHERE CustomerID = 2;"
+          "language": "sql",
+          "code": "-- Covering index example\nCREATE NONCLUSTERED INDEX idx_CoveringOrders\nON Orders(CustomerID)\nINCLUDE (TotalAmount);\n\n-- Query covered by the index\nSELECT CustomerID, TotalAmount\nFROM Orders\nWHERE CustomerID = 2;"
         }
       },
       {
@@ -650,8 +650,8 @@
         "id": "w0H7DDZO5m",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Additional index for demonstration\nCREATE NONCLUSTERED INDEX idx_TotalAmount ON Orders(TotalAmount);\n\n-- SQL Server may combine two indexes\nSELECT * FROM Orders\nWHERE TotalAmount = 1900 AND OrderDate = '2024-11-15';"
+          "language": "sql",
+          "code": "-- Additional index for demonstration\nCREATE NONCLUSTERED INDEX idx_TotalAmount ON Orders(TotalAmount);\n\n-- SQL Server may combine two indexes\nSELECT * FROM Orders\nWHERE TotalAmount = 1900 AND OrderDate = '2024-11-15';"
         }
       },
       {

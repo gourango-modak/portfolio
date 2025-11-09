@@ -41,8 +41,9 @@
     font-size: 1.25rem;
 }
 
-.editorjs-content p b {
-    color: #1e293b;
+.editorjs-content b {
+    color: #1d293d;
+    font-weight: 600;
 }
 
 /* .editorjs ul:not(ul ul),
