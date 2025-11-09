@@ -16,7 +16,7 @@
   "tags": [],
   "slug": "mastering-query-optimization-in-ms-sql-server-1762677729778",
   "content": {
-    "time": 1762682617305,
+    "time": 1762683236720,
     "blocks": [
       {
         "id": "05lK_nY15Z",
@@ -110,7 +110,7 @@
         "id": "j7a4BxJ6mj",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Drop table if exists\nIF OBJECT_ID('Orders', 'U') IS NOT NULL DROP TABLE Orders;\n\n-- Create Orders table\nCREATE TABLE Orders (\n    OrderID INT,\n    CustomerID INT,\n    OrderDate DATETIME,\n    TotalAmount DECIMAL(10,2)\n);\n\n-- Insert dummy data\nINSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\nVALUES\n(1, 1, '2025-01-01', 1200.50),\n(2, 2, '2025-02-15', 850.00),\n(3, 1, '2025-03-10', 400.00),\n(4, 3, '2025-04-05', 1500.75),\n(5, 2, '2025-05-20', 700.25),\n(6, 4, '2025-06-30', 950.00),\n(7, 1, '2025-07-15', 600.50),\n(8, 3, '2025-08-01', 1300.00),\n(9, 2, '2025-09-12', 1100.00),\n(10, 5, '2025-10-08', 450.00);\n\n-- Add more rows for larger test\nDECLARE @i INT = 11;\nWHILE @i <= 1000000\nBEGIN\n    INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount)\n    VALUES (\n        @i,\n        (ABS(CHECKSUM(NEWID())) % 10) + 1, -- Random CustomerID 1-10\n        DATEADD(DAY, -(@i % 365), '2025-01-01'),\n        CAST((ABS(CHECKSUM(NEWID())) % 2000) + 100 AS DECIMAL(10,2))\n    );\n    SET @i = @i + 1;\nEND"
         }
       },
@@ -200,7 +200,7 @@
         "id": "2_cTAaXJsF",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Query to analyze\nSELECT CustomerID, SUM(TotalAmount) AS TotalSpent\nFROM Orders\nWHERE OrderDate >= '2025-01-01'\nGROUP BY CustomerID;"
         }
       },
@@ -217,7 +217,12 @@
               "items": []
             },
             {
-              "content": "Without indexes, you may see a Table Scan, which is inefficient for large datasets.\n",
+              "content": "Without indexes, you may see a Table Scan, which is inefficient for large datasets.",
+              "meta": {},
+              "items": []
+            },
+            {
+              "content": "Hover over each operator in the execution plan to see estimated rows, I/O cost, and CPU cost.\n",
               "meta": {},
               "items": []
             }
@@ -231,11 +236,6 @@
           "style": "unordered",
           "meta": {},
           "items": [
-            {
-              "content": "Hover over each operator in the execution plan to see estimated rows, I/O cost, and CPU cost.\n",
-              "meta": {},
-              "items": []
-            },
             {
               "content": "Compare execution plans before and after creating indexes to see the performance improvement.\n",
               "meta": {},
@@ -289,7 +289,7 @@
         "id": "Mr6tea8gGu",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Table scan example\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
         }
       },
@@ -365,7 +365,7 @@
         "id": "gyWFEUpNXQ",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Add primary key (clustered index) for demonstration\nALTER TABLE Orders\nADD CONSTRAINT PK_Orders_OrderID PRIMARY KEY CLUSTERED (OrderID);"
         }
       },
@@ -380,7 +380,7 @@
         "id": "oJapH11FfV",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Clustered Index Seek (single row)\nSELECT * FROM Orders WHERE OrderID = 500;\n\n-- Clustered Index Scan\nSELECT * FROM Orders WHERE TotalAmount > 1500;"
         }
       },
@@ -392,17 +392,24 @@
         }
       },
       {
-        "id": "1-N8_yKUdA",
-        "type": "paragraph",
+        "id": "W7QEES2r8u",
+        "type": "list",
         "data": {
-          "text": "<b>Clustered index Seek</b>"
-        }
-      },
-      {
-        "id": "IUjBBGSZVs",
-        "type": "paragraph",
-        "data": {
-          "text": "SQL Server uses the clustered index on <code class=\"inline-code\">OrderID</code> to directly locate the requested row.\nActual Number of Rows Read: 1 (only the row with <code class=\"inline-code\">OrderID = 500</code> is accessed).\nThe seek operator quickly navigates the index tree to the exact location.\nExecution plan will show a Clustered Index Seek with very low estimated and actual I/O cost."
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Clustered index Seek</b>",
+              "meta": {},
+              "items": [
+                {
+                  "content": "<b></b><b></b><b></b><b></b><b></b><b></b><b></b>SQL Server uses the clustered index on <code class=\"inline-code\">OrderID</code> to directly locate the requested row.\nActual Number of Rows Read: 1 (only the row with <code class=\"inline-code\">OrderID = 500</code> is accessed).\nThe seek operator quickly navigates the index tree to the exact location.\nExecution plan will show a Clustered Index Seek with very low estimated and actual I/O cost.",
+                  "meta": {},
+                  "items": []
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -417,17 +424,24 @@
         }
       },
       {
-        "id": "Czev1OoCYa",
-        "type": "paragraph",
+        "id": "fDCTnQHHi6",
+        "type": "list",
         "data": {
-          "text": "<b>Clustered Index Scan\n</b>"
-        }
-      },
-      {
-        "id": "6ub272pkVe",
-        "type": "paragraph",
-        "data": {
-          "text": "SQL Server scans the entire clustered index because the <code data-start=\"1175\" data-end=\"1188\">TotalAmount</code> column does not have an index.\nActual Number of Rows Read: 10,000 (all rows are checked against the condition <code class=\"inline-code\">TotalAmount &gt; 1500</code>).\nThis is less efficient, especially as table size grows, because every row must be evaluated.\nExecution plan will show a Clustered Index Scan, with higher estimated and actual I/O cost compared to the seek."
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Clustered Index Scan</b>",
+              "meta": {},
+              "items": [
+                {
+                  "content": "<b></b>SQL Server scans the entire clustered index because the <code data-start=\"1175\" data-end=\"1188\">TotalAmount</code> column does not have an index.\nActual Number of Rows Read: 10,000 (all rows are checked against the condition <code class=\"inline-code\">TotalAmount &gt; 1500</code>).\nThis is less efficient, especially as table size grows, because every row must be evaluated.\nExecution plan will show a Clustered Index Scan, with higher estimated and actual I/O cost compared to the seek.",
+                  "meta": {},
+                  "items": []
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -473,14 +487,14 @@
         "id": "rNyty6WJ8j",
         "type": "paragraph",
         "data": {
-          "text": "<b>4.3.1 Create Non-Clustered Index</b>"
+          "text": "<b>Create Non-Clustered Index</b>"
         }
       },
       {
         "id": "c6MXPMXF4D",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Create a non-clustered index\nCREATE NONCLUSTERED INDEX idx_OrderDate ON Orders(OrderDate);"
         }
       },
@@ -488,14 +502,14 @@
         "id": "njxLIxCEiw",
         "type": "paragraph",
         "data": {
-          "text": "Queries to Demonstrate Non-Clustered Seek vs Scan"
+          "text": "<b>Queries to Demonstrate Non-Clustered Seek vs Scan</b>"
         }
       },
       {
         "id": "-7CkDnsGBa",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Non-Clustered Index Seek\nSELECT * FROM Orders WHERE OrderDate = '2025-07-15';\n\n-- Non-Clustered Index Scan (range query)\nSELECT OrderDate FROM Orders;"
         }
       },
@@ -503,21 +517,28 @@
         "id": "U_md8N5D_L",
         "type": "paragraph",
         "data": {
-          "text": "<b>4.3.2 Execution Details</b>"
+          "text": "<b>Execution Details</b>"
         }
       },
       {
-        "id": "fQf2seiodx",
-        "type": "paragraph",
+        "id": "Nupz2pBd7F",
+        "type": "list",
         "data": {
-          "text": "<b>Non-Clustered Index Seek\n</b>"
-        }
-      },
-      {
-        "id": "zJxE44JH0b",
-        "type": "paragraph",
-        "data": {
-          "text": "SQL Server uses the non-clustered index on <code class=\"inline-code\">OrderDate</code> to directly locate matching rows.\nActual Number of Rows Read: Depends on how many rows match the date, e.g., 1–10 rows in our dummy dataset.\nEfficient because SQL Server searches the B-Tree structure of the non-clustered index, avoiding a full table scan.\nExecution plan shows Non-Clustered Index Seek with very low I/O cost."
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Non-Clustered Index Seek</b>",
+              "meta": {},
+              "items": [
+                {
+                  "content": "<b></b>SQL Server uses the non-clustered index on <code class=\"inline-code\">OrderDate</code> to directly locate matching rows.\nActual Number of Rows Read: Depends on how many rows match the date, e.g., 1–10 rows in our dummy dataset.\nEfficient because SQL Server searches the B-Tree structure of the non-clustered index, avoiding a full table scan.\nExecution plan shows Non-Clustered Index Seek with very low I/O cost.",
+                  "meta": {},
+                  "items": []
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -532,17 +553,24 @@
         }
       },
       {
-        "id": "K1neF1Yue8",
-        "type": "paragraph",
+        "id": "z4_sbypvZW",
+        "type": "list",
         "data": {
-          "text": "<b>Non-Clustered Index Scan\n</b>"
-        }
-      },
-      {
-        "id": "-uoy90BOhk",
-        "type": "paragraph",
-        "data": {
-          "text": "SQL Server scans the entire non-clustered index because the query requests a range of dates.\nActual Number of Rows Read: All rows in the index that fall within the range (potentially thousands, depending on dataset).\nMore efficient than a table scan, but still reads many rows.\nExecution plan shows Non-Clustered Index Scan, with moderate I/O cost."
+          "style": "unordered",
+          "meta": {},
+          "items": [
+            {
+              "content": "<b>Non-Clustered Index Scan</b>",
+              "meta": {},
+              "items": [
+                {
+                  "content": "<b></b>SQL Server scans the entire non-clustered index because the query requests a range of dates.\nActual Number of Rows Read: All rows in the index that fall within the range (potentially thousands, depending on dataset).\nMore efficient than a table scan, but still reads many rows.\nExecution plan shows Non-Clustered Index Scan, with moderate I/O cost.",
+                  "meta": {},
+                  "items": []
+                }
+              ]
+            }
+          ]
         }
       },
       {
@@ -588,7 +616,7 @@
         "id": "ekrU5ZxJwn",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Covering index example\nCREATE NONCLUSTERED INDEX idx_CoveringOrders\nON Orders(CustomerID)\nINCLUDE (TotalAmount);\n\n-- Query covered by the index\nSELECT CustomerID, TotalAmount\nFROM Orders\nWHERE CustomerID = 2;"
         }
       },
@@ -650,7 +678,7 @@
         "id": "w0H7DDZO5m",
         "type": "code",
         "data": {
-          "language": "sql",
+          "language": "",
           "code": "-- Additional index for demonstration\nCREATE NONCLUSTERED INDEX idx_TotalAmount ON Orders(TotalAmount);\n\n-- SQL Server may combine two indexes\nSELECT * FROM Orders\nWHERE TotalAmount = 1900 AND OrderDate = '2024-11-15';"
         }
       },
