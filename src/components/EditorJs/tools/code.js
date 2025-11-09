@@ -21,6 +21,7 @@ class Code {
             "html",
             "css",
             "csharp",
+            "sql",
         ];
     }
 

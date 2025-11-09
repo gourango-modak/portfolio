@@ -1,8 +1,14 @@
 {
   "description": "Learn how Keyset (Seek) Pagination improves query performance for large datasets. This blog explains how it works, compares it with traditional OFFSET pagination, and shows practical real-world use cases like infinite scroll, dashboards, and APIs.",
   "readTime": 15,
-  "status": "In progress",
-  "category": "None",
+  "status": {
+    "label": "In progress",
+    "value": "In progress"
+  },
+  "category": {
+    "label": "None",
+    "value": "None"
+  },
   "id": 1762678664228,
   "createdAt": 1762678663691,
   "updatedAt": 1762678663691,
@@ -10,7 +16,7 @@
   "tags": [],
   "slug": "keyset-pagination-seek-method-in-sql-efficient-paging-for-large-datasets-1762678664228",
   "content": {
-    "time": 1762678641857,
+    "time": 1762681995688,
     "blocks": [
       {
         "id": "7uQ20IDRzF",
@@ -94,8 +100,8 @@
         "id": "qaEoc3r8Cq",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Page 10, 100 rows per page\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 900 ROWS FETCH NEXT 100 ROWS ONLY;"
+          "language": "sql",
+          "code": "-- Page 10, 100 rows per page\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 900 ROWS FETCH NEXT 100 ROWS ONLY;"
         }
       },
       {
@@ -149,8 +155,8 @@
         "id": "Xf7o86Pghn",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Page 1: fetch first 100 rows\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Page 2: fetch next 100 rows using last seen OrderID\nDECLARE @LastOrderID INT = 100;\n\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+          "language": "sql",
+          "code": "-- Page 1: fetch first 100 rows\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Page 2: fetch next 100 rows using last seen OrderID\nDECLARE @LastOrderID INT = 100;\n\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
       {
@@ -165,7 +171,9 @@
         "type": "list",
         "data": {
           "style": "ordered",
-          "meta": {},
+          "meta": {
+            "counterType": "numeric"
+          },
           "items": [
             {
               "content": "Uses an indexed column (<code data-start=\"2046\" data-end=\"2055\">OrderID</code>) for efficient retrieval.\n",
@@ -198,6 +206,7 @@
         "type": "table",
         "data": {
           "withHeadings": true,
+          "stretched": false,
           "content": [
             [
               "Advantage",
@@ -231,6 +240,7 @@
         "type": "table",
         "data": {
           "withHeadings": true,
+          "stretched": false,
           "content": [
             [
               "Limitation",
@@ -285,8 +295,8 @@
         "id": "8rr_OAbK8e",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- Slow for large tables\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 9000 ROWS FETCH NEXT 100 ROWS ONLY;"
+          "language": "sql",
+          "code": "-- Slow for large tables\nSELECT *\nFROM Orders\nORDER BY OrderID\nOFFSET 9000 ROWS FETCH NEXT 100 ROWS ONLY;"
         }
       },
       {
@@ -300,8 +310,8 @@
         "id": "kSrv3BJuds",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\n-- First page\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Next page (seek method)\nDECLARE @LastOrderID INT = 100;\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+          "language": "sql",
+          "code": "-- First page\nSELECT TOP 100 *\nFROM Orders\nORDER BY OrderID;\n\n-- Next page (seek method)\nDECLARE @LastOrderID INT = 100;\nSELECT TOP 100 *\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
       {
@@ -371,8 +381,8 @@
         "id": "OUWefVVvq9",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\nDECLARE @LastPostID INT = 450;\n\nSELECT TOP 20 PostID, UserID, Content, CreatedAt\nFROM Posts\nWHERE PostID > @LastPostID\nORDER BY PostID;"
+          "language": "sql",
+          "code": "DECLARE @LastPostID INT = 450;\n\nSELECT TOP 20 PostID, UserID, Content, CreatedAt\nFROM Posts\nWHERE PostID > @LastPostID\nORDER BY PostID;"
         }
       },
       {
@@ -422,8 +432,8 @@
         "id": "6jy63mcRZl",
         "type": "code",
         "data": {
-          "language": "",
-          "code": "//sql\nDECLARE @LastOrderID INT = 1000;\n\nSELECT TOP 500 OrderID, CustomerID, TotalAmount, OrderDate\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
+          "language": "sql",
+          "code": "DECLARE @LastOrderID INT = 1000;\n\nSELECT TOP 500 OrderID, CustomerID, TotalAmount, OrderDate\nFROM Orders\nWHERE OrderID > @LastOrderID\nORDER BY OrderID;"
         }
       },
       {
