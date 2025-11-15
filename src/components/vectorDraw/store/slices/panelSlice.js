@@ -36,6 +36,10 @@ export const createPanelSlice = (set, get) => ({
             [PANELS.TOOLBAR_PANEL]: 12,
             [PANELS.EXPORT_PANEL]: 13,
         },
+        viewport: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        },
 
         openToolbarPanel: () =>
             set((state) => ({
@@ -164,6 +168,10 @@ export const createPanelSlice = (set, get) => ({
                             ...state.panelSlice.panels[panelId],
                             position: { ...position },
                         },
+                    },
+                    viewport: {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
                     },
                 },
             })),

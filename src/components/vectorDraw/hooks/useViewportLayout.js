@@ -1,30 +1,44 @@
 import { useEffect, useCallback } from "react";
 import { PANELS } from "../constants";
 import { panelSlice } from "../store/utils";
-import { getToolbarPanelInitialPosition } from "../toolbar/utils";
 
 const updateToolbarPanelPosition = () => {
-    const { setPosition, panels } = panelSlice.getSlice();
+    const { setPosition, panels, viewport } = panelSlice.getSlice();
     const toolbarPanel = panels[PANELS.TOOLBAR_PANEL];
 
-    if (!toolbarPanel) return;
+    const toolbarElement = document.getElementById(PANELS.TOOLBAR_PANEL);
+    const panelWidth = toolbarElement?.offsetWidth || 0;
+    const panelHeight = toolbarElement?.offsetHeight || 0;
 
-    const orientation = toolbarPanel.orientation;
-    const curPos = toolbarPanel.position;
+    // Old position
+    const oldX = toolbarPanel.position.x;
+    const oldY = toolbarPanel.position.y;
 
-    const pos = getToolbarPanelInitialPosition({ orientation });
+    const oldWidth = viewport.width;
+    const oldHeight = viewport.height;
 
-    // Check if the position needs updating
-    if (curPos.x !== pos.x || curPos.y !== pos.y) {
-        // Update position in the external state store
+    // New window size
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+
+    // FIX: use relative position based on usable space
+    const relX = oldX / (oldWidth - panelWidth);
+    const relY = oldY / (oldHeight - panelHeight);
+
+    // Calculate position in new size
+    let newX = relX * (newWidth - panelWidth);
+    let newY = relY * (newHeight - panelHeight);
+
+    // Clamp inside viewport
+    newX = Math.max(0, Math.min(newX, newWidth - panelWidth));
+    newY = Math.max(0, Math.min(newY, newHeight - panelHeight));
+
+    const pos = { x: newX, y: newY };
+
+    if (oldX !== newX || oldY !== newY) {
         setPosition(PANELS.TOOLBAR_PANEL, pos);
-
-        // Direct DOM manipulation to reflect the new position
-        const toolbarElement = document.getElementById(PANELS.TOOLBAR_PANEL);
-        if (toolbarElement) {
-            toolbarElement.style.left = `${pos.x}px`;
-            toolbarElement.style.top = `${pos.y}px`;
-        }
+        toolbarElement.style.left = `${newX}px`;
+        toolbarElement.style.top = `${newY}px`;
     }
 };
 
@@ -34,12 +48,26 @@ export const useViewportLayout = () => {
     }, []);
 
     useEffect(() => {
-        window.addEventListener("resize", handleResize);
-        const initialTimer = setTimeout(() => handleResize(), 0);
+        let resizeTimer = null;
+
+        const onResize = () => {
+            // Clear ongoing timer
+            if (resizeTimer) clearTimeout(resizeTimer);
+
+            // Run only after resizing stops
+            resizeTimer = setTimeout(() => {
+                handleResize();
+            }, 0);
+        };
+
+        window.addEventListener("resize", onResize);
+
+        // Initial run
+        handleResize();
+
         return () => {
-            // Cleanup on unmount
-            clearTimeout(initialTimer);
-            window.removeEventListener("resize", handleResize);
+            if (resizeTimer) clearTimeout(resizeTimer);
+            window.removeEventListener("resize", onResize);
         };
     }, [handleResize]);
 };

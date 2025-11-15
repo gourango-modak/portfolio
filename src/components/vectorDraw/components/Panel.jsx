@@ -41,6 +41,10 @@ export const Panel = ({
             setPosition(
                 PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
             );
+            setPanelPosition(
+                panelId,
+                PANEL_INIT_POSITION_FUNCTIONS[panelId]({ orientation })
+            );
         }, 0);
     }, []);
 
