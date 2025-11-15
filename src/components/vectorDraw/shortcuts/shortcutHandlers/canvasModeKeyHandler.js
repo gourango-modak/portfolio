@@ -4,7 +4,7 @@ import { TOOLS } from "../../tools/constants";
 
 let pressedKeys = new Set();
 
-export const canvasModelKeyHandler = (e) => {
+export const canvasModeKeyHandler = (e) => {
     if (e.type === "keydown") {
         pressedKeys.add(e.code);
 

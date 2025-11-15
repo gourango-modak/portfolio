@@ -114,6 +114,7 @@ export const Panel = ({
 
     return (
         <div
+            id={panelId}
             ref={dragElementRef}
             onMouseDown={handleMouseDown}
             style={{

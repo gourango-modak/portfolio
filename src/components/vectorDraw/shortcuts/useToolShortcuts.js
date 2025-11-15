@@ -6,7 +6,7 @@ import { deleteShortcutHandler } from "./shortcutHandlers/deleteHandler";
 import { toolShortcutHandler } from "./shortcutHandlers/toolHandler";
 import { shiftKeyHandler } from "./shortcutHandlers/shiftKeyHandler";
 import { escapeKeyHandler } from "./shortcutHandlers/escapeKeyHandler";
-import { canvasModelKeyHandler } from "./shortcutHandlers/canvasModelKeyHandler";
+import { canvasModeKeyHandler } from "./shortcutHandlers/canvasModeKeyHandler";
 
 export const useToolShortcuts = () => {
     const lastActivatedToolRef = useRef(null);
@@ -14,7 +14,7 @@ export const useToolShortcuts = () => {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (escapeKeyHandler(e)) return;
-            if (canvasModelKeyHandler(e)) return;
+            if (canvasModeKeyHandler(e)) return;
             if (isTypingInInput(e)) return;
             if (shiftKeyHandler(e)) return;
             if (undoRedoShortcutHandler(e)) return;
@@ -25,7 +25,7 @@ export const useToolShortcuts = () => {
 
         const handleKeyUp = (e) => {
             shiftKeyHandler(e);
-            canvasModelKeyHandler(e);
+            canvasModeKeyHandler(e);
             revertTool(lastActivatedToolRef);
         };
 
